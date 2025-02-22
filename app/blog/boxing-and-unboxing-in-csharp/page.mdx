@@ -1,6 +1,6 @@
 # Deep Dive into C# Boxing and Unboxing
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Table of Contents
 - [Understanding the Fundamentals](#understanding-the-fundamentals)
@@ -10,7 +10,7 @@
 - [Best Practices](#best-practices)
 - [Advanced Scenarios](#advanced-scenarios)
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Understanding the Fundamentals
 
@@ -35,7 +35,7 @@ object boxed = 42;              // Boxed value
 int unboxed = (int)boxed;       // Unboxing back to a value type
 ```
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Memory Management Deep Dive
 
@@ -63,7 +63,7 @@ graph LR
 - Reference types live here
 - Boxed values reside here
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Practical Implementation
 
@@ -99,7 +99,7 @@ if (nullableNumber.HasValue)
 }
 ```
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Performance Optimization
 
@@ -149,7 +149,7 @@ Understanding the memory cost of boxing:
 | long | 8 bytes | 24+ bytes |
 | decimal | 16 bytes | 40+ bytes |
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Best Practices
 
@@ -182,7 +182,7 @@ numbers.Add(42);  // No boxing occurs
 Span<int> numbers = stackalloc int[100];
 ```
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Advanced Scenarios
 
@@ -229,7 +229,7 @@ public class ValueTypeProcessor<T> where T : struct
 }
 ```
 
-![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
+ 
 
 ## Final Thoughts
 
