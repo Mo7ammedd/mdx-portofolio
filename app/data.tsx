@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react'
+import { Icons } from '@/components/icons'
 
 type WorkExperience = {
   company: string
@@ -21,82 +21,90 @@ type SocialLink = {
   link: string
 }
 
-// links?: readonly {
-//   icon: React.ReactNode
-//   type: string
-//   href: string
-// }[]
-
 export const PROJECTS = [
   {
-    title: '  Talabat APIs',
+    title: 'SyntaxSphere',
+    href: 'https://github.com/ahmeddelattarr/SyntaxSphere',
+    active: true,
     description:
-      'alabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform. The API can be integrated with a vendor’s POS system to improve efficiency for menu management and order management.',
-    href: 'https://github.com/Mo7ammedd/Talabat-APIs',
-    tags: ['Asp.Net Core', 'C#', 'Redis', 'Sql Server'],
+      'SyntaxSphere is a Django-based web application that provides a platform for users to share and discuss programming-related content.',
+    technologies: ['Django', 'REST APIs', 'JWT', 'SQLite'],
     links: [
       {
-        icon: <Github />,
-        type: 'Github',
-        href: 'https://github.com/Mo7ammedd/Talabat-APIs',
+        type: 'Source',
+        href: 'https://github.com/ahmeddelattarr/SyntaxSphere',
+        icon: <Icons.github className="size-3" />,
       },
     ],
   },
   {
-    title: 'Manga Store',
+    title: 'Matrix',
+    href: 'https://github.com/ahmeddelattarr/matrix',
+    active: true,
     description:
-      'Manga Store MVC project It allows users to browse, purchase, and manage manga collections with integrated payment processing. The application features a user-friendly interface for seamless navigation and secure transactions.',
-    href: 'https://github.com/Mo7ammedd/BookStore',
-    tags: ['Asp.Net Mvc', 'C#', 'Stripe', 'Azure'],
+      'A secure, asynchronous communication server featuring SSL encryption and JWT-based authentication, designed to support seamless server-client interaction.',
+    technologies: [
+      'Python',
+      'Asynchronous Server',
+      'JWT',
+      'PostgreSQL',
+      'SSL Encryption',
+    ],
     links: [
       {
-        icon: <Github />,
-        type: 'Github',
-        href: 'https://github.com/ibelick/nim',
+        type: 'Source',
+        href: 'https://github.com/ahmeddelattarr/matrix',
+        icon: <Icons.github className="size-3" />,
       },
     ],
+    image: '',
+    video: '', // Add video link here if available
   },
   {
-    title: 'HungerStation Microservices',
+    title: 'DishRating API',
+    href: 'https://github.com/ahmeddelattarr/DishRating_api',
+    active: true,
     description:
-      ' Built seven microservices with .NET 8',
-    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
-    tags: ['Microservices', 'Asp.Net Core', 'C#', 'Azure Service Bus'],
+      'API built to manage user and meal ratings, with a focus on efficient token-based authentication and structured data management.',
+    technologies: [
+      'Django REST Framework',
+      'Token-Based Authentication',
+      'PostgreSQL',
+      'API Design',
+      'ElasticSearch (optional)',
+    ],
     links: [
       {
-        icon: <Github />,
-        type: 'Github',
-        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+        type: 'Source',
+        href: 'https://github.com/ahmeddelattarr/DishRating_api',
+        icon: <Icons.github className="size-3" />,
       },
     ],
+    image: '',
+    video: '', // Add video link here if available
   },
   {
-    title: 'E-Commercewebsite',
+    title: 'PollsApp Django',
+    href: 'https://github.com/ahmeddelattarr/PollsApp_django',
+    active: true,
     description:
-      'e-commerceapplication built using Node.js, Express.js, and other essential technologies',
-    href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
-    tags: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose'],
+      'An interactive polling application built with Django, allowing users to create, manage, and vote in custom polls with a user-friendly interface.',
+    technologies: [
+      'Django',
+      'Django REST Framework',
+      'SQLite',
+      'HTML/CSS',
+      'JavaScript',
+    ],
     links: [
       {
-        icon: <Github />,
-        type: 'Github',
-        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+        type: 'Source',
+        href: 'https://github.com/ahmeddelattarr/PollsApp_django',
+        icon: <Icons.github className="size-3" />,
       },
     ],
-  },
-  {
-    title: 'Taylor Swift Quiz',
-    description:
-      'I made random lyrics quiz generator for the best songwriter',
-    href: 'https://swiftiequiz.vercel.app/',
-    tags: ['Node.js', 'Express.js', 'NextJs'],
-    links: [
-      {
-        icon: <Github />,
-        type: 'Github',
-        href: 'https://github.com/Mo7ammedd/TaylorSwiftClient',
-      },
-    ],
+    image: '',
+    video: '', // Add video link here if available
   },
 ]
 
