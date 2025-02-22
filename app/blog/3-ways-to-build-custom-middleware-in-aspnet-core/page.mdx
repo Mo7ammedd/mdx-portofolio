@@ -1,105 +1,311 @@
-# 3 Ways to Build Custom Middleware in ASP.NET Core
+# Building Custom Middleware in ASP.NET Core: A Comprehensive Guide
 
-*By Mohammed Mostafa*  
-*October 22, 2024 · 2 min read*
+![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
 
-You've likely used built-in middleware in ASP.NET Core. Now, let's explore three ways to create custom middleware:
+## Table of Contents
+- [Introduction](#introduction)
+- [Understanding Middleware Basics](#understanding-middleware-basics)
+- [Implementation Methods](#implementation-methods)
+- [Best Practices](#best-practices)
+- [Advanced Scenarios](#advanced-scenarios)
 
-1. With Request Delegates
-2. By Convention
-3. Using the Factory-Based Method
+![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
 
-## 1. Adding Middleware Using Request Delegates
+## Introduction
 
-The first approach involves creating middleware inline using **request delegates**. This is achieved by calling the `Use` method on the **WebApplication instance** and passing a lambda function with two parameters:
+ASP.NET Core middleware components are software pieces that form a pipeline to handle requests and responses. This guide explores three distinct approaches to building custom middleware, each with its own use cases and benefits.
 
-- **HttpContext**: Represents the context for the HTTP request
-- **RequestDelegate**: Represents the next middleware component in the pipeline
+## Understanding Middleware Basics
 
-Here's a code example:
+Before diving into implementation methods, let's understand the fundamental concepts:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.Use(async (context, next) =>
-{
-    // Logic before the request
-    await next(context);  
-    // Logic after the request
-});
+```mermaid
+graph LR
+    A[Request] --> B[Middleware 1]
+    B --> C[Middleware 2]
+    C --> D[Middleware 3]
+    D --> E[Response]
+    E --> C
+    C --> B
+    B --> F[Client]
 ```
 
-By invoking `await next(context);`, you **continue the request pipeline execution**. If you want to **short-circuit the pipeline**, simply avoid calling `next`.
+## Implementation Methods
 
-## 2. Adding Middleware by Convention
+### 1. Request Delegates Approach
 
-In this method, you define middleware within a **class**. This approach follows **conventions** that ensure your class can function as middleware. Let's look at an example:
+The simplest way to create middleware using inline delegates:
 
 ```csharp
-public class ConventionMiddleware
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        var app = builder.Build();
+
+        // Basic middleware
+        app.Use(async (context, next) =>
+        {
+            var timer = Stopwatch.StartNew();
+            
+            await next(context);
+            
+            timer.Stop();
+            var elapsed = timer.ElapsedMilliseconds;
+            
+            context.Response.Headers.Add("X-Response-Time", elapsed.ToString());
+        });
+
+        // Conditional middleware
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Query.ContainsKey("api-version"))
+            {
+                context.Request.Headers.Add("api-version", 
+                    context.Request.Query["api-version"].ToString());
+            }
+            
+            await next(context);
+        });
+
+        app.Run();
+    }
+}
+```
+
+#### Key Features
+- Quick to implement
+- Ideal for simple scenarios
+- Access to both request and response
+- Can be conditional
+- No separate class required
+
+### 2. Convention-Based Middleware
+
+A more structured approach using a dedicated class:
+
+```csharp
+public class RequestLoggingMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<ConventionMiddleware> _logger;
+    private readonly ILogger<RequestLoggingMiddleware> _logger;
+    private readonly RequestLoggingOptions _options;
 
-    public ConventionMiddleware(RequestDelegate next, ILogger<ConventionMiddleware> logger)
+    public RequestLoggingMiddleware(
+        RequestDelegate next,
+        ILogger<RequestLoggingMiddleware> logger,
+        IOptions<RequestLoggingOptions> options)
     {
         _next = next;
         _logger = logger;
+        _options = options.Value;
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
-        _logger.LogInformation("Log before the request");
+        // Pre-request logging
+        var request = await FormatRequest(context.Request);
+        _logger.LogInformation($"Incoming Request: {request}");
 
-        await _next(context);  
+        // Continue the pipeline
+        await _next(context);
 
-        _logger.LogInformation("Log after the request");
+        // Post-response logging
+        var response = await FormatResponse(context.Response);
+        _logger.LogInformation($"Outgoing Response: {response}");
+    }
+
+    private async Task<string> FormatRequest(HttpRequest request)
+    {
+        request.EnableBuffering();
+        
+        var body = await new StreamReader(request.Body)
+            .ReadToEndAsync();
+        
+        request.Body.Position = 0;
+
+        return $"{request.Method} {request.Path}{request.QueryString} {body}";
+    }
+
+    private async Task<string> FormatResponse(HttpResponse response)
+    {
+        response.Body.Seek(0, SeekOrigin.Begin);
+        var text = await new StreamReader(response.Body).ReadToEndAsync();
+        response.Body.Seek(0, SeekOrigin.Begin);
+
+        return $"{response.StatusCode}: {text}";
+    }
+}
+
+// Extension method for clean registration
+public static class RequestLoggingMiddlewareExtensions
+{
+    public static IApplicationBuilder UseRequestLogging(
+        this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<RequestLoggingMiddleware>();
     }
 }
 ```
 
-### Convention Rules
+#### Usage
+```csharp
+app.UseRequestLogging();
+```
 
-1. The class must **inject a** `RequestDelegate` through its constructor
-2. It must define an `InvokeAsync` method with an `HttpContext` parameter
-3. Inside `InvokeAsync`, the `RequestDelegate` should be invoked with the `HttpContext`
+#### Key Features
+- Organized code structure
+- Reusable across applications
+- Supports dependency injection
+- Easy to test
+- Configurable through options pattern
 
-This pattern allows you to **reuse and organize middleware logic** more efficiently across different areas of your application.
+### 3. Factory-Based Middleware
 
-## 3. Adding Factory-Based Middleware
-
-The third approach leverages **factory-based middleware** by implementing the `IMiddleware` interface. This method provides **better integration** with **dependency injection (DI)**, making it ideal for more complex middleware components.
-
-Here's how the class looks:
+The most flexible approach using the `IMiddleware` interface:
 
 ```csharp
-public class FactoryMiddleware : IMiddleware
+public class PerformanceMiddleware : IMiddleware
 {
-    private readonly ILogger<FactoryMiddleware> _logger;
+    private readonly ILogger<PerformanceMiddleware> _logger;
+    private readonly IMetricsService _metrics;
 
-    public FactoryMiddleware(ILogger<FactoryMiddleware> logger)
+    public PerformanceMiddleware(
+        ILogger<PerformanceMiddleware> logger,
+        IMetricsService metrics)
     {
         _logger = logger;
+        _metrics = metrics;
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        _logger.LogInformation("Log before the request");
+        var timer = Stopwatch.StartNew();
+        var requestPath = context.Request.Path;
 
-        await next(context);
-
-        _logger.LogInformation("Log after the request");
+        try
+        {
+            await next(context);
+            
+            timer.Stop();
+            
+            await _metrics.RecordMetricAsync(new RequestMetric
+            {
+                Path = requestPath,
+                Method = context.Request.Method,
+                Duration = timer.ElapsedMilliseconds,
+                StatusCode = context.Response.StatusCode
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Request failed for {Path}", requestPath);
+            throw;
+        }
     }
+}
+
+// Registration in Program.cs
+services.AddTransient<PerformanceMiddleware>();
+app.UseMiddleware<PerformanceMiddleware>();
+```
+
+#### Key Features
+- Full dependency injection support
+- Scoped instance per request
+- Excellent for complex scenarios
+- Better separation of concerns
+- Easier unit testing
+
+## Best Practices
+
+### 1. Error Handling
+```csharp
+public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+{
+    try
+    {
+        await next(context);
+    }
+    catch (Exception ex) when (LogError(ex))
+    {
+        throw; // Rethrow after logging
+    }
+}
+
+private bool LogError(Exception ex)
+{
+    _logger.LogError(ex, "Unhandled exception");
+    return false; // Continue with throw
 }
 ```
 
-This approach offers **greater flexibility**, as the `IMiddleware` class is **resolved at runtime** by the DI container, ensuring proper management of dependencies.
+### 2. Performance Considerations
+- Use buffering judiciously
+- Implement caching where appropriate
+- Consider async/await overhead
+- Monitor memory allocations
+
+### 3. Configuration
+```csharp
+public class MiddlewareOptions
+{
+    public bool EnableLogging { get; set; }
+    public string[] ExcludedPaths { get; set; }
+    public int TimeoutSeconds { get; set; }
+}
+
+// In Program.cs
+services.Configure<MiddlewareOptions>(configuration.GetSection("Middleware"));
+```
+
+## Advanced Scenarios
+
+### 1. Conditional Middleware
+```csharp
+public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+{
+    if (ShouldProcess(context))
+    {
+        await ProcessRequest(context);
+    }
+    
+    await next(context);
+}
+
+private bool ShouldProcess(HttpContext context)
+{
+    return !_options.ExcludedPaths.Contains(context.Request.Path);
+}
+```
+
+### 2. Chaining Multiple Middleware
+```csharp
+app.UseMiddleware<AuthenticationMiddleware>()
+   .UseMiddleware<LoggingMiddleware>()
+   .UseMiddleware<CompressionMiddleware>();
+```
+
+### 3. Branching Pipeline
+```csharp
+app.Map("/api", apiApp =>
+{
+    apiApp.UseMiddleware<ApiVersionMiddleware>();
+    apiApp.UseMiddleware<ApiKeyMiddleware>();
+});
+```
 
 ## Conclusion
 
-ASP.NET Core offers various ways to create middleware, each suited to different scenarios:
+Each middleware implementation approach has its strengths:
 
-- **Request delegates** are great for quick and simple solutions
-- **Convention-based middleware** promotes reusability and organization
-- **Factory-based middleware** provides excellent DI support for complex logic
+| Approach | Best For | Complexity | DI Support |
+|----------|----------|------------|------------|
+| Request Delegates | Quick solutions | Low | Limited |
+| Convention | Reusable components | Medium | Good |
+| Factory | Complex scenarios | High | Excellent |
+
+Choose the approach that best fits your specific requirements while considering maintainability, reusability, and complexity.
+
+![divider](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png)
