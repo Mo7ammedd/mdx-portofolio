@@ -151,7 +151,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'Difference Between Cluster and Non-Cluster Index',
     description:
       'An index is a disk-based structure linked to a table or view that speeds up the retrieval of rows.',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
+    link: '/blog/difference-between-cluster-and-non-cluster-index',
     uid: 'blog-1',
   },
   {

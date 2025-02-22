@@ -30,7 +30,6 @@ export const siteConfig: Metadata = {
     locale: 'en_US',
     url: 'https://www.mohammedd.tech',
     siteName: "Mohammed's Portfolio",
-    title: '/og-image.png',
     description:
       'Software Engineer specializing in Asp.Net Core, Node.js, Express.js and TypeScript. Open to new opportunities.',
     images: [

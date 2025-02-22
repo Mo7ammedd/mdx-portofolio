@@ -3,7 +3,11 @@
 import { TextEffect } from '@/components/ui/text-effect'
 import Link from 'next/link'
 import Image from 'next/image'
+import {  Copy, Check } from 'lucide-react'
 import { Github } from '@/components/icons'
+
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 const PalestineFlagLine = () => {
   return (
@@ -17,6 +21,18 @@ const PalestineFlagLine = () => {
 }
 
 export function Header() {
+  const pathname = usePathname()
+  const [copied, setCopied] = useState(false)
+  const isBlogPost = pathname.startsWith('/blog/')
+
+  const handleCopy = () => {
+    // Get the full URL including the domain
+    const fullUrl = window.location.href
+    navigator.clipboard.writeText(fullUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <>
       <PalestineFlagLine />
@@ -47,13 +63,28 @@ export function Header() {
           </div>
         </div>
 
-        <a
-          href="https://github.com/mo7ammedd"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Github />
-        </a>
+        <div className="flex items-center gap-4">
+          {isBlogPost && (
+            <button
+              onClick={handleCopy}
+              className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800"
+              aria-label="Copy blog link"
+            >
+              {copied ? (
+                <Check className="h-5 w-5 text-green-500" />
+              ) : (
+                <Copy className="h-5 w-5 text-zinc-600 dark:text-zinc-400" />
+              )}
+            </button>
+          )}
+          <a
+            href="https://github.com/mo7ammedd"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github />
+          </a>
+        </div>
       </header>
     </>
   )

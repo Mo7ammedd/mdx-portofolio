@@ -136,30 +136,17 @@ AND s.index_id = i.index_id
 WHERE OBJECTPROPERTY(s.[object_id], 'IsUserTable') = 1;
 ```
 
-## Performance Comparison Matrix
+## Performance Comparison Between Clustered and Non-Clustered Indexes
 
-| Aspect | Clustered Index | Non-Clustered Index |
-|--------|----------------|---------------------|
-| Storage | Data pages | Separate pages |
-| Seeks | Very Fast | Fast |
-| Inserts | Slower (reordering) | Moderate |
-| Updates | Slower | Moderate |
-| Range Queries | Excellent | Good |
-| Multiple Indexes | Not Possible | Possible |
+When comparing clustered and non-clustered indexes, several key differences emerge in their performance characteristics. Clustered indexes store actual data pages, while non-clustered indexes maintain separate pages with pointers. In terms of seek operations, clustered indexes are very fast due to direct data access, while non-clustered indexes are fast but require an additional lookup. Insert operations tend to be slower with clustered indexes due to necessary data reordering, while non-clustered indexes handle inserts with moderate efficiency. Updates follow a similar pattern, with clustered indexes being slower due to data reorganization requirements. For range queries, clustered indexes excel due to physical data ordering, while non-clustered indexes perform well but not quite as efficiently. One notable limitation is that tables can only have one clustered index, while multiple non-clustered indexes are possible.
 
 ## Best Practices and Guidelines
 
 ### 1. Column Selection Criteria
-- High selectivity
-- Frequently used in WHERE clauses
-- Common JOIN conditions
-- ORDER BY/GROUP BY columns
+When selecting columns for indexing, focus on those with high selectivity, columns frequently used in WHERE clauses, common JOIN conditions, and columns used in ORDER BY or GROUP BY operations.
 
 ### 2. Index Design Considerations
-- Keep clustered index narrow
-- Consider composite indexes for common query patterns
-- Monitor fill factor based on update patterns
-- Use included columns judiciously
+For optimal index design: maintain narrow clustered indexes, implement composite indexes based on common query patterns, adjust fill factor according to update patterns, and use included columns strategically to enhance query performance.
 
 ### 3. Maintenance Schedule
 ```sql
