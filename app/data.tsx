@@ -29,11 +29,25 @@ type SocialLink = {
 
 export const PROJECTS = [
   {
-    title: 'SyntaxSphere',
+    title: '  Talabat APIs',
     description:
-      'SyntaxSphere is a Django-based web application that provides a platform for users to share and discuss programming-related content.',
-    href: 'https://pro.motion-primitives.com/',
-    tags: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+      'alabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform. The API can be integrated with a vendor’s POS system to improve efficiency for menu management and order management.',
+    href: 'https://github.com/Mo7ammedd/Talabat-APIs',
+    tags: ['Asp.Net Core', 'C#', 'Redis', 'Sql Server'],
+    links: [
+      {
+        icon: <Github />,
+        type: 'Github',
+        href: 'https://github.com/Mo7ammedd/Talabat-APIs',
+      },
+    ],
+  },
+  {
+    title: 'Manga Store',
+    description:
+      'Manga Store MVC project It allows users to browse, purchase, and manage manga collections with integrated payment processing. The application features a user-friendly interface for seamless navigation and secure transactions.',
+    href: 'https://github.com/Mo7ammedd/BookStore',
+    tags: ['Asp.Net Mvc', 'C#', 'Stripe', 'Azure'],
     links: [
       {
         icon: <Github />,
@@ -43,30 +57,44 @@ export const PROJECTS = [
     ],
   },
   {
-    title: 'Matrix',
+    title: 'HungerStation Microservices',
     description:
-      'A secure, asynchronous communication server featuring SSL encryption and JWT-based authentication, designed to support seamless server-client interaction.',
-    href: 'https://motion-primitives.com/',
-    tags: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+      ' Built seven microservices with .NET 8',
+    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+    tags: ['Microservices', 'Asp.Net Core', 'C#', 'Azure Service Bus'],
     links: [
       {
         icon: <Github />,
         type: 'Github',
-        href: 'https://github.com/ibelick/nim',
+        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
       },
     ],
   },
   {
-    title: 'DishRating API',
+    title: 'E-Commercewebsite',
     description:
-      'API built to manage user and meal ratings, with a focus on efficient token-based authentication and structured data management.',
-    href: 'https://github.com/ibelick/nim',
-    tags: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+      'e-commerceapplication built using Node.js, Express.js, and other essential technologies',
+    href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
+    tags: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose'],
     links: [
       {
         icon: <Github />,
         type: 'Github',
-        href: 'https://github.com/ibelick/nim',
+        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+      },
+    ],
+  },
+  {
+    title: 'Taylor Swift Quiz',
+    description:
+      'I made random lyrics quiz generator for the best songwriter',
+    href: 'https://swiftiequiz.vercel.app/',
+    tags: ['Node.js', 'Express.js', 'NextJs'],
+    links: [
+      {
+        icon: <Github />,
+        type: 'Github',
+        href: 'https://github.com/Mo7ammedd/TaylorSwiftClient',
       },
     ],
   },
@@ -84,7 +112,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'Manara',
     title: 'Backend Engineer',
-    start: '2024',
+    start: '2023',
     end: '2024',
     link: 'https://app.manara.tech/auth/',
     id: 'work2',
@@ -108,17 +136,17 @@ export const BLOG_POSTS: BlogPost[] = [
     uid: 'blog-1',
   },
   {
-    title: 'Why I left my job to start my own company',
+    title: '3 Ways to Build Custom Middleware in ASP.NET Core',
     description:
-      'A deep dive into my decision to leave my job and start my own company',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
+      'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
+    link: '/blog/3-ways-to-build-custom-middleware-in-aspnet-core',
     uid: 'blog-2',
   },
   {
-    title: 'What I learned from my first year of freelancing',
+    title: 'Boxing and Unboxing in C#',
     description:
-      'A look back at my first year of freelancing and what I learned',
-    link: '/blog/exploring-the-intersection-of-design-ai-and-design-engineering',
+      'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
+    link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
   },
 ]

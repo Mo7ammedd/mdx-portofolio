@@ -1,0 +1,105 @@
+# 3 Ways to Build Custom Middleware in ASP.NET Core
+
+*By Mohammed Mostafa*  
+*October 22, 2024 · 2 min read*
+
+You've likely used built-in middleware in ASP.NET Core. Now, let's explore three ways to create custom middleware:
+
+1. With Request Delegates
+2. By Convention
+3. Using the Factory-Based Method
+
+## 1. Adding Middleware Using Request Delegates
+
+The first approach involves creating middleware inline using **request delegates**. This is achieved by calling the `Use` method on the **WebApplication instance** and passing a lambda function with two parameters:
+
+- **HttpContext**: Represents the context for the HTTP request
+- **RequestDelegate**: Represents the next middleware component in the pipeline
+
+Here's a code example:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.Use(async (context, next) =>
+{
+    // Logic before the request
+    await next(context);  
+    // Logic after the request
+});
+```
+
+By invoking `await next(context);`, you **continue the request pipeline execution**. If you want to **short-circuit the pipeline**, simply avoid calling `next`.
+
+## 2. Adding Middleware by Convention
+
+In this method, you define middleware within a **class**. This approach follows **conventions** that ensure your class can function as middleware. Let's look at an example:
+
+```csharp
+public class ConventionMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ConventionMiddleware> _logger;
+
+    public ConventionMiddleware(RequestDelegate next, ILogger<ConventionMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        _logger.LogInformation("Log before the request");
+
+        await _next(context);  
+
+        _logger.LogInformation("Log after the request");
+    }
+}
+```
+
+### Convention Rules
+
+1. The class must **inject a** `RequestDelegate` through its constructor
+2. It must define an `InvokeAsync` method with an `HttpContext` parameter
+3. Inside `InvokeAsync`, the `RequestDelegate` should be invoked with the `HttpContext`
+
+This pattern allows you to **reuse and organize middleware logic** more efficiently across different areas of your application.
+
+## 3. Adding Factory-Based Middleware
+
+The third approach leverages **factory-based middleware** by implementing the `IMiddleware` interface. This method provides **better integration** with **dependency injection (DI)**, making it ideal for more complex middleware components.
+
+Here's how the class looks:
+
+```csharp
+public class FactoryMiddleware : IMiddleware
+{
+    private readonly ILogger<FactoryMiddleware> _logger;
+
+    public FactoryMiddleware(ILogger<FactoryMiddleware> logger)
+    {
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    {
+        _logger.LogInformation("Log before the request");
+
+        await next(context);
+
+        _logger.LogInformation("Log after the request");
+    }
+}
+```
+
+This approach offers **greater flexibility**, as the `IMiddleware` class is **resolved at runtime** by the DI container, ensuring proper management of dependencies.
+
+## Conclusion
+
+ASP.NET Core offers various ways to create middleware, each suited to different scenarios:
+
+- **Request delegates** are great for quick and simple solutions
+- **Convention-based middleware** promotes reusability and organization
+- **Factory-based middleware** provides excellent DI support for complex logic

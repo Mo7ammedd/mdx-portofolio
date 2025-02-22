@@ -11,46 +11,46 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 }
 
-export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.name }],
-  creator: siteConfig.name,
-  publisher: siteConfig.name,
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteConfig.website,
-    siteName: siteConfig.siteName,
-    title: siteConfig.ogTitle,
-    description: siteConfig.description,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.ogTitle,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: siteConfig.username,
-    creator: siteConfig.username,
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: siteConfig.website,
-  },
-  metadataBase: new URL(siteConfig.website),
-}
+// export const metadata: Metadata = {
+//   title: siteConfig.title,
+//   description: siteConfig.description,
+//   keywords: siteConfig.keywords,
+//   authors: [{ name: siteConfig.name }],
+//   creator: siteConfig.name,
+//   publisher: siteConfig.name,
+//   openGraph: {
+//     type: 'website',
+//     locale: 'en_US',
+//     url: siteConfig.website,
+//     siteName: siteConfig.siteName,
+//     title: siteConfig.ogTitle,
+//     description: siteConfig.description,
+//     images: [
+//       {
+//         url: siteConfig.ogImage,
+//         width: 1200,
+//         height: 630,
+//         alt: siteConfig.ogTitle,
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: 'summary_large_image',
+//     site: siteConfig.username,
+//     creator: siteConfig.username,
+//     title: siteConfig.title,
+//     description: siteConfig.description,
+//     images: [siteConfig.ogImage],
+//   },
+//   robots: {
+//     index: true,
+//     follow: true,
+//   },
+//   alternates: {
+//     canonical: siteConfig.website,
+//   },
+//   metadataBase: new URL(siteConfig.website),
+// }
 const geist = Geist({
   variable: '--font-geist',
   subsets: ['latin'],
