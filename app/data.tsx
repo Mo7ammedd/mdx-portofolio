@@ -23,37 +23,31 @@ type SocialLink = {
 
 export const PROJECTS = [
   {
-    title: 'SyntaxSphere',
-    href: 'https://github.com/ahmeddelattarr/SyntaxSphere',
+    title: 'Talabat APIs',
+    href: 'https://github.com/Mo7ammedd/Talabat-APIs',
     active: true,
     description:
-      'SyntaxSphere is a Django-based web application that provides a platform for users to share and discuss programming-related content.',
-    technologies: ['Django', 'REST APIs', 'JWT', 'SQLite'],
+      'Talabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform',
+    technologies: ['ASP.NET Core', 'C#', 'Sql Server', 'Redis'],
     links: [
       {
         type: 'Source',
-        href: 'https://github.com/ahmeddelattarr/SyntaxSphere',
+        href: 'https://github.com/Mo7ammedd/Talabat-APIs',
         icon: <Icons.github className="size-3" />,
       },
     ],
   },
   {
     title: 'Matrix',
-    href: 'https://github.com/ahmeddelattarr/matrix',
+    href: 'https://github.com/Mo7ammedd/BookStore',
     active: true,
     description:
-      'A secure, asynchronous communication server featuring SSL encryption and JWT-based authentication, designed to support seamless server-client interaction.',
-    technologies: [
-      'Python',
-      'Asynchronous Server',
-      'JWT',
-      'PostgreSQL',
-      'SSL Encryption',
-    ],
+    'Manga Store MVC project is a comprehensive web application built using .NET MVC Core. It allows users to browse, purchase, and manage manga collections with integrated payment processing. The application features a user-friendly interface for seamless navigation and secure transactions',
+    technologies: ['ASP.NET Mvc', 'Stripe', 'Sql Server', 'Azure'],
     links: [
       {
         type: 'Source',
-        href: 'https://github.com/ahmeddelattarr/matrix',
+        href: 'https://github.com/Mo7ammedd/BookStore',
         icon: <Icons.github className="size-3" />,
       },
     ],
@@ -61,22 +55,20 @@ export const PROJECTS = [
     video: '', // Add video link here if available
   },
   {
-    title: 'DishRating API',
-    href: 'https://github.com/ahmeddelattarr/DishRating_api',
+    title: 'HungerStation Microservices',
+    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     active: true,
     description:
-      'API built to manage user and meal ratings, with a focus on efficient token-based authentication and structured data management.',
+      'Built seven microservices with .NET 8, featuring secure authentication, Azure Service Bus communication',
     technologies: [
-      'Django REST Framework',
-      'Token-Based Authentication',
-      'PostgreSQL',
-      'API Design',
-      'ElasticSearch (optional)',
+      'Microservices',
+      'Azure Service Bus',
+      'RabbitMQ',
     ],
     links: [
       {
         type: 'Source',
-        href: 'https://github.com/ahmeddelattarr/DishRating_api',
+        href: 'ttps://github.com/Mo7ammedd/HungerStation_Microservices',
         icon: <Icons.github className="size-3" />,
       },
     ],
@@ -84,22 +76,41 @@ export const PROJECTS = [
     video: '', // Add video link here if available
   },
   {
-    title: 'PollsApp Django',
-    href: 'https://github.com/ahmeddelattarr/PollsApp_django',
+    title: 'E-Commercewebsite',
+    href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
     active: true,
     description:
-      'An interactive polling application built with Django, allowing users to create, manage, and vote in custom polls with a user-friendly interface.',
+      'E-commerce  allows users to browse products, add them to the cart, and place orders.',
     technologies: [
-      'Django',
-      'Django REST Framework',
-      'SQLite',
-      'HTML/CSS',
-      'JavaScript',
+      'Node.js',
+      'Express',
+      'MongoDB',
     ],
     links: [
       {
         type: 'Source',
-        href: 'https://github.com/ahmeddelattarr/PollsApp_django',
+        href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
+        icon: <Icons.github className="size-3" />,
+      },
+    ],
+    image: '',
+    video: '', // Add video link here if available
+  },
+  {
+    title: 'Taylor Swift Quiz',
+    href: 'https://swiftiequiz.vercel.app/',
+    active: true,
+    description:
+      'I made random lyrics quiz generator for the best songwriter',
+    technologies: [
+      'Node.js',
+      'Express',
+      'Next.js',
+    ],
+    links: [
+      {
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/TaylorSwiftClient',
         icon: <Icons.github className="size-3" />,
       },
     ],
@@ -118,20 +129,20 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     id: 'work1',
   },
   {
+    company: 'IT Mentor',
+    title: 'GDG Suez Canal',
+    start: '2025',
+    end: 'Present',
+    link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',
+    id: 'work3',
+  },
+  {
     company: 'Manara',
     title: 'Backend Engineer',
     start: '2023',
     end: '2024',
     link: 'https://app.manara.tech/auth/',
     id: 'work2',
-  },
-  {
-    company: 'IT Mentor',
-    title: 'GDG Suez Canal',
-    start: '2025',
-    end: 'Present',
-    link: 'https://ibelick.com',
-    id: 'work3',
   },
 ]
 
