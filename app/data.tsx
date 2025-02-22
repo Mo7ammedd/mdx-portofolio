@@ -68,7 +68,7 @@ export const PROJECTS = [
     links: [
       {
         type: 'Source',
-        href: 'ttps://github.com/Mo7ammedd/HungerStation_Microservices',
+        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
         icon: <Icons.github className="size-3" />,
       },
     ],

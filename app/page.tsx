@@ -80,12 +80,7 @@ export default function Personal() {
       >
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
-            I am a Software Engineer and a Computer Science student at Suez
-            Canal University. My focus is on backend development and software
-            engineering, where I design and implement robust systems and
-            automation scripts for various applications. I have experience
-            building efficient, scalable backend solutions and integrating them
-            with other components as needed.
+          I am a Software Engineer and a Computer Science student at Suez Canal University. I have a deep passion for building systems that are strong, efficient, and easy to use. I focus on backend development, where I design and develop reliable solutions that help applications run smoothly. I love solving problems and turning ideas into real, working systems
           </p>
         </div>
       </motion.section>

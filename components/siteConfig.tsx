@@ -1,9 +1,9 @@
 import { Metadata } from 'next'
 
 export const siteConfig: Metadata = {
-  title: 'Hüsam | Software Engineer',
+  title: 'Mohammed | Software Engineer',
   description:
-    'Software Engineer specializing in full-stack development with React, Next.js, Node.js, Express.js and TypeScript. Open to new opportunities.',
+    'Software Engineer specializing in Asp.Net Core, Node.js, Express.js and TypeScript. Open to new opportunities.',
   keywords: [
     'Software Engineer',
     'Backend Software Engineer',
