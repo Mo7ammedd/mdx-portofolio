@@ -38,7 +38,7 @@ export const PROJECTS = [
     ],
   },
   {
-    title: 'Matrix',
+    title: 'Manga Store',
     href: 'https://github.com/Mo7ammedd/BookStore',
     active: true,
     description:
