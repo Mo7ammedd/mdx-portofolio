@@ -3,7 +3,7 @@ import { BLOG_POSTS } from '@/app/data'
 import BlogLayoutClient from './blog-layout-client'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const currentPath = params.slug ? `/blog/${params.slug}` : ''
+  const currentPath = `/blog/${params.slug}`
   const post = BLOG_POSTS.find(post => post.link === currentPath)
 
   if (!post) {
@@ -12,6 +12,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: 'Technical articles and guides about software development',
     }
   }
+
+  const ogImage = currentPath.includes('cluster') ? '/og-cluster.png' : '/og-image.png'
 
   return {
     title: `${post.title} | Mohammed`,
@@ -23,7 +25,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       url: `https://www.mohammedd.tech${post.link}`,
       images: [
         {
-          url: '/og-image.png',
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -34,11 +36,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['/og-image.png'],
+      images: [ogImage],
     },
   }
 }
-
 export default function LayoutBlogPost({
   children,
 }: {
