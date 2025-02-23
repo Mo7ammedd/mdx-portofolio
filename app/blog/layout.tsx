@@ -3,8 +3,14 @@ import { BLOG_POSTS } from '@/app/data'
 import BlogLayoutClient from './blog-layout-client'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const currentPath = `/blog/${params.slug}`
-  const post = BLOG_POSTS.find(post => post.link === currentPath)
+  // Normalize the incoming slug
+  const normalizedSlug = params.slug.toLowerCase().trim();
+  
+  // Find post by matching normalized paths
+  const post = BLOG_POSTS.find(post => {
+    const postSlug = post.link.replace('/blog/', '').toLowerCase().trim();
+    return postSlug === normalizedSlug;
+  });
 
   if (!post) {
     return {
@@ -13,7 +19,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   }
 
-  const ogImage = currentPath.includes('cluster') ? '/og-cluster.png' : '/og-image.png'
+  const ogImage = post.link.includes('cluster') ? '/og-cluster.png' : '/og-image.png'
 
   return {
     title: `${post.title} | Mohammed`,
@@ -40,6 +46,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
   }
 }
+
 export default function LayoutBlogPost({
   children,
 }: {
