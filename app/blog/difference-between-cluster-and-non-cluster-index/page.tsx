@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata>
       siteName: "Mohammed's Blog",
       images: [
         {
-          url: '/og-image.png', // You can make this dynamic per post if needed
+          url: '/og-image.png',
           width: 1200,
           height: 630,
           alt: post.title,
@@ -44,7 +44,17 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata>
       creator: '@mohamedtv',
       title: post.title,
       description: post.description,
-      images: ['/og-image.png'], // You can make this dynamic per post if needed
+      images: ['/og-image.png'],
     },
   }
+}
+
+// This is the actual page component that Next.js requires
+export default function BlogPost() {
+  return (
+    // Your MDX content will be automatically inserted here by Next.js
+    // when using MDX, you don't need to manually import or render the content
+    <>
+    </>
+  )
 }
