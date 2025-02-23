@@ -1,13 +1,16 @@
 import { Metadata } from 'next'
 import { BLOG_POSTS } from '../../data'
 
-type BlogProps = {
+interface PageProps {
   params: {
     slug: string
   }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata({ params }: BlogProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params, searchParams }: PageProps
+): Promise<Metadata> {
   // Find the matching blog post from the data
   const post = BLOG_POSTS.find(
     (post) => post.link === `/blog/${params.slug}`
@@ -49,11 +52,9 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata>
   }
 }
 
-// This is the actual page component that Next.js requires
-export default function BlogPost() {
+export default function BlogPost({ params, searchParams }: PageProps) {
   return (
     // Your MDX content will be automatically inserted here by Next.js
-    // when using MDX, you don't need to manually import or render the content
     <>
     </>
   )
