@@ -296,10 +296,14 @@ app.Map("/api", apiApp =>
 });
 ```
 
-## Conclusion
-
-When choosing between middleware implementation approaches, each offers distinct advantages for different scenarios. Request Delegates excel in quick solutions and prototypes, offering low complexity but limited dependency injection support - perfect for simple, straightforward middleware needs. The Convention-based approach strikes a balance, providing good dependency injection support with medium complexity, making it ideal for creating reusable components that can be shared across different parts of your application or even different projects. For complex scenarios requiring sophisticated dependency injection and advanced features, the Factory-based approach stands out as the most powerful option, though it comes with higher complexity. This approach is particularly valuable when building enterprise-level middleware that needs to handle complex business logic or integrate with multiple services.
+## Middleware Implementation Comparison
+```
+| Approach | Complexity | DI Support | Ideal Use Cases | Key Benefits |
+|---------|-----------|------------|----------------|-------------|
+| Request Delegates | Low | Limited | Quick solutions, prototypes | Fast implementation, straightforward for simple scenarios |
+| Convention-based | Medium | Good | Reusable components, shared middleware | Balance between simplicity and power, good for team collaboration |
+| Factory-based | High | Excellent | Complex business logic, enterprise applications | Sophisticated DI, advanced features, better testability |
+```
 Choose your implementation approach based on your specific requirements, considering factors such as maintainability, reusability, and the overall complexity of your middleware needs.
-
 
  

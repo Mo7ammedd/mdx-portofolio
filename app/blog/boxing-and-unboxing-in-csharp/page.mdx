@@ -140,9 +140,17 @@ public class BoxingBenchmark
 
 ### Memory Footprint
 
-Memory Footprint
-When examining the memory impact of boxing operations, it's important to understand the significant size differences between boxed and unboxed value types. For boolean values, while they only occupy 1 byte in their unboxed form, they require at least 24 bytes when boxed due to the overhead of the object header and type information. Integer types follow a similar pattern - a standard int uses 4 bytes unboxed but needs 24+ bytes when boxed. Long integers, which normally use 8 bytes, also expand to at least 24 bytes when boxed. The most dramatic difference occurs with decimal types, which grow from 16 bytes in their unboxed form to 40+ bytes when boxed. This substantial increase in memory usage highlights why avoiding unnecessary boxing operations is crucial for performance-sensitive applications.
+Boxing operations significantly increase memory usage due to object overhead:
+```
+| Data Type | Unboxed Size | Boxed Size | Size Increase |
+|-----------|--------------|------------|---------------|
+| bool      | 1 byte       | 24+ bytes  | ~24x          |
+| int       | 4 bytes      | 24+ bytes  | ~6x           |
+| long      | 8 bytes      | 24+ bytes  | ~3x           |
+| decimal   | 16 bytes     | 40+ bytes  | ~2.5x         |
+```
 
+This substantial increase in memory usage highlights why avoiding unnecessary boxing operations is crucial for performance-sensitive applications, especially when dealing with large collections or memory-constrained environments.
  
 
 ## Best Practices
