@@ -9,17 +9,27 @@ export function PalestineSolidarity() {
   const [currentFactIndex, setCurrentFactIndex] = useState(0)
   
   const facts = [
+    // History
     "Palestine was historically known as the 'Land of Canaan'",
-    "The Palestinian flag was adopted in 1964",
-    "Olive trees are a symbol of Palestinian resilience",
-    "Palestinian embroidery (tatreez) is recognized by UNESCO",
-    "The dabke is a traditional Palestinian folk dance",
-    "In April 2025, French President Emmanuel Macron announced that France will recognize a Palestinian state by June 2025, coinciding with an international conference on the two-state solution co-chaired with Saudi Arabia",
-    "On April 8, 2025, Israeli and Palestinian students protested at the Hebrew University of Jerusalem against the ongoing war in Gaza, accusing Israel of committing genocide",
-    "In July 2024, 14 Palestinian factions, including Fatah and Hamas, signed the Beijing Declaration in China, agreeing to form a unity government and end longstanding divisions",
-    "On April 14, 2025, Israeli forces bombed a UN-run aid centre in Khan Younis, Gaza, surrounded by tents housing displaced Palestinians",
-    "In March 2025, the International Court of Justice ordered Israel to allow humanitarian aid into Gaza unimpeded, warning that famine is already occurring"
+    "Jerusalem, one of the oldest cities in the world, has deep historical roots in Palestine",
+    "The Palestinian flag was officially adopted in 1964 by the PLO",
+    "The Nakba in 1948 resulted in the displacement of over 700,000 Palestinians",
+    "Palestine was part of the Ottoman Empire until the end of World War I",
+    "The British Mandate for Palestine lasted from 1920 to 1948",
+    "The 1987 First Intifada was a major Palestinian uprising against Israeli occupation",
+    "Palestine was granted non-member observer state status in the United Nations in 2012",
+  
+    // Culture
+    "Olive trees are a symbol of Palestinian resilience and connection to the land",
+    "Palestinian embroidery (tatreez) is recognized by UNESCO as intangible cultural heritage",
+    "The dabke is a traditional Palestinian folk dance performed at weddings and celebrations",
+    "Palestinian cuisine includes dishes like maqluba, musakhan, hummus, and knafeh",
+    "Poetry is a significant cultural expression, with Mahmoud Darwish being a renowned Palestinian poet",
+    "Handcrafted ceramics and mosaics are traditional Palestinian arts",
+    "Storytelling and oral traditions are deeply rooted in Palestinian culture",
+    "Many Palestinian families pass down traditional recipes and clothing through generations"
   ];
+  
   
   // Pre-defined positions for olive branches to avoid hydration errors
   const oliveBranchPositions = [
@@ -345,18 +355,18 @@ return (
             </div>
         </div>
 
-        {/* Solidarity message banner */}
+        {/* Solidarity message banner - reduced size */}
         <div 
-            className={`fixed bottom-0 left-0 right-0 z-20 bg-gradient-to-r from-black via-red-600 to-green-600 p-3 text-center text-white transition-all duration-700 ${
+            className={`fixed bottom-0 left-0 right-0 z-20 bg-gradient-to-r from-black via-red-600 to-green-600 p-1.5 text-center text-white transition-all duration-700 ${
                 showMessage ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
             }`}
         >
-            <div className="flex flex-col items-center justify-center space-y-1">
-                <p className="text-sm md:text-base font-semibold">
+            <div className="flex flex-col items-center justify-center space-y-0.5">
+                <p className="text-xs md:text-sm font-semibold">
                 From The River To The Sea 
                 </p>
-                <p className="text-xs md:text-sm">
-                Day {counter}: We remember Gaza
+                <p className="text-[10px] md:text-xs">
+                Day {counter}: We still remember Gaza
                 </p>
             </div>
         </div>
