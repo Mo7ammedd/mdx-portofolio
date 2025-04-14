@@ -7,6 +7,7 @@ import './globals.css'
 import { siteConfig } from '@/components/siteConfig'
 import { Header } from './header'
 import { Footer } from './footer'
+import {PalestineSolidarity} from '@/components/palestine-solidarity'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -21,9 +22,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   ...siteConfig,
   other: {
-    // iOS status bar - black-translucent shows dark status bar with white text
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    // Android status bar color handled via theme-color meta above
     'theme-color': '#09090b',
   },
 }
@@ -54,6 +53,7 @@ export default function RootLayout({
           storageKey="theme"
           defaultTheme="system"
         >
+          <PalestineSolidarity />
           <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
             <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
               <Header />
