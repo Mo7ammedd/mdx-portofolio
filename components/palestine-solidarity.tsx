@@ -13,8 +13,13 @@ export function PalestineSolidarity() {
     "The Palestinian flag was adopted in 1964",
     "Olive trees are a symbol of Palestinian resilience",
     "Palestinian embroidery (tatreez) is recognized by UNESCO",
-    "The dabke is a traditional Palestinian folk dance"
-  ]
+    "The dabke is a traditional Palestinian folk dance",
+    "In April 2025, French President Emmanuel Macron announced that France will recognize a Palestinian state by June 2025, coinciding with an international conference on the two-state solution co-chaired with Saudi Arabia",
+    "On April 8, 2025, Israeli and Palestinian students protested at the Hebrew University of Jerusalem against the ongoing war in Gaza, accusing Israel of committing genocide",
+    "In July 2024, 14 Palestinian factions, including Fatah and Hamas, signed the Beijing Declaration in China, agreeing to form a unity government and end longstanding divisions",
+    "On April 14, 2025, Israeli forces bombed a UN-run aid centre in Khan Younis, Gaza, surrounded by tents housing displaced Palestinians",
+    "In March 2025, the International Court of Justice ordered Israel to allow humanitarian aid into Gaza unimpeded, warning that famine is already occurring"
+  ];
   
   // Pre-defined positions for olive branches to avoid hydration errors
   const oliveBranchPositions = [
