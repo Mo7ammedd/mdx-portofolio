@@ -11,10 +11,22 @@ import { Footer } from './footer'
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#ffffff',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#09090b' }, // zinc-950 color
+  ],
+  colorScheme: 'dark light',
 }
 
-export const metadata: Metadata = siteConfig
+export const metadata: Metadata = {
+  ...siteConfig,
+  other: {
+    // iOS status bar - black-translucent shows dark status bar with white text
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    // Android status bar color handled via theme-color meta above
+    'theme-color': '#09090b',
+  },
+}
 
 const geist = Geist({
   variable: '--font-geist',
