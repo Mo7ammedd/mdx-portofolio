@@ -15,11 +15,6 @@ const THEMES_OPTIONS = [
     id: 'dark',
     icon: <MoonIcon className="h-4 w-4" />,
   },
-  {
-    label: 'System',
-    id: 'system',
-    icon: <MonitorIcon className="h-4 w-4" />,
-  },
 ]
 
 function ThemeSwitch() {
@@ -70,7 +65,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
       <div className="flex items-center justify-between">
         <a
-          href="https://github.com/ibelick/mo7ammedd"
+          href="https://github.com/mo7ammedd"
           className="text-xs text-zinc-500"
           target="_blank"
         >
