@@ -23,6 +23,21 @@ type SocialLink = {
 
 export const PROJECTS = [
   {
+    title: 'Aura Decor',
+    href: 'https://github.com/Mo7ammedd/Aura-Decor',
+    active: true,
+    description:
+      'Augmented Reality (AR) application integrating custom 3D models to deliver an immersive shopping experience, allowing users to visualize furniture pieces in their real environment.',
+    technologies: ['ASP.NET Core', 'RabbitMQ', 'Docker', 'Redis'],
+    links: [
+      {
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/Aura-Decor',
+        icon: <Icons.github className="size-3" />,
+      },
+    ],
+  },
+  {
     title: 'Talabat APIs',
     href: 'https://github.com/Mo7ammedd/Talabat-APIs',
     active: true,
@@ -38,7 +53,7 @@ export const PROJECTS = [
     ],
   },
   {
-    title: 'Manga Store',
+    title: 'Manga Store', 
     href: 'https://github.com/Mo7ammedd/BookStore',
     active: true,
     description:
@@ -73,7 +88,7 @@ export const PROJECTS = [
       },
     ],
     image: '',
-    video: '', // Add video link here if available
+    video: '', 
   },
   {
     title: 'E-Commercewebsite',
