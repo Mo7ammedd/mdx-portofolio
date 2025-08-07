@@ -120,8 +120,8 @@ ON Sales (ProductID, SaleDate, Quantity, Amount);
 ```
 
 ## Performance Optimization Strategies
-
 ### Index Selection Matrix
+```
 
 | Scenario                  | Recommended Index Type       | Reason                                                                 |
 |---------------------------|------------------------------|-----------------------------------------------------------------------|
@@ -130,7 +130,7 @@ ON Sales (ProductID, SaleDate, Quantity, Amount);
 | OLTP Lookup Columns       | Non-Clustered                | Fast seeks with minimal write overhead                               |
 | Covering Frequent Queries | Non-Clustered with INCLUDES  | Eliminates expensive key lookups                                     |
 | Low Cardinality Columns   | Filtered Non-Clustered       | Reduces index size while maintaining usefulness                      |
-
+```
 ### Maintenance Scripts with Intelligence
 ```sql
 -- Smart index reorganization script

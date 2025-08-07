@@ -44,9 +44,11 @@ export const PROJECTS = [
     description:
       'A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.',
     technologies: [
-      'Node.js',
-      'Express',
-      'MongoDB',
+      'C#',
+      'LSM-Tree',
+      'ACID',
+      'Concurrent Access',
+      'Benchmarking',
     ],
     links: [
       {
