@@ -37,6 +37,27 @@ export const PROJECTS = [
       },
     ],
   },
+    {
+    title: 'LSMSharp',
+    href: 'https://github.com/Mo7ammedd/LSMSharp',
+    active: true,
+    description:
+      'A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.',
+    technologies: [
+      'Node.js',
+      'Express',
+      'MongoDB',
+    ],
+    links: [
+      {
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/LSMSharp',
+        icon: <Icons.github className="size-3" />,
+      },
+    ],
+    image: '',
+    video: '', // Add video link here if available
+  },
   {
     title: 'Talabat APIs',
     href: 'https://github.com/Mo7ammedd/Talabat-APIs',
@@ -89,27 +110,6 @@ export const PROJECTS = [
     ],
     image: '',
     video: '', 
-  },
-  {
-    title: 'E-Commercewebsite',
-    href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
-    active: true,
-    description:
-      'E-commerce  allows users to browse products, add them to the cart, and place orders.',
-    technologies: [
-      'Node.js',
-      'Express',
-      'MongoDB',
-    ],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/nodejs-e-commerce',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '', // Add video link here if available
   },
   {
     title: 'Taylor Swift Quiz',
