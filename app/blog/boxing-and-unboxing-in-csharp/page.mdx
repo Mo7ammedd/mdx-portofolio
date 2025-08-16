@@ -33,11 +33,11 @@ export const metadata = {
 
 Here's a confession: I wrote C# for three years before I truly understood the performance implications of boxing and unboxing. Sure, I knew the basic concept, but I had no idea how much it was costing me in real applications. Once I learned to spot boxing allocations, I was shocked at how pervasive they were in seemingly innocent code.
 
-Boxing and unboxing are fundamental to how .NET handles the divide between value types (like `int`, `struct`) and reference types (like `string`, `class`). But here's the thing—every time you box a value, you're making a secret allocation on the heap. And in high-performance applications, those "secret" allocations can kill you.
+Boxing and unboxing are fundamental to how .NET handles the divide between value types (like `int`, `struct`) and reference types (like `string`, `class`). But here's the thing-every time you box a value, you're making a secret allocation on the heap. And in high-performance applications, those "secret" allocations can kill you.
 
 ### What Actually Happens During Boxing?
 
-Let me paint you a picture of what's happening under the hood. When you box a value type, the runtime doesn't just wrap it—it performs a full memory allocation:
+Let me paint you a picture of what's happening under the hood. When you box a value type, the runtime doesn't just wrap it-it performs a full memory allocation:
 
 ```csharp
 // This looks innocent enough...
@@ -55,7 +55,7 @@ I remember profiling an application where we were processing thousands of temper
 
 ### The Hidden Cost of Unboxing
 
-Unboxing isn't free either. It's not just a type cast—it's a runtime type check followed by a memory copy:
+Unboxing isn't free either. It's not just a type cast-it's a runtime type check followed by a memory copy:
 
 ```csharp
 object boxed = 42;              // Boxing allocation
@@ -95,7 +95,7 @@ for (int i = 0; i < 1000000; i++)
 
 ### The Stack vs Heap Reality Check
 
-Here's where things get really interesting from a performance perspective. The difference between stack and heap isn't just academic—it has real-world implications that I've seen impact production systems.
+Here's where things get really interesting from a performance perspective. The difference between stack and heap isn't just academic-it has real-world implications that I've seen impact production systems.
 
 ```mermaid
 graph LR
@@ -107,7 +107,7 @@ graph LR
 
 ### Stack Memory: The Speed Demon
 
-Stack allocation is incredibly fast—it's literally just moving a pointer. I've measured this: stack allocation is typically under 1 nanosecond, while heap allocation can be 10-100x slower depending on GC pressure.
+Stack allocation is incredibly fast-it's literally just moving a pointer. I've measured this: stack allocation is typically under 1 nanosecond, while heap allocation can be 10-100x slower depending on GC pressure.
 
 ```csharp
 // Stack allocation - blazing fast
@@ -149,7 +149,7 @@ object boxed = value;     // 16+ bytes on heap + GC tracking
 
 ### Memory Layout Reality
 
-Let me show you what this actually looks like in memory—this visualization helped me finally "get" the performance implications:
+Let me show you what this actually looks like in memory-this visualization helped me finally "get" the performance implications:
 
 ```csharp
 // Stack layout (fast, compact)
