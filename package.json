@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-og": "tsx scripts/generate-og-images.ts",
+    "prebuild": "npm run generate-og"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -15,8 +17,11 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@tailwindcss/typography": "^0.5.15",
     "@types/mdx": "^2.0.13",
+    "@vercel/og": "^0.8.5",
+    "canvas": "^3.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "html-to-image": "^1.11.13",
     "lucide-react": "^0.475.0",
     "motion": "^11.15.0",
     "next": "15.1.1",
@@ -24,6 +29,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.0.0",
+    "sharp": "^0.34.3",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -39,6 +45,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.10",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.20.4",
     "typescript": "^5"
   }
 }
