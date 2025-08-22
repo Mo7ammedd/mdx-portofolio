@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 
 export function PalestineSolidarity() {
@@ -24,23 +23,30 @@ export function PalestineSolidarity() {
     }
   }, [])
 
-return (
+  return (
     <>
-        {/* Solidarity message banner - dark theme */}
-        <div 
-            className={`fixed bottom-0 left-0 right-0 z-50 bg-zinc-900 p-1.5 text-center text-white transition-all duration-700 ${
-                showMessage ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-            }`}
-        >
-            <div className="flex flex-col items-center justify-center space-y-0.5">
-                <p className="text-xs md:text-sm font-semibold">
-                From The River To The Sea 
-                </p>
-                <p className="text-[10px] md:text-xs text-zinc-400">
-                Day {counter}: We still remember Gaza
-                </p>
-            </div>
+      {/* Solidarity message banner - clean glassy theme */}
+      <div 
+        className={`fixed bottom-0 left-0 right-0 z-50 p-2 text-center text-white transition-all duration-700 ${
+          showMessage ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+        }`}
+        style={{
+          background: 'rgba(0, 0, 0, 0.15)',
+          backdropFilter: 'blur(30px)',
+          WebkitBackdropFilter: 'blur(30px)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.2)'
+        }}
+      >
+        <div className="flex flex-col items-center justify-center space-y-1">
+          <p className="text-sm md:text-base font-semibold">
+            From The River To The Sea 
+          </p>
+          <p className="text-xs md:text-sm text-gray-300">
+            Day {counter}: We still remember Gaza
+          </p>
         </div>
+      </div>
     </>
   )
 }
