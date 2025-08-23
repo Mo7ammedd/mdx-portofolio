@@ -138,28 +138,36 @@ export const PROJECTS = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
+    company: 'Medica Scope',
+    title: 'Backend Engineer',
+    start: 'Jul 2025',
+    end: 'Present',
+    link: 'https://www.facebook.com/medicascope/',
+    id: 'work1',
+  },
+  {
     company: 'ONVO',
     title: 'Software Engineer',
-    start: '2024',
-    end: 'Present',
+    start: 'Aug 2024',
+    end: 'Jul 2025',
     link: 'https://onvo.me/',
-    id: 'work1',
+    id: 'work2',
   },
   {
     company: 'IT Mentor',
     title: 'GDG Suez Canal',
-    start: '2025',
-    end: 'Present',
+    start: 'Oct 2024',
+    end: 'May 2025',
     link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',
     id: 'work3',
   },
   {
     company: 'Manara',
     title: 'Backend Engineer',
-    start: '2023',
-    end: '2024',
+    start: 'Mar 2024',
+    end: 'Jul 2024',
     link: 'https://app.manara.tech/auth/',
-    id: 'work2',
+    id: 'work4',
   },
 ]
 
