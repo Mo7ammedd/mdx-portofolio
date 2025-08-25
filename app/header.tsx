@@ -40,7 +40,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Image
             alt="Mohammed's avatar"
-            src="/avatar2.jpg"
+            src="/avatar.jpg"
             className="aspect-square rounded-full object-cover grayscale hover:grayscale-0"
             width={80}
             height={80}
