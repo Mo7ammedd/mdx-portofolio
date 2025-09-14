@@ -2,7 +2,7 @@
 
 import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 
 interface AnalyticsProps {
   googleAnalyticsId?: string
@@ -21,10 +21,7 @@ declare global {
   }
 }
 
-export function Analytics({ 
-  googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID,
-  microsoftClarityId = process.env.NEXT_PUBLIC_CLARITY_ID 
-}: AnalyticsProps) {
+function AnalyticsTracker({ googleAnalyticsId }: { googleAnalyticsId?: string }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -37,6 +34,13 @@ export function Analytics({
     }
   }, [pathname, searchParams, googleAnalyticsId])
 
+  return null
+}
+
+export function Analytics({ 
+  googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID,
+  microsoftClarityId = process.env.NEXT_PUBLIC_CLARITY_ID 
+}: AnalyticsProps) {
   return (
     <>
       {/* Google Analytics */}
@@ -59,6 +63,9 @@ export function Analytics({
               });
             `}
           </Script>
+          <Suspense fallback={null}>
+            <AnalyticsTracker googleAnalyticsId={googleAnalyticsId} />
+          </Suspense>
         </>
       )}
 
