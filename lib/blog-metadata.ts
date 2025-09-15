@@ -61,7 +61,7 @@ export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      creator: '@mohamedtv',
+      creator: '@mohameddtv',
       images: meta.image ? [`https://www.mohammedd.tech${meta.image}`] : [],
     },
     alternates: {

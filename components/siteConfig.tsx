@@ -57,13 +57,23 @@ export const siteConfig: Metadata = {
   creator: 'Mohammed - Software Engineer',
   publisher: 'Mohammed Portfolio Website',
   
-  // Add structured data hints
+  // Add structured data hints and meta properties
   other: {
     'og:profile:first_name': 'Mohammed',
+    'og:profile:last_name': 'Mostafa',
     'og:profile:username': 'mohammed-software-engineer',
     'profession': 'Software Engineer',
     'specialization': 'ASP.NET Core, Node.js, TypeScript',
     'status': 'Available for Opportunities',
+    'article:author': 'Mohammed Mostafa',
+    'og:email': 'mohammedmostafanazih@gmail.com',
+    'og:locality': 'Egypt',
+    'og:region': 'Middle East',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'format-detection': 'telephone=no',
+    'mobile-web-app-capable': 'yes',
+    'theme-color': '#09090b',
   },
   
   openGraph: {
@@ -76,27 +86,28 @@ export const siteConfig: Metadata = {
       'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. Available for new opportunities.',
     images: [
       {
-        url: 'https://www.mohammedd.tech/og-image.png', // Use absolute URL
+        url: 'https://www.mohammedd.tech/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Mohammed Mostafa Software Engineer Portfolio - ASP.NET Core & Node.js Developer',
         type: 'image/png',
       },
-      // Add a secondary professional headshot image
       {
-        url: 'https://www.mohammedd.tech/profile-photo.jpg',
+        url: 'https://www.mohammedd.tech/avatar.jpg',
         width: 400,
         height: 400,
         alt: 'Mohammed Mostafa Professional Photo - Software Engineer',
         type: 'image/jpeg',
       },
     ],
+    emails: ['mohammedmostafanazih@gmail.com'],
+    countryName: 'Egypt',
   },
   
   twitter: {
     card: 'summary_large_image',
-    site: '@mohamedtv',
-    creator: '@mohamedtv',
+    site: '@mohameddtv',
+    creator: '@mohameddtv',
     title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
     description:
       'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js and TypeScript. Computer Science graduate available for opportunities.',

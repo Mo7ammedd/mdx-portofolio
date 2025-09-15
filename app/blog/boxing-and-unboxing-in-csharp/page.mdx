@@ -1,19 +1,13 @@
-export const metadata = {
-  title: 'Boxing and Unboxing in C# | Mohammed Mostafa',
-  description: 'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
-  openGraph: {
-    title: 'Boxing and Unboxing in C#',
-    description: 'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
-    images: ['/og/boxing-and-unboxing-in-csharp.png'],
-    type: 'article',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Boxing and Unboxing in C#',
-    description: 'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
-    images: ['/og/boxing-and-unboxing-in-csharp.png'],
-  },
-}
+import { generateBlogPostSEO } from '@/lib/seo'
+
+export const metadata = generateBlogPostSEO({
+  title: 'Deep Dive into C# Boxing and Unboxing',
+  description: 'Master C# boxing and unboxing concepts with practical examples. Learn about performance implications, memory management, and best practices for value types and reference types.',
+  slug: 'boxing-and-unboxing-in-csharp',
+  publishedTime: '2024-11-15T10:00:00.000Z',
+  modifiedTime: '2024-11-15T10:00:00.000Z',
+  tags: ['csharp', 'dotnet', 'performance', 'memory-management', 'programming-fundamentals'],
+})
 
 # Deep Dive into C# Boxing and Unboxing
 

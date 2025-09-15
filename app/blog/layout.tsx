@@ -50,12 +50,12 @@ export default function LayoutBlogPost({
     jobTitle: 'Software Engineer',
     description: 'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript.',
     url: 'https://www.mohammedd.tech',
-    email: 'mohamedm7amed22@gmail.com',
+    email: 'mohammedmostafanazih@gmail.com',
     image: 'https://www.mohammedd.tech/avatar.jpg',
     sameAs: [
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
-      'https://twitter.com/mohamedtv',
+      'https://twitter.com/mohameddtv',
     ],
     knowsAbout: [
       'ASP.NET Core',

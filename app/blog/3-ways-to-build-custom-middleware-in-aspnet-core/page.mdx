@@ -1,19 +1,13 @@
-export const metadata = {
-  title: '3 Ways to Build Custom Middleware in ASP.NET Core | Mohammed Mostafa',
-  description: 'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
-  openGraph: {
-    title: '3 Ways to Build Custom Middleware in ASP.NET Core',
-    description: 'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
-    images: ['/og/3-ways-to-build-custom-middleware-in-aspnet-core.png'],
-    type: 'article',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '3 Ways to Build Custom Middleware in ASP.NET Core',
-    description: 'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
-    images: ['/og/3-ways-to-build-custom-middleware-in-aspnet-core.png'],
-  },
-}
+import { generateBlogPostSEO } from '@/lib/seo'
+
+export const metadata = generateBlogPostSEO({
+  title: '3 Ways to Build Custom Middleware in ASP.NET Core',
+  description: 'Learn 3 powerful approaches to building custom middleware in ASP.NET Core. Master request pipeline customization with practical examples and best practices.',
+  slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
+  publishedTime: '2024-12-01T10:00:00.000Z',
+  modifiedTime: '2024-12-01T10:00:00.000Z',
+  tags: ['aspnet-core', 'middleware', 'dotnet', 'web-development', 'request-pipeline', 'csharp'],
+})
 
 # Building Custom Middleware in ASP.NET Core: A Comprehensive Guide
 

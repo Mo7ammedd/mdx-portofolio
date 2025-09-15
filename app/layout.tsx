@@ -10,7 +10,7 @@ import { Footer } from './footer'
 import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
 import { Analytics } from '@/components/analytics'
-import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema'
+import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -51,12 +51,12 @@ export default function RootLayout({
     jobTitle: 'Software Engineer',
     description: 'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Available for new opportunities.',
     url: 'https://www.mohammedd.tech',
-    email: 'mohamedm7amed22@gmail.com',
+    email: 'mohammedmostafanazih@gmail.com',
     image: 'https://www.mohammedd.tech/avatar.jpg',
     sameAs: [
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
-      'https://twitter.com/mohamedtv',
+      'https://twitter.com/mohameddtv',
     ],
     knowsAbout: [
       'ASP.NET Core',
@@ -90,6 +90,8 @@ export default function RootLayout({
       >
         <StructuredData data={generatePersonSchema(personData)} />
         <StructuredData data={generateWebsiteSchema(websiteData.url, websiteData.name, websiteData.description)} />
+        <StructuredData data={generateProfessionalServiceSchema(personData)} />
+        <StructuredData data={generateOrganizationSchema()} />
         <Analytics />
         <ThemeProvider
           enableSystem={true}

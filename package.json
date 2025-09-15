@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-og": "tsx scripts/generate-og-images.ts",
-    "prebuild": "npm run generate-og"
+    "generate-og": "tsx scripts/generate-og-images.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -41,6 +40,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "postcss": "^8",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.10",

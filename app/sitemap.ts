@@ -1,28 +1,41 @@
 import { MetadataRoute } from 'next'
-
-const WEBSITE_URL = 'https://www.mohammedd.tech'
+import { WEBSITE_URL } from '@/lib/constants'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/blog'].map((route) => ({
-    url: `${WEBSITE_URL}${route}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: route === '' ? ('monthly' as const) : ('weekly' as const),
-    priority: route === '' ? 1 : 0.8,
-  }))
+  const currentDate = new Date().toISOString()
+  
+  // Main pages with their priorities and update frequencies
+  const mainRoutes = [
+    {
+      url: `${WEBSITE_URL}`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${WEBSITE_URL}/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+  ]
 
-  // Add blog posts
+  // Blog posts with more detailed metadata
   const blogPosts = [
     {
       slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
-      lastModified: '2024-12-01',
+      lastModified: '2024-12-01T10:00:00.000Z',
+      priority: 0.7,
     },
     {
       slug: 'boxing-and-unboxing-in-csharp',
-      lastModified: '2024-11-15',
+      lastModified: '2024-11-15T10:00:00.000Z',
+      priority: 0.7,
     },
     {
       slug: 'difference-between-cluster-and-non-cluster-index',
-      lastModified: '2024-11-01',
+      lastModified: '2024-11-01T10:00:00.000Z',
+      priority: 0.7,
     },
   ]
 
@@ -30,8 +43,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${WEBSITE_URL}/blog/${post.slug}`,
     lastModified: post.lastModified,
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    priority: post.priority,
   }))
 
-  return [...routes, ...blogRoutes]
+  // Add other important routes if they exist
+  const additionalRoutes: MetadataRoute.Sitemap = [
+    // Uncomment when these pages are created
+    // {
+    //   url: `${WEBSITE_URL}/projects`,
+    //   lastModified: currentDate,
+    //   changeFrequency: 'monthly' as const,
+    //   priority: 0.6,
+    // },
+    // {
+    //   url: `${WEBSITE_URL}/contact`,
+    //   lastModified: currentDate,
+    //   changeFrequency: 'yearly' as const,
+    //   priority: 0.5,
+    // },
+  ]
+
+  return [...mainRoutes, ...blogRoutes, ...additionalRoutes]
 }
