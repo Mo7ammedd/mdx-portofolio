@@ -12,6 +12,7 @@ import {
   WORK_EXPERIENCE,
 } from './data'
 import { ProjectCard } from '@/components/project-card'
+import { SpotifyWidget } from '@/components/spotify-widget'
 
 const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },
@@ -176,6 +177,13 @@ export default function Personal() {
             ))}
           </AnimatedBackground>
         </div>
+      </motion.section>
+
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <SpotifyWidget />
       </motion.section>
 
       <motion.section
