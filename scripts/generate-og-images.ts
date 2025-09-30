@@ -4,7 +4,6 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { generateOGImageForPost } from '../lib/og-generator'
 
-// Blog posts data (copied to avoid React import issues)
 const BLOG_POSTS = [
   {
     title: 'Difference Between Cluster and Non-Cluster Index',
