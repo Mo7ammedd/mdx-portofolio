@@ -29,7 +29,6 @@ const getAccessToken = async (): Promise<string> => {
     throw new Error('Spotify credentials not configured. Please set up your environment variables.')
   }
 
-  // No cache: always fetch a new token
 
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
@@ -41,7 +40,7 @@ const getAccessToken = async (): Promise<string> => {
       grant_type: 'refresh_token',
       refresh_token: SPOTIFY_REFRESH_TOKEN!,
     }),
-    next: { revalidate: 3600 } // Cache access token for 1 hour
+    next: { revalidate: 3600 } 
   })
 
   if (!response.ok) {
