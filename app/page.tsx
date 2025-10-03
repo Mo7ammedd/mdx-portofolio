@@ -137,16 +137,17 @@ export default function Personal() {
                   }}
                 ></div>
                 
-             <div
-  className="absolute left-3 top-3 h-8 w-8 sm:h-[60px] sm:w-[60px] rounded-full"
-  style={{ background: '#ffffff' }}
-></div>
-
-<div
-  className="absolute right-10 top-3 h-8 w-8 sm:h-[60px] sm:w-[60px] rounded-full"
-  style={{ background: '#3b82f6' }}
-></div>
-
+                {/* Decorative colored circle - left */}
+                <div 
+                  className="absolute left-[15px] top-[15px] h-[60px] w-[60px] rounded-full"
+                  style={{ background: '#ffffff' }}
+                ></div>
+                
+                {/* Decorative colored circle - right */}
+                <div 
+                  className="absolute right-[80px] top-[15px] h-[60px] w-[60px] rounded-full"
+                  style={{ background: '#3b82f6' }}
+                ></div>
 
                 <div className="relative z-[99] flex w-full flex-row justify-between">
                   <div>
