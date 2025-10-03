@@ -112,27 +112,62 @@ export default function Personal() {
         <div className="flex flex-col space-y-2">
           {WORK_EXPERIENCE.map((job) => (
             <a
-              className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
+              className="relative overflow-hidden rounded-2xl p-[1px]"
+              style={{
+                borderColor: 'var(--border)',
+              }}
               href={job.link}
               target="_blank"
               rel="noopener noreferrer"
               key={job.id}
             >
-              <Spotlight
-                className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
-                size={64}
-              />
-              <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
-                <div className="relative flex w-full flex-row justify-between">
+              <div 
+                className="relative h-full w-full rounded-[15px] p-4"
+                style={{
+                  backgroundColor: 'var(--card)',
+                  color: 'var(--card-foreground)',
+                }}
+              >
+                {/* Glassmorphism overlay */}
+                <div 
+                  className="absolute inset-0 z-[1] overflow-hidden rounded-[15px]"
+                  style={{
+                    backdropFilter: 'blur(60px)',
+                    background: 'rgba(9, 9, 11, 0.6)',
+                  }}
+                ></div>
+                
+                {/* Decorative colored circle - left */}
+                <div 
+                  className="absolute left-[15px] top-[15px] h-[60px] w-[60px] rounded-full"
+                  style={{ background: '#ffffff' }}
+                ></div>
+                
+                {/* Decorative colored circle - right */}
+                <div 
+                  className="absolute right-[80px] top-[15px] h-[60px] w-[60px] rounded-full"
+                  style={{ background: '#3b82f6' }}
+                ></div>
+
+                <div className="relative z-[99] flex w-full flex-row justify-between">
                   <div>
-                    <h4 className="font-normal dark:text-zinc-100">
+                    <h4 
+                      className="font-normal"
+                      style={{ color: 'var(--foreground)' }}
+                    >
                       {job.title}
                     </h4>
-                    <p className="text-zinc-500 dark:text-zinc-400">
+                    <p 
+                      className="text-sm"
+                      style={{ color: 'var(--muted-foreground)' }}
+                    >
                       {job.company}
                     </p>
                   </div>
-                  <p className="text-zinc-600 dark:text-zinc-400">
+                  <p 
+                    className="text-sm"
+                    style={{ color: 'var(--muted-foreground)' }}
+                  >
                     {job.start} - {job.end}
                   </p>
                 </div>

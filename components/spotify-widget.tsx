@@ -16,36 +16,17 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'top' | 'recent'>('recent')
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null)
-  const [lastFetch, setLastFetch] = useState<{ [key: string]: number }>({})
 
-  const fetchTracks = async (type: 'top' | 'recent', force = false) => {
-    // Check if we have recent data (within 5 minutes)
-    const now = Date.now()
-    const lastFetchTime = lastFetch[type] || 0
-    const fiveMinutes = 5 * 60 * 1000
-    
-    if (!force && now - lastFetchTime < fiveMinutes && tracks.length > 0) {
-      return // Skip fetch if data is fresh
-    }
-
+  const fetchTracks = async (type: 'top' | 'recent') => {
     try {
       setLoading(true)
       setError(null)
-      
-      const response = await fetch(`/api/spotify/${type === 'top' ? 'top-tracks' : 'recently-played'}`, {
-        // Add cache control headers
-        headers: {
-          'Cache-Control': 'public, max-age=300' // 5 minutes
-        }
-      })
-      
+      const response = await fetch(`/api/spotify/${type === 'top' ? 'top-tracks' : 'recently-played'}`)
       if (!response.ok) {
         throw new Error('Failed to fetch tracks')
       }
-      
       const data = await response.json()
       setTracks(data)
-      setLastFetch(prev => ({ ...prev, [type]: now }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load tracks')
     } finally {
@@ -57,19 +38,9 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
     fetchTracks(activeTab)
   }, [activeTab])
 
-  // Auto-refresh data every 5 minutes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchTracks(activeTab, true) // Force refresh
-    }, 5 * 60 * 1000) // 5 minutes
-
-    return () => clearInterval(interval)
-  }, [activeTab])
-
   const playPreview = (trackId: string, previewUrl?: string) => {
     if (!previewUrl) return
     
-    // Stop any currently playing preview
     if (currentlyPlaying) {
       const currentAudio = document.getElementById(currentlyPlaying) as HTMLAudioElement
       if (currentAudio) {
@@ -78,7 +49,6 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       }
     }
 
-    // Play new preview
     if (currentlyPlaying === trackId) {
       setCurrentlyPlaying(null)
     } else {
@@ -110,9 +80,49 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
 
   return (
     <div className={`relative ${className}`}>
-      <div className="relative bg-gradient-to-br from-black/20 via-black/80 to-black/20 backdrop-blur-sm border border-black/30 dark:border-black/30 rounded-xl p-6 shadow-2xl shadow-black/10">
+      <div 
+        className="relative overflow-hidden rounded-xl border p-6 shadow-2xl transition-all duration-300"
+        style={{
+          borderColor: 'var(--border)',
+          backgroundColor: 'var(--card)',
+          color: 'var(--card-foreground)',
+        }}
+      >
+        {/* Glassmorphism overlay */}
+        <div 
+          className="absolute inset-0 z-[1] overflow-hidden rounded-xl"
+          style={{
+            backdropFilter: 'blur(60px)',
+            background: 'rgba(9, 9, 11, 0.6)',
+          }}
+        ></div>
+        
+        {/* Decorative colored circle - top left */}
+        <div 
+          className="absolute left-[21px] top-[21px] h-[80px] w-[80px] rounded-full"
+          style={{ background: '#ffffff' }}
+        ></div>
+        
+        {/* Decorative colored circle - top right */}
+        <div 
+          className="absolute right-[21px] top-[21px] h-[80px] w-[80px] rounded-full"
+          style={{ background: '#ffffff' }}
+        ></div>
+        
+        {/* Decorative colored circle - bottom left */}
+        <div 
+          className="absolute left-[21px] bottom-[21px] h-[80px] w-[80px] rounded-full"
+          style={{ background: '#ffffff' }}
+        ></div>
+        
+        {/* Decorative colored circle - bottom right */}
+        <div 
+          className="absolute right-[21px] bottom-[21px] h-[80px] w-[80px] rounded-full"
+          style={{ background: '#ffffff' }}
+        ></div>
+
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="relative z-[99] flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-black to-gray-900 rounded-full flex items-center justify-center shadow-lg shadow-black/50">
@@ -124,15 +134,14 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
                 <h3 className="font-semibold text-white dark:text-white drop-shadow-lg">
                   SPOTIFY
                 </h3>
-               <div className="flex flex-col space-y-1">
-  <p className="text-sm text-gray-300 dark:text-gray-400 font-mono tracking-wider">
-    {activeTab === 'recent' ? 'RECENT VIBES' : 'TOP BANGERS'}
-  </p>
-  <p className="text-xs text-gray-400 font-mono tracking-widest">
-    Fueled by coffee, code, and Taylor Swift on repeat.
-  </p>
-</div>
-
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm text-gray-300 dark:text-gray-400 font-mono tracking-wider">
+                    {activeTab === 'recent' ? 'RECENT VIBES' : 'TOP BANGERS'}
+                  </p>
+                  <p className="text-xs text-gray-400 font-mono tracking-widest">
+                    Fueled by coffee, code, and Taylor Swift on repeat.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -163,7 +172,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
         </div>
 
         {/* Content */}
-        <div className="space-y-3">
+        <div className="relative z-[99] space-y-3">
           {loading && (
             <div className="flex items-center justify-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>

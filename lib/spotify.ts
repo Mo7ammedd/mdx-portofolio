@@ -29,11 +29,7 @@ const getAccessToken = async (): Promise<string> => {
     throw new Error('Spotify credentials not configured. Please set up your environment variables.')
   }
 
-  // Check cache first
-  const cachedToken = cache.get<string>('spotify_access_token')
-  if (cachedToken) {
-    return cachedToken
-  }
+  // No cache: always fetch a new token
 
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
@@ -55,28 +51,20 @@ const getAccessToken = async (): Promise<string> => {
 
   const data: SpotifyApi = await response.json()
   
-  // Cache the token for 50 minutes (tokens expire in 1 hour)
-  cache.set('spotify_access_token', data.access_token, 3000)
+  // No cache: always return fresh token
   
   return data.access_token
 }
 
 export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
-  const cacheKey = `top_tracks_${limit}`
-  
-  // Check cache first
-  const cachedTracks = cache.get<SpotifyTrack[]>(cacheKey)
-  if (cachedTracks) {
-    return cachedTracks
-  }
+  // No cache: always fetch fresh tracks
 
   const access_token = await getAccessToken()
   
   const response = await fetch(`${TOP_TRACKS_ENDPOINT}?limit=${limit}&time_range=short_term`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 300 } // Cache for 5 minutes
+    }
   })
 
   if (!response.ok) {
@@ -95,28 +83,20 @@ export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
     preview_url: item.preview_url,
   }))
 
-  // Cache for 5 minutes
-  cache.set(cacheKey, tracks, 300)
+  // No cache: always return fresh tracks
   
   return tracks
 }
 
 export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => {
-  const cacheKey = `recently_played_${limit}`
-  
-  // Check cache first
-  const cachedTracks = cache.get<SpotifyTrack[]>(cacheKey)
-  if (cachedTracks) {
-    return cachedTracks
-  }
+  // No cache: always fetch fresh recently played tracks
 
   const access_token = await getAccessToken()
   
   const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=${limit}`, {
     headers: {
       Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 300 } // Cache for 5 minutes
+    }
   })
 
   if (!response.ok) {
@@ -136,8 +116,7 @@ export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => 
     played_at: item.played_at,
   }))
 
-  // Cache for 5 minutes
-  cache.set(cacheKey, tracks, 300)
+  // No cache: always return fresh recently played tracks
   
   return tracks
 }

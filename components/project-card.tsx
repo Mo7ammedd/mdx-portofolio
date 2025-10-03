@@ -34,8 +34,8 @@ export function ProjectCard({ title, description, tags, links }: Props) {
       
       {/* Decorative colored circle - left */}
       <div 
-        className="absolute left-[21px] top-[21px] h-[50px] w-[50px] rounded-full"
-        style={{ background: '#f52525c9' }}
+        className="absolute left-[21px] top-[21px] h-[80px] w-[80px] rounded-full"
+        style={{ background: '#ffffff' }}
       ></div>
       
       {/* Decorative colored circle - right (hidden by default) */}
