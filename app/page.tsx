@@ -173,6 +173,7 @@ export default function Personal() {
                     {post.description}
                   </p>
                 </div>
+                
               </Link>
             ))}
           </AnimatedBackground>
