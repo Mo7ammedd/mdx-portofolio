@@ -128,6 +128,18 @@ export default function Personal() {
                   color: 'var(--card-foreground)',
                 }}
               >
+                {/* Decorative colored circle - left */}
+                <div 
+                  className="absolute left-[15px] top-[15px] h-[60px] w-[60px] rounded-full z-[0]"
+                  style={{ background: '#ffffff' }}
+                ></div>
+                
+                {/* Decorative colored circle - right */}
+                <div 
+                  className="absolute right-[80px] top-[15px] h-[60px] w-[60px] rounded-full z-[0]"
+                  style={{ background: '#3b82f6' }}
+                ></div>
+
                 {/* Glassmorphism overlay */}
                 <div 
                   className="absolute inset-0 z-[1] overflow-hidden rounded-[15px]"
@@ -135,18 +147,6 @@ export default function Personal() {
                     backdropFilter: 'blur(60px)',
                     background: 'rgba(9, 9, 11, 0.6)',
                   }}
-                ></div>
-                
-                {/* Decorative colored circle - left */}
-                <div 
-                  className="absolute left-[15px] top-[15px] h-[60px] w-[60px] rounded-full"
-                  style={{ background: '#ffffff' }}
-                ></div>
-                
-                {/* Decorative colored circle - right */}
-                <div 
-                  className="absolute right-[80px] top-[15px] h-[60px] w-[60px] rounded-full"
-                  style={{ background: '#3b82f6' }}
                 ></div>
 
                 <div className="relative z-[99] flex w-full flex-row justify-between">
