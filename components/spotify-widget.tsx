@@ -93,6 +93,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
           className="absolute inset-0 z-[1] overflow-hidden rounded-xl"
           style={{
             backdropFilter: 'blur(60px)',
+            WebkitBackdropFilter: 'blur(60px)',
             background: 'rgba(9, 9, 11, 0.6)',
           }}
         ></div>

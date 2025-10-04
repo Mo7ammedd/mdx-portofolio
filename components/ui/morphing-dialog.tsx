@@ -245,21 +245,9 @@ function MorphingDialogContainer({ children }: MorphingDialogContainerProps) {
             key={`backdrop-${uniqueId}`}
             className="fixed inset-0 h-full w-full"
             style={{
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              background: 'rgba(255, 255, 255, 0.4)',
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
-          <motion.div
-            key={`backdrop-dark-${uniqueId}`}
-            className="fixed inset-0 h-full w-full dark:block hidden"
-            style={{
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              background: 'rgba(0, 0, 0, 0.4)',
+              backdropFilter: 'blur(60px)',
+              WebkitBackdropFilter: 'blur(60px)',
+              background: 'rgba(9, 9, 11, 0.6)',
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
