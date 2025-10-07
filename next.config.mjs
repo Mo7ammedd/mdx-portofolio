@@ -27,7 +27,13 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   experimental: {
-    optimizePackageImports: ['lucide-react', 'motion', '@radix-ui/react-slot'],
+    optimizePackageImports: [
+      'lucide-react',
+      'motion',
+      '@radix-ui/react-slot',
+      'next-themes',
+      'react-markdown',
+    ],
     optimizeCss: true, // Enable CSS optimization
   },
   compiler: {

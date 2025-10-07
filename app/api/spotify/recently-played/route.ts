@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { getRecentlyPlayed } from '@/lib/spotify'
 
+// Use Edge Runtime for faster response times
+export const runtime = 'edge'
+
 // Revalidate every 5 minutes (300 seconds)
 export const revalidate = 300
 
