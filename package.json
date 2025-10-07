@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate-og": "tsx scripts/generate-og-images.ts",
-    "prebuild": "npm run generate-og"
+    "prebuild": "npm run generate-og",
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -35,10 +36,12 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.5.4",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "critters": "^0.0.23",
     "eslint": "^9",
     "eslint-config-next": "15.1.1",
     "eslint-config-prettier": "^10.1.8",

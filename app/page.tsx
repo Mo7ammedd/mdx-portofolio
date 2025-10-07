@@ -4,6 +4,7 @@ import { Spotlight } from '@/components/ui/spotlight'
 import { Magnetic } from '@/components/ui/magnetic'
 import Link from 'next/link'
 import { AnimatedBackground } from '@/components/ui/animated-background'
+import dynamic from 'next/dynamic'
 import {
   BLOG_POSTS,
   EMAIL,
@@ -12,7 +13,12 @@ import {
   WORK_EXPERIENCE,
 } from './data'
 import { ProjectCard } from '@/components/project-card'
-import { SpotifyWidget } from '@/components/spotify-widget'
+
+// Lazy load SpotifyWidget - it's not critical for initial render
+const SpotifyWidget = dynamic(() => import('@/components/spotify-widget').then(mod => ({ default: mod.SpotifyWidget })), {
+  loading: () => <div className="h-48 animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-800" />,
+  ssr: false, // Disable SSR for this component
+})
 
 const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },
@@ -75,15 +81,13 @@ export default function Personal() {
       initial="hidden"
       animate="visible"
     >
-      <motion.section
-        variants={VARIANTS_SECTION}
-        transition={TRANSITION_SECTION}
-      >
+      {/* Bio section without animation - renders immediately for better LCP */}
+      <section className="opacity-100">
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
           I am a Software Engineer and a recent Computer Science graduate from Suez Canal University. I have a deep passion for building systems that are strong, efficient, and easy to use. I focus on backend development, where I design and develop reliable solutions that help applications run smoothly. I love solving problems and turning ideas into real, working systems.          </p>
         </div>
-      </motion.section>
+      </section>
 
       <motion.section
         variants={VARIANTS_SECTION}

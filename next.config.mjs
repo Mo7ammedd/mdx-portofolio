@@ -1,4 +1,9 @@
 import createMDX from '@next/mdx'
+import bundleAnalyzer from '@next/bundle-analyzer'
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -22,7 +27,11 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   experimental: {
-    optimizePackageImports: ['lucide-react', 'motion'],
+    optimizePackageImports: ['lucide-react', 'motion', '@radix-ui/react-slot'],
+    optimizeCss: true, // Enable CSS optimization
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   webpack: (config, { dev, isServer }) => {
     // Optimize bundle size
@@ -36,9 +45,24 @@ const nextConfig = {
             name: 'vendor',
             chunks: 'all',
             test: /node_modules/,
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            priority: 5,
+            reuseExistingChunk: true,
           },
         },
       }
+      
+      // Minimize JS
+      config.optimization.minimize = true
+      
+      // Tree shaking
+      config.optimization.usedExports = true
+      config.optimization.sideEffects = false
     }
     return config
   },
@@ -48,4 +72,4 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 })
 
-export default withMDX(nextConfig)
+export default withBundleAnalyzer(withMDX(nextConfig))

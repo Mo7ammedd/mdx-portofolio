@@ -1,0 +1,10 @@
+# Modern browsers only - reduces polyfills and legacy code
+> 0.5%
+last 2 versions
+not dead
+not IE 11
+not op_mini all
+Chrome >= 90
+Firefox >= 88
+Safari >= 14
+Edge >= 90
