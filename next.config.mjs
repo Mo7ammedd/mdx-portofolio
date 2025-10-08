@@ -9,9 +9,16 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  
+  // Image optimization configuration
   images: {
-    domains: ['avatars.githubusercontent.com'],
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'i.scdn.co',
@@ -22,10 +29,18 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  
+  // Performance optimizations
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
+  
+  // Experimental features for better performance
   experimental: {
     optimizePackageImports: [
       'lucide-react',
@@ -34,10 +49,39 @@ const nextConfig = {
       'next-themes',
       'react-markdown',
     ],
-    optimizeCss: true, // Enable CSS optimization
+    optimizeCss: true,
   },
+  
+  // Server external packages (moved from experimental in Next.js 15)
+  serverExternalPackages: ['canvas'],
+  
+  // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+  // Headers for better caching and security
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|jpeg|png|gif|ico|webp|avif)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
   },
   webpack: (config, { dev, isServer }) => {
     // Optimize bundle size

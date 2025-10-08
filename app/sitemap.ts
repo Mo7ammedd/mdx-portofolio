@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { WEBSITE_URL } from '@/lib/constants'
+import { BLOG_POST_METADATA, getAllBlogSlugs } from '@/lib/blog-metadata'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date().toISOString()
@@ -20,31 +21,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Blog posts with more detailed metadata
-  const blogPosts = [
-    {
-      slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
-      lastModified: '2024-12-01T10:00:00.000Z',
+  // Blog posts - dynamically generated from metadata
+  const blogSlugs = getAllBlogSlugs()
+  const blogRoutes = blogSlugs.map((slug) => {
+    const metadata = BLOG_POST_METADATA[slug]
+    return {
+      url: `${WEBSITE_URL}/blog/${slug}`,
+      lastModified: metadata.dateModified,
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-    },
-    {
-      slug: 'boxing-and-unboxing-in-csharp',
-      lastModified: '2024-11-15T10:00:00.000Z',
-      priority: 0.7,
-    },
-    {
-      slug: 'difference-between-cluster-and-non-cluster-index',
-      lastModified: '2024-11-01T10:00:00.000Z',
-      priority: 0.7,
-    },
-  ]
-
-  const blogRoutes = blogPosts.map((post) => ({
-    url: `${WEBSITE_URL}/blog/${post.slug}`,
-    lastModified: post.lastModified,
-    changeFrequency: 'monthly' as const,
-    priority: post.priority,
-  }))
+    }
+  })
 
   // Add other important routes if they exist
   const additionalRoutes: MetadataRoute.Sitemap = [

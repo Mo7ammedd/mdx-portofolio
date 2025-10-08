@@ -10,6 +10,7 @@ import { Footer } from './footer'
 import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
 import { Analytics } from '@/components/analytics'
+import { PerformanceMonitor } from '@/components/performance-monitor'
 import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
 
 export const viewport: Viewport = {
@@ -103,6 +104,7 @@ export default function RootLayout({
         <StructuredData data={generateProfessionalServiceSchema(personData)} />
         <StructuredData data={generateOrganizationSchema()} />
         <Analytics />
+        <PerformanceMonitor />
         <ThemeProvider
           enableSystem={true}
           attribute="class"

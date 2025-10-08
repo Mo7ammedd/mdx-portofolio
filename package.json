@@ -9,7 +9,10 @@
     "lint": "next lint",
     "generate-og": "tsx scripts/generate-og-images.ts",
     "prebuild": "npm run generate-og",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "perf:analyze": "ANALYZE=true npm run build",
+    "perf:lighthouse": "npm run build && npm run start & npx wait-on http://localhost:3000 && npx lighthouse http://localhost:3000 --view",
+    "perf:stats": "next build --profile"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
