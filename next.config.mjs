@@ -1,5 +1,8 @@
 import createMDX from '@next/mdx'
 import bundleAnalyzer from '@next/bundle-analyzer'
+import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -152,6 +155,26 @@ const nextConfig = {
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [
+      // GitHub Flavored Markdown (tables, strikethrough, task lists, etc.)
+      remarkGfm,
+    ],
+    rehypePlugins: [
+      // Generate IDs for headings (e.g., ## Introduction → id="introduction")
+      rehypeSlug,
+      // Add anchor links to headings
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap',
+          properties: {
+            className: ['heading-anchor'],
+          },
+        },
+      ],
+    ],
+  },
 })
 
 export default withBundleAnalyzer(withMDX(nextConfig))

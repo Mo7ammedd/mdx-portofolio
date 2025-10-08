@@ -149,4 +149,47 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Offset scroll position for fixed header */
+  :target {
+    scroll-margin-top: 100px;
+  }
+  
+  /* Heading anchor link styles */
+  .heading-anchor {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .heading-anchor:hover {
+    text-decoration: none;
+  }
+  
+  /* MDX Table of Contents */
+  .prose a[href^="#"] {
+    @apply text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors;
+  }
+  
+  /* MDX Tables (from remark-gfm) */
+  .prose table {
+    @apply w-full border-collapse;
+  }
+  
+  .prose th {
+    @apply border-b border-zinc-200 dark:border-zinc-700 px-4 py-2 text-left font-medium;
+  }
+  
+  .prose td {
+    @apply border-b border-zinc-200 dark:border-zinc-700 px-4 py-2;
+  }
+  
+  /* Task lists */
+  .prose input[type="checkbox"] {
+    @apply mr-2;
+  }
 }
