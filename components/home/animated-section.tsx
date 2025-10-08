@@ -1,8 +1,14 @@
 'use client'
 
-import { motion } from 'motion/react'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useInView } from '@/hooks/useInView'
+import dynamic from 'next/dynamic'
+
+// Lazy load motion library - don't load if not needed
+const motion = dynamic(() => import('motion/react').then(mod => ({ default: mod.motion })), {
+  ssr: false,
+  loading: () => null,
+})
 
 const VARIANTS_SECTION = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
@@ -18,18 +24,39 @@ interface AnimatedSectionProps {
   className?: string
 }
 
+function checkReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 export function AnimatedSection({ children, className = '' }: AnimatedSectionProps) {
   const section = useInView()
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    setPrefersReducedMotion(checkReducedMotion())
+  }, [])
+
+  // Skip animation for reduced motion preference
+  if (prefersReducedMotion) {
+    return (
+      <section ref={section.ref} className={className}>
+        {section.isInView && children}
+      </section>
+    )
+  }
+
+  const MotionSection = motion as any
 
   return (
-    <motion.section
+    <MotionSection.section
       ref={section.ref}
       variants={VARIANTS_SECTION}
       transition={TRANSITION_SECTION}
       className={className}
     >
       {section.isInView && children}
-    </motion.section>
+    </MotionSection.section>
   )
 }
 
@@ -49,26 +76,51 @@ const VARIANTS_CONTAINER = {
 }
 
 export function AnimatedContainer({ children, className = '' }: AnimatedContainerProps) {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    setPrefersReducedMotion(checkReducedMotion())
+  }, [])
+
+  // Skip animation for reduced motion preference
+  if (prefersReducedMotion) {
+    return <main className={className}>{children}</main>
+  }
+
+  const MotionMain = motion as any
+
   return (
-    <motion.main
+    <MotionMain.main
       className={className}
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
     >
       {children}
-    </motion.main>
+    </MotionMain.main>
   )
 }
 
 export function StaticSection({ children, className = '' }: { children: ReactNode; className?: string }) {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    setPrefersReducedMotion(checkReducedMotion())
+  }, [])
+
+  if (prefersReducedMotion) {
+    return <section className={className}>{children}</section>
+  }
+
+  const MotionSection = motion as any
+
   return (
-    <motion.section
+    <MotionSection.section
       variants={VARIANTS_SECTION}
       transition={TRANSITION_SECTION}
       className={className}
     >
       {children}
-    </motion.section>
+    </MotionSection.section>
   )
 }

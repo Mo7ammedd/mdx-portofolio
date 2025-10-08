@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { ThemeProvider } from 'next-themes'
 
 import './globals.css'
 
@@ -11,6 +10,7 @@ import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
 import { Analytics } from '@/components/analytics'
 import { PerformanceMonitor } from '@/components/performance-monitor'
+import { Providers } from './providers'
 import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
 
 export const viewport: Viewport = {
@@ -105,12 +105,7 @@ export default function RootLayout({
         <StructuredData data={generateOrganizationSchema()} />
         <Analytics />
         <PerformanceMonitor />
-        <ThemeProvider
-          enableSystem={true}
-          attribute="class"
-          storageKey="theme"
-          defaultTheme="system"
-        >
+        <Providers>
           <PalestineSolidarity />
           <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
             <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 pb-16">
@@ -119,7 +114,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </div>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

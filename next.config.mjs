@@ -91,6 +91,35 @@ const nextConfig = {
         cacheGroups: {
           default: false,
           vendors: false,
+          // Separate motion/framer-motion into its own chunk
+          motion: {
+            name: 'motion',
+            test: /[\\/]node_modules[\\/](motion|framer-motion)[\\/]/,
+            priority: 30,
+            reuseExistingChunk: true,
+          },
+          // Lucide icons
+          icons: {
+            name: 'icons',
+            test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+            priority: 25,
+            reuseExistingChunk: true,
+          },
+          // Next.js specific
+          nextVendor: {
+            name: 'next-vendor',
+            test: /[\\/]node_modules[\\/](next|next-themes)[\\/]/,
+            priority: 20,
+            reuseExistingChunk: true,
+          },
+          // React
+          react: {
+            name: 'react',
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+            priority: 15,
+            reuseExistingChunk: true,
+          },
+          // Other vendors
           vendor: {
             name: 'vendor',
             chunks: 'all',
@@ -113,6 +142,9 @@ const nextConfig = {
       // Tree shaking
       config.optimization.usedExports = true
       config.optimization.sideEffects = false
+      
+      // Concatenate modules for better performance
+      config.optimization.concatenateModules = true
     }
     return config
   },
