@@ -1,14 +1,8 @@
 'use client'
 
+import { motion } from 'motion/react'
 import { ReactNode, useEffect, useState } from 'react'
 import { useInView } from '@/hooks/useInView'
-import dynamic from 'next/dynamic'
-
-// Lazy load motion library - don't load if not needed
-const motion = dynamic(() => import('motion/react').then(mod => ({ default: mod.motion })), {
-  ssr: false,
-  loading: () => null,
-})
 
 const VARIANTS_SECTION = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
@@ -46,17 +40,15 @@ export function AnimatedSection({ children, className = '' }: AnimatedSectionPro
     )
   }
 
-  const MotionSection = motion as any
-
   return (
-    <MotionSection.section
+    <motion.section
       ref={section.ref}
       variants={VARIANTS_SECTION}
       transition={TRANSITION_SECTION}
       className={className}
     >
       {section.isInView && children}
-    </MotionSection.section>
+    </motion.section>
   )
 }
 
@@ -87,17 +79,15 @@ export function AnimatedContainer({ children, className = '' }: AnimatedContaine
     return <main className={className}>{children}</main>
   }
 
-  const MotionMain = motion as any
-
   return (
-    <MotionMain.main
+    <motion.main
       className={className}
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
     >
       {children}
-    </MotionMain.main>
+    </motion.main>
   )
 }
 
@@ -112,15 +102,13 @@ export function StaticSection({ children, className = '' }: { children: ReactNod
     return <section className={className}>{children}</section>
   }
 
-  const MotionSection = motion as any
-
   return (
-    <MotionSection.section
+    <motion.section
       variants={VARIANTS_SECTION}
       transition={TRANSITION_SECTION}
       className={className}
     >
       {children}
-    </MotionSection.section>
+    </motion.section>
   )
 }
