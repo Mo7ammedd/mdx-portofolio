@@ -212,7 +212,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
                     <Magnetic springOptions={{ bounce: 0 }} intensity={0.1}>
                       <div className="group flex items-center gap-3 p-3 rounded-lg bg-black/30 dark:bg-gray-900/20 border border-black/20 dark:border-gray-400/20 hover:bg-black/50 dark:hover:bg-gray-800/50 transition-all duration-300 hover:border-black/50 shadow-md hover:shadow-black/20">
                         <div className="relative">
-                          <Image
+                          <img
                             src={track.image}
                             alt={track.name}
                             width={48}
