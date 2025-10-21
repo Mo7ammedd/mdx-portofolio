@@ -80,7 +80,7 @@ export const PROJECTS = [
     href: 'https://github.com/Mo7ammedd/BookStore',
     active: true,
     description:
-    'Manga Store MVC project is a comprehensive web application built using .NET MVC Core. It allows users to browse, purchase, and manage manga collections with integrated payment processing. The application features a user-friendly interface for seamless navigation and secure transactions',
+    'Microservices architecture with .NET Core (.NET 8) and Identity Server Integration with Azure Service Bus',
     technologies: ['ASP.NET Mvc', 'Stripe', 'Sql Server', 'Azure'],
     links: [
       {
