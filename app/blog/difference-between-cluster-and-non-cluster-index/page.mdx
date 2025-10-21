@@ -30,9 +30,15 @@ Database indexes are sophisticated data structures that create efficient pathway
 
 Last year, I was troubleshooting a reporting system that was taking hours to generate monthly reports. The culprit? A missing index on a date column that was filtering 200 million records. After adding a proper clustered index, the same report ran in under 2 minutes. The business team thought I was a magician-I just understood how databases think.
 
+![Clustered vs Non-Clustered Index Overview](/blog/cluster-index/clustered-vs-nonclustered-overview.png)
+*High-level comparison: Clustered indexes physically order data, while non-clustered indexes create separate lookup structures*
+
 ## B-Tree Architecture: The Engine Behind Indexes
 
 Now, let's get our hands dirty with the actual mechanics. B-Trees aren't just theoretical computer science-they're the workhorses that make databases blazingly fast. Think of a B-Tree as a multi-level directory system that's perfectly balanced.
+
+![B-Tree Structure Visualization](/blog/cluster-index/btree-structure.png)
+*B-Tree structure showing balanced nodes and hierarchical organization*
 
 ### How B-Trees Actually Work in Practice
 
@@ -68,6 +74,9 @@ I once had to explain to a skeptical product manager why we needed to rebuild an
 ## Clustered Indexes: The Data Organizer
 
 Here's where things get really interesting. A clustered index doesn't just point to your data-it **IS** your data. This is a concept that took me years to fully appreciate, and it's probably the most misunderstood aspect of database indexing.
+
+![Clustered Index Structure](/blog/cluster-index/clustered-index-structure.png)
+*Clustered index showing how data is physically ordered based on the index key*
 
 ### The Physical Reality of Clustered Indexes
 
@@ -122,6 +131,9 @@ ORDER BY OrderDate DESC, OrderID ASC;
 ```
 
 ## Non-Clustered Indexes: The Precision Navigator
+
+![Non-Clustered Index Structure](/blog/cluster-index/nonclustered-index-structure.png)
+*Non-clustered index showing separate index structure with pointers to actual data rows*
 
 ### Pointer Architecture Deep Dive
 ```sql
@@ -208,6 +220,9 @@ DEALLOCATE IndexCursor
 ```
 
 ## Real-World Performance Comparison
+
+![Database Index Performance Comparison](/blog/cluster-index/index-performance-comparison.png)
+*Visual comparison of how clustered and non-clustered indexes organize and access data differently*
 
 ### Benchmark Results (10M Row Table)
 ```
