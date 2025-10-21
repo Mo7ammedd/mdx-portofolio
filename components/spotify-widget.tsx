@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { SpotifyTrack } from '@/lib/spotify'
 import { Magnetic } from './ui/magnetic'
-import Image from 'next/image'
 
 interface SpotifyWidgetProps {
   className?: string
@@ -16,27 +15,14 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'top' | 'recent'>('recent')
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null)
-  const [lastFetch, setLastFetch] = useState<{ [key: string]: number }>({})
 
-  const fetchTracks = async (type: 'top' | 'recent', force = false) => {
-    // Check if we have recent data (within 5 minutes)
-    const now = Date.now()
-    const lastFetchTime = lastFetch[type] || 0
-    const fiveMinutes = 5 * 60 * 1000
-    
-    if (!force && now - lastFetchTime < fiveMinutes && tracks.length > 0) {
-      return // Skip fetch if data is fresh
-    }
-
+  const fetchTracks = useCallback(async (type: 'top' | 'recent') => {
     try {
       setLoading(true)
       setError(null)
       
       const response = await fetch(`/api/spotify/${type === 'top' ? 'top-tracks' : 'recently-played'}`, {
-        // Add cache control headers
-        headers: {
-          'Cache-Control': 'public, max-age=300' // 5 minutes
-        }
+        next: { revalidate: 300 }
       })
       
       if (!response.ok) {
@@ -45,31 +31,20 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       
       const data = await response.json()
       setTracks(data)
-      setLastFetch(prev => ({ ...prev, [type]: now }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load tracks')
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     fetchTracks(activeTab)
-  }, [activeTab])
+  }, [activeTab, fetchTracks])
 
-  // Auto-refresh data every 5 minutes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchTracks(activeTab, true) // Force refresh
-    }, 5 * 60 * 1000) // 5 minutes
-
-    return () => clearInterval(interval)
-  }, [activeTab])
-
-  const playPreview = (trackId: string, previewUrl?: string) => {
+  const playPreview = useCallback((trackId: string, previewUrl?: string) => {
     if (!previewUrl) return
     
-    // Stop any currently playing preview
     if (currentlyPlaying) {
       const currentAudio = document.getElementById(currentlyPlaying) as HTMLAudioElement
       if (currentAudio) {
@@ -78,7 +53,6 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       }
     }
 
-    // Play new preview
     if (currentlyPlaying === trackId) {
       setCurrentlyPlaying(null)
     } else {
@@ -89,9 +63,9 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
         audio.onended = () => setCurrentlyPlaying(null)
       }
     }
-  }
+  }, [currentlyPlaying])
 
-  const formatTime = (dateString: string) => {
+  const formatTime = useCallback((dateString: string) => {
     const now = new Date()
     const played = new Date(dateString)
     const diff = now.getTime() - played.getTime()
@@ -106,7 +80,9 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       const days = Math.floor(hours / 24)
       return `${days}d ago`
     }
-  }
+  }, [])
+
+  const displayedTracks = useMemo(() => tracks.slice(0, 5), [tracks])
 
   return (
     <div className={`relative ${className}`}>
@@ -193,7 +169,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
           )}
 
           <AnimatePresence mode="wait">
-            {!loading && !error && tracks.length > 0 && (
+            {!loading && !error && displayedTracks.length > 0 && (
               <motion.div
                 key={activeTab}
                 initial={{ opacity: 0, y: 20 }}
@@ -202,86 +178,92 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
                 transition={{ duration: 0.3 }}
                 className="space-y-3"
               >
-                {tracks.slice(0, 5).map((track, index) => (
-                  <motion.div
-                    key={`${activeTab}-${track.id}-${index}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Magnetic springOptions={{ bounce: 0 }} intensity={0.1}>
-                      <div className="group flex items-center gap-3 p-3 rounded-lg bg-black/30 dark:bg-gray-900/20 border border-black/20 dark:border-gray-400/20 hover:bg-black/50 dark:hover:bg-gray-800/50 transition-all duration-300 hover:border-black/50 shadow-md hover:shadow-black/20">
-                        <div className="relative">
-                          <img
-                            src={track.image}
-                            alt={track.name}
-                            width={48}
-                            height={48}
-                            className="rounded-md border border-black/30"
-                          />
-                          {track.preview_url && (
-                            <button
-                              onClick={() => playPreview(`${activeTab}-${track.id}-${index}`, track.preview_url)}
-                              className="absolute inset-0 flex items-center justify-center bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity rounded-md"
-                            >
-                              {currentlyPlaying === `${activeTab}-${track.id}-${index}` ? (
-                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M6 4h2v12H6V4zm6 0h2v12h-2V4z"/>
-                                </svg>
-                              ) : (
-                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M8 5v10l8-5-8-5z"/>
-                                </svg>
-                              )}
-                            </button>
-                          )}
-                          {track.preview_url && (
-                            <audio
-                              id={`${activeTab}-${track.id}-${index}`}
-                              src={track.preview_url}
-                              preload="none"
+                {displayedTracks.map((track, index) => {
+                  const trackId = `${activeTab}-${track.id}-${index}`
+                  return (
+                    <motion.div
+                      key={trackId}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Magnetic springOptions={{ bounce: 0 }} intensity={0.1}>
+                        <div className="group flex items-center gap-3 p-3 rounded-lg bg-black/30 dark:bg-gray-900/20 border border-black/20 dark:border-gray-400/20 hover:bg-black/50 dark:hover:bg-gray-800/50 transition-all duration-300 hover:border-black/50 shadow-md hover:shadow-black/20">
+                          <div className="relative">
+                            <img
+                              src={track.image}
+                              alt={track.name}
+                              width={48}
+                              height={48}
+                              className="rounded-md border border-black/30"
+                              loading="lazy"
                             />
-                          )}
+                            {track.preview_url && (
+                              <>
+                                <button
+                                  onClick={() => playPreview(trackId, track.preview_url)}
+                                  className="absolute inset-0 flex items-center justify-center bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity rounded-md"
+                                  aria-label={currentlyPlaying === trackId ? 'Pause preview' : 'Play preview'}
+                                >
+                                  {currentlyPlaying === trackId ? (
+                                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                      <path d="M6 4h2v12H6V4zm6 0h2v12h-2V4z"/>
+                                    </svg>
+                                  ) : (
+                                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                      <path d="M8 5v10l8-5-8-5z"/>
+                                    </svg>
+                                  )}
+                                </button>
+                                <audio
+                                  id={trackId}
+                                  src={track.preview_url}
+                                  preload="none"
+                                />
+                              </>
+                            )}
+                          </div>
+                          
+                          <div className="flex-1 min-w-0">
+                            <a
+                              href={track.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block hover:text-gray-200 dark:hover:text-gray-100 transition-colors"
+                            >
+                              <p className="font-medium text-white dark:text-gray-100 truncate drop-shadow-sm">
+                                {track.name}
+                              </p>
+                              <p className="text-sm text-gray-300 dark:text-gray-400 truncate">
+                                {track.artist}
+                              </p>
+                            </a>
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            {activeTab === 'recent' && track.played_at && (
+                              <span className="text-xs text-gray-400 dark:text-gray-500">
+                                {formatTime(track.played_at)}
+                              </span>
+                            )}
+                            <a
+                              href={track.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-400 dark:text-gray-500 hover:text-gray-200 dark:hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                              aria-label="Open in Spotify"
+                            >
+                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
+                                <path d="M5 5a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2v-2a1 1 0 10-2 0v2H5V7h2a1 1 0 000-2H5z"/>
+                              </svg>
+                            </a>
+                          </div>
                         </div>
-                        
-                        <div className="flex-1 min-w-0">
-                          <a
-                            href={track.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block hover:text-gray-200 dark:hover:text-gray-100 transition-colors"
-                          >
-                            <p className="font-medium text-white dark:text-gray-100 truncate drop-shadow-sm">
-                              {track.name}
-                            </p>
-                            <p className="text-sm text-gray-300 dark:text-gray-400 truncate">
-                              {track.artist}
-                            </p>
-                          </a>
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          {activeTab === 'recent' && track.played_at && (
-                            <span className="text-xs text-gray-400 dark:text-gray-500">
-                              {formatTime(track.played_at)}
-                            </span>
-                          )}
-                          <a
-                            href={track.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-400 dark:text-gray-500 hover:text-gray-200 dark:hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
-                              <path d="M5 5a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2v-2a1 1 0 10-2 0v2H5V7h2a1 1 0 000-2H5z"/>
-                            </svg>
-                          </a>
-                        </div>
-                      </div>
-                    </Magnetic>
-                  </motion.div>
-                ))}
+                      </Magnetic>
+                    </motion.div>
+                  )
+                })}
               </motion.div>
             )}
           </AnimatePresence>

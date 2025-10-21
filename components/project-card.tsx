@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Star, GitFork } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import {
@@ -20,9 +21,13 @@ interface Props {
     type: string
     href: string
   }[]
+  githubStats?: {
+    stars: number
+    forks: number
+  } | null
 }
 
-export function ProjectCard({ title, description, tags, links }: Props) {
+export function ProjectCard({ title, description, tags, links, githubStats }: Props) {
   return (
     <Card
       className={
@@ -31,7 +36,21 @@ export function ProjectCard({ title, description, tags, links }: Props) {
     >
       <CardHeader className="px-2">
         <div className="space-y-1">
-          <CardTitle className="mt-1 text-base">{title}</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="mt-1 text-base">{title}</CardTitle>
+            {githubStats && (
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3" />
+                  <span>{githubStats.stars}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <GitFork className="h-3 w-3" />
+                  <span>{githubStats.forks}</span>
+                </div>
+              </div>
+            )}
+          </div>
           <p className="prose text-muted-foreground dark:prose-invert max-w-full font-sans text-xs text-pretty">
             {description}
           </p>
