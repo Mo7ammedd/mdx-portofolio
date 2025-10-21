@@ -12,6 +12,7 @@ import { Analytics } from '@/components/analytics'
 import { PerformanceMonitor } from '@/components/performance-monitor'
 import { Providers } from './providers'
 import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
+import { generateFAQSchema } from '@/lib/faq-schema'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -103,6 +104,7 @@ export default function RootLayout({
         <StructuredData data={generateWebsiteSchema(websiteData.url, websiteData.name, websiteData.description)} />
         <StructuredData data={generateProfessionalServiceSchema(personData)} />
         <StructuredData data={generateOrganizationSchema()} />
+        <StructuredData data={generateFAQSchema()} />
         <Analytics />
         <PerformanceMonitor />
         <Providers>

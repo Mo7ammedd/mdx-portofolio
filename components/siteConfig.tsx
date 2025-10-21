@@ -1,57 +1,40 @@
 import { Metadata } from 'next'
 
 export const siteConfig: Metadata = {
-  // More specific and searchable title variations
   title: {
-    default: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
+    default: 'Mohammed Mostafa | Mohammed Software Engineer | ASP.NET Core & Node.js Developer',
     template: '%s | Mohammed Mostafa - Software Engineer',
   },
   description:
-    'Mohammed Mostafa - Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. View my portfolio, projects, and contact me for opportunities.',
+    'Mohammed Mostafa (Mohammed) - Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Backend engineer and full-stack developer from Egypt. Computer Science graduate from Suez Canal University. View Mohammed Mostafa portfolio, projects, and contact for opportunities.',
   keywords: [
-    // Personal brand keywords
     'Mohammed Mostafa',
+    'Mohammed Mostafa Software Engineer',
     'Mohammed Software Engineer',
-    'Mohammed Developer Egypt',
     'Mohammed Mostafa Portfolio',
-    'Software Engineer Egypt',
-    
-    // Technical expertise
+    'Mohammed Mostafa Developer',
+    'Mohammed Engineer',
+    'Mohammed Developer',
+    'Mohammed Backend Engineer',
+    'Mohammed Mostafa Backend Engineer',
+    'Software Engineer Mohammed Mostafa',
+    'Software Engineer Mohammed',
+    'Mohammed Full Stack Developer',
+    'Mohammed Mostafa Egypt',
+    'Software Engineer',
+    'Backend Engineer',
+    'Full Stack Developer',
     'ASP.NET Core Developer',
     'Node.js Engineer',
     'TypeScript Developer',
-    'Express.js Specialist',
     'C# Developer',
-    'Full Stack Developer',
-    'Backend Engineer',
-    'Web Developer',
-    
-    // Location-based
     'Software Engineer Egypt',
-    'Developer Middle East',
     'Remote Software Engineer',
-    
-    // Opportunity keywords
-    'Software Engineer for hire',
-    'Available for opportunities',
-    'Freelance developer',
-    'Contract software engineer',
-    'Remote developer available',
-    
-    // Technologies
-    'Microservices',
-    'Azure Cloud',
-    'SQL Server',
-    'Redis',
-    'JWT Authentication',
+    'Freelance Developer',
+    'Microservices Architecture',
     'RESTful APIs',
-    'Database Design',
-    'System Architecture',
-    
-    // Education
     'Suez Canal University',
     'Computer Science Graduate',
-    'Fresh Graduate Developer',
   ],
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.mohammedd.tech' }],
   creator: 'Mohammed - Software Engineer',
@@ -81,9 +64,9 @@ export const siteConfig: Metadata = {
     locale: 'en_US',
     url: 'https://www.mohammedd.tech',
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
-    title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js',
+    title: 'Mohammed Mostafa | Mohammed Software Engineer | ASP.NET Core & Node.js Developer',
     description:
-      'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. Available for new opportunities.',
+      'Mohammed Mostafa (Mohammed) - Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Backend engineer and full-stack developer from Egypt. Computer Science graduate from Suez Canal University. Available for new opportunities.',
     images: [
       {
         url: 'https://www.mohammedd.tech/og-image.png',
@@ -96,7 +79,7 @@ export const siteConfig: Metadata = {
         url: 'https://www.mohammedd.tech/avatar.jpg',
         width: 400,
         height: 400,
-        alt: 'Mohammed Mostafa Professional Photo - Software Engineer',
+        alt: 'Mohammed Mostafa (Mohammed) - Software Engineer Professional Photo',
         type: 'image/jpeg',
       },
     ],
@@ -108,9 +91,9 @@ export const siteConfig: Metadata = {
     card: 'summary_large_image',
     site: '@mohameddtv',
     creator: '@mohameddtv',
-    title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
+    title: 'Mohammed Mostafa | Mohammed Software Engineer | ASP.NET Core & Node.js Developer',
     description:
-      'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js and TypeScript. Computer Science graduate available for opportunities.',
+      'Mohammed Mostafa (Mohammed) - Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js and TypeScript. Backend engineer and full-stack developer available for opportunities.',
     images: ['https://www.mohammedd.tech/og-image.png'],
   },
   

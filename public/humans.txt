@@ -1,0 +1,16 @@
+/* TEAM */
+Developer: Mohammed Mostafa
+Site: https://www.mohammedd.tech
+Twitter: @mohameddtv
+Location: Egypt
+
+/* SITE */
+Last update: 2025/10/21
+Standards: HTML5, CSS3, JavaScript
+Components: React, Next.js 15, TypeScript
+Software: VS Code
+
+/* THANKS */
+Next.js - https://nextjs.org
+Vercel - https://vercel.com
+TailwindCSS - https://tailwindcss.com

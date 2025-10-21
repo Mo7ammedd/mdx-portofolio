@@ -38,8 +38,9 @@ export default async function Personal() {
     <AnimatedContainer className="space-y-24">
       <section className="opacity-100">
         <div className="flex-1">
+          <h1 className="sr-only">Mohammed Mostafa - Mohammed Software Engineer Portfolio</h1>
           <p className="text-zinc-600 dark:text-zinc-400">
-            I am a Software Engineer and a recent Computer Science graduate from Suez Canal University. I have a deep passion for building systems that are strong, efficient, and easy to use. I focus on backend development, where I design and develop reliable solutions that help applications run smoothly. I love solving problems and turning ideas into real, working systems.
+            I am Mohammed Mostafa, a Software Engineer and recent Computer Science graduate from Suez Canal University. As a dedicated software engineer, I have a deep passion for building systems that are strong, efficient, and easy to use. I focus on backend development, where I design and develop reliable solutions that help applications run smoothly. I love solving problems and turning ideas into real, working systems.
           </p>
         </div>
       </section>
