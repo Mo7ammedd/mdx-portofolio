@@ -11,11 +11,31 @@ import { WorkSection } from '@/components/home/work-section'
 import { BlogSection } from '@/components/home/blog-section'
 import { ConnectSection } from '@/components/home/connect-section'
 import { SpotifySection } from '@/components/home/spotify-section'
+import { getGitHubRepoStats, extractGitHubInfo } from '@/lib/github'
 
-export default function Personal() {
+export default async function Personal() {
+  const projectsWithStats = await Promise.all(
+    PROJECTS.map(async (project) => {
+      const githubLink = project.links?.find((link) => link.href.includes('github.com'))
+      
+      if (!githubLink) {
+        return { ...project, githubStats: null }
+      }
+
+      const repoInfo = extractGitHubInfo(githubLink.href)
+      
+      if (!repoInfo) {
+        return { ...project, githubStats: null }
+      }
+
+      const stats = await getGitHubRepoStats(repoInfo.owner, repoInfo.repo)
+      
+      return { ...project, githubStats: stats }
+    })
+  )
+
   return (
     <AnimatedContainer className="space-y-24">
-      {/* Bio section - static, renders immediately for better LCP */}
       <section className="opacity-100">
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
@@ -24,40 +44,36 @@ export default function Personal() {
         </div>
       </section>
 
-      {/* Projects section - static */}
       <StaticSection>
         <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
         <div className="mx-auto grid max-w-[800px] grid-cols-1 gap-3 sm:grid-cols-2">
-          {PROJECTS.map((project, index) => (
+          {projectsWithStats.map((project, index) => (
             <ProjectCard
               key={index}
               title={project.title}
               description={project.description}
               tags={project.technologies}
               links={project.links}
+              githubStats={project.githubStats}
             />
           ))}
         </div>
       </StaticSection>
 
-      {/* Work Experience section - lazy loaded */}
       <AnimatedSection>
         <h3 className="mb-5 text-lg font-medium">Work Experience</h3>
         <WorkSection jobs={WORK_EXPERIENCE} />
       </AnimatedSection>
 
-      {/* Blog section - lazy loaded */}
       <AnimatedSection>
         <h3 className="mb-3 text-lg font-medium">Blog</h3>
         <BlogSection posts={BLOG_POSTS} />
       </AnimatedSection>
 
-      {/* Spotify widget - lazy loaded */}
       <AnimatedSection>
         <SpotifySection />
       </AnimatedSection>
 
-      {/* Connect section - lazy loaded */}
       <AnimatedSection>
         <ConnectSection email={EMAIL} socialLinks={SOCIAL_LINKS} />
       </AnimatedSection>
