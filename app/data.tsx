@@ -7,6 +7,7 @@ type WorkExperience = {
   end: string
   link: string
   id: string
+  logo?: string
 }
 
 type BlogPost = {
@@ -139,12 +140,22 @@ export const PROJECTS = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
+    company: 'Oblien',
+    title: 'SDE',
+    start: 'Sep 2025',
+    end: 'Present',
+    link: 'https://oblien.com/',
+    id: 'work0',
+    logo: '/work/oblien.jpg',
+  },
+  {
     company: 'Medica Scope',
     title: 'Backend Engineer',
     start: 'Jul 2025',
     end: 'Present',
     link: 'https://www.facebook.com/medicascope/',
     id: 'work1',
+    logo: '/work/medica.png',
   },
   {
     company: 'ONVO',
@@ -153,6 +164,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     end: 'Jul 2025',
     link: 'https://onvo.me/',
     id: 'work2',
+    logo: '/work/onvo.png',
   },
   {
     company: 'IT Mentor',
@@ -161,6 +173,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     end: 'May 2025',
     link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',
     id: 'work3',
+    logo: '/work/gdg.png',
   },
   {
     company: 'Manara',
@@ -169,6 +182,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     end: 'Jul 2024',
     link: 'https://app.manara.tech/auth/',
     id: 'work4',
+    logo: '/work/manara.png',
   },
 ]
 

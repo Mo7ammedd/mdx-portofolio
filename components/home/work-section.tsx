@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
 const Spotlight = dynamic(() => import('@/components/ui/spotlight').then(mod => ({ default: mod.Spotlight })), {
   ssr: false,
@@ -13,6 +14,7 @@ interface WorkExperience {
   start: string
   end: string
   link: string
+  logo?: string
 }
 
 interface WorkSectionProps {
@@ -35,16 +37,30 @@ export function WorkSection({ jobs }: WorkSectionProps) {
             size={64}
           />
           <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
-            <div className="relative flex w-full flex-row justify-between">
-              <div>
-                <h4 className="font-normal dark:text-zinc-100">
-                  {job.title}
-                </h4>
-                <p className="text-zinc-500 dark:text-zinc-400">
-                  {job.company}
-                </p>
+            <div className="relative flex w-full flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                {job.logo && (
+                  <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border border-zinc-200 bg-white shadow-md transition-transform duration-200 hover:scale-110 dark:border-zinc-700 dark:bg-zinc-900">
+                    <Image
+                      src={job.logo}
+                      alt={`${job.company} logo`}
+                      width={56}
+                      height={56}
+                      className="h-full w-full rounded-full object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
+                <div>
+                  <h4 className="font-medium dark:text-zinc-100">
+                    {job.title}
+                  </h4>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                    {job.company}
+                  </p>
+                </div>
               </div>
-              <p className="text-zinc-600 dark:text-zinc-400">
+              <p className="text-nowrap text-sm text-zinc-600 dark:text-zinc-400">
                 {job.start} - {job.end}
               </p>
             </div>
