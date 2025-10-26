@@ -35,30 +35,36 @@ const getAccessToken = async (): Promise<string> => {
     return cachedToken
   }
 
-  const response = await fetch(TOKEN_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${BASIC}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      grant_type: 'refresh_token',
-      refresh_token: SPOTIFY_REFRESH_TOKEN!,
-    }),
-    next: { revalidate: 3600 } // Cache access token for 1 hour
-  })
+  try {
+    const response = await fetch(TOKEN_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${BASIC}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: SPOTIFY_REFRESH_TOKEN!,
+      }),
+      cache: 'no-store',
+    })
 
-  if (!response.ok) {
-    const errorData = await response.text()
-    throw new Error(`Failed to get access token: ${response.status} ${errorData}`)
+    if (!response.ok) {
+      const errorData = await response.text()
+      console.error('Spotify token error:', response.status, errorData)
+      throw new Error(`Failed to get access token: ${response.status}`)
+    }
+
+    const data: SpotifyApi = await response.json()
+    
+    // Cache the token for 50 minutes (tokens expire in 1 hour)
+    cache.set('spotify_access_token', data.access_token, 3000)
+    
+    return data.access_token
+  } catch (error) {
+    console.error('Error getting Spotify access token:', error)
+    throw error
   }
-
-  const data: SpotifyApi = await response.json()
-  
-  // Cache the token for 50 minutes (tokens expire in 1 hour)
-  cache.set('spotify_access_token', data.access_token, 3000)
-  
-  return data.access_token
 }
 
 export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
@@ -70,35 +76,49 @@ export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
     return cachedTracks
   }
 
-  const access_token = await getAccessToken()
-  
-  const response = await fetch(`${TOP_TRACKS_ENDPOINT}?limit=${limit}&time_range=short_term`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 300 } // Cache for 5 minutes
-  })
+  try {
+    const access_token = await getAccessToken()
+    
+    const response = await fetch(`${TOP_TRACKS_ENDPOINT}?limit=${limit}&time_range=short_term`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      cache: 'no-store',
+    })
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch top tracks')
+    if (!response.ok) {
+      const errorData = await response.text()
+      console.error('Spotify top tracks error:', response.status, errorData)
+      
+      // Return empty array instead of throwing
+      return []
+    }
+
+    const data = await response.json()
+    
+    if (!data.items || data.items.length === 0) {
+      return []
+    }
+    
+    const tracks = data.items.map((item: any): SpotifyTrack => ({
+      id: item.id,
+      name: item.name,
+      artist: item.artists.map((artist: any) => artist.name).join(', '),
+      album: item.album.name,
+      image: item.album.images[0]?.url || '',
+      url: item.external_urls.spotify,
+      preview_url: item.preview_url,
+    }))
+
+    // Cache for 5 minutes
+    cache.set(cacheKey, tracks, 300)
+    
+    return tracks
+  } catch (error) {
+    console.error('Error in getTopTracks:', error)
+    // Return empty array instead of throwing
+    return []
   }
-
-  const data = await response.json()
-  
-  const tracks = data.items.map((item: any): SpotifyTrack => ({
-    id: item.id,
-    name: item.name,
-    artist: item.artists.map((artist: any) => artist.name).join(', '),
-    album: item.album.name,
-    image: item.album.images[0]?.url || '',
-    url: item.external_urls.spotify,
-    preview_url: item.preview_url,
-  }))
-
-  // Cache for 5 minutes
-  cache.set(cacheKey, tracks, 300)
-  
-  return tracks
 }
 
 export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => {
@@ -110,34 +130,48 @@ export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => 
     return cachedTracks
   }
 
-  const access_token = await getAccessToken()
-  
-  const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=${limit}`, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 300 } // Cache for 5 minutes
-  })
+  try {
+    const access_token = await getAccessToken()
+    
+    const response = await fetch(`${RECENTLY_PLAYED_ENDPOINT}?limit=${limit}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      cache: 'no-store',
+    })
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch recently played tracks')
+    if (!response.ok) {
+      const errorData = await response.text()
+      console.error('Spotify recently played error:', response.status, errorData)
+      
+      // Return empty array instead of throwing
+      return []
+    }
+
+    const data = await response.json()
+    
+    if (!data.items || data.items.length === 0) {
+      return []
+    }
+    
+    const tracks = data.items.map((item: any): SpotifyTrack => ({
+      id: item.track.id,
+      name: item.track.name,
+      artist: item.track.artists.map((artist: any) => artist.name).join(', '),
+      album: item.track.album.name,
+      image: item.track.album.images[0]?.url || '',
+      url: item.track.external_urls.spotify,
+      preview_url: item.track.preview_url,
+      played_at: item.played_at,
+    }))
+
+    // Cache for 5 minutes
+    cache.set(cacheKey, tracks, 300)
+    
+    return tracks
+  } catch (error) {
+    console.error('Error in getRecentlyPlayed:', error)
+    // Return empty array instead of throwing
+    return []
   }
-
-  const data = await response.json()
-  
-  const tracks = data.items.map((item: any): SpotifyTrack => ({
-    id: item.track.id,
-    name: item.track.name,
-    artist: item.track.artists.map((artist: any) => artist.name).join(', '),
-    album: item.track.album.name,
-    image: item.track.album.images[0]?.url || '',
-    url: item.track.external_urls.spotify,
-    preview_url: item.track.preview_url,
-    played_at: item.played_at,
-  }))
-
-  // Cache for 5 minutes
-  cache.set(cacheKey, tracks, 300)
-  
-  return tracks
 }

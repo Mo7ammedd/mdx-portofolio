@@ -30,9 +30,18 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       }
       
       const data = await response.json()
-      setTracks(data)
+      
+      // Handle empty response gracefully
+      if (!data || (Array.isArray(data) && data.length === 0)) {
+        setTracks([])
+        setError('No tracks available')
+      } else {
+        setTracks(data)
+      }
     } catch (err) {
+      console.error('Error fetching tracks:', err)
       setError(err instanceof Error ? err.message : 'Failed to load tracks')
+      setTracks([])
     } finally {
       setLoading(false)
     }

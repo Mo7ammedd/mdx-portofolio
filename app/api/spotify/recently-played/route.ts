@@ -18,9 +18,14 @@ export async function GET() {
     return response
   } catch (error) {
     console.error('Error fetching recently played tracks:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch recently played tracks' },
-      { status: 500 }
-    )
+    
+    // Return empty array with 200 status instead of 500
+    // This prevents the widget from breaking
+    return NextResponse.json([], {
+      status: 200,
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+      },
+    })
   }
 }
