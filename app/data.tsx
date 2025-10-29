@@ -38,6 +38,23 @@ export const PROJECTS = [
       },
     ],
   },
+  {
+    title: 'SimuKernel',
+    href: 'https://github.com/Mo7ammedd/SimuKernel',
+    active: true,
+    description:
+      'An educational operating system simulator demonstrating CPU scheduling, memory management, and process control with visualized metrics.',
+    technologies: ['Operating Systems', 'CPU Scheduling', 'Memory Management', 'Process Management'],
+    links: [
+      {
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/SimuKernel',
+        icon: <Icons.github className="size-3" />,
+      },
+    ],
+    image: '',
+    video: '',
+  },
     {
     title: 'LSMSharp',
     href: 'https://github.com/Mo7ammedd/LSMSharp',
@@ -76,24 +93,24 @@ export const PROJECTS = [
       },
     ],
   },
-  {
-    title: 'Manga Store', 
-    href: 'https://github.com/Mo7ammedd/BookStore',
-    active: true,
-    description:
-    'Microservices architecture with .NET Core (.NET 8) and Identity Server Integration with Azure Service Bus',
-    technologies: ['ASP.NET Mvc', 'Stripe', 'Sql Server', 'Azure'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/BookStore',
-        icon: <Icons.github className="size-3" />,
-      },
+  // {
+  //   title: 'Manga Store', 
+  //   href: 'https://github.com/Mo7ammedd/BookStore',
+  //   active: true,
+  //   description:
+  //   'Microservices architecture with .NET Core (.NET 8) and Identity Server Integration with Azure Service Bus',
+  //   technologies: ['ASP.NET Mvc', 'Stripe', 'Sql Server', 'Azure'],
+  //   links: [
+  //     {
+  //       type: 'Source',
+  //       href: 'https://github.com/Mo7ammedd/BookStore',
+  //       icon: <Icons.github className="size-3" />,
+  //     },
       
-    ],
-    image: '',
-    video: '', // Add video link here if available
-  },
+  //   ],
+  //   image: '',
+  //   video: '', // Add video link here if available
+  // },
   {
     title: 'HungerStation Microservices',
     href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
@@ -207,6 +224,13 @@ export const BLOG_POSTS: BlogPost[] = [
       'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
     link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
+  },
+  {
+    title: 'SimuKernel: OS Concepts Explained',
+    description:
+      'A practical guide to CPU scheduling, memory management, and process control using the SimuKernel OS simulator.',
+    link: '/blog/simukernel-operating-system-concepts',
+    uid: 'blog-4',
   },
 ]
 
