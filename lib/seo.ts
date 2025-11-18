@@ -11,6 +11,8 @@ interface SEOParams {
   modifiedTime?: string
   type?: 'website' | 'article'
   tags?: string[]
+  languageAlternates?: Record<string, string>
+  localeAlternates?: string[]
 }
 
 export function generateSEO({
@@ -23,34 +25,61 @@ export function generateSEO({
   modifiedTime,
   type = 'website',
   tags = [],
+  languageAlternates = {},
+  localeAlternates = [],
 }: SEOParams): Metadata {
   const url = `${WEBSITE_URL}${path}`
   const fullTitle = path === '/' ? title : `${title} | Mohammed Mostafa`
+  const baseKeywords = [
+    'Mohammed Mostafa',
+    'Software Engineer',
+    'ASP.NET Core',
+    'Node.js',
+    'TypeScript',
+    'Web Developer',
+    'Backend Engineer',
+    'Full Stack Developer',
+  ]
+  const keywords = Array.from(new Set([...baseKeywords, ...tags]))
+  const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${WEBSITE_URL}${ogImage}`
+  const appLanguages = { 'en-US': url, ...languageAlternates }
   
   return {
+    metadataBase: new URL(WEBSITE_URL),
+    applicationName: 'Mohammed Mostafa Portfolio',
     title: fullTitle,
     description,
-    keywords: [
-      'Mohammed Mostafa',
-      'Software Engineer',
-      'ASP.NET Core',
-      'Node.js',
-      'TypeScript',
-      'Web Developer',
-      ...tags,
-    ],
+    keywords,
     authors: [{ name: 'Mohammed Mostafa', url: WEBSITE_URL }],
     creator: 'Mohammed Mostafa',
     publisher: 'Mohammed Mostafa',
+    category: 'Professional Portfolio',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'black-translucent',
+      title: 'Mohammed Mostafa Portfolio',
+    },
     robots: {
       index: !noIndex,
       follow: !noIndex,
       'max-image-preview': 'large',
       'max-snippet': 160,
       'max-video-preview': 30,
+      googleBot: {
+        index: !noIndex,
+        follow: !noIndex,
+        'max-image-preview': 'large',
+        'max-snippet': 160,
+      },
     },
     alternates: {
       canonical: url,
+      languages: appLanguages,
     },
     openGraph: {
       type: type === 'article' ? 'article' : 'website',
@@ -59,9 +88,10 @@ export function generateSEO({
       url,
       siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
       locale: 'en_US',
+      alternateLocale: localeAlternates,
       images: [
         {
-          url: `${WEBSITE_URL}${ogImage}`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: fullTitle,
@@ -75,6 +105,13 @@ export function generateSEO({
         section: 'Technology',
         tags,
       }),
+      ...(type === 'website' && {
+        profile: {
+          firstName: 'Mohammed',
+          lastName: 'Mostafa',
+          username: 'mohammed-software-engineer',
+        },
+      }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -82,13 +119,27 @@ export function generateSEO({
       creator: '@mohameddtv',
       title: fullTitle,
       description,
-      images: [`${WEBSITE_URL}${ogImage}`],
+      images: [
+        {
+          url: ogImageUrl,
+          alt: fullTitle,
+        },
+      ],
     },
     other: {
       'article:author': 'Mohammed Mostafa',
       'og:email': 'mohammedmostafanazih@gmail.com',
       'og:locality': 'Egypt',
       'og:region': 'Middle East',
+    },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+      yandex: process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION || undefined,
+      other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+        ? {
+            'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+          }
+        : {},
     },
   }
 }

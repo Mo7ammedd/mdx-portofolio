@@ -204,7 +204,12 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: 'Mohammed Mostafa Portfolio',
     url: 'https://www.mohammedd.tech',
-    logo: 'https://www.mohammedd.tech/avatar.jpg',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.mohammedd.tech/avatar.jpg',
+      width: 400,
+      height: 400,
+    },
     description: 'Professional portfolio website of Mohammed Mostafa, Software Engineer',
     founder: {
       '@type': 'Person',
@@ -214,11 +219,143 @@ export function generateOrganizationSchema() {
       '@type': 'ContactPoint',
       email: 'mohammedmostafanazih@gmail.com',
       contactType: 'Professional Inquiries',
+      availableLanguage: ['English', 'Arabic'],
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'EG',
+      addressRegion: 'Egypt',
     },
     sameAs: [
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
       'https://twitter.com/mohameddtv',
     ],
+  }
+}
+
+export function generateTechArticleSchema(data: {
+  title: string
+  description: string
+  url: string
+  datePublished: string
+  dateModified: string
+  author: PersonData
+  image?: string
+  keywords?: string[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: data.title,
+    description: data.description,
+    url: data.url,
+    datePublished: data.datePublished,
+    dateModified: data.dateModified,
+    author: {
+      '@type': 'Person',
+      name: data.author.name,
+      jobTitle: data.author.jobTitle,
+      url: data.author.url,
+      image: data.author.image,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: data.author.name,
+      logo: {
+        '@type': 'ImageObject',
+        url: data.author.image,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': data.url,
+    },
+    image: data.image || 'https://www.mohammedd.tech/og-image.png',
+    keywords: data.keywords?.join(', '),
+    inLanguage: 'en-US',
+    isAccessibleForFree: true,
+    proficiencyLevel: 'Expert',
+  }
+}
+
+export function generateVideoObjectSchema(data: {
+  name: string
+  description: string
+  thumbnailUrl: string
+  uploadDate: string
+  contentUrl: string
+  embedUrl?: string
+  duration?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: data.name,
+    description: data.description,
+    thumbnailUrl: data.thumbnailUrl,
+    uploadDate: data.uploadDate,
+    contentUrl: data.contentUrl,
+    embedUrl: data.embedUrl,
+    duration: data.duration,
+    author: {
+      '@type': 'Person',
+      name: 'Mohammed Mostafa',
+    },
+  }
+}
+
+export function generateSoftwareSourceCodeSchema(data: {
+  name: string
+  description: string
+  url: string
+  codeRepository: string
+  programmingLanguage: string[]
+  runtimePlatform?: string
+  license?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: data.name,
+    description: data.description,
+    url: data.url,
+    codeRepository: data.codeRepository,
+    programmingLanguage: data.programmingLanguage,
+    runtimePlatform: data.runtimePlatform,
+    license: data.license,
+    author: {
+      '@type': 'Person',
+      name: 'Mohammed Mostafa',
+      url: 'https://www.mohammedd.tech',
+    },
+  }
+}
+
+export function generateHowToSchema(data: {
+  name: string
+  description: string
+  totalTime?: string
+  steps: Array<{
+    name: string
+    text: string
+    url?: string
+    image?: string
+  }>
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: data.name,
+    description: data.description,
+    totalTime: data.totalTime,
+    step: data.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      url: step.url,
+      image: step.image,
+    })),
   }
 }

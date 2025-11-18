@@ -60,50 +60,132 @@ export function calculateReadingTime(content: string): string {
 
 export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
   const url = `https://www.mohammedd.tech/blog/${slug}`
+  const baseKeywords = [
+    'Mohammed Mostafa blog',
+    'Software engineering',
+    'Programming tutorial',
+    'Web development',
+    'Backend development',
+    'ASP.NET Core',
+    'Node.js',
+    'TypeScript',
+  ]
+  const keywords = Array.from(new Set([...(meta.tags || []), ...baseKeywords]))
   
   return {
+    metadataBase: new URL('https://www.mohammedd.tech'),
     title: `${meta.title} | Mohammed Mostafa`,
     description: meta.description,
-    keywords: [
-      ...(meta.tags || []),
-      'Mohammed Mostafa blog',
-      'Software engineering',
-      'Programming tutorial',
-      'Web development',
-    ],
+    keywords,
     authors: [{ 
       name: meta.author?.name || 'Mohammed Mostafa', 
       url: meta.author?.url || 'https://www.mohammedd.tech' 
     }],
+    creator: meta.author?.name || 'Mohammed Mostafa',
+    publisher: 'Mohammed Mostafa',
+    category: 'Technology',
     publishedTime: meta.publishDate,
     modifiedTime: meta.lastModified || meta.publishDate,
+    applicationName: 'Mohammed Mostafa Portfolio',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     openGraph: {
       type: 'article',
       url,
       title: meta.title,
       description: meta.description,
+      siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
+      locale: 'en_US',
       publishedTime: meta.publishDate,
       modifiedTime: meta.lastModified || meta.publishDate,
       authors: [meta.author?.name || 'Mohammed Mostafa'],
+      section: 'Technology',
+      tags: meta.tags,
       images: meta.image ? [
         {
           url: `https://www.mohammedd.tech${meta.image}`,
           width: 1200,
           height: 630,
           alt: meta.title,
+          type: 'image/png',
         }
       ] : [],
-      tags: meta.tags,
     },
     twitter: {
       card: 'summary_large_image',
+      site: '@mohameddtv',
+      creator: '@mohameddtv',
       title: meta.title,
       description: meta.description,
-      creator: '@mohameddtv',
-      images: meta.image ? [`https://www.mohammedd.tech${meta.image}`] : [],
+      images: meta.image ? [
+        {
+          url: `https://www.mohammedd.tech${meta.image}`,
+          alt: meta.title,
+        }
+      ] : [],
     },
     alternates: {
       canonical: url,
+      languages: {
+        'en-US': url,
+      },
     },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': 160,
+      'max-video-preview': 30,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': 160,
+      },
+    },
+  }
+}
+
+export function generateBlogPostStructuredData(meta: BlogPostMeta, slug: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: meta.title,
+    description: meta.description,
+    url: `https://www.mohammedd.tech/blog/${slug}`,
+    datePublished: meta.publishDate,
+    dateModified: meta.lastModified || meta.publishDate,
+    author: {
+      '@type': 'Person',
+      name: meta.author?.name || 'Mohammed Mostafa',
+      url: meta.author?.url || 'https://www.mohammedd.tech',
+      image: meta.author?.image || 'https://www.mohammedd.tech/avatar.jpg',
+      jobTitle: 'Software Engineer',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Mohammed Mostafa',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.mohammedd.tech/avatar.jpg',
+        width: 400,
+        height: 400,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://www.mohammedd.tech/blog/${slug}`,
+    },
+    image: meta.image ? `https://www.mohammedd.tech${meta.image}` : 'https://www.mohammedd.tech/og-image.png',
+    keywords: meta.tags?.join(', '),
+    articleSection: 'Technology',
+    inLanguage: 'en-US',
+    isAccessibleForFree: true,
+    ...(meta.readingTime && {
+      timeRequired: meta.readingTime,
+    }),
   }
 }

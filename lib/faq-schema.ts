@@ -29,6 +29,14 @@ export function generateFAQSchema() {
       },
       {
         '@type': 'Question',
+        name: 'What services does Mohammed Mostafa offer?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Mohammed Mostafa offers backend development with ASP.NET Core and Node.js, full-stack web application development, microservices architecture design, cloud solutions with Azure, RESTful API development, database design and optimization, and technical consulting for software projects.',
+        },
+      },
+      {
+        '@type': 'Question',
         name: 'Where is Mohammed Mostafa located?',
         acceptedAnswer: {
           '@type': 'Answer',
@@ -41,6 +49,22 @@ export function generateFAQSchema() {
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Yes, Mohammed Mostafa is currently available for software engineering opportunities, freelance projects, and contract work. Contact him at mohammedmostafanazih@gmail.com.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is Mohammed Mostafa\'s experience level?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Mohammed Mostafa has professional experience in software engineering, specializing in backend development with ASP.NET Core and Node.js. He has worked on scalable web applications, microservices architectures, and cloud-based solutions.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How can I contact Mohammed Mostafa?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'You can contact Mohammed Mostafa via email at mohammedmostafanazih@gmail.com, connect on LinkedIn at linkedin.com/in/mohammed-mostafa, follow on GitHub at github.com/Mo7ammedd, or reach out on Twitter @mohameddtv.',
         },
       },
     ],

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 export const siteConfig: Metadata = {
+  metadataBase: new URL('https://www.mohammedd.tech'),
   title: {
     default: 'Mohammed Mostafa | Mohammed Software Engineer | ASP.NET Core & Node.js Developer',
     template: '%s | Mohammed Mostafa - Software Engineer',
@@ -35,16 +36,39 @@ export const siteConfig: Metadata = {
     'RESTful APIs',
     'Suez Canal University',
     'Computer Science Graduate',
+    'Azure Cloud Engineer',
+    'SQL Server Developer',
+    'Redis Specialist',
   ],
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.mohammedd.tech' }],
-  creator: 'Mohammed - Software Engineer',
-  publisher: 'Mohammed Portfolio Website',
+  creator: 'Mohammed Mostafa - Software Engineer',
+  publisher: 'Mohammed Mostafa',
+  applicationName: 'Mohammed Mostafa Portfolio',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Mohammed Mostafa',
+    startupImage: [
+      {
+        url: '/avatar.jpg',
+        media: '(device-width: 375px) and (device-height: 812px)',
+      },
+    ],
+  },
   
   // Add structured data hints and meta properties
   other: {
     'og:profile:first_name': 'Mohammed',
     'og:profile:last_name': 'Mostafa',
     'og:profile:username': 'mohammed-software-engineer',
+    'og:profile:gender': 'male',
     'profession': 'Software Engineer',
     'specialization': 'ASP.NET Core, Node.js, TypeScript',
     'status': 'Available for Opportunities',
@@ -52,9 +76,7 @@ export const siteConfig: Metadata = {
     'og:email': 'mohammedmostafanazih@gmail.com',
     'og:locality': 'Egypt',
     'og:region': 'Middle East',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'format-detection': 'telephone=no',
+    'og:country-name': 'Egypt',
     'mobile-web-app-capable': 'yes',
     'theme-color': '#09090b',
   },
@@ -127,8 +149,20 @@ export const siteConfig: Metadata = {
     } : {},
   },
   
-  metadataBase: new URL('https://www.mohammedd.tech/'),
-  
   // Add category for better classification
   category: 'Professional Portfolio',
+  
+  classification: 'Software Engineering Portfolio',
+  
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/avatar.jpg', sizes: '192x192', type: 'image/jpeg' },
+    ],
+    apple: [
+      { url: '/avatar.jpg', sizes: '180x180', type: 'image/jpeg' },
+    ],
+  },
+  
+  manifest: '/site.webmanifest',
 }
