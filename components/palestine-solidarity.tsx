@@ -8,12 +8,10 @@ export function PalestineSolidarity() {
   useEffect(() => {
     // Client-side only code
     if (typeof window !== 'undefined') {
-      // Show the message after a short delay
       const timer = setTimeout(() => {
         setShowMessage(true)
-      }, 1500)
+      }, 1000)
       
-      // Update counter every day (86400000 ms)
       const daysSinceOct7 = Math.floor((new Date().getTime() - new Date('2023-10-07').getTime()) / 86400000)
       setCounter(daysSinceOct7)
       
