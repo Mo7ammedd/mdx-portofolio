@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { SpotifyTrack } from '@/lib/spotify'
 import { Magnetic } from './ui/magnetic'
@@ -15,8 +15,18 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'top' | 'recent'>('recent')
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null)
+  
+  const fetchingRef = useRef(false)
+  const fetchedTabsRef = useRef<Set<string>>(new Set())
 
   const fetchTracks = useCallback(async (type: 'top' | 'recent') => {
+    // Prevent duplicate fetches
+    if (fetchingRef.current) {
+      return
+    }
+    
+    fetchingRef.current = true
+    
     try {
       setLoading(true)
       setError(null)
@@ -37,6 +47,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
         setError('No tracks available')
       } else {
         setTracks(data)
+        fetchedTabsRef.current.add(type)
       }
     } catch (err) {
       console.error('Error fetching tracks:', err)
@@ -44,12 +55,14 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       setTracks([])
     } finally {
       setLoading(false)
+      fetchingRef.current = false
     }
   }, [])
 
   useEffect(() => {
     fetchTracks(activeTab)
-  }, [activeTab, fetchTracks])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab])
 
   const playPreview = useCallback((trackId: string, previewUrl?: string) => {
     if (!previewUrl) return
