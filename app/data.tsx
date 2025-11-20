@@ -8,6 +8,8 @@ type WorkExperience = {
   link: string
   id: string
   logo?: string
+  location?: string
+  workType?: 'Remote' | 'Hybrid' | 'Onsite'
 }
 
 type BlogPost = {
@@ -164,6 +166,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     link: 'https://oblien.com/',
     id: 'work0',
     logo: '/work/oblien.jpg',
+    location: 'San Francisco, CA',
+    workType: 'Remote',
   },
   {
     company: 'Medica Scope',
@@ -173,6 +177,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     link: 'https://www.facebook.com/medicascope/',
     id: 'work1',
     logo: '/work/medica.png',
+    location: 'Nasr City, Egypt',
+    workType: 'Hybrid',
   },
   {
     company: 'ONVO',
@@ -182,15 +188,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     link: 'https://onvo.me/',
     id: 'work2',
     logo: '/work/onvo.png',
-  },
-  {
-    company: 'IT Mentor',
-    title: 'GDG Suez Canal',
-    start: 'Oct 2024',
-    end: 'May 2025',
-    link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',
-    id: 'work3',
-    logo: '/work/gdg.png',
+    location: 'Berlin, Germany',
+    workType: 'Remote',
   },
   {
     company: 'Manara',
@@ -200,6 +199,8 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     link: 'https://app.manara.tech/auth/',
     id: 'work4',
     logo: '/work/manara.png',
+    location: 'Middle East',
+    workType: 'Remote',
   },
 ]
 
