@@ -96,6 +96,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.scdn.co" />
+        <link rel="alternate" type="application/rss+xml" title="Mohammed Mostafa - Blog RSS Feed" href="/rss.xml" />
       </head>
       <body
         className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}

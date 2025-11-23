@@ -76,13 +76,24 @@ export function Footer() {
         
         {/* Original footer content */}
         <div className="flex items-center justify-between w-full">
-          <a
-            href="https://github.com/mo7ammedd"
-            className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
-            target="_blank"
-          >
-            <span>Built with Mohammed.</span>
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/mo7ammedd"
+              className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+              target="_blank"
+            >
+              <span>Built with Mohammed.</span>
+            </a>
+            <a
+              href="/rss.xml"
+              className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+              target="_blank"
+              aria-label="RSS Feed"
+              title="Subscribe to RSS feed"
+            >
+              RSS
+            </a>
+          </div>
           <div className="text-xs text-zinc-400">
             <ThemeSwitch />
           </div>

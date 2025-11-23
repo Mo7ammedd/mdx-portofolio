@@ -1,10 +1,8 @@
-#!/usr/bin/env tsx
-
 import { promises as fs } from 'fs'
 import path from 'path'
 import { generateOGImageForPost } from '../lib/og-generator'
+import { getReadingTimeForPost } from '../lib/reading-time'
 
-// Blog posts data (copied to avoid React import issues)
 const BLOG_POSTS = [
   {
     title: 'Difference Between Cluster and Non-Cluster Index',
@@ -59,13 +57,17 @@ async function generateOGImages() {
       // Extract slug from link (remove /blog/ prefix)
       const slug = post.link.replace('/blog/', '')
       
+      // Calculate dynamic reading time
+      const readingTime = await getReadingTimeForPost(slug)
+      console.log(`   ⏱️  Reading time: ${readingTime.text}`)
+      
       // Generate OG image
       const imageBuffer = await generateOGImageForPost(
         post.title,
         post.description,
         {
           author: 'Mohammed Mostafa',
-          readTime: '5 min', // You can customize this or extract from content
+          readTime: readingTime.text,
         }
       )
       

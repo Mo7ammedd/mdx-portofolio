@@ -12,6 +12,7 @@ import { BlogSection } from '@/components/home/blog-section'
 import { ConnectSection } from '@/components/home/connect-section'
 import { SpotifySection } from '@/components/home/spotify-section'
 import { getGitHubRepoStats, extractGitHubInfo } from '@/lib/github'
+import { getReadingTimeForPost } from '@/lib/reading-time'
 
 export default async function Personal() {
   const projectsWithStats = await Promise.all(
@@ -31,6 +32,14 @@ export default async function Personal() {
       const stats = await getGitHubRepoStats(repoInfo.owner, repoInfo.repo)
       
       return { ...project, githubStats: stats }
+    })
+  )
+
+  const blogPostsWithReadingTime = await Promise.all(
+    BLOG_POSTS.map(async (post) => {
+      const slug = post.link.replace('/blog/', '')
+      const readingTime = await getReadingTimeForPost(slug)
+      return { ...post, readingTime: readingTime.text }
     })
   )
 
@@ -68,7 +77,7 @@ export default async function Personal() {
 
       <AnimatedSection>
         <h3 className="mb-3 text-lg font-medium">Blog</h3>
-        <BlogSection posts={BLOG_POSTS} />
+        <BlogSection posts={blogPostsWithReadingTime} />
       </AnimatedSection>
 
       <AnimatedSection>

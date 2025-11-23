@@ -12,6 +12,7 @@ interface BlogPost {
   title: string
   description: string
   link: string
+  readingTime?: string
 }
 
 interface BlogSectionProps {
@@ -39,9 +40,16 @@ export function BlogSection({ posts }: BlogSectionProps) {
             prefetch
           >
             <div className="flex flex-col space-y-1">
-              <h4 className="font-normal dark:text-zinc-100">
-                {post.title}
-              </h4>
+              <div className="flex items-start justify-between gap-2">
+                <h4 className="flex-1 font-normal dark:text-zinc-100">
+                  {post.title}
+                </h4>
+                {post.readingTime && (
+                  <span className="text-xs text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
+                    {post.readingTime}
+                  </span>
+                )}
+              </div>
               <p className="text-zinc-500 dark:text-zinc-400">
                 {post.description}
               </p>
