@@ -5,7 +5,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
     
-    // Custom cover component
     Cover: ({
       src,
       alt,
@@ -23,7 +22,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       )
     },
     
-    // Enhanced link component with Next.js Link for internal links
     a: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
       const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
       
@@ -47,7 +45,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       )
     },
     
-    // Enhanced code blocks
     pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
       return (
         <pre 
@@ -59,7 +56,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       )
     },
     
-    // Inline code
     code: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => {
       return (
         <code 

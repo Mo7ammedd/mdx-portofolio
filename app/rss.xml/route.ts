@@ -29,7 +29,7 @@ async function generateRSSFeed(): Promise<string> {
   const rssItems = postsWithReadingTime
     .map((post) => {
       const postUrl = `${SITE_URL}${post.link}`
-      const pubDate = new Date().toUTCString() // You can add actual publish dates to your data
+      const pubDate = new Date().toUTCString() 
 
       return `
     <item>

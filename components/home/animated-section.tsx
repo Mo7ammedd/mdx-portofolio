@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import { useInView } from '@/hooks/useInView'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 const VARIANTS_SECTION = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
@@ -18,20 +19,10 @@ interface AnimatedSectionProps {
   className?: string
 }
 
-function checkReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
 export function AnimatedSection({ children, className = '' }: AnimatedSectionProps) {
   const section = useInView()
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
-  useEffect(() => {
-    setPrefersReducedMotion(checkReducedMotion())
-  }, [])
-
-  // Skip animation for reduced motion preference
   if (prefersReducedMotion) {
     return (
       <section ref={section.ref} className={className}>
@@ -68,13 +59,8 @@ const VARIANTS_CONTAINER = {
 }
 
 export function AnimatedContainer({ children, className = '' }: AnimatedContainerProps) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
-  useEffect(() => {
-    setPrefersReducedMotion(checkReducedMotion())
-  }, [])
-
-  // Skip animation for reduced motion preference
   if (prefersReducedMotion) {
     return <main className={className}>{children}</main>
   }
@@ -92,11 +78,7 @@ export function AnimatedContainer({ children, className = '' }: AnimatedContaine
 }
 
 export function StaticSection({ children, className = '' }: { children: ReactNode; className?: string }) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-
-  useEffect(() => {
-    setPrefersReducedMotion(checkReducedMotion())
-  }, [])
+  const prefersReducedMotion = useReducedMotion()
 
   if (prefersReducedMotion) {
     return <section className={className}>{children}</section>
