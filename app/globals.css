@@ -160,16 +160,6 @@
     scroll-margin-top: 100px;
   }
   
-  /* Heading anchor link styles */
-  .heading-anchor {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .heading-anchor:hover {
-    text-decoration: none;
-  }
-  
   /* MDX Table of Contents */
   .prose a[href^="#"] {
     @apply text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors;
@@ -192,4 +182,73 @@
   .prose input[type="checkbox"] {
     @apply mr-2;
   }
+}
+
+/* Remove underlines from heading anchor links - outside @layer for higher specificity */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a,
+.prose h1 a.heading-anchor,
+.prose h2 a.heading-anchor,
+.prose h3 a.heading-anchor,
+.prose h4 a.heading-anchor,
+.prose h5 a.heading-anchor,
+.prose h6 a.heading-anchor {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  text-decoration-style: none !important;
+  text-underline-offset: 0 !important;
+  color: inherit !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+.prose h1 a:hover,
+.prose h2 a:hover,
+.prose h3 a:hover,
+.prose h4 a:hover,
+.prose h5 a:hover,
+.prose h6 a:hover {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+.prose h1 a::before,
+.prose h2 a::before,
+.prose h3 a::before,
+.prose h4 a::before,
+.prose h5 a::before,
+.prose h6 a::before,
+.prose h1 a::after,
+.prose h2 a::after,
+.prose h3 a::after,
+.prose h4 a::after,
+.prose h5 a::after,
+.prose h6 a::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Override Tailwind Typography link underlines for all prose variants */
+.prose a:where(:not(p a, li a, td a, figcaption a)) {
+  text-decoration: none !important;
+}
+
+.prose-gray h1 a,
+.prose-gray h2 a,
+.prose-gray h3 a,
+.prose-gray h4 a,
+.prose-gray h5 a,
+.prose-gray h6 a {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
