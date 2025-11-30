@@ -23,24 +23,17 @@ export function PalestineSolidarity() {
 
   return (
     <>
-      {/* Solidarity message banner - glassy dark theme */}
+      {/* Solidarity message banner - supports light/dark theme */}
       <div 
-        className={`fixed bottom-0 left-0 right-0 z-50 p-1.5 text-center text-white transition-all duration-700 ${
+        className={`fixed bottom-0 left-0 right-0 z-50 p-1.5 text-center transition-all duration-700 backdrop-blur-xl border-t ${
           showMessage ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-        }`}
-        style={{
-          background: 'rgba(0, 0, 0, 0.3)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-          boxShadow: '0 -4px 32px rgba(0, 0, 0, 0.3)'
-        }}
+        } bg-white/70 dark:bg-black/30 border-zinc-200 dark:border-white/20 shadow-[0_-4px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_32px_rgba(0,0,0,0.3)]`}
       >
         <div className="flex flex-col items-center justify-center space-y-0.5">
-          <p className="text-xs md:text-sm font-semibold drop-shadow-lg">
+          <p className="text-xs md:text-sm font-semibold text-zinc-900 dark:text-white drop-shadow-sm dark:drop-shadow-lg">
             From The River To The Sea 
           </p>
-          <p className="text-[10px] md:text-xs text-zinc-300 drop-shadow-sm">
+          <p className="text-[10px] md:text-xs text-zinc-600 dark:text-zinc-300">
             Day {counter}: We still remember Gaza
           </p>
         </div>
