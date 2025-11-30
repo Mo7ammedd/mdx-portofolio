@@ -113,8 +113,8 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 dark:from-zinc-800 dark:to-zinc-900 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30 dark:shadow-black/50">
+                <svg className="w-5 h-5 text-white dark:text-zinc-100" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 14.8c-.2 0-.32-.13-.41-.31-.43-.69-1.08-1.19-1.88-1.44-1.13-.35-2.31-.35-3.44 0-.8.25-1.45.75-1.88 1.44-.09.18-.21.31-.41.31-.33 0-.59-.27-.59-.59 0-.18.08-.34.21-.45.59-.87 1.42-1.48 2.37-1.78 1.37-.43 2.82-.43 4.19 0 .95.3 1.78.91 2.37 1.78.13.11.21.27.21.45 0 .32-.26.59-.59.59zm-1.12-4.81c-.38 0-.69-.31-.69-.69 0-.21.09-.39.24-.52.76-.65 1.69-1.01 2.67-1.01s1.91.36 2.67 1.01c.15.13.24.31.24.52 0 .38-.31.69-.69.69-.19 0-.36-.08-.48-.2-.57-.49-1.29-.77-2.05-.77s-1.48.28-2.05.77c-.12.12-.29.2-.48.2zm-3.04 0c-.19 0-.36-.08-.48-.2-.57-.49-1.29-.77-2.05-.77s-1.48.28-2.05.77c-.12.12-.29.2-.48.2-.38 0-.69-.31-.69-.69 0-.21.09-.39.24-.52.76-.65 1.69-1.01 2.67-1.01s1.91.36 2.67 1.01c.15.13.24.31.24.52 0 .38-.31.69-.69.69z"/>
                 </svg>
               </div>
