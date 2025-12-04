@@ -140,7 +140,6 @@ export const siteConfig: Metadata = {
     },
   },
   
-  // Add verification tags if you have them
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
     yandex: process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION || undefined,
@@ -149,7 +148,6 @@ export const siteConfig: Metadata = {
     } : {},
   },
   
-  // Add category for better classification
   category: 'Professional Portfolio',
   
   classification: 'Software Engineering Portfolio',

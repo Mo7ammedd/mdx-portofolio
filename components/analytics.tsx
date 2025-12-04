@@ -9,7 +9,6 @@ interface AnalyticsProps {
   microsoftClarityId?: string
 }
 
-// Extend the Window interface to include gtag
 declare global {
   interface Window {
     gtag: (
@@ -25,7 +24,6 @@ function AnalyticsTracker({ googleAnalyticsId }: { googleAnalyticsId?: string })
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Track page views
   useEffect(() => {
     if (googleAnalyticsId && typeof window.gtag !== 'undefined') {
       window.gtag('config', googleAnalyticsId, {
@@ -43,7 +41,6 @@ export function Analytics({
 }: AnalyticsProps) {
   return (
     <>
-      {/* Google Analytics */}
       {googleAnalyticsId && (
         <>
           <Script
@@ -69,7 +66,6 @@ export function Analytics({
         </>
       )}
 
-      {/* Microsoft Clarity */}
       {microsoftClarityId && (
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
@@ -85,14 +81,12 @@ export function Analytics({
   )
 }
 
-// Custom event tracking utility
 export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, parameters)
   }
 }
 
-// Track contact form submissions
 export const trackContactSubmission = () => {
   trackEvent('contact_form_submit', {
     event_category: 'engagement',
@@ -100,7 +94,6 @@ export const trackContactSubmission = () => {
   })
 }
 
-// Track project link clicks
 export const trackProjectClick = (projectName: string, linkType: 'demo' | 'source') => {
   trackEvent('project_click', {
     event_category: 'engagement',
@@ -109,7 +102,6 @@ export const trackProjectClick = (projectName: string, linkType: 'demo' | 'sourc
   })
 }
 
-// Track blog post engagement
 export const trackBlogEngagement = (postTitle: string, action: 'view' | 'scroll_50' | 'scroll_100') => {
   trackEvent('blog_engagement', {
     event_category: 'content',

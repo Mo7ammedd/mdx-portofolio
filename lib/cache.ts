@@ -4,20 +4,6 @@ interface CacheEntry<T> {
   ttl: number
 }
 
-/**
- * Serverless-compatible in-memory cache
- * 
- * Important: This cache is per-instance and won't persist across serverless invocations.
- * For persistent caching across requests, use:
- * - Next.js built-in caching (fetch with cache options)
- * - Redis/Upstash Redis for distributed caching
- * - Vercel KV for edge-compatible key-value storage
- * 
- * This is useful for:
- * - Caching within a single request
- * - Avoiding duplicate API calls in the same execution context
- * - Rate limiting within an instance
- */
 class SimpleCache {
   private cache = new Map<string, CacheEntry<any>>()
   private cleanupScheduled = false
@@ -29,7 +15,6 @@ class SimpleCache {
       ttl: ttlSeconds * 1000
     })
 
-    // Schedule cleanup on next tick (serverless-safe)
     this.scheduleCleanup()
   }
 
@@ -73,7 +58,6 @@ class SimpleCache {
     this.cache.clear()
   }
 
-  // Clean up expired entries (called lazily)
   cleanup(): void {
     const now = Date.now()
     
@@ -85,20 +69,17 @@ class SimpleCache {
     }
   }
 
-  // Schedule cleanup using queueMicrotask (serverless-safe alternative to setInterval)
   private scheduleCleanup(): void {
     if (this.cleanupScheduled) return
     
     this.cleanupScheduled = true
     
-    // Use queueMicrotask for serverless environments
     queueMicrotask(() => {
       this.cleanup()
       this.cleanupScheduled = false
     })
   }
 
-  // Get cache statistics (useful for monitoring)
   getStats(): { size: number; keys: string[] } {
     return {
       size: this.cache.size,
@@ -109,12 +90,6 @@ class SimpleCache {
 
 export const cache = new SimpleCache()
 
-/**
- * Helper function for caching async operations
- * 
- * Usage:
- * const data = await cachedFetch('my-key', () => fetchExpensiveData(), 300)
- */
 export async function cachedFetch<T>(
   key: string,
   fetchFn: () => Promise<T>,

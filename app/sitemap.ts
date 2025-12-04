@@ -5,7 +5,6 @@ import { BLOG_POST_METADATA, getAllBlogSlugs } from '@/lib/blog-metadata'
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date().toISOString()
   
-  // Main pages with their priorities and update frequencies
   const mainRoutes = [
     {
       url: `${WEBSITE_URL}`,
@@ -21,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Blog posts - dynamically generated from metadata
   const blogSlugs = getAllBlogSlugs()
   const blogRoutes = blogSlugs.map((slug) => {
     const metadata = BLOG_POST_METADATA[slug]
@@ -33,21 +31,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   })
 
-  // Add other important routes if they exist
   const additionalRoutes: MetadataRoute.Sitemap = [
-    // Uncomment when these pages are created
-    // {
-    //   url: `${WEBSITE_URL}/projects`,
-    //   lastModified: currentDate,
-    //   changeFrequency: 'monthly' as const,
-    //   priority: 0.6,
-    // },
-    // {
-    //   url: `${WEBSITE_URL}/contact`,
-    //   lastModified: currentDate,
-    //   changeFrequency: 'yearly' as const,
-    //   priority: 0.5,
-    // },
+ 
   ]
 
   return [...mainRoutes, ...blogRoutes, ...additionalRoutes]

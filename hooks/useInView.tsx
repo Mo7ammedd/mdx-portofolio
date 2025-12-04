@@ -16,7 +16,6 @@ export function useInView(options: UseInViewOptions = {}) {
       ([entry]) => {
         setIsInView(entry.isIntersecting)
         
-        // Disconnect after first view if triggerOnce is true
         if (entry.isIntersecting && triggerOnce) {
           observer.disconnect()
         }

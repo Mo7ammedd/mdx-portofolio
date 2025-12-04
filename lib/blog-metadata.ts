@@ -21,7 +21,6 @@ export interface BlogPostSchemaData {
   image: string
 }
 
-// Central blog post metadata for static generation and SEO
 export const BLOG_POST_METADATA: Record<string, BlogPostSchemaData> = {
   '3-ways-to-build-custom-middleware-in-aspnet-core': {
     title: '3 Ways to Build Custom Middleware in ASP.NET Core',
@@ -46,7 +45,6 @@ export const BLOG_POST_METADATA: Record<string, BlogPostSchemaData> = {
   },
 }
 
-// Get all blog post slugs for static generation
 export function getAllBlogSlugs(): string[] {
   return Object.keys(BLOG_POST_METADATA)
 }

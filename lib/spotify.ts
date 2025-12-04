@@ -29,7 +29,6 @@ const getAccessToken = async (): Promise<string> => {
     throw new Error('Spotify credentials not configured. Please set up your environment variables.')
   }
 
-  // Check cache first
   const cachedToken = cache.get<string>('spotify_access_token')
   if (cachedToken) {
     return cachedToken
@@ -57,7 +56,6 @@ const getAccessToken = async (): Promise<string> => {
 
     const data: SpotifyApi = await response.json()
     
-    // Cache the token for 50 minutes (tokens expire in 1 hour)
     cache.set('spotify_access_token', data.access_token, 3000)
     
     return data.access_token
@@ -70,7 +68,6 @@ const getAccessToken = async (): Promise<string> => {
 export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
   const cacheKey = `top_tracks_${limit}`
   
-  // Check cache first
   const cachedTracks = cache.get<SpotifyTrack[]>(cacheKey)
   if (cachedTracks) {
     return cachedTracks
@@ -90,7 +87,6 @@ export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
       const errorData = await response.text()
       console.error('Spotify top tracks error:', response.status, errorData)
       
-      // Return empty array instead of throwing
       return []
     }
 
@@ -110,13 +106,11 @@ export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
       preview_url: item.preview_url,
     }))
 
-    // Cache for 5 minutes
     cache.set(cacheKey, tracks, 300)
     
     return tracks
   } catch (error) {
     console.error('Error in getTopTracks:', error)
-    // Return empty array instead of throwing
     return []
   }
 }
@@ -124,7 +118,6 @@ export const getTopTracks = async (limit = 10): Promise<SpotifyTrack[]> => {
 export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => {
   const cacheKey = `recently_played_${limit}`
   
-  // Check cache first
   const cachedTracks = cache.get<SpotifyTrack[]>(cacheKey)
   if (cachedTracks) {
     return cachedTracks
@@ -144,7 +137,6 @@ export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => 
       const errorData = await response.text()
       console.error('Spotify recently played error:', response.status, errorData)
       
-      // Return empty array instead of throwing
       return []
     }
 
@@ -165,13 +157,11 @@ export const getRecentlyPlayed = async (limit = 10): Promise<SpotifyTrack[]> => 
       played_at: item.played_at,
     }))
 
-    // Cache for 5 minutes
     cache.set(cacheKey, tracks, 300)
     
     return tracks
   } catch (error) {
     console.error('Error in getRecentlyPlayed:', error)
-    // Return empty array instead of throwing
     return []
   }
 }

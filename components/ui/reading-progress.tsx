@@ -11,7 +11,7 @@ export type ReadingProgressProps = {
   showTimeEstimate?: boolean
 }
 
-const DEFAULT_WPM = 200 // Average reading speed
+const DEFAULT_WPM = 200 
 
 export function ReadingProgress({
   className,
@@ -33,17 +33,13 @@ export function ReadingProgress({
     restDelta: 0.001,
   })
 
-  // Transform for the circle progress - must be called unconditionally
   const strokeDashoffset = useTransform(scrollYProgress, [0, 1], [100, 0])
 
-  // Calculate reading time
   const totalReadingTime = Math.ceil(totalWords / wordsPerMinute)
   
-  // Calculate remaining time based on scroll progress
   const [scrollProgress, setScrollProgress] = useState(0)
   const remainingTime = Math.ceil(totalReadingTime * (1 - scrollProgress))
   
-  // Show/hide based on scroll position
   useEffect(() => {
     return scrollYProgress.on('change', (latest) => {
       setScrollProgress(latest)
@@ -51,7 +47,6 @@ export function ReadingProgress({
     })
   }, [scrollYProgress])
 
-  // Count words in the article
   useEffect(() => {
     const countWords = () => {
       const article = document.querySelector('main') || document.querySelector('article')
@@ -62,7 +57,6 @@ export function ReadingProgress({
       }
     }
 
-    // Count after a short delay to ensure content is loaded
     const timer = setTimeout(countWords, 100)
     return () => clearTimeout(timer)
   }, [])
@@ -77,7 +71,6 @@ export function ReadingProgress({
 
   return (
     <>
-      {/* Progress bar - positioned below Palestine flag */}
       <motion.div
         className={cn('fixed inset-x-0 top-1 z-40 h-0.5 origin-left bg-zinc-900 dark:bg-zinc-100', className)}
         style={{
@@ -85,7 +78,6 @@ export function ReadingProgress({
         }}
       />
 
-      {/* Reading time indicator */}
       {showTimeEstimate && totalWords > 0 && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -98,10 +90,8 @@ export function ReadingProgress({
         >
           <div className="bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-sm px-3 py-2">
             <div className="flex items-center gap-2.5">
-              {/* Progress circle */}
               <div className="relative w-9 h-9">
                 <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
-                  {/* Background circle */}
                   <circle
                     cx="18"
                     cy="18"

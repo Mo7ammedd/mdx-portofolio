@@ -6,7 +6,6 @@ export function PalestineSolidarity() {
   const [counter, setCounter] = useState(0)
   
   useEffect(() => {
-    // Client-side only code
     if (typeof window !== 'undefined') {
       const timer = setTimeout(() => {
         setShowMessage(true)
@@ -23,7 +22,6 @@ export function PalestineSolidarity() {
 
   return (
     <>
-      {/* Solidarity message banner - supports light/dark theme */}
       <div 
         className={`fixed bottom-0 left-0 right-0 z-50 p-1.5 text-center transition-all duration-700 backdrop-blur-xl border-t ${
           showMessage ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'

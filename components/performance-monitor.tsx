@@ -3,17 +3,7 @@
 import { useEffect } from 'react'
 import { useReportWebVitals } from 'next/web-vitals'
 
-/**
- * Performance monitoring component that tracks Core Web Vitals
- * 
- * Metrics tracked:
- * - FCP (First Contentful Paint): Time when first content is rendered
- * - LCP (Largest Contentful Paint): Time when largest content is rendered
- * - CLS (Cumulative Layout Shift): Visual stability measure
- * - FID (First Input Delay): Time from first interaction to browser response
- * - TTFB (Time to First Byte): Time from request to first byte received
- * - INP (Interaction to Next Paint): Responsiveness metric
- */
+
 export function PerformanceMonitor() {
   useReportWebVitals((metric) => {
     // Log to console in development

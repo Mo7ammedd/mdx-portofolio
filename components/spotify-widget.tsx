@@ -20,7 +20,6 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
   const fetchedTabsRef = useRef<Set<string>>(new Set())
 
   const fetchTracks = useCallback(async (type: 'top' | 'recent') => {
-    // Prevent duplicate fetches
     if (fetchingRef.current) {
       return
     }
@@ -41,7 +40,6 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       
       const data = await response.json()
       
-      // Handle empty response gracefully
       if (!data || (Array.isArray(data) && data.length === 0)) {
         setTracks([])
         setError('No tracks available')
@@ -61,7 +59,6 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
 
   useEffect(() => {
     fetchTracks(activeTab)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab])
 
   const playPreview = useCallback((trackId: string, previewUrl?: string) => {
