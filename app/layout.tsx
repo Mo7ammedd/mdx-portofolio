@@ -17,11 +17,8 @@ import { generateFAQSchema } from '@/lib/faq-schema'
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#09090b' }, // zinc-950 color
-  ],
-  colorScheme: 'dark light',
+  themeColor: '#09090b',
+  colorScheme: 'dark',
 }
 
 export const metadata: Metadata = {
