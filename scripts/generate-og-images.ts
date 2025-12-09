@@ -29,7 +29,7 @@ const BLOG_POSTS = [
     title: 'SimuKernel: OS Concepts Explained',
     description:
       'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
-    link: '/blog/simukernel-os-concepts-explained',
+    link: '/blog/simukernel-operating-system-concepts',
     uid: 'blog-4',
   },
 ]
