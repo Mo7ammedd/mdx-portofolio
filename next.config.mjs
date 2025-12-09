@@ -55,6 +55,12 @@ const nextConfig = {
     optimizeCss: true,
   },
   
+  // Turbopack configuration for Next.js 16
+  turbopack: {
+    // Empty config to silence the warning
+    // Turbopack handles optimizations automatically
+  },
+  
   // Server external packages (moved from experimental in Next.js 15)
   serverExternalPackages: ['canvas'],
   
