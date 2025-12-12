@@ -225,7 +225,7 @@ export function ChatInterface({
         
         {/* Logo */}
         <div className="text-xs text-white/40 font-light tracking-wider">
-          abdelhamed mohamed
+          Mohammed Mostafa
         </div>
       </div>
 
