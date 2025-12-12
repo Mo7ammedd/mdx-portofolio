@@ -252,3 +252,7 @@
   border-bottom: none !important;
   box-shadow: none !important;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

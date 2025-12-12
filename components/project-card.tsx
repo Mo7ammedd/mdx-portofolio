@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { getIcon } from '@/lib/icons'
 
 interface Props {
   title: string
@@ -17,7 +18,7 @@ interface Props {
   link?: string
   image?: string
   links?: readonly {
-    icon: React.ReactNode
+    icon: string
     type: string
     href: string
   }[]
@@ -77,7 +78,7 @@ export function ProjectCard({ title, description, tags, links, githubStats }: Pr
             {links?.map((link, idx) => (
               <Link href={link?.href} key={idx} target="_blank">
                 <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.icon}
+                  {getIcon(link.icon)}
                   {link.type}
                 </Badge>
               </Link>

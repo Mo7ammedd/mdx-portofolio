@@ -1,0 +1,46 @@
+[
+  {
+    "company": "Oblien",
+    "title": "SDE",
+    "start": "Sep 2025",
+    "end": "Present",
+    "link": "https://oblien.com/",
+    "id": "work0",
+    "logo": "/work/oblien.jpg",
+    "location": "San Francisco, CA",
+    "workType": "Remote"
+  },
+  {
+    "company": "Medica Scope",
+    "title": "Backend Engineer",
+    "start": "Jul 2025",
+    "end": "Present",
+    "link": "https://www.facebook.com/medicascope/",
+    "id": "work1",
+    "logo": "/work/medica.png",
+    "location": "Nasr City, Egypt",
+    "workType": "Hybrid"
+  },
+  {
+    "company": "ONVO",
+    "title": "Software Engineer",
+    "start": "Aug 2024",
+    "end": "Jul 2025",
+    "link": "https://onvo.me/",
+    "id": "work2",
+    "logo": "/work/onvo.png",
+    "location": "Berlin, Germany",
+    "workType": "Remote"
+  },
+  {
+    "company": "Manara",
+    "title": "Backend Engineer",
+    "start": "Mar 2024",
+    "end": "Jul 2024",
+    "link": "https://app.manara.tech/auth/",
+    "id": "work4",
+    "logo": "/work/manara.png",
+    "location": "Middle East",
+    "workType": "Remote"
+  }
+]

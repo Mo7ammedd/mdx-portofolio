@@ -1,0 +1,98 @@
+[
+  {
+    "title": "Aura Decor",
+    "href": "https://github.com/Mo7ammedd/Aura-Decor",
+    "active": true,
+    "description": "Augmented Reality (AR) application integrating custom 3D models to deliver an immersive shopping experience, allowing users to visualize furniture pieces in their real environment.",
+    "technologies": ["ASP.NET Core", "RabbitMQ", "Docker", "Redis"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/Aura-Decor",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  },
+  {
+    "title": "SimuKernel",
+    "href": "https://github.com/Mo7ammedd/SimuKernel",
+    "active": true,
+    "description": "An educational operating system simulator demonstrating CPU scheduling, memory management, and process control with visualized metrics.",
+    "technologies": ["Operating Systems", "CPU Scheduling", "Memory Management", "Process Management"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/SimuKernel",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  },
+  {
+    "title": "LSMSharp",
+    "href": "https://github.com/Mo7ammedd/LSMSharp",
+    "active": true,
+    "description": "A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.",
+    "technologies": ["C#", "LSM-Tree", "ACID", "Concurrent Access", "Benchmarking"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/LSMSharp",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  },
+  {
+    "title": "Talabat APIs",
+    "href": "https://github.com/Mo7ammedd/Talabat-APIs",
+    "active": true,
+    "description": "Talabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform",
+    "technologies": ["ASP.NET Core", "C#", "Sql Server", "Redis"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/Talabat-APIs",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  },
+  {
+    "title": "HungerStation Microservices",
+    "href": "https://github.com/Mo7ammedd/HungerStation_Microservices",
+    "active": true,
+    "description": "Built seven microservices with .NET 8, featuring secure authentication, Azure Service Bus communication",
+    "technologies": ["Microservices", "Azure Service Bus", "RabbitMQ"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/HungerStation_Microservices",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  },
+  {
+    "title": "Taylor Swift Quiz",
+    "href": "https://swiftiequiz.vercel.app/",
+    "active": true,
+    "description": "I made random lyrics quiz generator for the best songwriter",
+    "technologies": ["Node.js", "Express", "Next.js"],
+    "links": [
+      {
+        "type": "Source",
+        "href": "https://github.com/Mo7ammedd/TaylorSwiftClient",
+        "icon": "github"
+      }
+    ],
+    "image": "",
+    "video": ""
+  }
+]
