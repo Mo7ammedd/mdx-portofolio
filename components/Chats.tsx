@@ -246,8 +246,10 @@ export function ChatInterface({
       </div>
 
       {/* Chat input at bottom */}
-      <div className="w-full flex justify-center pb-8 px-4">
-        <ChatInputWrapper onSendMessage={handleSendMessage} isStreaming={isStreaming} abort={abort} onNewSession={onCreateSession} />
+      <div className="sticky bottom-0 w-full flex justify-center pb-4 sm:pb-8 px-4 bg-gradient-to-t from-black via-black to-transparent pt-4">
+        <div className="w-full max-w-3xl">
+          <ChatInputWrapper onSendMessage={handleSendMessage} isStreaming={isStreaming} abort={abort} onNewSession={onCreateSession} />
+        </div>
       </div>
     </div>
   );
@@ -286,15 +288,15 @@ export function ChatInputWrapper({ onSendMessage, isStreaming, abort, onNewSessi
 
   return (
     <>
-    <form onSubmit={handleSubmit} className="w-full">
-        <div className="group relative flex items-center rounded-full bg-white/5 backdrop-blur-sm transition-all duration-300">
+    <form onSubmit={handleSubmit} className="w-full max-w-3xl">
+        <div className="group relative flex items-center rounded-full bg-white/5 backdrop-blur-sm transition-all duration-300 border border-white/10">
         <button
           type="button"
             onClick={handleNewSession}
-            className="flex h-14 w-14 items-center justify-center text-white/50 transition-colors hover:text-white/80"
+            className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center text-white/50 transition-colors hover:text-white/80 flex-shrink-0"
             aria-label="New chat session"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
@@ -305,16 +307,16 @@ export function ChatInputWrapper({ onSendMessage, isStreaming, abort, onNewSessi
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Ask anything"
           disabled={isStreaming}
-            className="flex-1 bg-transparent py-4 pr-4 text-sm text-white placeholder-white/30 outline-none sm:text-base disabled:opacity-50"
+            className="flex-1 bg-transparent py-3 sm:py-4 pr-2 sm:pr-4 text-sm text-white placeholder-white/30 outline-none sm:text-base disabled:opacity-50 min-w-0"
         />
         
         <button
           type="button"
             onClick={handleVoiceClick}
-            className="mr-2 flex h-10 w-10 items-center justify-center text-white/50 transition-colors hover:text-white/80"
+            className="mr-1 sm:mr-2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-white/50 transition-colors hover:text-white/80 flex-shrink-0"
           aria-label="Voice input"
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
           </svg>
         </button>
@@ -323,10 +325,10 @@ export function ChatInputWrapper({ onSendMessage, isStreaming, abort, onNewSessi
           <button
             type="button"
             onClick={handleStop}
-              className="mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 active:scale-95"
+              className="mr-1 sm:mr-2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 active:scale-95 flex-shrink-0"
             aria-label="Stop generation"
           >
-            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
               <rect x="6" y="6" width="12" height="12" />
             </svg>
           </button>
@@ -334,10 +336,10 @@ export function ChatInputWrapper({ onSendMessage, isStreaming, abort, onNewSessi
           <button
             type="submit"
             disabled={!message.trim()}
-              className="mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition-all hover:bg-white/90 active:scale-95 disabled:opacity-30 disabled:hover:bg-white"
+              className="mr-1 sm:mr-2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-black transition-all hover:bg-white/90 active:scale-95 disabled:opacity-30 disabled:hover:bg-white flex-shrink-0"
             aria-label="Send message"
           >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
