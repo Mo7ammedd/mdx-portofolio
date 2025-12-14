@@ -51,6 +51,7 @@ const nextConfig = {
       '@radix-ui/react-slot',
       'next-themes',
       'react-markdown',
+      'react-chat-agent',
     ],
     optimizeCss: true,
   },

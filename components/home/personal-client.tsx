@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react'
-import { ChatProvider } from 'react-chat-agent'
+import dynamic from 'next/dynamic'
 import { ProjectCard } from '@/components/project-card'
 import { AnimatedContainer, StaticSection, AnimatedSection } from '@/components/home/animated-section'
 import { WorkSection } from '@/components/home/work-section'
@@ -9,14 +9,30 @@ import { BlogSection } from '@/components/home/blog-section'
 import { ConnectSection } from '@/components/home/connect-section'
 import { SpotifySection } from '@/components/home/spotify-section'
 import ChatInput from '@/components/ChatInput'
+// Use lightweight session helpers - no heavy dependencies
 import { 
-  ChatInterface, 
-  ErrorModal, 
   getOrCreateFingerprint, 
   storeSession, 
   getStoredSession 
-} from '@/components/Chats'
-import 'react-chat-agent/ui.css'
+} from '@/lib/session'
+
+// Dynamically import heavy chat components - only loaded when chat is opened
+const ChatView = dynamic(() => import('@/components/ChatView'), {
+  loading: () => (
+    <div className="fixed inset-0 h-screen w-screen bg-black flex items-center justify-center z-50">
+      <div className="text-center">
+        <div className="w-8 h-8 border-2 border-white/20 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-white/40">Loading chat...</p>
+      </div>
+    </div>
+  ),
+  ssr: false,
+})
+
+// Dynamically import ErrorModal - only loaded when needed
+const ErrorModal = dynamic(() => import('@/components/Chats').then(mod => ({ default: mod.ErrorModal })), {
+  ssr: false,
+})
 
 interface PersonalClientProps {
   projectsWithStats: any[]
@@ -136,46 +152,21 @@ export function PersonalClient({
     // Don't clear authConfig - keep session for when they return
   }, [])
 
-  // Chat view
+  // Chat view - lazy loaded
   if (chatOpen) {
-    // Show loading state while creating session
-    if (isLoadingSession || !authConfig) {
-      return (
-        <div className="fixed inset-0 h-screen w-screen bg-black flex items-center justify-center z-50">
-          <div className="text-center">
-            <div className="w-8 h-8 border-2 border-white/20 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-white/40">Creating chat session...</p>
-          </div>
-        </div>
-      )
-    }
-
     return (
-      <div className="fixed inset-0 h-screen w-screen bg-black z-50">
-        <ChatProvider 
-          authConfig={authConfig}
-          onError={handleError}
-          typingAnimation={{ mode: 'word', speed: 30 }}
-          initialWelcome={{
-            title: 'Welcome to My personal assistant',
-            description: 'Ask me anything about my projects, work experience, blog posts, etc.'
-          }}
-        >
-          <ChatInterface 
-            onBackToHome={handleBackToHome} 
-            onCreateSession={handleCreateSession}
-            pendingMessage={pendingMessage}
-            onMessageSent={clearPendingMessage}
-          />
-        </ChatProvider>
-        
-        {/* Error Modal */}
-        <ErrorModal 
-          isOpen={errorModalOpen}
-          onClose={closeErrorModal}
-          error={currentError}
-        />
-      </div>
+      <ChatView
+        authConfig={authConfig}
+        isLoadingSession={isLoadingSession}
+        pendingMessage={pendingMessage}
+        onBackToHome={handleBackToHome}
+        onCreateSession={handleCreateSession}
+        onClearPendingMessage={clearPendingMessage}
+        onError={handleError}
+        errorModalOpen={errorModalOpen}
+        closeErrorModal={closeErrorModal}
+        currentError={currentError}
+      />
     )
   }
 
