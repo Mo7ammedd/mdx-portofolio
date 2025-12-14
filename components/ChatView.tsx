@@ -1,7 +1,8 @@
 'use client';
 
 import { ChatProvider } from 'react-chat-agent'
-import { ChatInterface, ErrorModal } from '@/components/Chats'
+import { ChatInterface } from '@/components/Chats'
+import { ErrorModal } from '@/components/ui/modals'
 import 'react-chat-agent/ui.css'
 
 interface ChatViewProps {

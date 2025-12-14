@@ -15,6 +15,8 @@ import {
   storeSession, 
   getStoredSession 
 } from '@/lib/session'
+// Use lightweight modals - no heavy dependencies
+import { ErrorModal } from '@/components/ui/modals'
 
 // Dynamically import heavy chat components - only loaded when chat is opened
 const ChatView = dynamic(() => import('@/components/ChatView'), {
@@ -26,11 +28,6 @@ const ChatView = dynamic(() => import('@/components/ChatView'), {
       </div>
     </div>
   ),
-  ssr: false,
-})
-
-// Dynamically import ErrorModal - only loaded when needed
-const ErrorModal = dynamic(() => import('@/components/Chats').then(mod => ({ default: mod.ErrorModal })), {
   ssr: false,
 })
 

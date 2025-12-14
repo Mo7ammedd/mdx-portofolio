@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 
 import './globals.css'
 
@@ -29,18 +29,33 @@ export const metadata: Metadata = {
   },
 }
 
-const geist = Geist({
+// Use system fonts to avoid network requests and improve LCP
+const geist = localFont({
+  src: [
+    {
+      path: '../public/fonts/GeistVF.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
   variable: '--font-geist',
-  subsets: ['latin'],
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 })
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: [
+    {
+      path: '../public/fonts/GeistMonoVF.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
   variable: '--font-geist-mono',
-  subsets: ['latin'],
   display: 'swap',
   preload: true,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'monospace'],
 })
 
 export default function RootLayout({

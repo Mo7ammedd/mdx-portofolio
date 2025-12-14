@@ -101,6 +101,15 @@ const nextConfig = {
         cacheGroups: {
           default: false,
           vendors: false,
+          // CRITICAL: Isolate react-chat-agent and ALL its dependencies into async chunks
+          chatAgent: {
+            name: 'chat-agent',
+            test: /[\\/]node_modules[\\/](react-chat-agent|oblien|react-syntax-highlighter|refractor|prismjs|highlight\.js|highlightjs-vue|lowlight|streamdown|mermaid|shiki|@shikijs|katex|cytoscape|cytoscape-fcose|langium|@mermaid-js)[\\/]/,
+            chunks: 'async', // Only load when dynamically imported
+            priority: 50,
+            enforce: true,
+            reuseExistingChunk: false,
+          },
           // Separate motion/framer-motion into its own chunk
           motion: {
             name: 'motion',
@@ -129,11 +138,38 @@ const nextConfig = {
             priority: 15,
             reuseExistingChunk: true,
           },
-          // Other vendors
+          // Other vendors - exclude chat-related packages and their dependencies
           vendor: {
             name: 'vendor',
             chunks: 'all',
-            test: /node_modules/,
+            test: (module) => {
+              if (!module.context) return false;
+              if (!module.context.includes('node_modules')) return false;
+              // Exclude these from vendor chunk - they should be loaded async with chat
+              const excludePackages = [
+                'react-chat-agent',
+                'oblien',
+                'react-syntax-highlighter',
+                'refractor',
+                'prismjs',
+                'highlight.js',
+                'highlightjs-vue',
+                'lowlight',
+                'streamdown',
+                'mermaid',
+                'shiki',
+                '@shikijs',
+                'katex',
+                'cytoscape',
+                'cytoscape-fcose',
+                'langium',
+                '@mermaid-js'
+              ];
+              for (const pkg of excludePackages) {
+                if (module.context.includes(pkg)) return false;
+              }
+              return true;
+            },
             priority: 10,
             reuseExistingChunk: true,
           },

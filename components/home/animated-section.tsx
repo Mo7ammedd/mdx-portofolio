@@ -5,13 +5,16 @@ import { ReactNode } from 'react'
 import { useInView } from '@/hooks/useInView'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
+// Use GPU-accelerated properties only (transform, opacity)
+// Avoid filter: blur() which causes non-composited animations
 const VARIANTS_SECTION = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
 }
 
 const TRANSITION_SECTION = {
   duration: 0.3,
+  ease: 'easeOut',
 }
 
 interface AnimatedSectionProps {
