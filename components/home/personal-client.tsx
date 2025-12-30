@@ -8,7 +8,6 @@ import { WorkSection } from '@/components/home/work-section'
 import { BlogSection } from '@/components/home/blog-section'
 import { ConnectSection } from '@/components/home/connect-section'
 import { SpotifySection } from '@/components/home/spotify-section'
-import ChatInput from '@/components/ChatInput'
 // Use lightweight session helpers - no heavy dependencies
 import { 
   getOrCreateFingerprint, 
@@ -28,6 +27,11 @@ const ChatView = dynamic(() => import('@/components/ChatView'), {
       </div>
     </div>
   ),
+  ssr: false,
+})
+
+const ChatInput = dynamic(() => import('@/components/ChatInput'), {
+  loading: () => null,
   ssr: false,
 })
 
