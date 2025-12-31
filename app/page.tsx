@@ -9,6 +9,17 @@ import { getGitHubRepoStats, extractGitHubInfo } from '@/lib/github'
 import { getReadingTimeForPost } from '@/lib/reading-time'
 import { PersonalClient } from '@/components/home/personal-client'
 
+// Enable ISR - revalidate every 3600 seconds (1 hour)
+export const revalidate = 3600
+
+// Static metadata generation
+export async function generateMetadata() {
+  return {
+    title: 'Mohammed Mostafa - Software Engineer',
+    description: 'Experienced Software Engineer specializing in ASP.NET Core, Node.js, and TypeScript',
+  }
+}
+
 export default async function Personal() {
   const projectsWithStats = await Promise.all(
     PROJECTS.map(async (project) => {

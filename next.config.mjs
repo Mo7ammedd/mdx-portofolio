@@ -41,7 +41,13 @@ const nextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
-  generateEtags: false,
+  generateEtags: true,
+  
+  // Enable SWC minification (default in Next.js 15 but explicit for clarity)
+  swcMinify: true,
+  
+  // Optimize output
+  output: 'standalone',
   
   // Experimental features for better performance
   experimental: {
@@ -52,8 +58,11 @@ const nextConfig = {
       'next-themes',
       'react-markdown',
       'react-chat-agent',
+      'react-syntax-highlighter',
+      'refractor',
     ],
     optimizeCss: true,
+    webpackMemoryOptimizations: true,
   },
   
   // Turbopack configuration for Next.js 16

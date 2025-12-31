@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   },
 }
 
+// Add revalidation for ISR
+export const revalidate = 3600 // Revalidate every hour
+
 // Use system fonts to avoid network requests and improve LCP
 const geist = localFont({
   src: [
@@ -104,10 +107,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="https://i.scdn.co" />
+        <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+        <link rel="dns-prefetch" href="https://api.github.com" />
+        
+        {/* Preconnect to critical external domains */}
+        <link rel="preconnect" href="https://i.scdn.co" crossOrigin="anonymous" />
+        
+        {/* RSS Feed */}
         <link rel="alternate" type="application/rss+xml" title="Mohammed Mostafa - Blog RSS Feed" href="/rss.xml" />
       </head>
       <body
