@@ -43,11 +43,18 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: true,
   
-  // Enable SWC minification (default in Next.js 15 but explicit for clarity)
-  swcMinify: true,
-  
   // Optimize output
   output: 'standalone',
+  
+  // Modern JavaScript output - eliminates legacy polyfills for ~12KB savings
+  // Only targets modern browsers (ES2020+)
+  // This removes unnecessary transpilation and polyfills
+  transpilePackages: [],
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
+  },
   
   // Experimental features for better performance
   experimental: {
@@ -63,6 +70,8 @@ const nextConfig = {
     ],
     optimizeCss: true,
     webpackMemoryOptimizations: true,
+    // Inline critical CSS automatically
+    inlineCss: true,
   },
   
   // Turbopack configuration for Next.js 16

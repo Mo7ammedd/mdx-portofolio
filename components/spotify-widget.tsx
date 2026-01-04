@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { SpotifyTrack } from '@/lib/spotify'
+import type { SpotifyTrack } from '@/lib/spotify'
 import { Magnetic } from './ui/magnetic'
 
 interface SpotifyWidgetProps {

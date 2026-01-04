@@ -8,11 +8,14 @@ import { Header } from './header'
 import { Footer } from './footer'
 import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
-import { Analytics } from '@/components/analytics'
-import { PerformanceMonitor } from '@/components/performance-monitor'
+import dynamic from 'next/dynamic'
 import { Providers } from './providers'
 import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
 import { generateFAQSchema } from '@/lib/faq-schema'
+
+// Lazy load analytics and monitoring - not needed for initial render
+const Analytics = dynamic(() => import('@/components/analytics').then(mod => ({ default: mod.Analytics })))
+const PerformanceMonitor = dynamic(() => import('@/components/performance-monitor').then(mod => ({ default: mod.PerformanceMonitor })))
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -107,13 +110,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* DNS prefetch for external domains */}
+        {/* Preconnect to critical external domains - prioritize over DNS prefetch */}
+        <link rel="preconnect" href="https://i.scdn.co" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://avatars.githubusercontent.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.github.com" crossOrigin="anonymous" />
+        
+        {/* DNS prefetch as fallback for non-critical domains */}
         <link rel="dns-prefetch" href="https://i.scdn.co" />
         <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
         <link rel="dns-prefetch" href="https://api.github.com" />
-        
-        {/* Preconnect to critical external domains */}
-        <link rel="preconnect" href="https://i.scdn.co" crossOrigin="anonymous" />
         
         {/* RSS Feed */}
         <link rel="alternate" type="application/rss+xml" title="Mohammed Mostafa - Blog RSS Feed" href="/rss.xml" />

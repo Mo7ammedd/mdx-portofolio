@@ -1,0 +1,89 @@
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+}
+
+.dark {
+  --background: oklch(0.098 0 0);
+  --foreground: oklch(0.985 0 0);
+}
+
+* {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--color-gray-200, currentColor);
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Minimal layout styles for LCP element */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-screen-sm {
+  max-width: 640px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.pt-20 {
+  padding-top: 5rem;
+}
+
+.pb-16 {
+  padding-bottom: 4rem;
+}
+
+/* Typography for hero section */
+.text-zinc-600 {
+  color: rgb(82 82 91);
+}
+
+.dark .dark\:text-zinc-400 {
+  color: rgb(161 161 170);
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

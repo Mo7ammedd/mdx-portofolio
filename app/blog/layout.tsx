@@ -1,5 +1,5 @@
 import { ReadingProgress } from '@/components/ui/reading-progress'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 export default function LayoutBlogPost({
   children,

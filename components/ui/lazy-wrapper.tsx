@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef, ReactNode } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import type { ReactNode } from 'react'
 
 interface LazyWrapperProps {
   children: ReactNode

@@ -13,8 +13,8 @@ import {
   motion,
   AnimatePresence,
   MotionConfig,
-  Transition,
-  Variant,
+  type Transition,
+  type Variant,
 } from 'motion/react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'

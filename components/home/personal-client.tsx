@@ -2,12 +2,41 @@
 
 import { useState, useCallback } from 'react'
 import dynamic from 'next/dynamic'
-import { ProjectCard } from '@/components/project-card'
-import { AnimatedContainer, StaticSection, AnimatedSection } from '@/components/home/animated-section'
-import { WorkSection } from '@/components/home/work-section'
-import { BlogSection } from '@/components/home/blog-section'
-import { ConnectSection } from '@/components/home/connect-section'
-import { SpotifySection } from '@/components/home/spotify-section'
+
+// Lazy load ALL non-critical components to reduce initial bundle
+// These components are below the fold and can be loaded on-demand
+const ProjectCard = dynamic(() => import('@/components/project-card').then(mod => ({ default: mod.ProjectCard })), {
+  loading: () => <div className="h-32 bg-zinc-100 dark:bg-zinc-900 animate-pulse rounded-lg" />,
+})
+
+const AnimatedContainer = dynamic(() => import('@/components/home/animated-section').then(mod => ({ default: mod.AnimatedContainer })), {
+  ssr: true, // Keep SSR for SEO
+})
+
+const StaticSection = dynamic(() => import('@/components/home/animated-section').then(mod => ({ default: mod.StaticSection })), {
+  ssr: true,
+})
+
+const AnimatedSection = dynamic(() => import('@/components/home/animated-section').then(mod => ({ default: mod.AnimatedSection })), {
+  ssr: true,
+})
+
+const WorkSection = dynamic(() => import('@/components/home/work-section').then(mod => ({ default: mod.WorkSection })), {
+  loading: () => <div className="h-24 bg-zinc-100 dark:bg-zinc-900 animate-pulse rounded-lg" />,
+})
+
+const BlogSection = dynamic(() => import('@/components/home/blog-section').then(mod => ({ default: mod.BlogSection })), {
+  loading: () => <div className="h-24 bg-zinc-100 dark:bg-zinc-900 animate-pulse rounded-lg" />,
+})
+
+const ConnectSection = dynamic(() => import('@/components/home/connect-section').then(mod => ({ default: mod.ConnectSection })), {
+  loading: () => <div className="h-24 bg-zinc-100 dark:bg-zinc-900 animate-pulse rounded-lg" />,
+})
+
+const SpotifySection = dynamic(() => import('@/components/home/spotify-section').then(mod => ({ default: mod.SpotifySection })), {
+  loading: () => <div className="h-24 bg-zinc-100 dark:bg-zinc-900 animate-pulse rounded-lg" />,
+  ssr: false, // Spotify widget doesn't need SSR
+})
 // Use lightweight session helpers - no heavy dependencies
 import { 
   getOrCreateFingerprint, 

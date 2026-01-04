@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 import { WEBSITE_URL } from '@/lib/constants'
 import { BLOG_POST_METADATA, getAllBlogSlugs } from '@/lib/blog-metadata'
 

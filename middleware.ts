@@ -1,19 +1,28 @@
-// Middleware for security headers and performance
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Clone the response
   const response = NextResponse.next()
 
-  // Security headers
+  // Enable DNS prefetch for faster domain resolution
   response.headers.set('X-DNS-Prefetch-Control', 'on')
+  
+  // Security headers
   response.headers.set('X-Frame-Options', 'SAMEORIGIN')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
   
-  // Strict CSP for better security (adjust as needed)
+  // Add resource hints via Link header for critical resources
+  // This helps browsers discover and fetch critical resources earlier
+  const linkHeaders = [
+    '<https://i.scdn.co>; rel=preconnect; crossorigin',
+    '<https://avatars.githubusercontent.com>; rel=preconnect; crossorigin',
+    '<https://api.github.com>; rel=preconnect',
+  ].join(', ')
+  
+  response.headers.set('Link', linkHeaders)
+  
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com;
@@ -37,13 +46,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
     {
       source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
