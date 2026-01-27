@@ -20,123 +20,114 @@ type SocialLink = {
   label: string
   link: string
 }
-
+ 
 export const PROJECTS = [
   {
-    title: 'Aura Decor',
-    href: 'https://github.com/Mo7ammedd/Aura-Decor',
+    title: "Aura Decor",
+    href: "https://github.com/Mo7ammedd/Aura-Decor",
     active: true,
-    description:
-      'Augmented Reality (AR) application integrating custom 3D models to deliver an immersive shopping experience, allowing users to visualize furniture pieces in their real environment.',
-    technologies: ['ASP.NET Core', 'RabbitMQ', 'Docker', 'Redis'],
+    description: "Augmented Reality (AR) application integrating custom 3D models to deliver an immersive shopping experience, allowing users to visualize furniture pieces in their real environment.",
+    technologies: ["ASP.NET Core", "RabbitMQ", "Docker", "Redis"],
     links: [
       {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/Aura-Decor',
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/Aura-Decor",
         icon: <Icons.github className="size-3" />,
-      },
+      }
     ],
-  },
-    {
-    title: 'LSMSharp',
-    href: 'https://github.com/Mo7ammedd/LSMSharp',
-    active: true,
-    description:
-      'A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.',
-    technologies: [
-      'C#',
-      'LSM-Tree',
-      'ACID',
-      'Concurrent Access',
-      'Benchmarking',
-    ],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/LSMSharp',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '', // Add video link here if available
+    image: "",
+    video: ""
   },
   {
-    title: 'Talabat APIs',
-    href: 'https://github.com/Mo7ammedd/Talabat-APIs',
+    title: "SimuKernel",
+    href: "https://github.com/Mo7ammedd/SimuKernel",
     active: true,
-    description:
-      'Talabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform',
-    technologies: ['ASP.NET Core', 'C#', 'Sql Server', 'Redis'],
+    description: "An educational operating system simulator demonstrating CPU scheduling, memory management, and process control with visualized metrics.",
+    technologies: ["Operating Systems", "CPU Scheduling", "Memory Management", "Process Management"],
     links: [
       {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/Talabat-APIs',
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/SimuKernel",
         icon: <Icons.github className="size-3" />,
-      },
+      }
     ],
+    image: "",
+    video: ""
   },
   {
-    title: 'Manga Store', 
-    href: 'https://github.com/Mo7ammedd/BookStore',
+    title: "LSMSharp",
+    href: "https://github.com/Mo7ammedd/LSMSharp",
     active: true,
-    description:
-    'Manga Store MVC project is a comprehensive web application built using .NET MVC Core. It allows users to browse, purchase, and manage manga collections with integrated payment processing. The application features a user-friendly interface for seamless navigation and secure transactions',
-    technologies: ['ASP.NET Mvc', 'Stripe', 'Sql Server', 'Azure'],
+    description: "A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.",
+    technologies: ["C#", "LSM-Tree", "ACID", "Concurrent Access", "Benchmarking"],
     links: [
       {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/BookStore',
-        icon: <Icons.github className="size-3" />,
-      },
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/LSMSharp",
+        icon  : <Icons.github className="size-3" />,
+      }
     ],
-    image: '',
-    video: '', // Add video link here if available
+    image: "",
+    video: ""
   },
   {
-    title: 'HungerStation Microservices',
-    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+    title: "Talabat APIs",
+    href: "https://github.com/Mo7ammedd/Talabat-APIs",
     active: true,
-    description:
-      'Built seven microservices with .NET 8, featuring secure authentication, Azure Service Bus communication',
-    technologies: [
-      'Microservices',
-      'Azure Service Bus',
-      'RabbitMQ',
-    ],
+    description: "Talabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform",
+    technologies: ["ASP.NET Core", "C#", "Sql Server", "Redis"],
     links: [
       {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/Talabat-APIs",
         icon: <Icons.github className="size-3" />,
-      },
+      }
     ],
-    image: '',
-    video: '', 
+    image: "",
+    video: ""
   },
   {
-    title: 'Taylor Swift Quiz',
-    href: 'https://swiftiequiz.vercel.app/',
+    title: "HungerStation Microservices",
+    href: "https://github.com/Mo7ammedd/HungerStation_Microservices",
     active: true,
-    description:
-      'I made random lyrics quiz generator for the best songwriter',
-    technologies: [
-      'Node.js',
-      'Express',
-      'Next.js',
-    ],
+    description: "Built seven microservices with .NET 8, featuring secure authentication, Azure Service Bus communication",
+    technologies: ["Microservices", "Azure Service Bus", "RabbitMQ"],
     links: [
       {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/TaylorSwiftClient',
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/HungerStation_Microservices",
         icon: <Icons.github className="size-3" />,
-      },
+      }
     ],
-    image: '',
-    video: '', // Add video link here if available
+    image: "",
+    video: ""
   },
+  {
+    title: "Taylor Swift Quiz",
+    href: "https://swiftiequiz.vercel.app/",
+    active: true,
+    description: "I made random lyrics quiz generator for the best songwriter",
+    technologies: ["Node.js", "Express", "Next.js"],
+    links: [
+      {
+        type: "Source",
+        href: "https://github.com/Mo7ammedd/TaylorSwiftClient",
+        icon: <Icons.github className="size-3" />,
+      }
+    ],
+    image: "",
+    video: ""
+  }
 ]
-
 export const WORK_EXPERIENCE: WorkExperience[] = [
+    {
+    company: "Oblien",
+    title: "SDE",
+    start: "Sep 2025",
+    end: "Present",
+    link: "https://oblien.com/",
+    id: "work0",
+  },
   {
     company: 'Medica Scope',
     title: 'Backend Engineer',
@@ -192,6 +183,13 @@ export const BLOG_POSTS: BlogPost[] = [
       'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
     link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
+  },
+  {
+    title: 'SimuKernel: OS Concepts Explained',
+    description:
+      'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
+    link: '/blog/simukernel-operating-system-concepts',
+    uid: 'blog-4',
   },
 ]
 

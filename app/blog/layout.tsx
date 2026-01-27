@@ -38,6 +38,13 @@ export default function LayoutBlogPost({
         dateModified: '2024-11-01',
         image: '/og/difference-between-cluster-and-non-cluster-index.png',
       },
+      'simukernel-operating-system-concepts': {
+        title: 'SimuKernel: OS Concepts Explained',
+        description: 'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
+        datePublished: '2024-12-10',
+        dateModified: '2024-12-10',
+        image: '/og/simukernel-operating-system-concepts.png',
+      },
     }
     
     return blogPosts[slug || ''] || null

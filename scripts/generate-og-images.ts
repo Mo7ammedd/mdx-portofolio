@@ -27,6 +27,12 @@ const BLOG_POSTS = [
     link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
   },
+  {
+    title: 'SimuKernel: OS Concepts Explained',
+    description:'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
+    link: '/blog/simukernel-operating-system-concepts',
+    uid: 'blog-4',
+  },
 ]
 
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'og')
