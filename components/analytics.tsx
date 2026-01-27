@@ -100,7 +100,6 @@ export const trackContactSubmission = () => {
   })
 }
 
-// Track project link clicks
 export const trackProjectClick = (projectName: string, linkType: 'demo' | 'source') => {
   trackEvent('project_click', {
     event_category: 'engagement',
