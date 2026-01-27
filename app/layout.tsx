@@ -16,8 +16,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#09090b' }, // zinc-950 color
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
   ],
   colorScheme: 'dark light',
 }
@@ -97,7 +97,7 @@ export default function RootLayout({
           enableSystem={true}
           attribute="class"
           storageKey="theme"
-          defaultTheme="system"
+          defaultTheme="dark"
         >
           <PalestineSolidarity />
           <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
