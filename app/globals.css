@@ -149,4 +149,51 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Enhanced blog post typography */
+  article {
+    @apply text-zinc-700 dark:text-zinc-300;
+  }
+  
+  /* Better code block styling with syntax highlighting support */
+  article pre {
+    @apply shadow-xl;
+  }
+  
+  article pre code {
+    @apply text-zinc-100;
+  }
+  
+  /* Enhanced inline code */
+  article :not(pre) > code {
+    @apply font-mono text-[0.9em] font-medium;
+  }
+  
+  /* Better link hover states */
+  article a {
+    @apply transition-all duration-200;
+  }
+  
+  /* Enhanced list markers */
+  article ul > li::marker {
+    @apply text-zinc-400 dark:text-zinc-600;
+  }
+  
+  article ol > li::marker {
+    @apply text-zinc-500 dark:text-zinc-500 font-semibold;
+  }
+  
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Better blockquote styling */
+  article blockquote p:first-of-type::before {
+    content: none;
+  }
+  
+  article blockquote p:last-of-type::after {
+    content: none;
+  }
 }

@@ -1,289 +1,467 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'Clustered vs Non-Clustered Database Indexes: Complete Guide',
-  description: 'Master database indexing with comprehensive guide on clustered and non-clustered indexes. Learn B-Tree architecture, performance optimization, and real-world implementation strategies.',
-  slug: 'difference-between-cluster-and-non-cluster-index',
-  publishedTime: '2024-11-01T10:00:00.000Z',
-  modifiedTime: '2024-11-01T10:00:00.000Z',
-  tags: ['database', 'sql-server', 'indexing', 'performance', 'b-tree', 'database-optimization'],
+  title: 'SimuKernel: OS Concepts Explained',
+  description:
+    'A practical guide to CPU scheduling, memory management, and process control using SimuKernel — an educational operating system simulator.',
+  slug: 'simukernel-operating-system-concepts',
+  publishedTime: '2025-10-29T10:00:00.000Z',
+  modifiedTime: '2025-10-29T10:00:00.000Z',
+  tags: ['operating-systems', 'cpu-scheduling', 'memory-management', 'process-management'],
 })
 
-# Clustered and Non-Clustered Implementations
+# OS Concepts Explained
 
-## Introduction to Database Indexing
+This article provides detailed explanations of the operating system concepts implemented in SimuKernel.
 
-Picture this: you're searching for a specific page in a 1,000-page technical manual. Without an index, you'd flip through every single page-tedious and time-consuming. Database indexes work exactly the same way, but instead of pages, we're dealing with millions of data rows.
+> Source code: https://github.com/Mo7ammedd/SimuKernel
 
-As someone who's spent countless hours optimizing database performance in production systems, I can tell you that understanding indexes isn't just academic-it's the difference between a snappy application and one that makes users wait. I've seen queries that took 30 seconds drop to under 50 milliseconds just by adding the right index.
+## Table of Contents
+1. [CPU Scheduling](#cpu-scheduling)
+2. [Memory Management](#memory-management)
+3. [Process Management](#process-management)
+4. [Performance Metrics](#performance-metrics)
 
-Database indexes are sophisticated data structures that create efficient pathways to your data. Without them, databases perform **table scans**-reading every single row sequentially (O(n) complexity). I've witnessed this firsthand when a colleague accidentally dropped an index on a 50-million-row table during peak hours. The result? Every query ground to a halt.
+---
 
-### Why Indexes Matter (From Real-World Experience):
+## CPU Scheduling
 
-- **I/O Operations**: The biggest performance killer in databases. I've seen systems go from 10,000 IOPS to under 100 IOPS with proper indexing
-- **Query Execution**: Transform linear searches into logarithmic ones-the mathematical beauty of O(log n) complexity
-- **Sorting Operations**: Pre-ordered data means ORDER BY clauses fly instead of crawl
-- **Join Performance**: Nothing kills a query faster than nested loops on unindexed columns
+### What is CPU Scheduling?
 
-### A Quick Story from the Trenches
+CPU scheduling is the process of determining which process in the ready queue will be allocated the CPU for execution. The goal is to maximize CPU utilization, throughput, and minimize waiting time and response time.
 
-Last year, I was troubleshooting a reporting system that was taking hours to generate monthly reports. The culprit? A missing index on a date column that was filtering 200 million records. After adding a proper clustered index, the same report ran in under 2 minutes. The business team thought I was a magician-I just understood how databases think.
+### Process States
 
-## B-Tree Architecture: The Engine Behind Indexes
+A process transitions through several states:
+- **New**: Process is being created
+- **Ready**: Process is waiting to be assigned to CPU
+- **Running**: Instructions are being executed
+- **Waiting**: Process is waiting for I/O or event
+- **Terminated**: Process has finished execution
 
-Now, let's get our hands dirty with the actual mechanics. B-Trees aren't just theoretical computer science-they're the workhorses that make databases blazingly fast. Think of a B-Tree as a multi-level directory system that's perfectly balanced.
+### Scheduling Algorithms
 
-### How B-Trees Actually Work in Practice
+#### 1. Round Robin (RR)
 
-When I explain B-Trees to junior developers, I use this analogy: imagine you're organizing a massive library where books need to be found in seconds, not minutes. You wouldn't just throw books on shelves randomly-you'd create a hierarchical system.
+**How it works:**
+- Each process gets a fixed time slice (quantum)
+- After quantum expires, process moves to end of ready queue
+- Next process in queue gets CPU
+- Preemptive algorithm
 
-```sql
-                    [Root Node: 1-500, 501-1000, 1001-1500]
-                   /                 |                      \
-         [1-250, 251-500]    [501-750, 751-1000]    [1001-1250, 1251-1500]
-          /      |     \           /      |      \           /       |       \
-    [1-125][126-250][251-375] [501-625][626-750][751-875] [1001-1125][1126-1250][1251-1375]
+**Advantages:**
+- Fair allocation of CPU time
+- No starvation
+- Good for time-sharing systems
+- Predictable response time
+
+**Disadvantages:**
+- Context switching overhead
+- Average waiting time can be high
+- Performance depends on time quantum selection
+
+**Time Quantum Selection:**
+- Too small: High context switching overhead
+- Too large: Becomes FCFS, poor response time
+- Typical: 10-100 milliseconds
+
+**Example:**
+```
+Processes: P1(burst=10), P2(burst=5), P3(burst=8)
+Quantum = 4
+
+Execution Order:
+P1[0-4] → P2[4-8] → P3[8-12] → P1[12-16] → P2[16-17] → P3[17-21] → P1[21-22]
 ```
 
-#### The Magic of B-Tree Design:
+#### 2. Priority Scheduling
 
-- **Balanced Structure**: This isn't accidental-SQL Server works hard to keep all leaf nodes at the same depth. I've seen what happens when this balance breaks (hello, performance degradation!)
-- **Node Capacity**: Each page holds about 8KB of data. With proper key design, that's typically 100-1,000 keys per node
-- **Self-Maintaining**: Here's the cool part-the database engine automatically handles splits and merges. You don't babysit it
+**How it works:**
+- Each process has a priority number
+- CPU allocated to highest priority process
+- Can be preemptive or non-preemptive
+- Lower number = higher priority (convention)
 
-### Real-World B-Tree Performance
+**Preemptive Priority:**
+- Running process can be interrupted
+- New higher priority process gets CPU immediately
 
-I once had to explain to a skeptical product manager why we needed to rebuild an index. The fragmentation had gotten so bad that what should have been a 3-level B-Tree had become a 7-level nightmare. One REBUILD command later, query performance improved by 400%. The math is beautiful: log₁₀₀(1,000,000) = 3 vs log₁₀₀(10,000,000) = 4 levels for ten times more data.
+**Non-Preemptive Priority:**
+- Process runs to completion
+- Priority checked only when CPU becomes free
 
-### Operational Complexity
+**Advantages:**
+- Important processes execute first
+- Good for real-time systems
+- Flexible based on process needs
+
+**Disadvantages:**
+- **Starvation**: Low priority processes may never execute
+- Priority inversion in complex systems
+
+**Starvation Prevention:**
+- Aging: Gradually increase priority of waiting processes
+- After threshold time, boost priority
+
+**Example:**
 ```
-| Operation      | Complexity | Description                                  |
-|----------------|------------|--------------------------------------------- |
-| Equality Seek  | O(log n)   | Direct path from root to leaf                |
-| Range Query    | O(log n +k)| k = number of rows in range                  |
-| Insert         | O(log n)   | Tree traversal + potential node splits       |
-| Delete         | O(log n)   | Tree traversal + potential node merges       |
-```
-## Clustered Indexes: The Data Organizer
+Processes: P1(priority=3), P2(priority=1), P3(priority=4), P4(priority=2)
 
-Here's where things get really interesting. A clustered index doesn't just point to your data-it **IS** your data. This is a concept that took me years to fully appreciate, and it's probably the most misunderstood aspect of database indexing.
-
-### The Physical Reality of Clustered Indexes
-
-Think of a clustered index like a filing cabinet where documents are physically arranged in order. Once you decide on the ordering (say, alphabetical by last name), that's how the documents are actually stored.
-
-```sql
-CREATE CLUSTERED INDEX IX_Orders_Date ON Orders (OrderDate);
-```
-
-**What Actually Happens on Disk:**
-```
-Page 1023: [2024-01-01 Orders: 1001, 1003, 1007] → Physical Storage
-Page 1024: [2024-01-02 Orders: 1002, 1009, 1012] → Continuous Storage  
-Page 1025: [2024-01-03 Orders: 1005, 1008, 1015] → Sequential Pages
-```
-
-#### The Three Golden Rules I've Learned:
-
-1. **Physical Ordering Matters**: Your data is literally rearranged on disk. I once made the mistake of clustering on a GUID column-performance was horrific because GUIDs are random, causing constant page splits.
-
-2. **The Uniquifier Problem**: Here's something that bit me early in my career. If your clustered key isn't unique, SQL Server adds a hidden 4-byte "uniquifier" to make it unique. I've seen tables bloat by 15% because of this oversight.
-
-3. **Insert Pattern Performance**: Random inserts on a clustered index are like trying to insert pages in the middle of a bound book-messy and expensive. Sequential inserts (like IDENTITY columns) are like adding pages to the end-smooth and fast.
-
-### Advanced Clustered Index Strategies
-
-After years of database optimization, here are the patterns that actually work in production:
-
-### Advanced Configuration Options
-
-#### 1. Page Density Control
-```sql
--- Leave 10% free space per page for updates
-CREATE CLUSTERED INDEX IX_Customers_Cluster 
-ON Customers (LastName)
-WITH (FILLFACTOR = 90);
+Non-Preemptive Order: P2 → P4 → P1 → P3
+(Execution order by priority)
 ```
 
-#### 2. Composite Key Strategies
-```sql
--- Optimize for date-range queries with ID fallback
-CREATE CLUSTERED INDEX IX_Orders_Composite
-ON Orders (OrderDate DESC, OrderID ASC);
+#### 3. Multilevel Feedback Queue (MLFQ)
+
+**How it works:**
+- Multiple queues with different priorities
+- Each queue has its own scheduling algorithm (usually RR)
+- Different time quantums for each level
+- Processes can move between queues
+
+**Queue Structure:**
+```
+Queue 0 (Highest Priority) - Quantum: 2ms
+Queue 1 (Medium Priority)  - Quantum: 4ms  
+Queue 2 (Lowest Priority)  - Quantum: 8ms
 ```
 
-**Query Pattern Leverage:**
-```sql
--- Efficient range query using leading date column
-SELECT * FROM Orders
-WHERE OrderDate BETWEEN '2024-01-01' AND '2024-01-31'
-ORDER BY OrderDate DESC, OrderID ASC;
+**Process Movement Rules:**
+1. New processes enter highest priority queue
+2. If process uses entire quantum: Move down one level
+3. If process blocks (I/O): Stay in same level or move up
+4. If process waits too long (aging): Move up one level
+
+**Advantages:**
+- Favors short jobs (I/O-bound)
+- Prevents starvation through aging
+- Adapts to process behavior
+- No need to know burst time in advance
+
+**Disadvantages:**
+- Complex to implement
+- Requires parameter tuning
+- Can have high overhead
+
+**Real-World Use:**
+- Linux CFS (Completely Fair Scheduler)
+- Windows Thread Scheduler
+- macOS Grand Central Dispatch
+
+---
+
+## Memory Management
+
+### Virtual Memory
+
+**Concept:**
+- Separation of logical and physical memory
+- Processes use virtual addresses
+- MMU (Memory Management Unit) translates to physical addresses
+- Allows running programs larger than physical RAM
+
+**Benefits:**
+- Process isolation (security)
+- Efficient memory use
+- Simplified programming model
+- Support for shared libraries
+
+### Paging
+
+**How it works:**
+- Divide memory into fixed-size blocks
+- **Pages**: Logical memory blocks (process view)
+- **Frames**: Physical memory blocks (hardware view)
+- Page table maps pages to frames
+
+**Page Table:**
+```
+Virtual Page → Physical Frame
+    0       →      2
+    1       →      5
+    2       →      1
+    3       →      7
 ```
 
-## Non-Clustered Indexes: The Precision Navigator
+**Address Translation:**
+```
+Virtual Address = Page Number + Offset
+Physical Address = Frame Number + Offset
 
-### Pointer Architecture Deep Dive
-```sql
--- Create index on frequently searched column
-CREATE NONCLUSTERED INDEX IX_Orders_Customer
-ON Orders (CustomerID)
-INCLUDE (OrderDate, TotalAmount);
+Example:
+Virtual: Page 2, Offset 100
+Physical: Frame 1, Offset 100
 ```
 
-**Storage Layout:**
+### Page Replacement Algorithms
+
+When memory is full and new page needed, must replace existing page.
+
+#### 1. FIFO (First-In-First-Out)
+
+**Algorithm:**
+- Maintain queue of pages in memory
+- Replace oldest page (first loaded)
+
+**Implementation:**
 ```
-Index Page 701:
-CustomerID | Row Locator
------------|------------
-12345      | Page 1023, Slot 5
-12345      | Page 1025, Slot 2
-12346      | Page 1030, Slot 7
-
-Data Pages:
-Page 1023: [OrderID: 1001, CustomerID: 12345, ...]
-Page 1025: [OrderID: 1002, CustomerID: 12345, ...]
-Page 1030: [OrderID: 1003, CustomerID: 12346, ...]
-```
-
-### Specialized Index Types
-
-#### 1. Filtered Indexes
-```sql
--- Optimize for active users
-CREATE NONCLUSTERED INDEX IX_Users_Active
-ON Users (LastLoginDate)
-WHERE IsActive = 1;
+Queue: [P1, P2, P3, P4]
+New page P5 arrives → Replace P1
+Queue: [P2, P3, P4, P5]
 ```
 
-#### 2. Columnstore Indexes
-```sql
--- For analytical workloads
-CREATE COLUMNSTORE INDEX IX_Sales_Columnstore
-ON Sales (ProductID, SaleDate, Quantity, Amount);
+**Advantages:**
+- Simple to implement
+- Low overhead
+- Fair (all pages age equally)
+
+**Disadvantages:**
+- Belady's Anomaly: More frames can cause more faults
+- Doesn't consider page usage patterns
+- May replace frequently used pages
+
+**Belady's Anomaly Example:**
+```
+Reference: 1,2,3,4,1,2,5,1,2,3,4,5
+
+3 Frames: 9 page faults
+4 Frames: 10 page faults (worse!)
 ```
 
-## Performance Optimization Strategies
-### Index Selection Matrix
+#### 2. LRU (Least Recently Used)
+
+**Algorithm:**
+- Replace page not used for longest time
+- Assumes: Recently used pages will be used again soon
+
+**Implementation:**
+- Timestamp each page access
+- On replacement, choose minimum timestamp
+- Or use stack/counter
+
+**Advantages:**
+- Better performance than FIFO
+- No Belady's anomaly
+- Approximates optimal
+
+**Disadvantages:**
+- High overhead (tracking access times)
+- Requires hardware support
+- Complex implementation
+
+**Hardware Support:**
+- Timestamp register
+- Stack of page numbers
+- Counter for each page table entry
+
+**Example:**
+```
+Time: 0  1  2  3  4  5
+Ref:  1  2  3  1  4  2
+
+Access times when referencing page 5:
+P1: 3, P2: 5, P3: 2, P4: 4
+Replace P3 (oldest access)
 ```
 
-| Scenario                  | Recommended Index Type       | Reason                                                                 |
-|---------------------------|------------------------------|-----------------------------------------------------------------------|
-| Primary Key               | Clustered                    | Natural access path for unique record retrieval                      |
-| Frequent Range Queries    | Clustered                    | Physical ordering enables sequential reads                           |
-| OLTP Lookup Columns       | Non-Clustered                | Fast seeks with minimal write overhead                               |
-| Covering Frequent Queries | Non-Clustered with INCLUDES  | Eliminates expensive key lookups                                     |
-| Low Cardinality Columns   | Filtered Non-Clustered       | Reduces index size while maintaining usefulness                      |
+#### 3. Optimal Page Replacement
+
+**Algorithm:**
+- Replace page that won't be used for longest time in future
+- Theoretical optimal (minimum possible faults)
+
+**Implementation:**
+- Look ahead in reference string
+- For each frame, find next use time
+- Replace frame with farthest next use
+- If page never used again, replace it immediately
+
+**Advantages:**
+- Minimum page faults (provably optimal)
+- Good benchmark for other algorithms
+
+**Disadvantages:**
+- Impossible to implement (requires future knowledge)
+- Only useful for analysis and comparison
+
+**Example:**
 ```
-### Maintenance Scripts with Intelligence
-```sql
--- Smart index reorganization script
-DECLARE @IndexName NVARCHAR(255), @Fragmentation FLOAT
+Reference: 1,2,3,4,1,2,5,1,2,3,4,5
+Frames: 3
 
-DECLARE IndexCursor CURSOR FOR
-SELECT name, avg_fragmentation_in_percent
-FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, NULL) ps
-JOIN sys.indexes i ON ps.object_id = i.object_id AND ps.index_id = i.index_id
-WHERE ps.avg_fragmentation_in_percent > 5 -- Only consider fragmented indexes
+At step 6 (need to load page 5):
+P1: next used at step 7 (distance: 1)
+P2: next used at step 8 (distance: 2)  
+P3: next used at step 10 (distance: 4)
+P4: not used again (distance: ∞)
 
-OPEN IndexCursor
-FETCH NEXT FROM IndexCursor INTO @IndexName, @Fragmentation
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    IF @Fragmentation > 30
-    BEGIN
-        EXEC('ALTER INDEX ' + @IndexName + ' ON Orders REBUILD')
-    END
-    ELSE
-    BEGIN
-        EXEC('ALTER INDEX ' + @IndexName + ' ON Orders REORGANIZE')
-    END
-    
-    FETCH NEXT FROM IndexCursor INTO @IndexName, @Fragmentation
-END
-
-CLOSE IndexCursor
-DEALLOCATE IndexCursor
+Replace P4 (optimal choice)
 ```
 
-## Real-World Performance Comparison
+### Page Fault Handling
 
-### Benchmark Results (10M Row Table)
+**Page Fault Process:**
+1. CPU tries to access page not in memory
+2. MMU generates page fault interrupt
+3. OS locates page on disk
+4. Selects victim frame (if memory full)
+5. Writes victim page to disk (if modified)
+6. Loads requested page into frame
+7. Updates page table
+8. Restarts instruction
+
+**Page Fault Cost:**
+- Trap to OS: ~1-10 microseconds
+- Disk access: ~1-10 milliseconds
+- Total: ~1000x slower than memory access
+
+---
+
+## Process Management
+
+### Process Control Block (PCB)
+
+Contains process information:
+- Process ID (PID)
+- Process state
+- Program counter
+- CPU registers
+- Memory management info
+- I/O status
+- Accounting information
+
+### Context Switch
+
+**What happens:**
+1. Save state of current process to PCB
+2. Select next process to run
+3. Restore state from new process PCB
+4. Switch to user mode
+
+**Cost:**
+- Direct: Saving/restoring registers
+- Indirect: Cache/TLB flush, pipeline stall
+- Typical: 1-10 microseconds
+
+### Process Creation
+
+**Unix/Linux (fork/exec):**
 ```
-| Operation               | Clustered Index | Non-Clustered Index | Heap Table      |
-|-------------------------|-----------------|---------------------|-----------------|
-| Primary Key Seek        | 0.003 ms        | 0.003 ms + 0.2 ms*  | 2.1 ms (Table Scan) |
-| Range Query (10,000 rows) | 12 ms         | 45 ms               | 1200 ms         |
-| INSERT (sequential)     | 8 ms            | 10 ms               | 5 ms            |
-| INSERT (random)         | 120 ms          | 15 ms               | 5 ms            |
-| UPDATE (in-place)       | 6 ms            | 9 ms                | 7 ms            |
-```
-*Includes clustered index lookup time
-
-## Advanced Design Patterns
-
-### 1. Indexed Views
-```sql
--- Materialized view with combined indexes
-CREATE VIEW dbo.OrderSummary WITH SCHEMABINDING
-AS
-SELECT CustomerID, COUNT_BIG(*) AS OrderCount, SUM(TotalAmount) AS Total
-FROM dbo.Orders
-GROUP BY CustomerID
-
-CREATE UNIQUE CLUSTERED INDEX IX_OrderSummary
-ON dbo.OrderSummary (CustomerID)
-```
-
-### 2. Partitioned Indexing
-```sql
--- Monthly partitioning scheme
-CREATE PARTITION FUNCTION OrderDateRangePF (DATE)
-AS RANGE RIGHT FOR VALUES 
-('2024-01-01', '2024-02-01', '2024-03-01')
-
-CREATE PARTITION SCHEME OrderDatePS
-AS PARTITION OrderDateRangePF
-TO (fg_2023Q4, fg_2024Q1, fg_2024Q2, fg_2024Q3)
-
-CREATE CLUSTERED INDEX IX_Orders_Partitioned
-ON Orders (OrderDate)
-ON OrderDatePS (OrderDate)
-```
-
-## Troubleshooting Common Issues
-
-### Index Selection Problems
-**Symptoms:**
-- Query uses unexpected index
-- Missing index warnings in execution plans
-- High Key Lookup costs
-
-**Diagnosis Tools:**
-```sql
--- Show query execution plan with index usage
-SET STATISTICS XML ON
-
--- Find missing indexes
-SELECT * FROM sys.dm_db_missing_index_details
-
--- Analyze index usage patterns
-SELECT * FROM sys.dm_db_index_usage_stats
+parent process
+    ↓
+fork() → creates child with copy of parent memory
+    ↓
+exec() → replaces child memory with new program
+    ↓
+child executes new program
 ```
 
-## Conclusion: Strategic Index Management
+---
 
-Effective index strategy requires balancing between:
-- **Read Performance**: More indexes generally improve query speed
-- **Write Overhead**: Each index adds insert/update/delete costs
-- **Storage Costs**: Indexes consume 20-100% of table storage
-- **Maintenance Complexity**: Fragmentation requires regular attention
+## Performance Metrics
 
-**Golden Rules:**
-1. Cluster on most frequent ordered access pattern
-2. Non-clustered indexes should cover common search predicates
-3. Regularly monitor and remove unused indexes
-4. Align index strategy with workload patterns (OLTP vs OLAP)
+### CPU Scheduling Metrics
 
-By mastering these index concepts and continuously analyzing your database's specific needs, you can achieve order-of-magnitude performance improvements while maintaining system efficiency.
+**1. Turnaround Time**
+```
+Turnaround Time = Completion Time - Arrival Time
+```
+Total time from submission to completion.
+
+**2. Waiting Time**
+```
+Waiting Time = Turnaround Time - Burst Time
+```
+Time spent in ready queue.
+
+**3. Response Time**
+```
+Response Time = First Run Time - Arrival Time
+```
+Time from submission to first execution.
+
+**4. CPU Utilization**
+```
+CPU Utilization = (Total CPU Busy Time / Total Time) × 100%
+```
+Percentage of time CPU is doing useful work.
+
+**5. Throughput**
+```
+Throughput = Number of Processes / Total Time
+```
+Processes completed per time unit.
+
+### Memory Management Metrics
+
+**1. Page Fault Rate**
+```
+Page Fault Rate = (Number of Page Faults / Total References) × 100%
+```
+
+**2. Effective Access Time (EAT)**
+```
+EAT = (1 - p) × memory_access_time + p × page_fault_time
+
+where p = page fault rate
+```
+
+**Example:**
+- Memory access: 100 ns
+- Page fault time: 10 ms = 10,000,000 ns
+- Page fault rate: 0.1% = 0.001
+
+```
+EAT = 0.999 × 100 + 0.001 × 10,000,000
+    = 99.9 + 10,000
+    = 10,099.9 ns
+```
+
+**3. Memory Utilization**
+```
+Memory Utilization = (Used Memory / Total Memory) × 100%
+```
+
+---
+
+## Real-World Applications
+
+### Linux Process Scheduler
+
+**CFS (Completely Fair Scheduler):**
+- Red-black tree of runnable processes
+- Each process has virtual runtime (vruntime)
+- Runs process with smallest vruntime
+- Time slice based on nice value and number of processes
+
+### Windows Memory Manager
+
+**Working Set Management:**
+- Each process has working set (pages in physical memory)
+- Minimum and maximum working set sizes
+- Page frame database tracks all physical memory
+- Modified page writer writes dirty pages to disk
+
+### Android Process Management
+
+**Low Memory Killer:**
+- Processes assigned priority levels
+- When memory low, kills lowest priority processes
+- Background apps killed before foreground
+- System services protected
+
+---
+
+## Further Reading
+
+- **Books:**
+  - "Operating Systems: Internals and Design Principles" by William Stallings
+  - "Modern Operating Systems" by Andrew Tanenbaum
+  - "Operating Systems: Three Easy Pieces" by Remzi H. Arpaci-Dusseau
+
+- **Online Resources:**
+  - [OSDev Wiki](https://wiki.osdev.org/)
+  - [Linux Kernel Documentation](https://www.kernel.org/doc/)
+  - [MIT 6.828 Operating System Engineering](https://pdos.csail.mit.edu/6.828/)
+
+
