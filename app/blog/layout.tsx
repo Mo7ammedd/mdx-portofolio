@@ -4,6 +4,7 @@ import { ScrollProgress } from '@/components/ui/scroll-progress'
 import { StructuredData } from '@/components/structured-data'
 import { generateBlogPostSchema } from '@/lib/schema'
 import { usePathname } from 'next/navigation'
+import { TextSizeProvider, TextSizeControl } from '@/components/ui/text-size-control'
 
 export default function LayoutBlogPost({
   children,
@@ -77,7 +78,7 @@ export default function LayoutBlogPost({
   }
 
   return (
-    <>
+    <TextSizeProvider>
       {blogPostData && (
         <StructuredData 
           data={generateBlogPostSchema({
@@ -99,11 +100,15 @@ export default function LayoutBlogPost({
         }}
       />
 
-      <main className="prose prose-zinc dark:prose-invert max-w-none prose-headings:scroll-m-20 prose-lead:text-zinc-600 dark:prose-lead:text-zinc-400 prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 mt-24 pb-20">
+      <main 
+        className="prose prose-zinc dark:prose-invert max-w-none prose-headings:scroll-m-20 prose-lead:text-zinc-600 dark:prose-lead:text-zinc-400 prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 mt-24 pb-20 transition-all duration-300"
+        style={{ fontSize: `calc(1rem * var(--blog-text-size, 100) / 100)` }}
+      >
         <article className="mx-auto">
+          <TextSizeControl />
           {children}
         </article>
       </main>
-    </>
+    </TextSizeProvider>
   )
 }

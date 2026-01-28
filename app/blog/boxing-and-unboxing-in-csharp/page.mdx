@@ -1,467 +1,238 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'SimuKernel: OS Concepts Explained',
-  description:
-    'A practical guide to CPU scheduling, memory management, and process control using SimuKernel — an educational operating system simulator.',
-  slug: 'simukernel-operating-system-concepts',
-  publishedTime: '2025-10-29T10:00:00.000Z',
-  modifiedTime: '2025-10-29T10:00:00.000Z',
-  tags: ['operating-systems', 'cpu-scheduling', 'memory-management', 'process-management'],
+  title: 'Deep Dive into C# Boxing and Unboxing',
+  description: 'Master C# boxing and unboxing concepts with practical examples. Learn about performance implications, memory management, and best practices for value types and reference types.',
+  slug: 'boxing-and-unboxing-in-csharp',
+  publishedTime: '2024-11-15T10:00:00.000Z',
+  modifiedTime: '2024-11-15T10:00:00.000Z',
+  tags: ['csharp', 'dotnet', 'performance', 'memory-management', 'programming-fundamentals'],
 })
 
-# OS Concepts Explained
+# Deep Dive into C# Boxing and Unboxing
 
-This article provides detailed explanations of the operating system concepts implemented in SimuKernel.
 
-> Source code: https://github.com/Mo7ammedd/SimuKernel
+## Understanding the Fundamentals
 
-## Table of Contents
-1. [CPU Scheduling](#cpu-scheduling)
-2. [Memory Management](#memory-management)
-3. [Process Management](#process-management)
-4. [Performance Metrics](#performance-metrics)
+Boxing and unboxing describe how .NET handles value types and reference types.
+
+* **Value types** (`int`, `double`, `struct`) live on the stack.
+* **Reference types** (`string`, `class`, `object`) live on the heap.
+
+**Boxing** happens when a value type is converted into an object on the heap.
+**Unboxing** happens when that object is converted back into a value type.
+
+### What Happens During Boxing
+
+```csharp
+int number = 42;             
+object boxed = number;       
+```
+
+Under the hood:
+
+1. A new object is allocated on the heap.
+2. The value is copied from the stack to the heap.
+3. A reference to the newly created object is stored in `boxed`.
+
+So even though `number` is 4 bytes, the boxed object is much larger because of object header overhead and alignment padding.
+
+### What Happens During Unboxing
+
+```csharp
+object boxed = 42;
+int unboxed = (int)boxed;
+```
+
+Unboxing requires:
+
+1. Runtime type check
+2. Copying the value back to the stack
+3. The boxed object remains on the heap
 
 ---
 
-## CPU Scheduling
+## Memory Management 
 
-### What is CPU Scheduling?
+### Stack vs Heap
 
-CPU scheduling is the process of determining which process in the ready queue will be allocated the CPU for execution. The goal is to maximize CPU utilization, throughput, and minimize waiting time and response time.
+**Stack**
 
-### Process States
+* Very fast
+* Fixed-size memory
+* Automatic cleanup
+* Stores value types
 
-A process transitions through several states:
-- **New**: Process is being created
-- **Ready**: Process is waiting to be assigned to CPU
-- **Running**: Instructions are being executed
-- **Waiting**: Process is waiting for I/O or event
-- **Terminated**: Process has finished execution
+**Heap**
 
-### Scheduling Algorithms
+* Slower allocation
+* Must be managed by the garbage collector
+* Stores reference types
 
-#### 1. Round Robin (RR)
+### Example: Stack vs Heap Layout
 
-**How it works:**
-- Each process gets a fixed time slice (quantum)
-- After quantum expires, process moves to end of ready queue
-- Next process in queue gets CPU
-- Preemptive algorithm
+```csharp
+// Stack:
+int x = 10; // stored directly
 
-**Advantages:**
-- Fair allocation of CPU time
-- No starvation
-- Good for time-sharing systems
-- Predictable response time
-
-**Disadvantages:**
-- Context switching overhead
-- Average waiting time can be high
-- Performance depends on time quantum selection
-
-**Time Quantum Selection:**
-- Too small: High context switching overhead
-- Too large: Becomes FCFS, poor response time
-- Typical: 10-100 milliseconds
-
-**Example:**
-```
-Processes: P1(burst=10), P2(burst=5), P3(burst=8)
-Quantum = 4
-
-Execution Order:
-P1[0-4] → P2[4-8] → P3[8-12] → P1[12-16] → P2[16-17] → P3[17-21] → P1[21-22]
+// Heap:
+object boxed = x; // stored somewhere else + larger size
 ```
 
-#### 2. Priority Scheduling
+### Why Boxing Is Expensive
 
-**How it works:**
-- Each process has a priority number
-- CPU allocated to highest priority process
-- Can be preemptive or non-preemptive
-- Lower number = higher priority (convention)
+Boxing causes:
 
-**Preemptive Priority:**
-- Running process can be interrupted
-- New higher priority process gets CPU immediately
+* Heap allocation
+* Memory copy
+* GC pressure
 
-**Non-Preemptive Priority:**
-- Process runs to completion
-- Priority checked only when CPU becomes free
+Unboxing causes:
 
-**Advantages:**
-- Important processes execute first
-- Good for real-time systems
-- Flexible based on process needs
-
-**Disadvantages:**
-- **Starvation**: Low priority processes may never execute
-- Priority inversion in complex systems
-
-**Starvation Prevention:**
-- Aging: Gradually increase priority of waiting processes
-- After threshold time, boost priority
-
-**Example:**
-```
-Processes: P1(priority=3), P2(priority=1), P3(priority=4), P4(priority=2)
-
-Non-Preemptive Order: P2 → P4 → P1 → P3
-(Execution order by priority)
-```
-
-#### 3. Multilevel Feedback Queue (MLFQ)
-
-**How it works:**
-- Multiple queues with different priorities
-- Each queue has its own scheduling algorithm (usually RR)
-- Different time quantums for each level
-- Processes can move between queues
-
-**Queue Structure:**
-```
-Queue 0 (Highest Priority) - Quantum: 2ms
-Queue 1 (Medium Priority)  - Quantum: 4ms  
-Queue 2 (Lowest Priority)  - Quantum: 8ms
-```
-
-**Process Movement Rules:**
-1. New processes enter highest priority queue
-2. If process uses entire quantum: Move down one level
-3. If process blocks (I/O): Stay in same level or move up
-4. If process waits too long (aging): Move up one level
-
-**Advantages:**
-- Favors short jobs (I/O-bound)
-- Prevents starvation through aging
-- Adapts to process behavior
-- No need to know burst time in advance
-
-**Disadvantages:**
-- Complex to implement
-- Requires parameter tuning
-- Can have high overhead
-
-**Real-World Use:**
-- Linux CFS (Completely Fair Scheduler)
-- Windows Thread Scheduler
-- macOS Grand Central Dispatch
+* Type check
+* Memory copy
 
 ---
 
-## Memory Management
+## Performance Analysis
 
-### Virtual Memory
+### Benchmark Example
 
-**Concept:**
-- Separation of logical and physical memory
-- Processes use virtual addresses
-- MMU (Memory Management Unit) translates to physical addresses
-- Allows running programs larger than physical RAM
+```csharp
+// Boxing-heavy code
+ArrayList list = new ArrayList();
+for (int i = 0; i < 1_000_000; i++)
+{
+    list.Add(i); // boxing
+}
 
-**Benefits:**
-- Process isolation (security)
-- Efficient memory use
-- Simplified programming model
-- Support for shared libraries
-
-### Paging
-
-**How it works:**
-- Divide memory into fixed-size blocks
-- **Pages**: Logical memory blocks (process view)
-- **Frames**: Physical memory blocks (hardware view)
-- Page table maps pages to frames
-
-**Page Table:**
-```
-Virtual Page → Physical Frame
-    0       →      2
-    1       →      5
-    2       →      1
-    3       →      7
+// Generic version - no boxing
+List<int> modernList = new List<int>();
+for (int i = 0; i < 1_000_000; i++)
+{
+    modernList.Add(i);
+}
 ```
 
-**Address Translation:**
+### Memory Footprint Comparison
+
 ```
-Virtual Address = Page Number + Offset
-Physical Address = Frame Number + Offset
-
-Example:
-Virtual: Page 2, Offset 100
-Physical: Frame 1, Offset 100
-```
-
-### Page Replacement Algorithms
-
-When memory is full and new page needed, must replace existing page.
-
-#### 1. FIFO (First-In-First-Out)
-
-**Algorithm:**
-- Maintain queue of pages in memory
-- Replace oldest page (first loaded)
-
-**Implementation:**
-```
-Queue: [P1, P2, P3, P4]
-New page P5 arrives → Replace P1
-Queue: [P2, P3, P4, P5]
-```
-
-**Advantages:**
-- Simple to implement
-- Low overhead
-- Fair (all pages age equally)
-
-**Disadvantages:**
-- Belady's Anomaly: More frames can cause more faults
-- Doesn't consider page usage patterns
-- May replace frequently used pages
-
-**Belady's Anomaly Example:**
-```
-Reference: 1,2,3,4,1,2,5,1,2,3,4,5
-
-3 Frames: 9 page faults
-4 Frames: 10 page faults (worse!)
-```
-
-#### 2. LRU (Least Recently Used)
-
-**Algorithm:**
-- Replace page not used for longest time
-- Assumes: Recently used pages will be used again soon
-
-**Implementation:**
-- Timestamp each page access
-- On replacement, choose minimum timestamp
-- Or use stack/counter
-
-**Advantages:**
-- Better performance than FIFO
-- No Belady's anomaly
-- Approximates optimal
-
-**Disadvantages:**
-- High overhead (tracking access times)
-- Requires hardware support
-- Complex implementation
-
-**Hardware Support:**
-- Timestamp register
-- Stack of page numbers
-- Counter for each page table entry
-
-**Example:**
-```
-Time: 0  1  2  3  4  5
-Ref:  1  2  3  1  4  2
-
-Access times when referencing page 5:
-P1: 3, P2: 5, P3: 2, P4: 4
-Replace P3 (oldest access)
-```
-
-#### 3. Optimal Page Replacement
-
-**Algorithm:**
-- Replace page that won't be used for longest time in future
-- Theoretical optimal (minimum possible faults)
-
-**Implementation:**
-- Look ahead in reference string
-- For each frame, find next use time
-- Replace frame with farthest next use
-- If page never used again, replace it immediately
-
-**Advantages:**
-- Minimum page faults (provably optimal)
-- Good benchmark for other algorithms
-
-**Disadvantages:**
-- Impossible to implement (requires future knowledge)
-- Only useful for analysis and comparison
-
-**Example:**
-```
-Reference: 1,2,3,4,1,2,5,1,2,3,4,5
-Frames: 3
-
-At step 6 (need to load page 5):
-P1: next used at step 7 (distance: 1)
-P2: next used at step 8 (distance: 2)  
-P3: next used at step 10 (distance: 4)
-P4: not used again (distance: ∞)
-
-Replace P4 (optimal choice)
-```
-
-### Page Fault Handling
-
-**Page Fault Process:**
-1. CPU tries to access page not in memory
-2. MMU generates page fault interrupt
-3. OS locates page on disk
-4. Selects victim frame (if memory full)
-5. Writes victim page to disk (if modified)
-6. Loads requested page into frame
-7. Updates page table
-8. Restarts instruction
-
-**Page Fault Cost:**
-- Trap to OS: ~1-10 microseconds
-- Disk access: ~1-10 milliseconds
-- Total: ~1000x slower than memory access
-
----
-
-## Process Management
-
-### Process Control Block (PCB)
-
-Contains process information:
-- Process ID (PID)
-- Process state
-- Program counter
-- CPU registers
-- Memory management info
-- I/O status
-- Accounting information
-
-### Context Switch
-
-**What happens:**
-1. Save state of current process to PCB
-2. Select next process to run
-3. Restore state from new process PCB
-4. Switch to user mode
-
-**Cost:**
-- Direct: Saving/restoring registers
-- Indirect: Cache/TLB flush, pipeline stall
-- Typical: 1-10 microseconds
-
-### Process Creation
-
-**Unix/Linux (fork/exec):**
-```
-parent process
-    ↓
-fork() → creates child with copy of parent memory
-    ↓
-exec() → replaces child memory with new program
-    ↓
-child executes new program
+| Type     | Unboxed Size | Boxed Size | Increase |
+|----------|--------------|------------|----------|
+| bool     | 1 byte       | ~24 bytes  | ~24x     |
+| int      | 4 bytes      | ~24 bytes  | ~6x      |
+| long     | 8 bytes      | ~24 bytes  | ~3x      |
+| decimal  | 16 bytes     | ~40 bytes  | ~2.5x    |
 ```
 
 ---
 
-## Performance Metrics
+## Practical Implementation
 
-### CPU Scheduling Metrics
+### Common Boxing Situations
 
-**1. Turnaround Time**
-```
-Turnaround Time = Completion Time - Arrival Time
-```
-Total time from submission to completion.
-
-**2. Waiting Time**
-```
-Waiting Time = Turnaround Time - Burst Time
-```
-Time spent in ready queue.
-
-**3. Response Time**
-```
-Response Time = First Run Time - Arrival Time
-```
-Time from submission to first execution.
-
-**4. CPU Utilization**
-```
-CPU Utilization = (Total CPU Busy Time / Total Time) × 100%
-```
-Percentage of time CPU is doing useful work.
-
-**5. Throughput**
-```
-Throughput = Number of Processes / Total Time
-```
-Processes completed per time unit.
-
-### Memory Management Metrics
-
-**1. Page Fault Rate**
-```
-Page Fault Rate = (Number of Page Faults / Total References) × 100%
+```csharp
+object obj = 42;                // explicit boxing
+Console.WriteLine(42);          // implicit boxing
+IComparable c = 42;             // interface boxing
 ```
 
-**2. Effective Access Time (EAT)**
-```
-EAT = (1 - p) × memory_access_time + p × page_fault_time
+### Avoiding Boxing in String Interpolation
 
-where p = page fault rate
-```
+```csharp
+int value = 42;
 
-**Example:**
-- Memory access: 100 ns
-- Page fault time: 10 ms = 10,000,000 ns
-- Page fault rate: 0.1% = 0.001
+// Causes boxing:
+string s1 = $"Value is {value}";
 
-```
-EAT = 0.999 × 100 + 0.001 × 10,000,000
-    = 99.9 + 10,000
-    = 10,099.9 ns
-```
-
-**3. Memory Utilization**
-```
-Memory Utilization = (Used Memory / Total Memory) × 100%
+// Avoids boxing:
+string s2 = $"Value is {value:D}";
 ```
 
 ---
 
-## Real-World Applications
+## Performance Optimization
 
-### Linux Process Scheduler
+### Boxing Benchmark
 
-**CFS (Completely Fair Scheduler):**
-- Red-black tree of runnable processes
-- Each process has virtual runtime (vruntime)
-- Runs process with smallest vruntime
-- Time slice based on nice value and number of processes
+```csharp
+const int count = 1_000_000;
 
-### Windows Memory Manager
+// Without boxing:
+int total1 = 0;
+for (int i = 0; i < count; i++)
+{
+    total1 += i;
+}
 
-**Working Set Management:**
-- Each process has working set (pages in physical memory)
-- Minimum and maximum working set sizes
-- Page frame database tracks all physical memory
-- Modified page writer writes dirty pages to disk
-
-### Android Process Management
-
-**Low Memory Killer:**
-- Processes assigned priority levels
-- When memory low, kills lowest priority processes
-- Background apps killed before foreground
-- System services protected
+// With boxing:
+object total2 = 0;
+for (int i = 0; i < count; i++)
+{
+    total2 = (int)total2 + i; // boxing repeatedly
+}
+```
 
 ---
 
-## Further Reading
+## Best Practices
 
-- **Books:**
-  - "Operating Systems: Internals and Design Principles" by William Stallings
-  - "Modern Operating Systems" by Andrew Tanenbaum
-  - "Operating Systems: Three Easy Pieces" by Remzi H. Arpaci-Dusseau
+### Do:
 
-- **Online Resources:**
-  - [OSDev Wiki](https://wiki.osdev.org/)
-  - [Linux Kernel Documentation](https://www.kernel.org/doc/)
-  - [MIT 6.828 Operating System Engineering](https://pdos.csail.mit.edu/6.828/)
+* Use generics (`List<T>`, `Dictionary<TKey,TValue>`)
+* Prefer `int?` instead of boxing into `object`
+* Implement `IEquatable<T>` for custom structs
+* Use profiling tools to detect boxing
 
+### Don’t:
 
+* Avoid using non-generic collections like `ArrayList`, `Hashtable`
+* Avoid passing value types to `object`-typed parameters
+* Avoid interface calls that cause boxing when using structs
+
+---
+
+## Advanced Scenarios
+
+### Custom Value Types Without Boxing
+
+```csharp
+public readonly struct Money : IEquatable<Money>
+{
+    private readonly decimal amount;
+
+    public Money(decimal amount) => this.amount = amount;
+
+    public bool Equals(Money other) => amount == other.amount;
+
+    public override bool Equals(object obj) =>
+        obj is Money other && Equals(other);
+
+    public override int GetHashCode() => amount.GetHashCode();
+}
+```
+
+### Preventing Boxing with Generic Constraints
+
+```csharp
+public class ValueProcessor<T> where T : struct
+{
+    public T Process(T value)
+    {
+        return value; // no boxing
+    }
+}
+```
+
+---
+
+## Summary
+
+Boxing and unboxing are key concepts in C# that directly affect performance.
+They are not always bad, but **unnecessary boxing should be avoided**, especially in:
+
+* Loops
+* High-performance code
+* Collection-heavy workloads
+
+Modern C# features like generics, `Span<T>`, and nullable value types make it easier to avoid boxing entirely.
