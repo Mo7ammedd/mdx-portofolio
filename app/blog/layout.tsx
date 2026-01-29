@@ -5,6 +5,7 @@ import { StructuredData } from '@/components/structured-data'
 import { generateBlogPostSchema } from '@/lib/schema'
 import { usePathname } from 'next/navigation'
 import { TextSizeProvider, TextSizeControl } from '@/components/ui/text-size-control'
+import { BlogSocialShare } from '@/components/ui/blog-social-share'
 
 export default function LayoutBlogPost({
   children,
@@ -106,7 +107,7 @@ export default function LayoutBlogPost({
       )}
       <div className="pointer-events-none fixed top-0 left-0 z-10 h-12 w-full bg-gray-100 to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)] dark:bg-zinc-950" />
       <ScrollProgress
-        className="fixed top-0 z-20 h-0.5 bg-gray-300 dark:bg-zinc-600"
+        className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-900 dark:bg-zinc-100"
         springOptions={{
           bounce: 0,
         }}
@@ -119,6 +120,12 @@ export default function LayoutBlogPost({
         <article className="mx-auto">
           <TextSizeControl readingTimeMinutes={blogPostData?.readingTime} />
           {children}
+          {blogPostData && (
+            <BlogSocialShare 
+              title={blogPostData.title} 
+              description={blogPostData.description}
+            />
+          )}
         </article>
       </main>
     </TextSizeProvider>
