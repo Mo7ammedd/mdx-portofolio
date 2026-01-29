@@ -1,6 +1,6 @@
 'use client'
 import { AnimatedBackground } from '@/components/ui/animated-background'
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
+import { MonitorIcon, MoonIcon, SunIcon, Rss } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
@@ -84,8 +84,18 @@ export function Footer() {
           >
             <span>Built with Mohammed.</span>
           </a>
-          <div className="text-xs text-zinc-400">
-            <ThemeSwitch />
+          <div className="flex items-center gap-3">
+            <a
+              href="/blog/rss.xml"
+              className="inline-flex h-7 w-7 items-center justify-center text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300 transition-colors"
+              aria-label="RSS Feed"
+              title="Subscribe via RSS"
+            >
+              <Rss className="h-4 w-4" />
+            </a>
+            <div className="text-xs text-zinc-400">
+              <ThemeSwitch />
+            </div>
           </div>
         </div>
       </div>

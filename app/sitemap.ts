@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import { WEBSITE_URL } from '@/lib/constants'
+import { getAllBlogPosts } from '@/lib/blog-utils'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString()
   
   // Main pages with their priorities and update frequencies
@@ -20,30 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Blog posts with more detailed metadata
-  const blogPosts = [
-    {
-      slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
-      lastModified: '2024-12-01T10:00:00.000Z',
-      priority: 0.7,
-    },
-    {
-      slug: 'boxing-and-unboxing-in-csharp',
-      lastModified: '2024-11-15T10:00:00.000Z',
-      priority: 0.7,
-    },
-    {
-      slug: 'difference-between-cluster-and-non-cluster-index',
-      lastModified: '2024-11-01T10:00:00.000Z',
-      priority: 0.7,
-    },
-  ]
+  // Auto-discover blog posts from filesystem
+  const blogPosts = await getAllBlogPosts()
 
   const blogRoutes = blogPosts.map((post) => ({
     url: `${WEBSITE_URL}/blog/${post.slug}`,
-    lastModified: post.lastModified,
+    lastModified: post.modifiedTime || post.publishedTime,
     changeFrequency: 'monthly' as const,
-    priority: post.priority,
+    priority: 0.7,
   }))
 
   // Add other important routes if they exist

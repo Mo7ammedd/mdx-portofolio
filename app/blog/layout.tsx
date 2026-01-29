@@ -24,6 +24,7 @@ export default function LayoutBlogPost({
         datePublished: '2024-12-01',
         dateModified: '2024-12-01',
         image: '/og/3-ways-to-build-custom-middleware-in-aspnet-core.png',
+        readingTime: 8,
       },
       'boxing-and-unboxing-in-csharp': {
         title: 'Boxing and Unboxing in C#',
@@ -31,6 +32,7 @@ export default function LayoutBlogPost({
         datePublished: '2024-11-15',
         dateModified: '2024-11-15',
         image: '/og/boxing-and-unboxing-in-csharp.png',
+        readingTime: 6,
       },
       'difference-between-cluster-and-non-cluster-index': {
         title: 'Difference Between Cluster and Non-Cluster Index',
@@ -38,6 +40,7 @@ export default function LayoutBlogPost({
         datePublished: '2024-11-01',
         dateModified: '2024-11-01',
         image: '/og/difference-between-cluster-and-non-cluster-index.png',
+        readingTime: 7,
       },
       'simukernel-operating-system-concepts': {
         title: 'SimuKernel: OS Concepts Explained',
@@ -45,6 +48,7 @@ export default function LayoutBlogPost({
         datePublished: '2024-12-10',
         dateModified: '2024-12-10',
         image: '/og/simukernel-operating-system-concepts.png',
+        readingTime: 5,
       },
     }
     
@@ -57,9 +61,9 @@ export default function LayoutBlogPost({
     name: 'Mohammed Mostafa',
     jobTitle: 'Software Engineer',
     description: 'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript.',
-    url: 'https://www.mohammedd.tech',
+    url: 'https://www.modev.me',
     email: 'mohammedmostafanazih@gmail.com',
-    image: 'https://www.mohammedd.tech/avatar.jpg',
+    image: 'https://www.modev.me/avatar.jpg',
     sameAs: [
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
@@ -84,7 +88,7 @@ export default function LayoutBlogPost({
           data={generateBlogPostSchema({
             title: blogPostData.title,
             description: blogPostData.description,
-            url: `https://www.mohammedd.tech${pathname}`,
+            url: `https://www.modev.me${pathname}`,
             datePublished: blogPostData.datePublished,
             dateModified: blogPostData.dateModified,
             author: authorData,
@@ -105,7 +109,7 @@ export default function LayoutBlogPost({
         style={{ fontSize: `calc(1rem * var(--blog-text-size, 100) / 100)` }}
       >
         <article className="mx-auto">
-          <TextSizeControl />
+          <TextSizeControl readingTimeMinutes={blogPostData?.readingTime} />
           {children}
         </article>
       </main>

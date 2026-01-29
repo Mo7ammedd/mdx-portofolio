@@ -53,7 +53,7 @@ export const siteConfig: Metadata = {
     'Computer Science Graduate',
     'Fresh Graduate Developer',
   ],
-  authors: [{ name: 'Mohammed Mostafa', url: 'https://www.mohammedd.tech' }],
+  authors: [{ name: 'Mohammed Mostafa', url: 'https://www.modev.me' }],
   creator: 'Mohammed - Software Engineer',
   publisher: 'Mohammed Portfolio Website',
   
@@ -79,21 +79,21 @@ export const siteConfig: Metadata = {
   openGraph: {
     type: 'profile',
     locale: 'en_US',
-    url: 'https://www.mohammedd.tech',
+    url: 'https://www.modev.me',
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
     title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js',
     description:
       'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. Available for new opportunities.',
     images: [
       {
-        url: 'https://www.mohammedd.tech/og-image.png',
+        url: 'https://www.modev.me/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Mohammed Mostafa Software Engineer Portfolio - ASP.NET Core & Node.js Developer',
         type: 'image/png',
       },
       {
-        url: 'https://www.mohammedd.tech/avatar.jpg',
+        url: 'https://www.modev.me/avatar.jpg',
         width: 400,
         height: 400,
         alt: 'Mohammed Mostafa Professional Photo - Software Engineer',
@@ -111,7 +111,7 @@ export const siteConfig: Metadata = {
     title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
     description:
       'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js and TypeScript. Computer Science graduate available for opportunities.',
-    images: ['https://www.mohammedd.tech/og-image.png'],
+    images: ['https://www.modev.me/og-image.png'],
   },
   
   robots: {
@@ -129,9 +129,12 @@ export const siteConfig: Metadata = {
   },
   
   alternates: {
-    canonical: 'https://www.mohammedd.tech',
+    canonical: 'https://www.modev.me',
     languages: {
-      'en-US': 'https://www.mohammedd.tech',
+      'en-US': 'https://www.modev.me',
+    },
+    types: {
+      'application/rss+xml': 'https://www.modev.me/blog/rss.xml',
     },
   },
   
@@ -144,7 +147,7 @@ export const siteConfig: Metadata = {
     } : {},
   },
   
-  metadataBase: new URL('https://www.mohammedd.tech/'),
+  metadataBase: new URL('https://www.modev.me/'),
   
   // Add category for better classification
   category: 'Professional Portfolio',
