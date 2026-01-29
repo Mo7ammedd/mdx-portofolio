@@ -50,6 +50,14 @@ export default function LayoutBlogPost({
         image: '/og/simukernel-operating-system-concepts.png',
         readingTime: 5,
       },
+      'nginx-deep-dive-architecture-configuration-production-patterns': {
+        title: 'Nginx Deep Dive: Architecture, Configuration, and Production Patterns',
+        description: 'Master Nginx from request flow to production-grade deployment.',
+        datePublished: '2025-01-28',
+        dateModified: '2025-01-28',
+        image: '/og/nginx-deep-dive-architecture-configuration-production-patterns.png',
+        readingTime: 12,
+      },
     }
     
     return blogPosts[slug || ''] || null

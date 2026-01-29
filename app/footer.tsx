@@ -67,7 +67,7 @@ export function Footer() {
         {/* Palestine solidarity message */}
         <div className="text-center">
           <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
-            <span className="font-medium">🇵🇸 Standing with Palestine</span>
+            <span className="font-medium">Standing with Palestine 🇵🇸</span>
           </p>
           <p className="text-xs text-zinc-500 dark:text-zinc-500 max-w-md">
             Supporting justice, human rights, and the dignity of all people. 
