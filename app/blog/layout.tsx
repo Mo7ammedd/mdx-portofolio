@@ -6,6 +6,7 @@ import { generateBlogPostSchema } from '@/lib/schema'
 import { usePathname } from 'next/navigation'
 import { TextSizeProvider, TextSizeControl } from '@/components/ui/text-size-control'
 import { BlogSocialShare } from '@/components/ui/blog-social-share'
+import { BlogHeader } from '@/components/ui/blog-header'
 
 export default function LayoutBlogPost({
   children,
@@ -22,40 +23,40 @@ export default function LayoutBlogPost({
       '3-ways-to-build-custom-middleware-in-aspnet-core': {
         title: '3 Ways to Build Custom Middleware in ASP.NET Core',
         description: 'Learn three different approaches to building custom middleware in ASP.NET Core applications.',
-        datePublished: '2024-12-01',
-        dateModified: '2024-12-01',
+        datePublished: '2024-03-15',
+        dateModified: '2024-03-15',
         image: '/og/3-ways-to-build-custom-middleware-in-aspnet-core.png',
         readingTime: 8,
       },
       'boxing-and-unboxing-in-csharp': {
         title: 'Boxing and Unboxing in C#',
         description: 'Understanding boxing and unboxing concepts in C# programming language.',
-        datePublished: '2024-11-15',
-        dateModified: '2024-11-15',
+        datePublished: '2023-08-22',
+        dateModified: '2023-08-22',
         image: '/og/boxing-and-unboxing-in-csharp.png',
         readingTime: 6,
       },
       'difference-between-cluster-and-non-cluster-index': {
         title: 'Difference Between Cluster and Non-Cluster Index',
         description: 'Learn the key differences between clustered and non-clustered indexes in database systems.',
-        datePublished: '2024-11-01',
-        dateModified: '2024-11-01',
+        datePublished: '2023-11-10',
+        dateModified: '2023-11-10',
         image: '/og/difference-between-cluster-and-non-cluster-index.png',
         readingTime: 7,
       },
       'simukernel-operating-system-concepts': {
         title: 'SimuKernel: OS Concepts Explained',
         description: 'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
-        datePublished: '2024-12-10',
-        dateModified: '2024-12-10',
+        datePublished: '2025-10-29',
+        dateModified: '2025-10-29',
         image: '/og/simukernel-operating-system-concepts.png',
         readingTime: 5,
       },
       'nginx-deep-dive-architecture-configuration-production-patterns': {
         title: 'Nginx Deep Dive: Architecture, Configuration, and Production Patterns',
         description: 'Master Nginx from request flow to production-grade deployment.',
-        datePublished: '2025-01-28',
-        dateModified: '2025-01-28',
+        datePublished: '2026-01-15',
+        dateModified: '2026-01-15',
         image: '/og/nginx-deep-dive-architecture-configuration-production-patterns.png',
         readingTime: 12,
       },
@@ -119,6 +120,7 @@ export default function LayoutBlogPost({
       >
         <article className="mx-auto">
           <TextSizeControl readingTimeMinutes={blogPostData?.readingTime} />
+          {blogPostData && <BlogHeader datePublished={blogPostData.datePublished} />}
           {children}
           {blogPostData && (
             <BlogSocialShare 
