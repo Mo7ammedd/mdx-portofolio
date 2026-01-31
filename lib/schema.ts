@@ -26,6 +26,7 @@ export function generatePersonSchema(data: PersonData) {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: data.name,
+    alternateName: ['Mo7ammedd'],
     jobTitle: data.jobTitle,
     description: data.description,
     url: data.url,
@@ -36,39 +37,10 @@ export function generatePersonSchema(data: PersonData) {
     alumniOf: {
       '@type': 'EducationalOrganization',
       name: data.alumniOf,
-      url: 'https://www.suez.edu.eg/',
     },
     workLocation: {
       '@type': 'Place',
       name: data.location,
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'EG',
-        addressRegion: 'Egypt',
-      },
-    },
-    hasOccupation: {
-      '@type': 'Occupation',
-      name: data.jobTitle,
-      description: 'Software Engineer specializing in backend development with ASP.NET Core, Node.js, and cloud technologies',
-      occupationLocation: {
-        '@type': 'Place',
-        name: data.location,
-      },
-      skills: data.knowsAbout,
-      experienceRequirements: 'Professional experience in software development',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: data.email,
-      contactType: 'Professional',
-      availableLanguage: ['English', 'Arabic'],
-    },
-    nationality: 'Egyptian',
-    seeks: {
-      '@type': 'Occupation',
-      name: 'Software Engineer',
-      description: 'Seeking software engineering opportunities in backend development',
     },
   }
 }
@@ -203,8 +175,8 @@ export function generateOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Mohammed Mostafa Portfolio',
-    url: 'https://www.mohammedd.tech',
-    logo: 'https://www.mohammedd.tech/avatar.jpg',
+    url: 'https://www.modev.me',
+    logo: 'https://www.modev.me/avatar.jpg',
     description: 'Professional portfolio website of Mohammed Mostafa, Software Engineer',
     founder: {
       '@type': 'Person',
@@ -222,3 +194,96 @@ export function generateOrganizationSchema() {
     ],
   }
 }
+
+// FAQ Schema for homepage or blog posts
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  }
+}
+
+// HowTo Schema for tutorial blog posts
+export function generateHowToSchema(data: {
+  name: string
+  description: string
+  totalTime?: string
+  steps: Array<{ name: string; text: string; image?: string }>
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: data.name,
+    description: data.description,
+    totalTime: data.totalTime,
+    step: data.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      image: step.image,
+    })),
+  }
+}
+
+// Software Application Schema for projects
+export function generateSoftwareAppSchema(data: {
+  name: string
+  description: string
+  url: string
+  applicationCategory: string
+  operatingSystem?: string
+  offers?: {
+    price: string
+    priceCurrency: string
+  }
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: data.name,
+    description: data.description,
+    url: data.url,
+    applicationCategory: data.applicationCategory,
+    operatingSystem: data.operatingSystem || 'Cross-platform',
+    author: {
+      '@type': 'Person',
+      name: 'Mohammed Mostafa',
+    },
+    offers: data.offers
+      ? {
+          '@type': 'Offer',
+          price: data.offers.price,
+          priceCurrency: data.offers.priceCurrency,
+        }
+      : {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+  }
+}
+
+// ItemList Schema for projects/blog list
+export function generateItemListSchema(items: Array<{ name: string; url: string; description: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+      description: item.description,
+    })),
+  }
+}
+

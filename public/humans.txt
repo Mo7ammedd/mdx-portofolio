@@ -1,16 +1,43 @@
 /* TEAM */
-Developer: Mohammed Mostafa
-Site: https://www.mohammedd.tech
+Developer & Designer: Mohammed Mostafa
+Role: Software Engineer - Backend & Full Stack
+Contact: mohammedmostafanazih@gmail.com
+Site: https://www.modev.me
+GitHub: https://github.com/Mo7ammedd
+LinkedIn: https://linkedin.com/in/mohammed-mostafa
 Twitter: @mohameddtv
 Location: Egypt
 
+/* EXPERTISE */
+Primary: ASP.NET Core, Node.js, TypeScript, C#
+Architecture: Microservices, Clean Architecture, Domain-Driven Design
+Cloud: Azure, Docker, Kubernetes
+Databases: SQL Server, Redis, Entity Framework Core
+Messaging: RabbitMQ, Azure Service Bus
+Authentication: JWT, OAuth2, Identity Server
+
 /* SITE */
-Last update: 2025/10/21
-Standards: HTML5, CSS3, JavaScript
-Components: React, Next.js 15, TypeScript
-Software: VS Code
+Last update: 2026/01/31
+Standards: HTML5, CSS3, ES2023, TypeScript
+Framework: Next.js 16, React 19
+Styling: Tailwind CSS 4.0
+Content: MDX 3.0
+Animation: Framer Motion
+SEO: Structured Data (JSON-LD), Open Graph, Twitter Cards
+Performance: WebP/AVIF images, code splitting, lazy loading
+Hosting: Vercel
+Software: VS Code, Git
 
 /* THANKS */
 Next.js - https://nextjs.org
 Vercel - https://vercel.com
 TailwindCSS - https://tailwindcss.com
+React - https://react.dev
+TypeScript - https://www.typescriptlang.org
+MDX - https://mdxjs.com
+
+/* RECOGNITION */
+Education: Computer Science, Suez Canal University
+Experience: 5+ years in software development
+Availability: Open for remote opportunities and freelance projects
+Languages: English, Arabic

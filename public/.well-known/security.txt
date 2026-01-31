@@ -1,0 +1,25 @@
+Contact: mailto:mohammedmostafanazih@gmail.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, ar
+Canonical: https://www.modev.me/.well-known/security.txt
+Policy: https://www.modev.me/security-policy
+Acknowledgments: https://www.modev.me/security-acknowledgments
+
+# Security Policy
+
+If you discover a security vulnerability in this portfolio website, 
+please report it responsibly via email.
+
+# Scope
+
+- Source code vulnerabilities
+- XSS, CSRF, or injection vulnerabilities
+- Authentication or authorization issues
+- Sensitive data exposure
+
+Out of scope:
+- Social engineering attacks
+- Physical security issues
+- DoS/DDoS attacks
+
+Thank you for helping keep this site secure!

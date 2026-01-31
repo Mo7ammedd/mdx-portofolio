@@ -3,55 +3,65 @@ import { Metadata } from 'next'
 export const siteConfig: Metadata = {
   // More specific and searchable title variations
   title: {
-    default: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
-    template: '%s | Mohammed Mostafa - Software Engineer',
+    default: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js, SQL Server)',
+    template: '%s | Mohammed Mostafa',
   },
   description:
-    'Mohammed Mostafa - Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. View my portfolio, projects, and contact me for opportunities.',
+    'Mohammed Mostafa - Backend Software Engineer from Egypt specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices, REST APIs, and distributed systems. View projects and technical blog.',
   keywords: [
     // Personal brand keywords
     'Mohammed Mostafa',
-    'Mohammed Software Engineer',
+    'Mohammed Mostafa Software Engineer',
     'Mohammed Developer Egypt',
     'Mohammed Mostafa Portfolio',
-    'Software Engineer Egypt',
+    'modev.me',
     
-    // Technical expertise
+    // Technical expertise - Long tail
     'ASP.NET Core Developer',
-    'Node.js Engineer',
-    'TypeScript Developer',
-    'Express.js Specialist',
-    'C# Developer',
-    'Full Stack Developer',
-    'Backend Engineer',
-    'Web Developer',
+    'ASP.NET Core Web API Developer',
+    'Node.js Backend Engineer',
+    'TypeScript Full Stack Developer',
+    'Express.js REST API Developer',
+    'C# Senior Developer',
+    'Backend Software Engineer',
+    'Microservices Architect',
     
-    // Location-based
+    // Location-based SEO
     'Software Engineer Egypt',
-    'Developer Middle East',
-    'Remote Software Engineer',
+    'Backend Developer Cairo',
+    'Remote Software Engineer Middle East',
+    'Egyptian Software Engineer',
     
-    // Opportunity keywords
-    'Software Engineer for hire',
+    // Professional status
     'Available for opportunities',
-    'Freelance developer',
-    'Contract software engineer',
-    'Remote developer available',
+    'Remote developer',
     
-    // Technologies
-    'Microservices',
-    'Azure Cloud',
-    'SQL Server',
-    'Redis',
-    'JWT Authentication',
-    'RESTful APIs',
-    'Database Design',
-    'System Architecture',
+    // Technologies & Skills
+    'Microservices Architecture',
+    'Azure Cloud Developer',
+    'SQL Server DBA',
+    'Redis Cache Expert',
+    'JWT Authentication Implementation',
+    'RESTful API Design',
+    'Database Design Expert',
+    'System Architecture Design',
+    'Docker Containerization',
+    'RabbitMQ Message Queue',
+    'Entity Framework Core',
+    'Clean Architecture',
+    'CQRS Pattern',
+    'Domain Driven Design',
     
-    // Education
-    'Suez Canal University',
-    'Computer Science Graduate',
-    'Fresh Graduate Developer',
+    // Content keywords
+    'Software Engineering Blog',
+    'ASP.NET Core Tutorials',
+    'Node.js Best Practices',
+    'Backend Development Guide',
+    
+    // Education & Experience
+    'Suez Canal University Computer Science',
+    '5 years software development experience',
+    'Senior Backend Developer',
   ],
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.modev.me' }],
   creator: 'Mohammed - Software Engineer',
@@ -59,16 +69,15 @@ export const siteConfig: Metadata = {
   
   // Add structured data hints and meta properties
   other: {
+    // Profile metadata
     'og:profile:first_name': 'Mohammed',
     'og:profile:last_name': 'Mostafa',
-    'og:profile:username': 'mohammed-software-engineer',
-    'profession': 'Software Engineer',
-    'specialization': 'ASP.NET Core, Node.js, TypeScript',
-    'status': 'Available for Opportunities',
+    'og:profile:username': 'Mo7ammedd',
+    
+    // Professional info
     'article:author': 'Mohammed Mostafa',
-    'og:email': 'mohammedmostafanazih@gmail.com',
-    'og:locality': 'Egypt',
-    'og:region': 'Middle East',
+    
+    // App-specific
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
@@ -81,9 +90,9 @@ export const siteConfig: Metadata = {
     locale: 'en_US',
     url: 'https://www.modev.me',
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
-    title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js',
+    title: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js)',
     description:
-      'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Computer Science graduate from Suez Canal University. Available for new opportunities.',
+      'Backend Software Engineer from Egypt specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
     images: [
       {
         url: 'https://www.modev.me/og-image.png',
@@ -108,9 +117,9 @@ export const siteConfig: Metadata = {
     card: 'summary_large_image',
     site: '@mohameddtv',
     creator: '@mohameddtv',
-    title: 'Mohammed Mostafa | Software Engineer | ASP.NET Core & Node.js Developer',
+    title: 'Mohammed Mostafa | Backend Software Engineer',
     description:
-      'Mohammed Mostafa - Software Engineer specializing in ASP.NET Core, Node.js, Express.js and TypeScript. Computer Science graduate available for opportunities.',
+      'Backend Software Engineer specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
     images: ['https://www.modev.me/og-image.png'],
   },
   

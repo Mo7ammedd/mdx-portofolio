@@ -57,6 +57,8 @@ export default function RootLayout({
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
       'https://twitter.com/mohameddtv',
+      'https://www.modev.me',
+      'https://www.modev.me/blog',
     ],
     knowsAbout: [
       'ASP.NET Core',
@@ -85,13 +87,30 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Resource hints for performance */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Preload critical assets */}
+        <link rel="preload" as="image" href="/avatar.jpg" type="image/jpeg" />
+        
+        {/* Security headers via meta tags */}
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+        
+        {/* Favicon and app icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* PWA manifest */}
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body
         className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
       >
         <StructuredData data={generatePersonSchema(personData)} />
         <StructuredData data={generateWebsiteSchema(websiteData.url, websiteData.name, websiteData.description)} />
-        <StructuredData data={generateProfessionalServiceSchema(personData)} />
-        <StructuredData data={generateOrganizationSchema()} />
         <Analytics />
         <ThemeProvider
           enableSystem={true}

@@ -112,6 +112,17 @@ export function generateBlogPostSEO({
   modifiedTime?: string
   tags?: string[]
 }): Metadata {
+  // Enhance tags with SEO-friendly additions
+  const enhancedTags = [
+    'blog',
+    'tutorial',
+    'programming',
+    'software engineering',
+    'technical guide',
+    'Mohammed Mostafa',
+    ...tags,
+  ]
+  
   return generateSEO({
     title,
     description,
@@ -119,7 +130,7 @@ export function generateBlogPostSEO({
     ogImage: `/og/${slug}.png`,
     type: 'article',
     publishedTime,
-    modifiedTime,
-    tags: ['blog', 'tutorial', 'programming', ...tags],
+    modifiedTime: modifiedTime || publishedTime,
+    tags: enhancedTags,
   })
 }

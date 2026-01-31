@@ -106,16 +106,31 @@ export default function LayoutBlogPost({
           })} 
         />
       )}
-      <div className="pointer-events-none fixed top-0 left-0 z-10 h-12 w-full bg-gray-100 to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)] dark:bg-zinc-950" />
+      <div className="pointer-events-none fixed top-0 left-0 z-10 h-12 w-full bg-gradient-to-b from-white to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)] dark:from-zinc-950" />
       <ScrollProgress
-        className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-900 dark:bg-zinc-100"
+        className="fixed top-0 left-0 right-0 z-50 h-1 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-zinc-100 dark:to-zinc-100"
         springOptions={{
           bounce: 0,
         }}
       />
 
       <main 
-        className="prose prose-zinc dark:prose-invert max-w-none prose-headings:scroll-m-20 prose-lead:text-zinc-600 dark:prose-lead:text-zinc-400 prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100 mt-24 pb-20 transition-all duration-300"
+        className="prose prose-zinc dark:prose-invert max-w-none 
+        prose-headings:scroll-m-20 prose-headings:font-semibold prose-headings:tracking-tight
+        prose-h1:text-3xl prose-h1:font-bold prose-h1:text-zinc-900 dark:prose-h1:text-zinc-100
+        prose-h2:text-2xl prose-h2:text-zinc-800 dark:prose-h2:text-zinc-200 prose-h2:border-b prose-h2:border-zinc-200 dark:prose-h2:border-zinc-800 prose-h2:pb-2
+        prose-h3:text-xl prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200
+        prose-p:text-zinc-700 dark:prose-p:text-zinc-300 prose-p:leading-7
+        prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-a:font-medium
+        prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100
+        prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:font-mono prose-code:text-sm 
+        prose-code:bg-zinc-100 dark:prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+        prose-pre:bg-zinc-900 dark:prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-200 dark:prose-pre:border-zinc-800
+        prose-blockquote:border-l-4 prose-blockquote:border-blue-600 dark:prose-blockquote:border-blue-400 
+        prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-blue-950/20 prose-blockquote:py-2 prose-blockquote:px-4
+        prose-li:text-zinc-700 dark:prose-li:text-zinc-300
+        prose-img:rounded-lg prose-img:shadow-md
+        mt-24 pb-20 transition-all duration-300"
         style={{ fontSize: `calc(1rem * var(--blog-text-size, 100) / 100)` }}
       >
         <article className="mx-auto">

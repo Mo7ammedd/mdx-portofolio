@@ -33,7 +33,13 @@ const BLOG_POSTS = [
     link: '/blog/simukernel-operating-system-concepts',
     uid: 'blog-4',
   },
-]
+  {
+    title : 'Nginx Deep Dive: Architecture, Configuration, and Production Patterns',
+    description : 'Explore Nginx architecture, configuration, and production patterns for high-performance web serving and reverse proxying.',
+    link : '/blog/nginx-deep-dive-architecture-configuration-and-production-patterns',
+    uid : 'blog-5',
+  }
+  ]
 
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'og')
 
@@ -46,14 +52,14 @@ async function ensureDirectoryExists(dir: string) {
 }
 
 async function generateOGImages() {
-  console.log('🎨 Starting OG image generation...')
+  console.log('Starting OG image generation...')
   
   // Ensure output directory exists
   await ensureDirectoryExists(OUTPUT_DIR)
 
   for (const post of BLOG_POSTS) {
     try {
-      console.log(`📝 Generating OG image for: ${post.title}`)
+      console.log(`Generating OG image for: ${post.title}`)
       
       // Extract slug from link (remove /blog/ prefix)
       const slug = post.link.replace('/blog/', '')
@@ -72,19 +78,19 @@ async function generateOGImages() {
       const imagePath = path.join(OUTPUT_DIR, `${slug}.png`)
       await fs.writeFile(imagePath, imageBuffer)
       
-      console.log(`✅ Generated: ${imagePath}`)
+      console.log(`Generated: ${imagePath}`)
     } catch (error) {
-      console.error(`❌ Failed to generate OG image for ${post.title}:`, error)
+      console.error(`Failed to generate OG image for ${post.title}:`, error)
     }
   }
   
-  console.log('🎉 OG image generation completed!')
+  console.log('OG image generation completed!')
 }
 
 // Execute if run directly
 if (require.main === module) {
   generateOGImages().catch((error) => {
-    console.error('❌ OG image generation failed:', error)
+    console.error('OG image generation failed:', error)
     process.exit(1)
   })
 }
