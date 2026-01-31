@@ -113,7 +113,7 @@ export default function RootLayout({
         <StructuredData data={generateWebsiteSchema(websiteData.url, websiteData.name, websiteData.description)} />
         <Analytics />
         <ThemeProvider
-          enableSystem={true}
+          enableSystem={false}
           attribute="class"
           storageKey="theme"
           defaultTheme="dark"
