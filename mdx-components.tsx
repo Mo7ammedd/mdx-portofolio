@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import { ReactNode } from 'react'
+import { ZoomableImage } from '@/components/ui/zoomable-image'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -114,10 +115,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <hr className="my-8 border-zinc-200 dark:border-zinc-800" {...props} />
     ),
     img: (props: any) => (
-      <img 
-        className="rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-md my-8" 
-        {...props} 
-      />
+      <div className="my-8">
+        <ZoomableImage src={props.src} alt={props.alt || ''} />
+      </div>
     ),
     Cover: ({
       src,
@@ -130,11 +130,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }) => {
       return (
         <figure className="my-8">
-          <img 
-            src={src} 
-            alt={alt} 
-            className="rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-lg w-full" 
-          />
+          <ZoomableImage src={src} alt={alt} />
           <figcaption className="text-center mt-3 text-sm text-zinc-600 dark:text-zinc-400 italic">
             {caption}
           </figcaption>

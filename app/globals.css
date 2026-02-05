@@ -155,13 +155,70 @@
     @apply text-zinc-700 dark:text-zinc-300;
   }
   
-  /* Better code block styling with syntax highlighting support */
+  /* Code block styling synced with theme */
   article pre {
-    @apply shadow-xl;
+    @apply shadow-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800;
   }
   
   article pre code {
-    @apply text-zinc-100;
+    @apply text-zinc-800 dark:text-zinc-200;
+    display: block;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  /* Syntax highlighting colors that adapt to theme */
+  article pre code .token.comment,
+  article pre code .token.prolog,
+  article pre code .token.doctype,
+  article pre code .token.cdata {
+    @apply text-zinc-500 dark:text-zinc-500;
+  }
+  
+  article pre code .token.punctuation {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
+  
+  article pre code .token.property,
+  article pre code .token.tag,
+  article pre code .token.boolean,
+  article pre code .token.number,
+  article pre code .token.constant,
+  article pre code .token.symbol,
+  article pre code .token.deleted {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
+  
+  article pre code .token.selector,
+  article pre code .token.attr-name,
+  article pre code .token.string,
+  article pre code .token.char,
+  article pre code .token.builtin,
+  article pre code .token.inserted {
+    @apply text-zinc-700 dark:text-zinc-300;
+  }
+  
+  article pre code .token.operator,
+  article pre code .token.entity,
+  article pre code .token.url,
+  article pre code .token.variable {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
+  
+  article pre code .token.atrule,
+  article pre code .token.attr-value,
+  article pre code .token.function,
+  article pre code .token.class-name {
+    @apply text-zinc-900 dark:text-zinc-100 font-semibold;
+  }
+  
+  article pre code .token.keyword {
+    @apply text-zinc-900 dark:text-zinc-100 font-bold;
+  }
+  
+  article pre code .token.regex,
+  article pre code .token.important {
+    @apply text-zinc-800 dark:text-zinc-200 font-semibold;
   }
   
   /* Enhanced inline code */

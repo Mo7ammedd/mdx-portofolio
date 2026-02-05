@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 const PalestineFlagLine = () => {
   return (
-    <div className="fixed top-0 right-0 left-0 z-50 flex h-1 w-full">
+    <div className="fixed top-0 right-0 left-0 z-[100] flex h-1 w-full">
       <div className="w-1/4 bg-black"></div>
       <div className="w-1/4 bg-white"></div>
       <div className="w-1/4 bg-green-600"></div>

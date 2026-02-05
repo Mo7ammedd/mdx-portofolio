@@ -68,6 +68,7 @@ interface PersonalClientProps {
     link: string
     uid: string
     publishedTime: string
+    readingTime: number
   }>
   projects: any[]
   workExperience: any[]
@@ -197,16 +198,17 @@ export function PersonalClient({
                   <p className="text-zinc-500 dark:text-zinc-400">
                     {post.description}
                   </p>
-                  <time 
-                    className="text-xs text-zinc-400 dark:text-zinc-500"
-                    dateTime={post.publishedTime}
-                  >
-                    {new Date(post.publishedTime).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
+                  <div className="flex items-center gap-3 text-xs text-zinc-600 dark:text-zinc-400">
+                    <time dateTime={post.publishedTime}>
+                      {new Date(post.publishedTime).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </time>
+                    <span>•</span>
+                    <span>{post.readingTime} min read</span>
+                  </div>
                 </div>
               </Link>
             ))}

@@ -79,6 +79,7 @@ export default async function Personal() {
         link: `/blog/${post.slug}`,
         uid: post.slug,
         publishedTime: post.publishedTime,
+        readingTime: post.readingTime,
       }))}
       projects={PROJECTS}
       workExperience={WORK_EXPERIENCE}
