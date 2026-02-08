@@ -54,6 +54,7 @@ async function ensureDirectoryExists(dir: string) {
 async function generateOGImages() {
   console.log('Starting OG image generation...')
   
+  
   // Ensure output directory exists
   await ensureDirectoryExists(OUTPUT_DIR)
 
