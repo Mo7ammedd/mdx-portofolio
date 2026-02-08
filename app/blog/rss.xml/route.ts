@@ -14,6 +14,7 @@ function mdxToHtml(content: string): string {
   content = content.replace(/^## (.+)$/gm, '<h2>$1</h2>')
   content = content.replace(/^### (.+)$/gm, '<h3>$1</h3>')
   content = content.replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+  content = content
   
   // Convert code blocks with language
   content = content.replace(/```(\w+)\n([\s\S]*?)```/g, 
