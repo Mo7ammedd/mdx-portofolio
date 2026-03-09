@@ -3,9 +3,8 @@
 import { TextEffect } from '@/components/ui/text-effect'
 import Link from 'next/link'
 import Image from 'next/image'
-import {  Copy, Check } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import { Github } from '@/components/icons'
-
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
@@ -63,7 +62,18 @@ export function Header() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <nav className="flex items-center gap-1">
+          <Link
+            href="/blog"
+            className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+              pathname.startsWith('/blog')
+                ? 'font-medium text-zinc-900 dark:text-zinc-100'
+                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+            }`}
+          >
+            Blog
+          </Link>
+
           {isBlogPost && (
             <button
               onClick={handleCopy}
@@ -71,20 +81,22 @@ export function Header() {
               aria-label="Copy blog link"
             >
               {copied ? (
-                <Check className="h-5 w-5 text-green-500" />
+                <Check className="h-4 w-4 text-green-500" />
               ) : (
-                <Copy className="h-5 w-5 text-zinc-600 dark:text-zinc-400" />
+                <Copy className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
               )}
             </button>
           )}
+
           <a
             href="https://github.com/mo7ammedd"
             target="_blank"
             rel="noopener noreferrer"
+            className="flex items-center justify-center rounded-full p-2 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
           >
             <Github />
           </a>
-        </div>
+        </nav>
       </header>
     </>
   )

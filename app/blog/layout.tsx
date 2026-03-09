@@ -151,6 +151,7 @@ export default function LayoutBlogPost({
         <BlogHeader
           datePublished={blogPostData.datePublished}
           title={blogPostData.title}
+          readingTime={blogPostData.readingTime}
           previousPost={previousPost}
           nextPost={nextPost}
         />

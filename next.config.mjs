@@ -1,4 +1,5 @@
 import createMDX from '@next/mdx'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,7 +24,6 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'motion'],
   },
   webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -42,8 +42,18 @@ const nextConfig = {
   },
 }
 
+/** @type {import('rehype-pretty-code').Options} */
+const prettyCodeOptions = {
+  theme: 'github-dark-dimmed',
+  keepBackground: false,
+  defaultLang: 'plaintext',
+}
+
 const withMDX = createMDX({
   extension: /\.mdx?$/,
+  options: {
+    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+  },
 })
 
 export default withMDX(nextConfig)

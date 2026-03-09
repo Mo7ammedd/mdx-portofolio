@@ -71,13 +71,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     li: (props: any) => (
       <li className="leading-7 text-zinc-700 dark:text-zinc-300" {...props} />
     ),
-    // `code` only handles inline backtick code — fenced blocks go through `pre` → CodeBlock
-    code: ({ children, className }: any) => {
-      // Fenced code block — pass raw children through; CodeBlock in `pre` handles rendering
+    // rehype-pretty-code handles all fenced code blocks — this only covers inline backtick code
+    code: ({ children, className, ...rest }: any) => {
+      // If it has a language class, it's inside a pre — render plainly, CodeBlock wraps it
       if (className?.includes('language-')) {
-        return <code className={className}>{children}</code>
+        return <code className={className} {...rest}>{children}</code>
       }
-      // Inline code
       return (
         <code className="relative rounded bg-zinc-100 dark:bg-zinc-800 px-[0.4rem] py-[0.2rem] font-mono text-sm font-semibold text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700">
           {children}

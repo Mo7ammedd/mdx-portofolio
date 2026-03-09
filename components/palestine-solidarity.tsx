@@ -1,12 +1,14 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
+import { usePathname } from 'next/navigation'
 
 export function PalestineSolidarity() {
   const [showMessage, setShowMessage] = useState(false)
   const [counter, setCounter] = useState(0)
   const { theme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
   
   useEffect(() => {
     setMounted(true)
@@ -28,7 +30,11 @@ export function PalestineSolidarity() {
   }, [])
 
   if (!mounted) return null
-  
+
+  // Hide on individual blog post pages so it doesn't distract while reading
+  const isBlogPost = /^\/blog\/.+/.test(pathname ?? '')
+  if (isBlogPost) return null
+
   const isDark = resolvedTheme === 'dark'
 
   return (

@@ -1,27 +1,20 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Share2, Check, Calendar } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Share2, Check, Calendar, Clock } from 'lucide-react'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 interface BlogHeaderProps {
   datePublished: string
   title: string
+  readingTime?: number
   previousPost?: { slug: string; title: string }
   nextPost?: { slug: string; title: string }
 }
 
-export function BlogHeader({ datePublished, title, previousPost, nextPost }: BlogHeaderProps) {
-  const pathname = usePathname()
-  const [copied, setCopied] = useState(false)
+export function BlogHeader({ datePublished, title, readingTime, previousPost, nextPost }: BlogHeaderProps) {
 
-  const handleShare = () => {
-    const url = `https://www.modev.me${pathname}`
-    navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
 
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString('en-US', {
@@ -51,17 +44,7 @@ export function BlogHeader({ datePublished, title, previousPost, nextPost }: Blo
         </Link>
 
         <div className="flex items-center gap-1">
-          <button
-            onClick={handleShare}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-100"
-            title="Copy link"
-          >
-            {copied ? (
-              <Check className="h-4 w-4 text-emerald-400" />
-            ) : (
-              <Share2 className="h-4 w-4" />
-            )}
-          </button>
+     
 
           <Link
             href={previousPost ? `/blog/${previousPost.slug}` : '#'}
@@ -89,10 +72,18 @@ export function BlogHeader({ datePublished, title, previousPost, nextPost }: Blo
         </div>
       </div>
 
-      {/* Date line under the article title */}
-      <div className="mb-8 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-        <Calendar className="h-4 w-4" />
-        <time dateTime={datePublished}>{formatDate(datePublished)}</time>
+      {/* Date + reading time below the article title */}
+      <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+        <span className="flex items-center gap-1.5">
+          <Calendar className="h-4 w-4" />
+          <time dateTime={datePublished}>{formatDate(datePublished)}</time>
+        </span>
+        {readingTime && (
+          <span className="flex items-center gap-1.5">
+            <Clock className="h-4 w-4" />
+            {readingTime} min read
+          </span>
+        )}
       </div>
     </>
   )

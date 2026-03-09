@@ -28,27 +28,17 @@ const LANGUAGE_LABELS: Record<string, string> = {
   toml: 'TOML',
 }
 
-function extractLanguage(className?: string): string | null {
-  if (!className) return null
-  // Find the language-xxx token among all space-separated classes
-  const lang = className
-    .split(' ')
-    .find((c) => c.startsWith('language-'))
-    ?.replace('language-', '')
-    .toLowerCase()
-  if (!lang) return null
-  return LANGUAGE_LABELS[lang] ?? lang.toUpperCase()
+interface CodeBlockProps extends React.ComponentProps<'pre'> {
+  'data-language'?: string
 }
 
-export function CodeBlock({ children, ...props }: React.ComponentProps<'pre'>) {
+export function CodeBlock({ children, 'data-language': dataLanguage, ...props }: CodeBlockProps) {
   const preRef = useRef<HTMLPreElement>(null)
   const [copied, setCopied] = useState(false)
 
-  const codeChild = React.isValidElement(children)
-    ? (children as React.ReactElement<{ className?: string; children?: React.ReactNode }>)
-    : null
-
-  const language = extractLanguage(codeChild?.props?.className)
+  const language =
+    LANGUAGE_LABELS[dataLanguage?.toLowerCase() ?? ''] ??
+    (dataLanguage ? dataLanguage.toUpperCase() : null)
 
   const handleCopy = () => {
     const code =
@@ -64,7 +54,7 @@ export function CodeBlock({ children, ...props }: React.ComponentProps<'pre'>) {
     <div className="not-prose my-6">
       {/* Header bar */}
       <div className="flex items-center justify-between rounded-t-xl border border-b-0 border-zinc-700 bg-zinc-800/90 px-4 py-2.5">
-        <span className="text-xs font-medium tracking-wider text-zinc-400 uppercase">
+        <span className="text-xs font-medium uppercase tracking-wider text-zinc-400">
           {language ?? 'Code'}
         </span>
         <button
@@ -86,16 +76,14 @@ export function CodeBlock({ children, ...props }: React.ComponentProps<'pre'>) {
         </button>
       </div>
 
-      {/* Code area */}
+      {/* Code body — rehype-pretty-code injects syntax-highlighted spans */}
       <pre
         ref={preRef}
-        className="overflow-x-auto rounded-b-xl bg-zinc-900 dark:bg-zinc-950 px-6 py-5 border border-zinc-700 text-sm leading-relaxed"
+        data-language={dataLanguage}
+        className="overflow-x-auto rounded-b-xl border border-zinc-700 bg-zinc-900 px-6 py-5 text-sm leading-relaxed dark:bg-zinc-950"
         {...props}
       >
-        {/* Render code content cleanly — strip extra classes, keep only text */}
-        <code className="font-mono text-zinc-100">
-          {codeChild?.props?.children ?? children}
-        </code>
+        {children}
       </pre>
     </div>
   )

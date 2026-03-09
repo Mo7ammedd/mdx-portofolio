@@ -1,29 +1,49 @@
-import Link from 'next/link'
-import { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: '404 - Page Not Found | Mohammed Mostafa',
-  description: 'The page you are looking for does not exist. Return to Mohammed Mostafa\'s portfolio homepage.',
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
+import Link from 'next/link'
+import { motion } from 'motion/react'
+import { ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-      <h1 className="mb-4 text-6xl font-bold text-zinc-900 dark:text-zinc-100">404</h1>
-      <h2 className="mb-6 text-2xl font-medium text-zinc-700 dark:text-zinc-300">Page Not Found</h2>
-      <p className="mb-8 max-w-md text-zinc-600 dark:text-zinc-400">
-        The page you are looking for doesn't exist or has been moved.
-      </p>
-      <Link
-        href="/"
-        className="rounded-lg bg-zinc-900 px-6 py-3 text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+    <div className="flex min-h-[70vh] flex-col items-center justify-center text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.4 }}
+        className="flex flex-col items-center gap-6"
       >
-        Return Home
-      </Link>
+        {/* Glassy card */}
+        <div
+          className="flex flex-col items-center gap-4 rounded-2xl px-12 py-10"
+          style={{
+            background: 'rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            boxShadow: '0 4px 32px rgba(0, 0, 0, 0.3)',
+          }}
+        >
+          <span className="text-7xl font-bold tracking-tight text-zinc-100">404</span>
+          <div className="h-px w-16 bg-zinc-700" />
+          <p className="text-lg font-medium text-zinc-300">Page not found</p>
+          <p className="max-w-xs text-sm text-zinc-500">
+            The page you are looking for doesn&apos;t exist or has been moved.
+          </p>
+        </div>
+
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-100"
+          style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to home
+        </Link>
+      </motion.div>
     </div>
   )
 }
