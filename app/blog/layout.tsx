@@ -8,6 +8,8 @@ import { TextSizeProvider, TextSizeControl } from '@/components/ui/text-size-con
 import { BlogSocialShare } from '@/components/ui/blog-social-share'
 import { BlogHeader } from '@/components/ui/blog-header'
 import { BlogNavigation } from '@/components/ui/blog-navigation'
+import { TableOfContents } from '@/components/ui/table-of-contents'
+import { BackToTop } from '@/components/ui/back-to-top'
 
 export default function LayoutBlogPost({
   children,
@@ -118,6 +120,11 @@ export default function LayoutBlogPost({
     location: 'Egypt',
   }
 
+  // Blog index page — render without post chrome
+  if (pathname === '/blog') {
+    return <>{children}</>
+  }
+
   return (
     <TextSizeProvider>
       {blogPostData && (
@@ -133,13 +140,22 @@ export default function LayoutBlogPost({
           })} 
         />
       )}
-      <div className="pointer-events-none fixed top-0 left-0 z-10 h-12 w-full bg-gradient-to-b from-white to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)] dark:from-zinc-950" />
       <ScrollProgress
-        className="fixed top-[4px] left-0 right-0 z-40 h-1 bg-zinc-900 dark:bg-zinc-100"
+        className="fixed top-0 left-0 right-0 z-50 h-[2px] bg-zinc-900 dark:bg-zinc-100"
         springOptions={{
           bounce: 0,
         }}
       />
+
+      {blogPostData && (
+        <BlogHeader
+          datePublished={blogPostData.datePublished}
+          title={blogPostData.title}
+          previousPost={previousPost}
+          nextPost={nextPost}
+        />
+      )}
+      <BackToTop />
 
       <main 
         className="prose prose-zinc dark:prose-invert max-w-none 
@@ -150,18 +166,19 @@ export default function LayoutBlogPost({
         prose-p:text-zinc-700 dark:prose-p:text-zinc-300 prose-p:leading-7
         prose-a:text-zinc-900 dark:prose-a:text-zinc-100 prose-a:underline prose-a:underline-offset-4 prose-a:decoration-zinc-300 dark:prose-a:decoration-zinc-700 hover:prose-a:decoration-zinc-900 dark:hover:prose-a:decoration-zinc-100 prose-a:font-medium prose-a:transition-colors
         prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100
-        prose-code:text-zinc-800 dark:prose-code:text-zinc-200 prose-code:font-mono prose-code:text-sm 
-        prose-code:bg-zinc-100 dark:prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-zinc-200 dark:prose-code:border-zinc-700
+        prose-code:text-zinc-800 dark:prose-code:text-zinc-200 prose-code:font-mono prose-code:text-sm
+        [&_:not(pre)>code]:bg-zinc-100 dark:[&_:not(pre)>code]:bg-zinc-800 [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:border [&_:not(pre)>code]:border-zinc-200 dark:[&_:not(pre)>code]:border-zinc-700
+        [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:border-0 [&_pre_code]:rounded-none
         prose-blockquote:border-l-4 prose-blockquote:border-zinc-400 dark:prose-blockquote:border-zinc-600 
         prose-blockquote:bg-zinc-50 dark:prose-blockquote:bg-zinc-900/50 prose-blockquote:py-2 prose-blockquote:px-4
         prose-li:text-zinc-700 dark:prose-li:text-zinc-300
         prose-img:rounded-lg prose-img:shadow-md
-        mt-24 pb-20 transition-all duration-300"
+        mt-20 pb-20 transition-all duration-300"
         style={{ fontSize: `calc(1rem * var(--blog-text-size, 100) / 100)` }}
       >
         <article className="mx-auto">
           <TextSizeControl readingTimeMinutes={blogPostData?.readingTime} />
-          {blogPostData && <BlogHeader datePublished={blogPostData.datePublished} />}
+          <TableOfContents />
           {children}
           <BlogNavigation previousPost={previousPost} nextPost={nextPost} />
           {blogPostData && (
