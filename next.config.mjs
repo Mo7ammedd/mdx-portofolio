@@ -1,5 +1,6 @@
 import createMDX from '@next/mdx'
 import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeUnwrapImages from 'rehype-unwrap-images'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -44,15 +45,15 @@ const nextConfig = {
 
 /** @type {import('rehype-pretty-code').Options} */
 const prettyCodeOptions = {
-  theme: 'github-dark-dimmed',
-  keepBackground: false,
+  theme: 'github-dark',
+  keepBackground: true,
   defaultLang: 'plaintext',
 }
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+      rehypePlugins: [[rehypePrettyCode, prettyCodeOptions], rehypeUnwrapImages],
   },
 })
 

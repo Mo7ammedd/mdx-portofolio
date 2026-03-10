@@ -125,9 +125,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <hr className="my-8 border-zinc-200 dark:border-zinc-800" {...props} />
     ),
     img: (props: any) => (
-      <div className="my-8">
-        <ZoomableImage src={props.src} alt={props.alt || ''} />
-      </div>
+      <ZoomableImage src={props.src} alt={props.alt || ''} />
     ),
     Cover: ({
       src,

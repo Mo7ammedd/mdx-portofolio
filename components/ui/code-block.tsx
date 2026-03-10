@@ -38,7 +38,7 @@ export function CodeBlock({ children, 'data-language': dataLanguage, ...props }:
 
   const language =
     LANGUAGE_LABELS[dataLanguage?.toLowerCase() ?? ''] ??
-    (dataLanguage ? dataLanguage.toUpperCase() : null)
+    (dataLanguage ? dataLanguage.toUpperCase() : 'Code')
 
   const handleCopy = () => {
     const code =
@@ -51,36 +51,40 @@ export function CodeBlock({ children, 'data-language': dataLanguage, ...props }:
   }
 
   return (
-    <div className="not-prose my-6">
-      {/* Header bar */}
-      <div className="flex items-center justify-between rounded-t-xl border border-b-0 border-zinc-700 bg-zinc-800/90 px-4 py-2.5">
-        <span className="text-xs font-medium uppercase tracking-wider text-zinc-400">
-          {language ?? 'Code'}
+    <div className="not-prose my-8 rounded-xl overflow-hidden" style={{ background: '#0d1117', border: '1px solid #30363d' }}>
+      <div
+        className="flex items-center justify-between px-5 py-2.5"
+        style={{ background: '#010409', borderBottom: '1px solid #30363d' }}
+      >
+        <span className="font-mono text-[11px] tracking-widest uppercase" style={{ color: '#484f58' }}>
+          {language}
         </span>
+
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-zinc-400 transition-colors hover:bg-zinc-700 hover:text-zinc-100"
-          title="Copy code"
+          className="flex items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-[11px] transition-all duration-150"
+          style={{ color: '#484f58' }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = '#30363d'
+            e.currentTarget.style.color = '#e6edf3'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'transparent'
+            e.currentTarget.style.color = '#484f58'
+          }}
         >
-          {copied ? (
-            <>
-              <Check className="h-3 w-3 text-emerald-400" />
-              <span className="text-emerald-400">Copied!</span>
-            </>
-          ) : (
-            <>
-              <Copy className="h-3 w-3" />
-              <span>Copy</span>
-            </>
-          )}
+          {copied
+            ? <><Check className="h-3 w-3" />Copied</>
+            : <><Copy className="h-3 w-3" />Copy</>
+          }
         </button>
       </div>
 
-      {/* Code body — rehype-pretty-code injects syntax-highlighted spans */}
       <pre
         ref={preRef}
         data-language={dataLanguage}
-        className="overflow-x-auto rounded-b-xl border border-zinc-700 bg-zinc-900 px-6 py-5 text-sm leading-relaxed dark:bg-zinc-950"
+        className="overflow-x-auto px-5 py-5 text-sm leading-7"
+        style={{ background: '#0d1117', margin: 0 }}
         {...props}
       >
         {children}
