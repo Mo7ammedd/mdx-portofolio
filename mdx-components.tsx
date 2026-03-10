@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { ZoomableImage } from '@/components/ui/zoomable-image'
 import { CodeBlock } from '@/components/ui/code-block'
 import { HeadingAnchor } from '@/components/ui/heading-anchor'
-import { Info, AlertTriangle, CheckCircle, XCircle, Quote } from 'lucide-react'
+import { Info, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -55,10 +55,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     blockquote: ({ children, ...props }: any) => (
       <blockquote
-        className="relative mt-6 overflow-hidden rounded-r-lg border-l-4 border-zinc-400 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-900/50 pl-6 pr-4 py-4 italic"
+        className="my-6 border-l-2 border-zinc-300 pl-4 not-italic text-zinc-600 dark:border-zinc-700 dark:text-zinc-400 [&_p]:my-0 [&_p]:leading-relaxed"
         {...props}
       >
-        <Quote className="absolute right-3 top-3 h-8 w-8 text-zinc-200 dark:text-zinc-700 rotate-180" />
         {children}
       </blockquote>
     ),
