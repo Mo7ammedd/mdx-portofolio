@@ -49,7 +49,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     a: (props: any) => (
       <a
-        className="font-medium text-zinc-900 dark:text-zinc-100 underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 transition-colors"
+        className="font-medium text-zinc-900 dark:text-zinc-100 no-underline transition-colors hover:text-zinc-600 dark:hover:text-zinc-400"
         {...props}
       />
     ),

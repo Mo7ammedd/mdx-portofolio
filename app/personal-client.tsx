@@ -125,43 +125,35 @@ export function PersonalClient({
         transition={TRANSITION_SECTION}
       >
         <h3 className="mb-5 text-lg font-medium">Work Experience</h3>
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col gap-2">
           {workExperience.map((job) => (
             <a
-              className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
+              key={job.id}
               href={job.link}
               target="_blank"
               rel="noopener noreferrer"
-              key={job.id}
+              className="theme-card group relative flex items-center gap-4 rounded-2xl p-4 hover:scale-[1.01]"
             >
-              <Spotlight
-                className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
-                size={64}
-              />
-              <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
-                <div className="relative flex w-full flex-row items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
-                      <Image
-                        src={job.logo}
-                        alt={`${job.company} logo`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-normal dark:text-zinc-100">
-                        {job.title}
-                      </h4>
-                      <p className="text-zinc-500 dark:text-zinc-400">
-                        {job.company}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    {job.start} - {job.end}
-                  </p>
-                </div>
+              {/* Logo */}
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
+                <Image
+                  src={job.logo}
+                  alt={`${job.company} logo`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Role + company */}
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-zinc-100">{job.title}</p>
+                <p className="mt-0.5 text-sm text-zinc-500">{job.company}</p>
+              </div>
+
+              {/* Date stacked */}
+              <div className="shrink-0 text-right">
+                <p className="font-mono text-xs text-zinc-500">{job.start}</p>
+                <p className="font-mono text-xs text-zinc-700">{job.end}</p>
               </div>
             </a>
           ))}

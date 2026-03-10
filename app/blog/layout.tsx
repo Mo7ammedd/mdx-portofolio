@@ -165,7 +165,7 @@ export default function LayoutBlogPost({
         prose-h2:text-2xl prose-h2:text-zinc-800 dark:prose-h2:text-zinc-200 prose-h2:border-b prose-h2:border-zinc-200 dark:prose-h2:border-zinc-800 prose-h2:pb-2
         prose-h3:text-xl prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200
         prose-p:text-zinc-700 dark:prose-p:text-zinc-300 prose-p:leading-7
-        prose-a:text-zinc-900 dark:prose-a:text-zinc-100 prose-a:underline prose-a:underline-offset-4 prose-a:decoration-zinc-300 dark:prose-a:decoration-zinc-700 hover:prose-a:decoration-zinc-900 dark:hover:prose-a:decoration-zinc-100 prose-a:font-medium prose-a:transition-colors
+        prose-a:text-zinc-900 dark:prose-a:text-zinc-100 prose-a:no-underline prose-a:font-medium prose-a:transition-colors hover:prose-a:text-zinc-600 dark:hover:prose-a:text-zinc-400
         prose-strong:font-semibold prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100
         prose-code:text-zinc-800 dark:prose-code:text-zinc-200 prose-code:font-mono prose-code:text-sm
         [&_:not(pre)>code]:bg-zinc-100 dark:[&_:not(pre)>code]:bg-zinc-800 [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:border [&_:not(pre)>code]:border-zinc-200 dark:[&_:not(pre)>code]:border-zinc-700

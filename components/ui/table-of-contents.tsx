@@ -81,7 +81,7 @@ export function TableOfContents() {
               key={heading.id}
               href={`#${heading.id}`}
               onClick={() => setIsOpen(false)}
-              className={`block rounded-md py-1.5 text-sm transition-colors ${
+              className={`block rounded-md py-1.5 text-sm transition-colors no-underline ${
                 heading.level === 3 ? 'pl-4' : 'pl-0'
               } ${
                 activeId === heading.id

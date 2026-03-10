@@ -149,6 +149,50 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Dot grid — light mode */
+  body {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* Dot grid — dark mode */
+  .dark body {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* Vignette — light mode */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, white 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Vignette — dark mode */
+  .dark body::after {
+    background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, #09090b 100%);
+  }
+
+  /* Theme-aware card — used on work + project cards */
+  .theme-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: border-color 0.25s, transform 0.3s;
+  }
+  .theme-card:hover {
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+  .dark .theme-card {
+    background: rgba(255, 255, 255, 0.01);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+  .dark .theme-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
   
   /* Enhanced blog post typography */
   article {

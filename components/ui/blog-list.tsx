@@ -48,7 +48,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
       {/* Back link */}
       <Link
         href="/"
-        className="mb-10 inline-flex items-center gap-1.5 text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
+        className="mb-10 inline-flex items-center gap-1.5 text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100 no-underline"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back
@@ -151,7 +151,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
       {featured && (
         <Link
           href={`/blog/${featured.slug}`}
-          className="group mb-6 block rounded-2xl p-6 transition-all duration-300 hover:scale-[1.005]"
+          className="group mb-6 block rounded-2xl p-6 transition-all duration-300 hover:scale-[1.005] no-underline"
           style={{
             background: 'rgba(0,0,0,0.3)',
             backdropFilter: 'blur(20px) saturate(180%)',
@@ -229,7 +229,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex items-start gap-5 py-5 transition-all duration-200 hover:bg-white/[0.02] rounded-xl px-2 -mx-2"
+              className="group flex items-start gap-5 py-5 transition-all duration-200 hover:bg-white/[0.02] rounded-xl px-2 -mx-2 no-underline"
             >
               {/* Index number */}
               <span

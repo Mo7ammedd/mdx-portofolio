@@ -1,13 +1,5 @@
 import Link from 'next/link'
-
-import { Badge } from '@/components/ui/badge'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { ArrowUpRight } from 'lucide-react'
 
 interface Props {
   title: string
@@ -24,48 +16,58 @@ interface Props {
 
 export function ProjectCard({ title, description, tags, links }: Props) {
   return (
-    <Card
-      className={
-        'flex h-full flex-col gap-3 overflow-hidden border p-2 transition-all duration-300 ease-out hover:shadow-lg'
-      }
-    >
-      <CardHeader className="px-2">
-        <div className="space-y-1">
-          <CardTitle className="mt-1 text-base">{title}</CardTitle>
-          <p className="prose text-muted-foreground dark:prose-invert max-w-full font-sans text-xs text-pretty">
-            {description}
-          </p>
+    <div className="theme-card group flex h-full flex-col rounded-2xl p-5 hover:scale-[1.02]">
+      {/* Title row */}
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-base font-semibold leading-snug text-zinc-100">
+          {title}
+        </h3>
+        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-zinc-600 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </div>
+
+      {/* Description */}
+      <p className="mt-3 flex-1 text-xs leading-relaxed text-zinc-500 line-clamp-3">
+        {description}
+      </p>
+
+      {/* Tags */}
+      {tags && tags.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full px-2 py-0.5 font-mono text-[10px]"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                color: 'rgba(113,113,122,1)',
+              }}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
-      </CardHeader>
-      <CardContent className="mt-auto flex flex-col px-2">
-        {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {tags?.map((tag) => (
-              <Badge
-                className="px-1 py-0 text-[9px]"
-                variant="secondary"
-                key={tag}
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="px-2 pb-2">
-        {links && links.length > 0 && (
-          <div className="flex flex-row flex-wrap items-start gap-1">
-            {links?.map((link, idx) => (
-              <Link href={link?.href} key={idx} target="_blank">
-                <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.icon}
-                  {link.type}
-                </Badge>
-              </Link>
-            ))}
-          </div>
-        )}
-      </CardFooter>
-    </Card>
+      )}
+
+      {/* Footer links */}
+      {links && links.length > 0 && (
+        <div
+          className="mt-4 flex gap-3 pt-4"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+        >
+          {links.map((link, idx) => (
+            <Link
+              key={idx}
+              href={link.href}
+              target="_blank"
+              className="flex items-center gap-1.5 text-[11px] text-zinc-500 transition-colors duration-150 hover:text-zinc-200 no-underline"
+            >
+              {link.icon}
+              {link.type}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
