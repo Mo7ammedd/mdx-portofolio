@@ -59,11 +59,10 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
             <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              Writing
-            </h1>
+            Blogging about backend engineering, system design, and scalable software            </h1>
             <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-              Thoughts on backend engineering, system design &amp; the craft.
-            </p>
+        Notes on backend systems, performance, and building software that scales.
+      </p>
           </div>
 
           {/* Stats */}
