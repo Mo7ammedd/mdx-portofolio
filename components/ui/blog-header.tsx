@@ -21,7 +21,7 @@ export function BlogHeader({ datePublished, readingTime, previousPost, nextPost 
 
   return (
     <>
-      <div className="fixed left-0 right-0 top-0 z-30 flex items-center justify-between border-b border-zinc-200 bg-white/80 px-6 py-3 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/80">
+      <div data-blog-header className="fixed left-0 right-0 top-0 z-30 flex items-center justify-between border-b border-zinc-200 bg-white/80 px-6 py-3 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/80">
         <Link
           href="/blog"
           className="flex items-center gap-1.5 text-sm text-zinc-500 no-underline transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"

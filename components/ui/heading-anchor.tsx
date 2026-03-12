@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import { Hash } from 'lucide-react'
 
 function slugify(text: string) {
@@ -12,6 +12,16 @@ function slugify(text: string) {
     .trim()
 }
 
+function getChildText(children: React.ReactNode): string {
+  if (typeof children === 'string') return children
+  if (typeof children === 'number') return String(children)
+  if (Array.isArray(children)) return children.map(getChildText).join('')
+  if (children !== null && typeof children === 'object' && 'props' in children) {
+    return getChildText((children as any).props?.children)
+  }
+  return ''
+}
+
 interface HeadingAnchorProps {
   level: 2 | 3 | 4
   className?: string
@@ -20,17 +30,9 @@ interface HeadingAnchorProps {
 
 export function HeadingAnchor({ level, className, children }: HeadingAnchorProps) {
   const ref = useRef<HTMLHeadingElement>(null)
-  const [id, setId] = useState('')
   const [copied, setCopied] = useState(false)
 
-  useEffect(() => {
-    if (ref.current) {
-      const text = ref.current.textContent?.replace('#', '').trim() || ''
-      const slug = slugify(text)
-      ref.current.id = slug
-      setId(slug)
-    }
-  }, [])
+  const id = useMemo(() => slugify(getChildText(children)), [children])
 
   const handleCopyAnchor = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -47,7 +49,7 @@ export function HeadingAnchor({ level, className, children }: HeadingAnchorProps
   const Tag = `h${level}` as 'h2' | 'h3' | 'h4'
 
   return (
-    <Tag ref={ref} className={`group flex items-center gap-2 ${className}`}>
+    <Tag id={id} ref={ref} className={`group flex items-center gap-2 ${className}`}>
       {children}
       <button
         onClick={handleCopyAnchor}

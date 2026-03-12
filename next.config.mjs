@@ -1,7 +1,6 @@
 import createMDX from '@next/mdx'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeUnwrapImages from 'rehype-unwrap-images'
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

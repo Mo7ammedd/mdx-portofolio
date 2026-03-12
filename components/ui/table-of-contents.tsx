@@ -15,22 +15,18 @@ export function TableOfContents() {
   const [activeId, setActiveId] = useState('')
 
   useEffect(() => {
-    const elements = document.querySelectorAll('article h2, article h3')
-    const items: Heading[] = Array.from(elements).map((el) => {
-      if (!el.id) {
-        el.id =
-          el.textContent
-            ?.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]/g, '') || ''
-      }
-      return {
+    const read = () => {
+      const elements = document.querySelectorAll('article h2, article h3')
+      const items: Heading[] = Array.from(elements).map((el) => ({
         id: el.id,
-        text: el.textContent || '',
+        text: el.textContent?.replace(/\s*#\s*$/, '').trim() || '',
         level: parseInt(el.tagName[1]),
-      }
-    })
-    setHeadings(items)
+      })).filter((h) => h.id)
+      setHeadings(items)
+    }
+    // Wait one frame so HeadingAnchor ids are committed to the DOM
+    const frame = requestAnimationFrame(read)
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   useEffect(() => {
@@ -80,7 +76,18 @@ export function TableOfContents() {
             <a
               key={heading.id}
               href={`#${heading.id}`}
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                e.preventDefault()
+                const target = document.getElementById(heading.id)
+                if (target) {
+                  const fixedHeader = document.querySelector('[data-blog-header]') as HTMLElement
+                  const offset = (fixedHeader?.getBoundingClientRect().height ?? 52) + 16
+                  const top = target.getBoundingClientRect().top + window.scrollY - offset
+                  window.scrollTo({ top, behavior: 'smooth' })
+                  window.history.pushState(null, '', `#${heading.id}`)
+                }
+                setIsOpen(false)
+              }}
               className={`block rounded-md py-1.5 text-sm transition-colors no-underline ${
                 heading.level === 3 ? 'pl-4' : 'pl-0'
               } ${

@@ -57,6 +57,14 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
         image: '/og/nginx-deep-dive-architecture-configuration-production-patterns.png',
         readingTime: 12,
       },
+      'pagination-strategies-offset-vs-cursor': {
+        title: 'Pagination Strategies: OFFSET vs Cursor Pagination',
+        description: 'A deep technical dive into OFFSET and cursor-based pagination strategies — covering database internals, B-tree traversal, performance characteristics, and real-world implementation patterns.',
+        datePublished: '2026-03-13',
+        dateModified: '2026-03-13',
+        image: '/og/pagination-strategies-offset-vs-cursor.png',
+        readingTime: 15,
+      },
     }
     return blogPosts[slug || ''] || null
   }
@@ -69,6 +77,7 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
       { slug: '3-ways-to-build-custom-middleware-in-aspnet-core', title: '3 Ways to Build Custom Middleware in ASP.NET Core', date: '2024-03-15' },
       { slug: 'simukernel-operating-system-concepts', title: 'SimuKernel: OS Concepts Explained', date: '2025-10-29' },
       { slug: 'nginx-deep-dive-architecture-configuration-production-patterns', title: 'Nginx Deep Dive: Architecture & Production', date: '2026-01-15' },
+      { slug: 'pagination-strategies-offset-vs-cursor', title: 'Pagination Strategies: OFFSET vs Cursor Pagination', date: '2026-03-13' },
     ]
     const sortedSlugs = [...slugs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     const currentIndex = sortedSlugs.findIndex(p => p.slug === currentSlug)
