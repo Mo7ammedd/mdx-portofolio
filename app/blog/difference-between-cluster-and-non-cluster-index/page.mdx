@@ -1,7 +1,7 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'Clustered vs Non-Clustered Database Indexes: Complete Guide',
+  title: 'Clustered vs Non Clustered Database Indexes',
   description: 'Database indexing with comprehensive guide on clustered and non-clustered indexes. Learn B-Tree architecture. ',
   slug: 'difference-between-cluster-and-non-cluster-index',
   publishedTime: '2023-11-10T10:00:00.000Z',
@@ -72,14 +72,37 @@ Because of this design, index operations scale logarithmically with data size.
 
 ### Operation Complexity
 
-```
-Operation      Complexity          Description
--------------------------------------------------------------------
-Equality Seek  O(log n)            Direct lookup by key
-Range Query    O(log n + k)        k = number of rows returned
-Insert         O(log n)            May cause page split
-Delete         O(log n)            May cause page merge
-```
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Complexity</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Equality Seek</td>
+      <td>O(log n)</td>
+      <td>Direct lookup by key</td>
+    </tr>
+    <tr>
+      <td>Range Query</td>
+      <td>O(log n + k)</td>
+      <td>k = number of rows returned</td>
+    </tr>
+    <tr>
+      <td>Insert</td>
+      <td>O(log n)</td>
+      <td>May cause page split</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>O(log n)</td>
+      <td>May cause page merge</td>
+    </tr>
+  </tbody>
+</table>
 
 In practice, most index seeks require only 2 to 4 page reads, even for very large tables.
 
@@ -245,16 +268,47 @@ They are not ideal for heavy OLTP updates.
 
 ## Index Selection Guide
 
-```
-Scenario                     Recommended Index            Reason
----------------------------------------------------------------------------------------
-Primary Key                 Clustered                    Natural ordering
-Range Queries               Clustered                    Sequential reads
-Frequent Lookups            Non-Clustered                Fast seeks
-Covering Queries            Non-Clustered + INCLUDE      Avoids lookups
-Low Cardinality Filters     Filtered Index               Smaller footprint
-Analytics                   Columnstore                 Compression and scans
-```
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Recommended Index</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primary Key</td>
+      <td>Clustered</td>
+      <td>Natural ordering</td>
+    </tr>
+    <tr>
+      <td>Range Queries</td>
+      <td>Clustered</td>
+      <td>Sequential reads</td>
+    </tr>
+    <tr>
+      <td>Frequent Lookups</td>
+      <td>Non-Clustered</td>
+      <td>Fast seeks</td>
+    </tr>
+    <tr>
+      <td>Covering Queries</td>
+      <td>Non-Clustered + INCLUDE</td>
+      <td>Avoids lookups</td>
+    </tr>
+    <tr>
+      <td>Low Cardinality Filters</td>
+      <td>Filtered Index</td>
+      <td>Smaller footprint</td>
+    </tr>
+    <tr>
+      <td>Analytics</td>
+      <td>Columnstore</td>
+      <td>Compression and scans</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -306,15 +360,48 @@ DEALLOCATE IndexCursor
 
 ## Performance Comparison (10M Rows)
 
-```
-Operation                     Clustered     Non-Clustered      Heap
------------------------------------------------------------------------------------
-Primary Key Seek             0.003 ms      0.003 + lookup      2.1 ms
-Range Query (10k rows)       12 ms         45 ms               1200 ms
-INSERT (sequential)          8 ms          10 ms               5 ms
-INSERT (random)              120 ms        15 ms               5 ms
-UPDATE (in-place)            6 ms          9 ms                7 ms
-```
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Clustered</th>
+      <th>Non-Clustered</th>
+      <th>Heap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primary Key Seek</td>
+      <td>0.003 ms</td>
+      <td>0.003 ms + lookup</td>
+      <td>2.1 ms</td>
+    </tr>
+    <tr>
+      <td>Range Query (10k rows)</td>
+      <td>12 ms</td>
+      <td>45 ms</td>
+      <td>1200 ms</td>
+    </tr>
+    <tr>
+      <td>INSERT (sequential)</td>
+      <td>8 ms</td>
+      <td>10 ms</td>
+      <td>5 ms</td>
+    </tr>
+    <tr>
+      <td>INSERT (random)</td>
+      <td>120 ms</td>
+      <td>15 ms</td>
+      <td>5 ms</td>
+    </tr>
+    <tr>
+      <td>UPDATE (in-place)</td>
+      <td>6 ms</td>
+      <td>9 ms</td>
+      <td>7 ms</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 

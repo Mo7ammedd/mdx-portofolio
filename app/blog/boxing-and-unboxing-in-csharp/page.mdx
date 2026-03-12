@@ -1,7 +1,7 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'Deep Dive into C# Boxing and Unboxing',
+  title: 'C# Boxing and Unboxing',
   description: 'A practical guide to boxing and unboxing in C# and their performance impact.',
   slug: 'boxing-and-unboxing-in-csharp',
   publishedTime: '2023-08-22T10:00:00.000Z',
@@ -204,14 +204,42 @@ The generic version:
 
 ### Memory Footprint Comparison
 
-```
-Type       Unboxed Size   Boxed Size   Approx Increase
-------------------------------------------------------
-bool       1 byte        ~24 bytes    24x
-int        4 bytes       ~24 bytes    6x
-long       8 bytes       ~24 bytes    3x
-decimal    16 bytes      ~40 bytes    2.5x
-```
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Unboxed Size</th>
+      <th>Boxed Size</th>
+      <th>Approx Increase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bool</td>
+      <td>1 byte</td>
+      <td>~24 bytes</td>
+      <td>24x</td>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td>4 bytes</td>
+      <td>~24 bytes</td>
+      <td>6x</td>
+    </tr>
+    <tr>
+      <td>long</td>
+      <td>8 bytes</td>
+      <td>~24 bytes</td>
+      <td>3x</td>
+    </tr>
+    <tr>
+      <td>decimal</td>
+      <td>16 bytes</td>
+      <td>~40 bytes</td>
+      <td>2.5x</td>
+    </tr>
+  </tbody>
+</table>
 
 These numbers explain why legacy non-generic APIs scale poorly.
 

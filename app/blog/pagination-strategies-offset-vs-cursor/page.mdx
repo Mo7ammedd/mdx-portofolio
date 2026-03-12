@@ -706,12 +706,3 @@ LIMIT 10;
 ```
 
 
-## Conclusion
-
-OFFSET pagination is the fast path to getting pagination working. It's intuitive, maps directly to page numbers, and requires minimal database knowledge. But it carries a hidden debt: linear performance degradation, data consistency problems under concurrent writes, and inherent unsuitability for large datasets.
-
-Cursor pagination inverts the cost structure. It requires upfront investment in API design, composite index planning, and cursor encoding/decoding logic. In return, it delivers constant-time performance regardless of depth, stable results under concurrent writes, and a pagination model that scales to any dataset size.
-
-For any production system expected to grow, cursor pagination is not just a performance optimisation: it is the correct abstraction for paginating over a live, changing dataset.
-
-The summary: **start with OFFSET during prototyping**, but treat the migration to cursor pagination as a scheduled architectural task before you reach scale. Waiting until you're at 10M rows and your page-500 queries are timing out is not the time to make this change.

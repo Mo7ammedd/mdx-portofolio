@@ -103,7 +103,16 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
       </motion.section>
 
       <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
-        <h3 className="mb-3 text-lg font-medium">Blog</h3>
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="text-lg font-medium">Blog</h3>
+          <Link
+            href="/blog"
+            className="flex items-center gap-1 text-sm text-zinc-500 no-underline transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          >
+            View all
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
         <div className="flex flex-col">
           <AnimatedBackground
             enableHover

@@ -403,13 +403,36 @@ Pipeline order should be intentional and documented.
 
 ## Middleware Approach Comparison
 
-```
-Approach             Complexity   DI Support     Best Use Case
----------------------------------------------------------------------------
-Request Delegates    Low          Limited        Small logic, quick checks
-Convention-Based     Medium       Good           Reusable, configurable middleware
-Factory-Based        High         Excellent      Complex logic, enterprise systems
-```
+<table>
+  <thead>
+    <tr>
+      <th>Approach</th>
+      <th>Complexity</th>
+      <th>DI Support</th>
+      <th>Best Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Request Delegates</td>
+      <td>Low</td>
+      <td>Limited</td>
+      <td>Small logic, quick checks</td>
+    </tr>
+    <tr>
+      <td>Convention-Based</td>
+      <td>Medium</td>
+      <td>Good</td>
+      <td>Reusable, configurable middleware</td>
+    </tr>
+    <tr>
+      <td>Factory-Based</td>
+      <td>High</td>
+      <td>Excellent</td>
+      <td>Complex logic, enterprise systems</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
