@@ -2,62 +2,48 @@ import { getAllBlogPosts } from '@/lib/blog-utils'
 import { WEBSITE_URL } from '@/lib/constants'
 import fs from 'fs'
 import path from 'path'
+import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import { renderToStaticMarkup } from 'react-dom/server'
+
+function sanitizeMdxForRss(content: string): string {
+  return (
+    content
+      // Remove metadata export block.
+      .replace(/export const metadata = generateBlogPostSEO\({[\s\S]*?}\)/g, '')
+      // Remove import/export statements.
+      .replace(/^import .+$/gm, '')
+      .replace(/^export .+$/gm, '')
+      // Remove JSX-style self-closing components that RSS readers can't render.
+      .replace(/^\s*<[A-Z][\w.-]*(?:\s+[^>]*)?\/>\s*$/gm, '')
+      // Remove JSX-style component blocks.
+      .replace(/<([A-Z][\w.-]*)(?:\s[^>]*)?>[\s\S]*?<\/\1>/g, '')
+      .trim()
+  )
+}
 
 function mdxToHtml(content: string): string {
-  // Remove metadata export
-  content = content.replace(/export const metadata = generateBlogPostSEO\({[\s\S]*?}\)/g, '')
-  
-  content = content.replace(/^import .+$/gm, '')
-  
-  // Convert headings
-  content = content.replace(/^# (.+)$/gm, '<h1>$1</h1>')
-  content = content.replace(/^## (.+)$/gm, '<h2>$1</h2>')
-  content = content.replace(/^### (.+)$/gm, '<h3>$1</h3>')
-  content = content.replace(/^#### (.+)$/gm, '<h4>$1</h4>')
-  content = content
-  
-  // Convert code blocks with language
-  content = content.replace(/```(\w+)\n([\s\S]*?)```/g, 
-    '<pre><code class="language-$1">$2</code></pre>')
-  
-  // Convert inline code
-  content = content.replace(/`([^`]+)`/g, '<code>$1</code>')
-  
-  // Convert bold
-  content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-  
-  // Convert italic
-  content = content.replace(/\*(.+?)\*/g, '<em>$1</em>')
-  
-  // Convert links
-  content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-  
-  // Convert images
-  content = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, 
-    '<img src="' + WEBSITE_URL + '$2" alt="$1" />')
-  
-  // Convert lists
-  content = content.replace(/^\* (.+)$/gm, '<li>$1</li>')
-  content = content.replace(/^- (.+)$/gm, '<li>$1</li>')
-  content = content.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
-  
-  // Wrap consecutive list items in ul/ol tags
-  content = content.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
-    return '<ul>' + match + '</ul>'
-  })
-  
-  // Convert paragraphs (text not in tags)
-  content = content.split('\n\n').map(para => {
-    para = para.trim()
-    if (!para) return ''
-    if (para.startsWith('<')) return para
-    return '<p>' + para + '</p>'
-  }).join('\n')
-  
-  // Clean up extra whitespace
-  content = content.replace(/\n{3,}/g, '\n\n')
-  
-  return content
+  const safeContent = sanitizeMdxForRss(content)
+
+  return renderToStaticMarkup(
+    React.createElement(
+      ReactMarkdown,
+      {
+        components: {
+          img: ({ src, alt }) =>
+            React.createElement('img', {
+              src: src
+                ? src.startsWith('http')
+                  ? src
+                  : `${WEBSITE_URL}${src}`
+                : undefined,
+              alt: alt ?? '',
+            }),
+        },
+      },
+      safeContent
+    )
+  )
 }
 
 function getFullPostContent(slug: string): string {
@@ -73,14 +59,15 @@ function getFullPostContent(slug: string): string {
 
 export async function GET() {
   const posts = await getAllBlogPosts()
-  
+
   const rssItems = posts
-    .map(
-      (post) => {
-        const fullContent = getFullPostContent(post.slug)
-        const imageUrl = post.image ? `${WEBSITE_URL}${post.image}` : `${WEBSITE_URL}/og/${post.slug}.png`
-        
-        return `
+    .map((post) => {
+      const fullContent = getFullPostContent(post.slug)
+      const imageUrl = post.image
+        ? `${WEBSITE_URL}${post.image}`
+        : `${WEBSITE_URL}/og/${post.slug}.png`
+
+      return `
     <item>
       <title><![CDATA[${post.title}]]></title>
       <description><![CDATA[${post.description}]]></description>
@@ -106,8 +93,7 @@ export async function GET() {
       <author>mohammedmostafanazih@gmail.com (Mohammed Mostafa)</author>
       <enclosure url="${imageUrl}" type="image/png" length="0"/>
     </item>`
-      }
-    )
+    })
     .join('\n')
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
