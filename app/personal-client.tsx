@@ -53,10 +53,30 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
   return (
     <motion.main className="space-y-24" variants={VARIANTS_CONTAINER} initial="hidden" animate="visible">
       <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
-        <p className="text-zinc-600 dark:text-zinc-400">
-          I am Mohammed Mostafa, a Software Engineer and recent Computer Science graduate from Suez Canal University. As a dedicated software engineer, I have a deep passion for building systems that are strong, efficient, and easy to use. I focus on backend development, where I design and develop reliable solutions that help applications run smoothly. I love solving problems and turning ideas into real, working systems.
-        </p>
-      </motion.section>
+        {/* <h1 className="mb-4 text-2xl font-medium tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+          im a software engineer btw
+        </h1> */}
+<p className="text-zinc-600 dark:text-zinc-400">
+  im Mohammed Mostafa, a software engineer and cs graduate from Suez Canal University. i mostly work on backend systems, distributed architectures, databases, and infrastructure. ive built large scale platforms like{" "}
+  <a
+    href="https://onvo.me"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="font-medium text-zinc-900 underline underline-offset-4 dark:text-zinc-100"
+  >
+    Onvo
+  </a>
+  , serving 200k+ users with realtime interactions and high concurrency support, alongside ai powered products like{" "}
+  <a
+    href="https://reflx.me"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="font-medium text-zinc-900 underline underline-offset-4 dark:text-zinc-100"
+  >
+    Reflx
+  </a>
+  , and multi tenant saas systems. i enjoy solving complex engineering problems and building software thats scalable, reliable, and actually survives production traffic.
+</p>    </motion.section>
 
       <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
         <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
@@ -89,7 +109,15 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
               </div>
 
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{job.title}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{job.title}</p>
+                  {job.end === 'Present' && (
+                    <span className="relative flex h-1.5 w-1.5" title="Currently here">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-zinc-400 opacity-60 dark:bg-zinc-500" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-zinc-500 dark:bg-zinc-400" />
+                    </span>
+                  )}
+                </div>
                 <p className="mt-0.5 text-sm text-zinc-500">{job.company}</p>
               </div>
 

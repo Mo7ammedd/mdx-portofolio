@@ -3,10 +3,37 @@
 import { TextEffect } from '@/components/ui/text-effect'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, Moon, Sun } from 'lucide-react'
 import { Github } from '@/components/icons'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
+
+function ThemeToggle() {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = resolvedTheme === 'dark'
+
+  return (
+    <button
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      className="flex items-center justify-center rounded-full p-2 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+      aria-label="Toggle theme"
+      type="button"
+    >
+      {mounted && isDark ? (
+        <Sun className="h-4 w-4" />
+      ) : (
+        <Moon className="h-4 w-4" />
+      )}
+    </button>
+  )
+}
 
 const PalestineFlagLine = () => {
   return (
@@ -96,6 +123,8 @@ export function Header() {
           >
             <Github />
           </a>
+
+          <ThemeToggle />
         </nav>
       </header>
     </>
