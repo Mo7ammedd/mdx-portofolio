@@ -75,7 +75,7 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
   >
     Reflx
   </a>
-  , and multi tenant saas systems. i enjoy solving complex engineering problems and building software thats scalable, reliable, and actually survives production traffic.
+  , an ai platform that creates digital clones with personality, tone, and knowledge that can represent users 24/7. i enjoy solving complex engineering problems and building software thats scalable, reliable, and actually survives production traffic.
 </p>    </motion.section>
 
       <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
