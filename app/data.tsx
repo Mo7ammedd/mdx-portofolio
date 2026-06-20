@@ -10,12 +10,6 @@ type WorkExperience = {
   logo: string
 }
 
-type BlogPost = {
-  title: string
-  description: string
-  link: string
-  uid: string
-}
 
 type SocialLink = {
   label: string
@@ -168,36 +162,6 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   },
 ]
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    title: 'Difference Between Cluster and Non-Cluster Index',
-    description:
-      'An index is a disk-based structure linked to a table or view that speeds up the retrieval of rows.',
-    link: '/blog/difference-between-cluster-and-non-cluster-index',
-    uid: 'blog-1',
-  },
-  {
-    title: '3 Ways to Build Custom Middleware in ASP.NET Core',
-    description:
-      'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
-    link: '/blog/3-ways-to-build-custom-middleware-in-aspnet-core',
-    uid: 'blog-2',
-  },
-  {
-    title: 'Boxing and Unboxing in C#',
-    description:
-      'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
-    link: '/blog/boxing-and-unboxing-in-csharp',
-    uid: 'blog-3',
-  },
-  {
-    title: 'SimuKernel: OS Concepts Explained',
-    description:
-      'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
-    link: '/blog/simukernel-operating-system-concepts',
-    uid: 'blog-4',
-  },
-]
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
