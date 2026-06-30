@@ -135,7 +135,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     title: 'Backend Engineer',
     start: 'Jul 2025',
     end: 'Present',
-    link: 'https://www.facebook.com/medicascope/',
+    link: 'https://medicascopehms.com/',
     id: 'work1',
     logo: '/work/medica.png',
   },

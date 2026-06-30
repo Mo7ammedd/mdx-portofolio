@@ -57,26 +57,17 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
           im a software engineer btw
         </h1> */}
 <p className="text-zinc-600 dark:text-zinc-400">
-  im Mohammed Mostafa, a software engineer and cs graduate from Suez Canal University. i mostly work on backend systems, distributed architectures, databases, and infrastructure. ive built large scale platforms like{" "}
+  im Mohammed Mostafa, a software engineer and cs graduate from Suez Canal University. im currently working as a software engineer at{" "}
   <a
-    href="https://onvo.me"
+    href="https://medicascopehms.com/"
     target="_blank"
     rel="noopener noreferrer"
     className="font-medium text-zinc-900 underline underline-offset-4 dark:text-zinc-100"
   >
-    Onvo
+    Medica Scope
   </a>
-  , serving 200k+ users with realtime interactions and high concurrency support, alongside ai powered products like{" "}
-  <a
-    href="https://reflx.me"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="font-medium text-zinc-900 underline underline-offset-4 dark:text-zinc-100"
-  >
-    Reflx
-  </a>
-  , an ai platform that creates digital clones with personality, tone, and knowledge that can represent users 24/7. i enjoy solving complex engineering problems and building software thats scalable, reliable, and actually survives production traffic.
-</p>    </motion.section>
+  . i specialize in backend engineering, distributed systems, databases, and cloud infrastructure. i enjoy solving complex engineering challenges and building scalable, reliable software with a focus on performance, maintainability, and production readiness.
+</p></motion.section>
 
       <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
         <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
