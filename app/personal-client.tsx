@@ -79,6 +79,7 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
               description={project.description}
               tags={project.technologies}
               links={project.links}
+              href={project.href}
             />
           ))}
         </div>

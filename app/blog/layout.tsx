@@ -65,6 +65,14 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
         image: '/og/pagination-strategies-offset-vs-cursor.png',
         readingTime: 15,
       },
+      'aeroudp-networking-concepts': {
+        title: 'Building a Transport Protocol on Top of UDP',
+        description: 'A practical guide to reliable transport, congestion control, flow control, and connection management — using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
+        datePublished: '2026-07-01',
+        dateModified: '2026-07-01',
+        image: '/og/aeroudp-networking-concepts.png',
+        readingTime: 14,
+      },
     }
     return blogPosts[slug || ''] || null
   }
@@ -78,6 +86,7 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
       { slug: 'simukernel-operating-system-concepts', title: 'SimuKernel: OS Concepts Explained', date: '2025-10-29' },
       { slug: 'nginx-deep-dive-architecture-configuration-production-patterns', title: 'Nginx Deep Dive: Architecture & Production', date: '2026-01-15' },
       { slug: 'pagination-strategies-offset-vs-cursor', title: 'Pagination Strategies: OFFSET vs Cursor Pagination', date: '2026-03-13' },
+      { slug: 'aeroudp-networking-concepts', title: 'Building a Transport Protocol on Top of UDP', date: '2026-07-01' },
     ]
     const sortedSlugs = [...slugs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     const currentIndex = sortedSlugs.findIndex(p => p.slug === currentSlug)
@@ -141,20 +150,8 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
 
       <main
         className="prose prose-zinc dark:prose-invert max-w-none mt-20 pb-20 transition-all duration-300
-          prose-headings:scroll-m-20 prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h1:text-3xl prose-h1:font-bold
-          prose-h2:text-2xl prose-h2:border-b prose-h2:border-zinc-200 dark:prose-h2:border-zinc-800 prose-h2:pb-2
-          prose-h3:text-xl
-          prose-p:leading-7
-          prose-a:font-medium prose-a:no-underline prose-a:transition-colors
           prose-strong:font-semibold
-          prose-code:font-mono prose-code:text-sm
-          [&_:not(pre)>code]:bg-zinc-100 dark:[&_:not(pre)>code]:bg-zinc-800
-          [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded
-          [&_:not(pre)>code]:border [&_:not(pre)>code]:border-zinc-200 dark:[&_:not(pre)>code]:border-zinc-700
           [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:border-0 [&_pre_code]:rounded-none
-          prose-blockquote:border-l-4 prose-blockquote:border-zinc-400 dark:prose-blockquote:border-zinc-600
-          prose-blockquote:bg-zinc-50 dark:prose-blockquote:bg-zinc-900/50 prose-blockquote:py-2 prose-blockquote:px-4
           prose-img:rounded-lg prose-img:shadow-md"
         style={{ fontSize: `calc(1rem * var(--blog-text-size, 100) / 100)` }}
       >

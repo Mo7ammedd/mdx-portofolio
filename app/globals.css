@@ -150,31 +150,47 @@
     @apply bg-background text-foreground;
   }
 
+  /* Sitewide keyboard focus ring (only shows for keyboard nav, not mouse clicks) */
+  a:focus-visible,
+  button:focus-visible,
+  [role='button']:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid rgba(113, 113, 122, 0.7); /* zinc-500 */
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .dark a:focus-visible,
+  .dark button:focus-visible,
+  .dark [role='button']:focus-visible,
+  .dark [tabindex]:focus-visible {
+    outline-color: rgba(212, 212, 216, 0.7); /* zinc-300 */
+  }
+
   /* Dot grid — light mode */
   body {
-    background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1.5px, transparent 1.5px);
-    background-size: 28px 28px;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.09) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 
   /* Dot grid — dark mode */
   .dark body {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
-    background-size: 28px 28px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 
-  /* Vignette — light mode */
+  /* Vignette — light mode (soft fade, edges stay visible) */
   body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, white 100%);
+    background: radial-gradient(ellipse 120% 120% at 50% 35%, transparent 65%, rgba(255, 255, 255, 0.85) 100%);
     pointer-events: none;
     z-index: 0;
   }
 
   /* Vignette — dark mode */
   .dark body::after {
-    background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, #09090b 100%);
+    background: radial-gradient(ellipse 120% 120% at 50% 35%, transparent 65%, rgba(9, 9, 11, 0.85) 100%);
   }
 
   /* Theme-aware card — used on work + project cards */

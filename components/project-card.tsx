@@ -6,6 +6,7 @@ interface Props {
   description: string
   tags: readonly string[]
   link?: string
+  href?: string
   image?: string
   links?: readonly {
     icon: React.ReactNode
@@ -14,9 +15,20 @@ interface Props {
   }[]
 }
 
-export function ProjectCard({ title, description, tags, links }: Props) {
+export function ProjectCard({ title, description, tags, links, href }: Props) {
   return (
-    <div className="theme-card group flex h-full flex-col rounded-2xl p-5 hover:scale-[1.02]">
+    <div className="theme-card group relative flex h-full flex-col rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/30">
+      {/* Stretched link — makes the whole card clickable without nesting anchors */}
+      {href && (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View project: ${title}`}
+          className="absolute inset-0 z-0 rounded-2xl"
+        />
+      )}
+
       {/* Title row */}
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base font-semibold leading-snug text-zinc-900 dark:text-zinc-100">
@@ -36,7 +48,7 @@ export function ProjectCard({ title, description, tags, links }: Props) {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-zinc-200 bg-zinc-100 px-2 py-0.5 font-mono text-[10px] text-zinc-600 dark:border-white/10 dark:bg-white/5 dark:text-zinc-400"
+              className="rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 font-mono text-[10px] leading-none text-zinc-600 dark:border-white/10 dark:bg-white/5 dark:text-zinc-400"
             >
               {tag}
             </span>
@@ -44,9 +56,9 @@ export function ProjectCard({ title, description, tags, links }: Props) {
         </div>
       )}
 
-      {/* Footer links */}
+      {/* Footer links — lifted above the stretched link so they stay clickable */}
       {links && links.length > 0 && (
-        <div className="mt-4 flex gap-3 border-t border-zinc-200 pt-4 dark:border-white/[0.06]">
+        <div className="relative z-10 mt-4 flex gap-3 border-t border-zinc-200 pt-4 dark:border-white/[0.06]">
           {links.map((link, idx) => (
             <Link
               key={idx}

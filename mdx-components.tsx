@@ -77,46 +77,35 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         return <code className={className} {...rest}>{children}</code>
       }
       return (
-        <code className="relative rounded bg-zinc-100 dark:bg-zinc-800 px-[0.4rem] py-[0.2rem] font-mono text-sm font-semibold text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700">
+        <code className="relative rounded bg-zinc-100/80 dark:bg-zinc-800/60 px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] font-medium text-zinc-800 dark:text-zinc-200">
           {children}
         </code>
       )
     },
     pre: (props: any) => <CodeBlock {...props} />,
     table: ({ children }: any) => (
-      <div className="not-prose my-8 w-full overflow-x-auto rounded-xl"
-        style={{
-          background: 'rgba(0,0,0,0.35)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          border: '1px solid rgba(255,255,255,0.12)',
-          boxShadow: '0 4px 32px rgba(0,0,0,0.25)',
-        }}
-      >
+      <div className="not-prose my-8 w-full overflow-x-auto rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-white/10 dark:bg-white/[0.02] dark:shadow-[0_4px_32px_rgba(0,0,0,0.25)] dark:backdrop-blur-xl">
         <table className="w-full border-collapse text-sm">{children}</table>
       </div>
     ),
     thead: ({ children }: any) => (
-      <thead style={{ background: 'rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
+      <thead className="border-b border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-white/5">
         {children}
       </thead>
     ),
     tbody: ({ children }: any) => <tbody>{children}</tbody>,
     tr: ({ children }: any) => (
-      <tr
-        className="transition-colors hover:bg-white/5"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
-      >
+      <tr className="border-b border-zinc-100 transition-colors last:border-0 hover:bg-zinc-50 dark:border-white/5 dark:hover:bg-white/5">
         {children}
       </tr>
     ),
     th: ({ children }: any) => (
-      <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+      <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
         {children}
       </th>
     ),
     td: ({ children }: any) => (
-      <td className="px-5 py-3.5 text-sm text-zinc-200 dark:text-zinc-200">
+      <td className="px-5 py-3.5 text-sm text-zinc-700 dark:text-zinc-200">
         {children}
       </td>
     ),
