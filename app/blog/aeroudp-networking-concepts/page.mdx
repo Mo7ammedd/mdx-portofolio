@@ -3,7 +3,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 export const metadata = generateBlogPostSEO({
   title: 'Building a Transport Protocol on Top of UDP',
   description:
-    'A practical guide to reliable transport, congestion control, flow control, and connection management — using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
+    'A practical guide to reliable transport, congestion control, flow control, and connection management, using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
   slug: 'aeroudp-networking-concepts',
   publishedTime: '2026-07-01T10:00:00.000Z',
   modifiedTime: '2026-07-01T10:00:00.000Z',
@@ -12,11 +12,10 @@ export const metadata = generateBlogPostSEO({
 
 # Building a Transport Protocol on Top of UDP
 
-This article explains the core networking concepts that make a reliable transport protocol work, using AeroUDP as a concrete reference implementation. AeroUDP is a reliable, ordered, congestion-controlled transport protocol layered on top of unreliable UDP — essentially a stripped-down hybrid of TCP and QUIC written in idiomatic asynchronous Rust.
+This article explains the core networking concepts that make a reliable transport protocol work, using AeroUDP as a concrete reference implementation. AeroUDP is a reliable, ordered, congestion-controlled transport protocol layered on top of unreliable UDP, essentially a stripped-down hybrid of TCP and QUIC written in idiomatic asynchronous Rust.
 
 > Source code: https://github.com/Mo7ammedd/AeroUDP
 
-Every concept below maps to real code in the repository. The complete wire format and state machine live in [docs/PROTOCOL.md](https://github.com/Mo7ammedd/AeroUDP/blob/main/docs/PROTOCOL.md).
 
 ---
 
@@ -29,12 +28,12 @@ The transport layer sits between the raw network (IP) and your application. It i
 **TCP (Transmission Control Protocol):**
 - Reliable, ordered, connection-oriented byte stream
 - Built-in congestion and flow control
-- Implemented in the kernel — hard to modify or experiment with
+- Implemented in the kernel, hard to modify or experiment with
 
 **UDP (User Datagram Protocol):**
 - Unreliable, unordered, connectionless datagrams
 - No congestion control, no retransmission, no ordering
-- A thin wrapper over IP — fast, minimal, and fully programmable in user space
+- A thin wrapper over IP, fast, minimal, and fully programmable in user space
 
 ### The Middle Ground
 
@@ -55,7 +54,7 @@ AeroUDP takes the same approach for educational and experimental purposes. It us
 
 ### What is a Packet Header?
 
-Before any bytes travel across a network, they must be wrapped in a **header** — a fixed structure of metadata that tells the receiver how to interpret the payload. The header answers questions like: *Which connection is this? What sequence number? What is being acknowledged? How much buffer space is available?*
+Before any bytes travel across a network, they must be wrapped in a **header**, a fixed structure of metadata that tells the receiver how to interpret the payload. The header answers questions like: *Which connection is this? What sequence number? What is being acknowledged? How much buffer space is available?*
 
 ### AeroUDP Header
 
@@ -77,7 +76,7 @@ Every AeroUDP datagram is exactly one UDP payload carrying one packet with a 28-
 
 **Key design choices:**
 - **Magic byte + version**: lets the receiver reject garbage or mismatched protocol versions immediately.
-- **Big-endian fields**: "network byte order" — the universal convention so machines with different native byte orders agree.
+- **Big-endian fields**: "network byte order", the universal convention so machines with different native byte orders agree.
 - **1200-byte max payload**: chosen to fit inside common network MTUs (Maximum Transmission Unit) and avoid IP fragmentation.
 
 ### Error Detection with Checksums
@@ -89,12 +88,12 @@ Networks corrupt bits. A **checksum** is a small value computed over the data so
 2. CRC32 is computed over the entire packet (header + payload).
 3. The result is written back into the checksum field.
 
-On receipt, the process is reversed. A mismatch means the packet is silently dropped — from the protocol's perspective it never arrived, and reliability mechanisms will recover it.
+On receipt, the process is reversed. A mismatch means the packet is silently dropped, from the protocol's perspective it never arrived, and reliability mechanisms will recover it.
 
 **Why CRC32?**
 - Fast to compute in hardware and software
 - Excellent at catching burst errors
-- Not cryptographic — it detects accidental corruption, not malicious tampering
+- Not cryptographic, it detects accidental corruption, not malicious tampering
 
 ---
 
@@ -123,16 +122,16 @@ An **ACK** tells the sender "I received everything up to here." AeroUDP uses *cu
 Receiver has: 1, 2, 3, 4    (missing 5)
 ack_num sent: 5             (expecting 5 next)
 
-Later receives: 6, 7        (still missing 5 — out of order)
+Later receives: 6, 7        (still missing 5, out of order)
 ack_num stays: 5            (cannot advance past the gap)
 ```
 
 **Advantages of cumulative ACKs:**
-- Simple and robust — a single number summarizes everything received
+- Simple and robust, a single number summarizes everything received
 - A lost ACK is harmless if a later ACK gets through (it supersedes the old one)
 
 **Disadvantage:**
-- Cannot tell the sender *which specific* later packets arrived after a gap. That is what Selective ACK (SACK) solves — a feature AeroUDP intentionally omits for simplicity.
+- Cannot tell the sender *which specific* later packets arrived after a gap. That is what Selective ACK (SACK) solves, a feature AeroUDP intentionally omits for simplicity.
 
 ### Automatic Repeat reQuest (ARQ)
 
@@ -140,7 +139,7 @@ The general strategy of "detect loss, then resend" is called **ARQ**. AeroUDP im
 
 **How it works:**
 1. Every DATA packet is stored in an in-flight queue, keyed by sequence number.
-2. A cumulative ACK evicts everything strictly below `ack_num` — those packets are confirmed delivered.
+2. A cumulative ACK evicts everything strictly below `ack_num`, those packets are confirmed delivered.
 3. If a packet is not acknowledged in time, it is resent (with a `RETX` flag set for observability).
 
 **Example:**
@@ -157,7 +156,7 @@ ACK arrives with ack_num = 7
 
 ### The Core Problem
 
-How long should a sender wait before deciding a packet was lost? Too short, and it retransmits packets that were merely slow — wasting bandwidth. Too long, and it stalls after real losses.
+How long should a sender wait before deciding a packet was lost? Too short, and it retransmits packets that were merely slow, wasting bandwidth. Too long, and it stalls after real losses.
 
 The answer is to **measure** the network and adapt. The **Round-Trip Time (RTT)** is how long a packet takes to be sent and acknowledged. The **Retransmission Timeout (RTO)** is derived from it.
 
@@ -184,11 +183,11 @@ A network with steady 50 ms RTT and one with wildly swinging 20–200 ms RTT can
 
 **The ambiguity problem:** if a packet is retransmitted and then an ACK arrives, was it acknowledging the *original* or the *retransmission*? You cannot tell, so the RTT sample is unreliable.
 
-**Karn's rule:** never take an RTT sample from a retransmitted segment. AeroUDP enforces exactly this — only clean, first-try packets update SRTT.
+**Karn's rule:** never take an RTT sample from a retransmitted segment. AeroUDP enforces exactly this, only clean, first-try packets update SRTT.
 
 ### Exponential Backoff
 
-When an RTO fires (a real timeout), AeroUDP **doubles** the RTO (`RTO *= 2`) before retrying. This is **exponential backoff** — it prevents a sender from hammering an already-congested or broken network. On the next fresh RTT sample, the backoff resets.
+When an RTO fires (a real timeout), AeroUDP **doubles** the RTO (`RTO *= 2`) before retrying. This is **exponential backoff**, it prevents a sender from hammering an already-congested or broken network. On the next fresh RTT sample, the backoff resets.
 
 **Reference defaults:**
 ```
@@ -208,7 +207,7 @@ A fast sender talking to a slow receiver (or one whose application is slow to re
 ### Sliding Window
 
 **Concept:**
-The receiver advertises how much buffer space it currently has — the **receive window** (the `window` field in the header, measured in packets in AeroUDP). The sender must never have more unacknowledged data in flight than the window allows.
+The receiver advertises how much buffer space it currently has, the **receive window** (the `window` field in the header, measured in packets in AeroUDP). The sender must never have more unacknowledged data in flight than the window allows.
 
 **How it works:**
 ```
@@ -220,7 +219,7 @@ As the buffer fills, the window shrinks toward zero.
 window = 0  →  sender pauses entirely until space frees up.
 ```
 
-The window "slides" forward as ACKs confirm old data and new data is sent — hence *sliding window*.
+The window "slides" forward as ACKs confirm old data and new data is sent, hence *sliding window*.
 
 ### Out-of-Order Buffering
 
@@ -230,7 +229,7 @@ Because UDP can reorder packets, the receiver may get packet 7 before packet 5. 
 
 ## Congestion Control: Don't Overwhelm the Network
 
-Flow control protects the *receiver*. **Congestion control** protects the *network itself* — the shared routers and links between the two endpoints. Without it, many senders can collectively cause **congestion collapse**, where the network is so overloaded that almost nothing gets through.
+Flow control protects the *receiver*. **Congestion control** protects the *network itself*, the shared routers and links between the two endpoints. Without it, many senders can collectively cause **congestion collapse**, where the network is so overloaded that almost nothing gets through.
 
 AeroUDP implements a **NewReno-style** controller, the classic TCP congestion algorithm. Its central variable is the **congestion window (cwnd)**: the sender's own estimate of how much it may safely have in flight. The true limit is:
 
@@ -245,7 +244,7 @@ That is: respect both the network (cwnd) *and* the receiver (peer_window), which
 **How it works:**
 - Start with a small `cwnd` (default: 10 packets).
 - For every ACK that advances the cumulative ACK, grow `cwnd` by the number of segments acknowledged.
-- This **doubles cwnd roughly every RTT** — exponential growth.
+- This **doubles cwnd roughly every RTT**, exponential growth.
 - Exit when `cwnd >= ssthresh` (the slow-start threshold).
 
 **Why "slow"?** It starts small (slow) even though it grows fast. The name reflects the conservative starting point, not the growth rate.
@@ -264,7 +263,7 @@ cwnd: 10 → 20 → 40 → 80 ...   (exponential, per RTT)
 cwnd: 64 → 65 → 66 → 67 ...   (linear, per RTT)
 ```
 
-This is the **AIMD** principle — Additive Increase, Multiplicative Decrease — probing gently for more bandwidth while staying ready to back off hard.
+This is the **AIMD** principle, Additive Increase, Multiplicative Decrease, probing gently for more bandwidth while staying ready to back off hard.
 
 ### Phase 3: Reacting to Loss
 
@@ -275,27 +274,27 @@ Loss is the signal that the network is congested. AeroUDP distinguishes two kind
 **Trigger:** three **duplicate ACKs**. When the receiver gets out-of-order packets, it keeps re-sending the same `ack_num`. Three duplicates strongly suggest a *single* packet was lost while later ones arrived.
 
 **Reaction:**
-- Immediately retransmit the missing segment — do **not** wait for the RTO.
+- Immediately retransmit the missing segment, do **not** wait for the RTO.
 - `ssthresh = max(cwnd / 2, 2)`
 - `cwnd = ssthresh` (halve, don't reset)
 - Enter **fast recovery**; exit when a new cumulative ACK passes the recovery point.
 
-This is "multiplicative decrease" — a measured halving because the network is delivering *some* packets, so it isn't badly congested.
+This is "multiplicative decrease", a measured halving because the network is delivering *some* packets, so it isn't badly congested.
 
 #### Timeout (severe loss)
 
-**Trigger:** the RTO fires — no ACKs at all.
+**Trigger:** the RTO fires, no ACKs at all.
 
 **Reaction (much harsher):**
 - `ssthresh = max(cwnd / 2, 2)`
-- `cwnd = 1` — collapse the window
+- `cwnd = 1`, collapse the window
 - Return to **slow start**
 
 A full timeout means the network may be severely congested or the path broken, so AeroUDP starts over from near-zero.
 
 ### The Sawtooth
 
-Put together, these phases produce TCP's characteristic **sawtooth** pattern — cwnd climbs, hits loss, halves, climbs again — continuously probing for the maximum safe rate:
+Put together, these phases produce TCP's characteristic **sawtooth** pattern, cwnd climbs, hits loss, halves, climbs again, continuously probing for the maximum safe rate:
 
 ```
 cwnd
@@ -356,7 +355,7 @@ A connection is a two-way street, so each direction is closed independently ("ha
 
 ### Abort (RST)
 
-If something goes catastrophically wrong, either side sends a **RST** (reset). The receiver immediately transitions to CLOSED and surfaces a `PeerReset` event — no graceful exchange, just an abrupt teardown.
+If something goes catastrophically wrong, either side sends a **RST** (reset). The receiver immediately transitions to CLOSED and surfaces a `PeerReset` event, no graceful exchange, just an abrupt teardown.
 
 ### Keepalive (PING / PONG)
 
@@ -399,7 +398,7 @@ aeroudp-analyzer proxy \
     --min-latency-ms 20 --max-latency-ms 60 --jitter-ms 10
 ```
 
-Pointing a client at this proxy forces every reliability and congestion mechanism to actually work — turning "it passes on localhost" into "it survives 5% loss with reordering and jitter."
+Pointing a client at this proxy forces every reliability and congestion mechanism to actually work, turning "it passes on localhost" into "it survives 5% loss with reordering and jitter."
 
 ---
 
@@ -408,24 +407,24 @@ Pointing a client at this proxy forces every reliability and congestion mechanis
 A single `send()` call in AeroUDP quietly exercises every concept in this article:
 
 1. The payload is wrapped in a **28-byte header** with a sequence number and CRC32 **checksum**.
-2. The sender checks **flow control** (peer window) and **congestion control** (cwnd) — it only transmits if `in_flight < min(cwnd, peer_window)`.
+2. The sender checks **flow control** (peer window) and **congestion control** (cwnd), it only transmits if `in_flight < min(cwnd, peer_window)`.
 3. The packet is stored in the **retransmission queue** and sent over UDP.
 4. If it arrives cleanly, the receiver **buffers or delivers in order** and returns a **cumulative ACK**, advancing its **window**.
 5. The ACK confirms the packet, updates the **RTT/RTO estimate**, and grows **cwnd** (slow start or congestion avoidance).
 6. If it is lost, either **three duplicate ACKs** (fast retransmit) or an **RTO timeout** triggers retransmission and shrinks cwnd.
 
-None of this is visible to the application, which simply sees a reliable, ordered byte stream — exactly the illusion a transport protocol exists to provide.
+None of this is visible to the application, which simply sees a reliable, ordered byte stream, exactly the illusion a transport protocol exists to provide.
 
 ---
 
 ## Further Reading
 
 - **Standards:**
-  - [RFC 793 / RFC 9293 — TCP](https://www.rfc-editor.org/rfc/rfc9293)
-  - [RFC 6298 — Computing TCP's Retransmission Timer](https://www.rfc-editor.org/rfc/rfc6298)
-  - [RFC 5681 — TCP Congestion Control](https://www.rfc-editor.org/rfc/rfc5681)
-  - [RFC 6582 — The NewReno Modification to TCP's Fast Recovery](https://www.rfc-editor.org/rfc/rfc6582)
-  - [RFC 9000 — QUIC Transport Protocol](https://www.rfc-editor.org/rfc/rfc9000)
+  - [RFC 793 / RFC 9293, TCP](https://www.rfc-editor.org/rfc/rfc9293)
+  - [RFC 6298, Computing TCP's Retransmission Timer](https://www.rfc-editor.org/rfc/rfc6298)
+  - [RFC 5681, TCP Congestion Control](https://www.rfc-editor.org/rfc/rfc5681)
+  - [RFC 6582, The NewReno Modification to TCP's Fast Recovery](https://www.rfc-editor.org/rfc/rfc6582)
+  - [RFC 9000, QUIC Transport Protocol](https://www.rfc-editor.org/rfc/rfc9000)
 
 - **Books:**
   - "TCP/IP Illustrated, Volume 1" by W. Richard Stevens

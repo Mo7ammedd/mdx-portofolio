@@ -67,7 +67,7 @@ export default function LayoutBlogPost({ children }: { children: React.ReactNode
       },
       'aeroudp-networking-concepts': {
         title: 'Building a Transport Protocol on Top of UDP',
-        description: 'A practical guide to reliable transport, congestion control, flow control, and connection management — using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
+        description: 'A practical guide to reliable transport, congestion control, flow control, and connection management, using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
         datePublished: '2026-07-01',
         dateModified: '2026-07-01',
         image: '/og/aeroudp-networking-concepts.png',
