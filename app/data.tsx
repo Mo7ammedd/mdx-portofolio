@@ -72,15 +72,15 @@ export const PROJECTS = [
     video: ""
   },
   {
-    title: "Talabat APIs",
-    href: "https://github.com/Mo7ammedd/Talabat-APIs",
+    title: "Disk-Mesh",
+    href: "https://github.com/Mo7ammedd/Disk-Mesh",
     active: true,
-    description: "Talabat Integration Platform API enables vendors to manage store, menus and orders on the Talabat platform",
-    technologies: ["ASP.NET Core", "C#", "Sql Server", "Redis"],
+    description: "A distributed file system built from scratch in Java with chunk replication, failure detection, and automatic recovery.",
+    technologies: ["Java", "Distributed Systems", "Replication", "Failure Recovery"],
     links: [
       {
         type: "Source",
-        href: "https://github.com/Mo7ammedd/Talabat-APIs",
+        href: "https://github.com/Mo7ammedd/Disk-Mesh",
         icon: <Icons.github className="size-3" />,
       }
     ],
@@ -104,15 +104,15 @@ export const PROJECTS = [
     video: ""
   },
   {
-    title: "Taylor Swift Quiz",
-    href: "https://swiftiequiz.vercel.app/",
+    title: "AeroUDP",
+    href: "https://github.com/Mo7ammedd/AeroUDP",
     active: true,
-    description: "I made random lyrics quiz generator for the best songwriter",
-    technologies: ["Node.js", "Express", "Next.js"],
+    description: "A reliable transport protocol built on UDP in asynchronous Rust, featuring ordered delivery, congestion control, retransmissions, sliding windows, and RTT/RTO estimation.",
+    technologies: ["Rust", "Tokio", "UDP", "Networking", "Congestion Control"],
     links: [
       {
         type: "Source",
-        href: "https://github.com/Mo7ammedd/TaylorSwiftClient",
+        href: "https://github.com/Mo7ammedd/AeroUDP",
         icon: <Icons.github className="size-3" />,
       }
     ],
