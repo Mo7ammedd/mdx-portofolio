@@ -1,36 +1,17 @@
-'use client'
-
-import { motion } from 'motion/react'
-import { Magnetic } from '@/components/ui/magnetic'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AnimatedBackground } from '@/components/ui/animated-background'
 import { ProjectCard } from '@/components/project-card'
 import { ArrowUpRight } from 'lucide-react'
 
-const VARIANTS_CONTAINER = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-}
-
-const VARIANTS_SECTION = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-}
-
-const TRANSITION_SECTION = { duration: 0.3 }
-
-function MagneticSocialLink({ children, link }: { children: React.ReactNode; link: string }) {
+function SocialLink({ children, link }: { children: React.ReactNode; link: string }) {
   return (
-    <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
-      <a
-        href={link}
-        className="group relative inline-flex shrink-0 items-center gap-1 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 no-underline transition-colors duration-200 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
-      >
-        {children}
-        <ArrowUpRight className="h-3 w-3" />
-      </a>
-    </Magnetic>
+    <a
+      href={link}
+      className="group relative inline-flex shrink-0 items-center gap-1 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+    >
+      {children}
+      <ArrowUpRight className="h-3 w-3" />
+    </a>
   )
 }
 
@@ -51,8 +32,8 @@ interface PersonalClientProps {
 
 export function PersonalClient({ blogPosts, projects, workExperience, socialLinks, email }: PersonalClientProps) {
   return (
-    <motion.main className="space-y-24" variants={VARIANTS_CONTAINER} initial="hidden" animate="visible">
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+    <main className="space-y-24">
+      <section>
         {/* <h1 className="mb-4 text-2xl font-medium tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
           im a software engineer btw
         </h1> */}
@@ -67,9 +48,9 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
     Medica Scope
   </a>
   . i specialize in backend engineering, distributed systems, databases, and cloud infrastructure. i enjoy solving complex engineering challenges and building scalable, reliable software with a focus on performance, maintainability, and production readiness.
-</p></motion.section>
+</p></section>
 
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+      <section>
         <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {projects.map((project, index) => (
@@ -83,9 +64,9 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
             />
           ))}
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+      <section>
         <h3 className="mb-5 text-lg font-medium">Work Experience</h3>
         <div className="flex flex-col gap-2">
           {workExperience.map((job) => (
@@ -120,9 +101,9 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
             </a>
           ))}
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+      <section>
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-lg font-medium">Blog</h3>
           <Link
@@ -134,17 +115,12 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
           </Link>
         </div>
         <div className="flex flex-col">
-          <AnimatedBackground
-            enableHover
-            className="h-full w-full rounded-lg bg-zinc-100 dark:bg-zinc-900/80"
-            transition={{ type: 'spring', bounce: 0, duration: 0.2 }}
-          >
+          <div>
             {blogPosts.map((post) => (
               <Link
                 key={post.uid}
-                className="-mx-3 rounded-xl px-3 py-3 no-underline"
+                className="-mx-3 block rounded-xl px-3 py-3 no-underline transition-colors duration-200 hover:bg-zinc-100 dark:hover:bg-zinc-900/80"
                 href={post.link}
-                data-id={post.uid}
                 prefetch
               >
                 <div className="flex flex-col space-y-1">
@@ -164,11 +140,11 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
                 </div>
               </Link>
             ))}
-          </AnimatedBackground>
+          </div>
         </div>
-      </motion.section>
+      </section>
 
-      <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+      <section>
         <h3 className="mb-5 text-lg font-medium">Connect</h3>
         <p className="mb-5 text-zinc-600 dark:text-zinc-400">
           Feel free to contact me at{' '}
@@ -181,12 +157,12 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
         </p>
         <div className="flex flex-wrap items-center gap-2">
           {socialLinks.map((link) => (
-            <MagneticSocialLink key={link.label} link={link.link}>
+            <SocialLink key={link.label} link={link.link}>
               {link.label}
-            </MagneticSocialLink>
+            </SocialLink>
           ))}
         </div>
-      </motion.section>
-    </motion.main>
+      </section>
+    </main>
   )
 }

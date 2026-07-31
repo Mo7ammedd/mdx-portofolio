@@ -1,4 +1,3 @@
-'use client'
 import { Rss } from 'lucide-react'
 
 export function Footer() {
