@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { ZoomableImage } from '@/components/ui/zoomable-image'
 import { CodeBlock } from '@/components/ui/code-block'
 import { HeadingAnchor } from '@/components/ui/heading-anchor'
+import { getBlogImageDimensions } from '@/lib/blog-image-metadata'
 import { Info, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -112,21 +113,39 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     hr: (props: any) => (
       <hr className="my-8 border-zinc-200 dark:border-zinc-800" {...props} />
     ),
-    img: (props: any) => (
-      <ZoomableImage src={props.src} alt={props.alt || ''} />
-    ),
+    img: (props: any) => {
+      const dimensions = getBlogImageDimensions(props.src)
+      return (
+        <ZoomableImage
+          src={props.src}
+          alt={props.alt || ''}
+          width={Number(props.width) || dimensions?.width || 1200}
+          height={Number(props.height) || dimensions?.height || 675}
+        />
+      )
+    },
     Cover: ({
       src,
       alt,
       caption,
+      width,
+      height,
     }: {
       src: string
       alt: string
       caption: string
+      width?: number
+      height?: number
     }) => {
+      const dimensions = getBlogImageDimensions(src)
       return (
         <figure className="my-8">
-          <ZoomableImage src={src} alt={alt} />
+          <ZoomableImage
+            src={src}
+            alt={alt}
+            width={width || dimensions?.width || 1200}
+            height={height || dimensions?.height || 675}
+          />
           <figcaption className="text-center mt-3 text-sm text-zinc-600 dark:text-zinc-400 italic">
             {caption}
           </figcaption>

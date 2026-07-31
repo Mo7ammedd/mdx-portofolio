@@ -23,23 +23,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'motion'],
   },
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          vendor: {
-            name: 'vendor',
-            chunks: 'all',
-            test: /node_modules/,
-          },
-        },
-      }
-    }
-    return config
-  },
 }
 
 /** @type {import('rehype-pretty-code').Options} */

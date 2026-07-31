@@ -33,7 +33,7 @@ To use Nginx effectively in production, you must understand **how requests flow 
 
 ## Nginx Architecture: The Master-Worker Model
 
-![Nginx Architecture Overview](/blog/nginx/nginx-architecture-overview.png)
+![Nginx Architecture Overview](/blog/nginx/nginx-architecture-overview.webp)
 
 Nginx uses a **master-worker process model** that differs fundamentally from traditional web servers like Apache's prefork MPM.
 
@@ -308,7 +308,7 @@ location ~ ^/api(/|$) { }    # /api or /api/anything
 
 ## Location Matching Visual Guide
 
-![Location Matching Priority](/blog/nginx/nginx-location-matching-2.png)
+![Location Matching Priority](/blog/nginx/nginx-location-matching-2.webp)
 
 ### Real-World Examples
 
@@ -1194,4 +1194,3 @@ Nginx is a high-performance traffic control layer that, when properly configured
 8. **Zero-downtime** - Graceful reloads and binary upgrades
 9. **Observability** - Log timing breakdowns, monitor cache hit rates
 10. **Know your limits** - Nginx is infrastructure, not application logic
-

@@ -54,7 +54,7 @@ LIMIT 10 OFFSET 500;
 Page number translates directly to `OFFSET = (page - 1) * pageSize`. Clean. Predictable.
 
 <Cover
-  src="/blog/pagination-strategies/offset-pagination-mechanics.png"
+  src="/blog/pagination-strategies/offset-pagination-mechanics.webp"
   alt="OFFSET pagination mechanics diagram"
   caption="OFFSET forces the database to count and skip N rows from the beginning on every query"
 />
@@ -102,7 +102,7 @@ The planner uses the index, but it still reads **500,010 rows** to return 10. Th
 The cost of OFFSET pagination is **O(offset)**: linear in the number of rows to skip. The further you paginate, the slower each query gets.
 
 <Cover
-  src="/blog/pagination-strategies/offset-vs-cursor-performance.png"
+  src="/blog/pagination-strategies/offset-vs-cursor-performance.webp"
   alt="Performance comparison chart: OFFSET degrades linearly while cursor stays flat"
   caption="OFFSET query time grows linearly with page number. Cursor pagination maintains constant O(log n) time regardless of depth."
 />
@@ -118,7 +118,7 @@ OFFSET pagination has a correctness problem that no amount of indexing can fix: 
 If a row is inserted or deleted between two page fetches, the offset arithmetic breaks. Rows get duplicated or silently skipped.
 
 <Cover
-  src="/blog/pagination-strategies/offset-phantom-records.png"
+  src="/blog/pagination-strategies/offset-phantom-records.webp"
   alt="Diagram showing how OFFSET pagination produces duplicate or missing records during concurrent writes"
   caption="Concurrent inserts and deletes corrupt OFFSET pagination: rows are silently skipped or shown twice"
 />
@@ -165,7 +165,7 @@ LIMIT 10;
 The `WHERE` clause anchors the query to a specific position in the index. The database doesn't skip anything: it seeks directly to the cursor position and reads forward.
 
 <Cover
-  src="/blog/pagination-strategies/cursor-pagination-mechanics.png"
+  src="/blog/pagination-strategies/cursor-pagination-mechanics.webp"
   alt="Cursor pagination mechanics showing direct B-tree index seek"
   caption="Cursor pagination uses a WHERE clause to seek directly to the cursor position in the B-tree index: no rows are skipped or wasted"
 />
@@ -175,7 +175,7 @@ The `WHERE` clause anchors the query to a specific position in the index. The da
 To understand why cursor pagination outperforms OFFSET at scale, you need to understand how B-tree indexes work.
 
 <Cover
-  src="/blog/pagination-strategies/btree-traversal-comparison.png"
+  src="/blog/pagination-strategies/btree-traversal-comparison.webp"
   alt="B-Tree traversal comparison between OFFSET and Cursor pagination"
   caption="OFFSET must traverse all leaf nodes up to the skip count. Cursor pagination performs a direct seek using binary search: O(log n) regardless of position."
 />
@@ -231,7 +231,7 @@ Always create a composite index that exactly matches your cursor columns and sor
 The cursor value should be **opaque** to clients: they should not parse, construct, or predict it. Expose a base64-encoded JSON token that the server decodes internally.
 
 <Cover
-  src="/blog/pagination-strategies/cursor-api-flow.png"
+  src="/blog/pagination-strategies/cursor-api-flow.webp"
   alt="API flow diagram showing cursor token encoding, transmission, and decoding"
   caption="The cursor is an opaque base64 token. Clients treat it as a black box: they receive it, store it, and send it back."
 />
@@ -704,5 +704,4 @@ WHERE id > $1::uuid
 ORDER BY id ASC
 LIMIT 10;
 ```
-
 

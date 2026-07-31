@@ -1,15 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 
 interface ZoomableImageProps {
   src: string
   alt: string
+  width: number
+  height: number
 }
 
-export function ZoomableImage({ src, alt }: ZoomableImageProps) {
+export function ZoomableImage({ src, alt, width, height }: ZoomableImageProps) {
   const [isZoomed, setIsZoomed] = useState(false)
 
   useEffect(() => {
@@ -27,10 +30,15 @@ export function ZoomableImage({ src, alt }: ZoomableImageProps) {
     <>
       <figure className="my-8 group cursor-zoom-in" onClick={() => setIsZoomed(true)}>
         <div className="overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 transition-all duration-300 group-hover:border-zinc-400 dark:group-hover:border-zinc-600">
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            width={width}
+            height={height}
+            sizes="(max-width: 640px) calc(100vw - 2rem), 640px"
+            loading="lazy"
+            decoding="async"
+            className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           />
         </div>
         {alt && (

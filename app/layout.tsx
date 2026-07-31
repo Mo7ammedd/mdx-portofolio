@@ -88,14 +88,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Resource hints for performance */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Preload critical assets */}
-        <link rel="preload" as="image" href="/avatar.jpg" type="image/jpeg" />
-        
         {/* Security headers via meta tags */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         
