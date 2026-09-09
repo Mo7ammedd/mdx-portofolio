@@ -10,23 +10,19 @@ import { Footer } from './footer'
 import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
 import { Analytics } from '@/components/analytics'
-import { generatePersonSchema, generateWebsiteSchema, generateProfessionalServiceSchema, generateOrganizationSchema } from '@/lib/schema'
+import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#09090b' }, // zinc-950 color
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-  ],
-  colorScheme: 'dark light',
+  themeColor: '#080808',
+  colorScheme: 'dark',
 }
 
 export const metadata: Metadata = {
   ...siteConfig,
   other: {
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'theme-color': '#09090b',
   },
 }
 
@@ -49,7 +45,8 @@ export default function RootLayout({
   const personData = {
     name: 'Mohammed Mostafa',
     jobTitle: 'Software Engineer',
-    description: 'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Available for new opportunities.',
+    description:
+      'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Available for new opportunities.',
     url: 'https://www.modev.me',
     email: 'mohammedmostafanazih@gmail.com',
     image: 'https://www.modev.me/avatar.jpg',
@@ -82,37 +79,51 @@ export default function RootLayout({
   const websiteData = {
     url: 'https://www.modev.me',
     name: 'Mohammed Mostafa - Software Engineer Portfolio',
-    description: 'Professional Software Engineer Mohammed specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. View portfolio, projects, and contact information.',
+    description:
+      'Professional Software Engineer Mohammed specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. View portfolio, projects, and contact information.',
   }
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="dark"
+      style={{ colorScheme: 'dark' }}
+      suppressHydrationWarning
+    >
       <head>
         {/* Security headers via meta tags */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-        
+
         {/* Favicon and app icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+
         {/* PWA manifest */}
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} bg-background text-foreground font-sans antialiased`}
       >
         <StructuredData data={generatePersonSchema(personData)} />
-        <StructuredData data={generateWebsiteSchema(websiteData.url, websiteData.name, websiteData.description)} />
+        <StructuredData
+          data={generateWebsiteSchema(
+            websiteData.url,
+            websiteData.name,
+            websiteData.description,
+          )}
+        />
         <Analytics />
         <ThemeProvider
           enableSystem={false}
           attribute="class"
           storageKey="theme"
           defaultTheme="dark"
+          forcedTheme="dark"
+          disableTransitionOnChange
         >
           <PalestineSolidarity />
-          <div className="relative z-10 flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20 pb-16">
+          <div className="relative z-10 flex min-h-screen w-full flex-col">
+            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-6 pt-12 pb-24 sm:pt-20">
               <Header />
               {children}
               <Footer />

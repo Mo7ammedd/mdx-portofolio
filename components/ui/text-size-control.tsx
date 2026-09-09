@@ -1,9 +1,73 @@
 'use client'
 
-import { useState, useEffect, createContext, useContext, ReactNode, useMemo } from 'react'
-import { useScroll, useTransform } from 'motion/react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useSyncExternalStore,
+  type ReactNode,
+} from 'react'
 
-// ─── Context ────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'blog-text-size'
+const CHANGE_EVENT = 'blog-text-size-change'
+const DEFAULT_SIZE = 100
+const PRESETS = [
+  { value: 80, label: 'Small', className: 'text-xs' },
+  { value: 100, label: 'Default', className: 'text-sm' },
+  { value: 125, label: 'Large', className: 'text-base' },
+] as const
+
+let temporarySize: number | undefined
+
+function normalizeSize(value: number) {
+  return PRESETS.some((preset) => preset.value === value) ? value : DEFAULT_SIZE
+}
+
+function getSize() {
+  if (temporarySize !== undefined) return temporarySize
+
+  try {
+    return normalizeSize(Number(window.localStorage.getItem(STORAGE_KEY)))
+  } catch {
+    return DEFAULT_SIZE
+  }
+}
+
+function getServerSize() {
+  return DEFAULT_SIZE
+}
+
+function subscribeToSize(onChange: () => void) {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY || event.key === null) {
+      temporarySize = undefined
+      onChange()
+    }
+  }
+
+  window.addEventListener('storage', handleStorage)
+  window.addEventListener(CHANGE_EVENT, onChange)
+
+  return () => {
+    window.removeEventListener('storage', handleStorage)
+    window.removeEventListener(CHANGE_EVENT, onChange)
+  }
+}
+
+function setSize(value: number) {
+  const nextSize = normalizeSize(value)
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, nextSize.toString())
+    temporarySize = undefined
+  } catch {
+    // Keep the control usable when the browser blocks persistent storage.
+    temporarySize = nextSize
+  }
+
+  window.dispatchEvent(new Event(CHANGE_EVENT))
+}
 
 interface TextSizeContextType {
   size: number
@@ -11,33 +75,31 @@ interface TextSizeContextType {
   reset: () => void
 }
 
-const TextSizeContext = createContext<TextSizeContextType | undefined>(undefined)
+const TextSizeContext = createContext<TextSizeContextType | undefined>(
+  undefined,
+)
 
 export function TextSizeProvider({ children }: { children: ReactNode }) {
-  const [size, setSize] = useState(100)
-  const [mounted, setMounted] = useState(false)
+  const size = useSyncExternalStore(subscribeToSize, getSize, getServerSize)
 
   useEffect(() => {
-    setMounted(true)
-    const savedSize = localStorage.getItem('blog-text-size')
-    if (savedSize) {
-      const parsedSize = parseInt(savedSize, 10)
-      setSize(parsedSize)
-      document.documentElement.style.setProperty('--blog-text-size', parsedSize.toString())
-    } else {
-      document.documentElement.style.setProperty('--blog-text-size', '100')
-    }
-  }, [])
+    document.documentElement.style.setProperty(
+      '--blog-text-size',
+      size.toString(),
+    )
 
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('blog-text-size', size.toString())
-      document.documentElement.style.setProperty('--blog-text-size', size.toString())
+    return () => {
+      document.documentElement.style.removeProperty('--blog-text-size')
     }
-  }, [size, mounted])
+  }, [size])
+
+  const value = useMemo(
+    () => ({ size, setSize, reset: () => setSize(DEFAULT_SIZE) }),
+    [size],
+  )
 
   return (
-    <TextSizeContext.Provider value={{ size, setSize, reset: () => setSize(100) }}>
+    <TextSizeContext.Provider value={value}>
       {children}
     </TextSizeContext.Provider>
   )
@@ -45,214 +107,52 @@ export function TextSizeProvider({ children }: { children: ReactNode }) {
 
 export function useTextSize() {
   const context = useContext(TextSizeContext)
-  if (!context) throw new Error('useTextSize must be used within TextSizeProvider')
+  if (!context)
+    throw new Error('useTextSize must be used within TextSizeProvider')
   return context
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function formatTimeRemaining(minutes: number): string {
-  if (minutes < 0.5) return 'Done reading'
-  if (minutes < 1) return 'Less than a minute left'
-  const m = Math.ceil(minutes)
-  return `${m} min left`
-}
-
-// ─── Mobile strip ────────────────────────────────────────────────────────────
-
-function MobileReadingControls({
+export function TextSizeControl({
   readingTimeMinutes,
-  currentProgress,
-  timeRemaining,
-  size,
-  setSize,
 }: {
   readingTimeMinutes?: number
-  currentProgress: number
-  timeRemaining: string | null
-  size: number
-  setSize: (size: number) => void
 }) {
-  const showProgress = readingTimeMinutes && currentProgress >= 5 && currentProgress <= 98
+  const { size, setSize } = useTextSize()
 
   return (
-    <div
-      className="mb-8 overflow-hidden rounded-xl md:hidden"
-      style={{
-        background: 'rgba(0,0,0,0.3)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-        border: '1px solid rgba(255,255,255,0.1)',
-      }}
-    >
-      {/* Progress bar */}
-      {showProgress && (
-        <div className="h-1 w-full bg-zinc-800">
-          <div
-            className="h-full bg-emerald-500 transition-all duration-300"
-            style={{ width: `${currentProgress}%` }}
-          />
-        </div>
-      )}
+    <div className="not-prose flex flex-wrap items-center justify-between gap-3">
+      {readingTimeMinutes && readingTimeMinutes > 0 ? (
+        <span className="text-xs text-zinc-400">
+          {readingTimeMinutes} min read
+        </span>
+      ) : null}
 
-      <div className="flex items-center justify-between gap-4 px-4 py-3">
-        {/* Time remaining */}
-        <div className="flex items-center gap-2 text-xs text-zinc-400">
-          {showProgress ? (
-            <>
-              <span className="font-medium text-emerald-400">{currentProgress}%</span>
-              <span className="text-zinc-600">·</span>
-              <span>{timeRemaining}</span>
-            </>
-          ) : (
-            <span>{readingTimeMinutes ? `${readingTimeMinutes} min read` : 'Reading controls'}</span>
-          )}
-        </div>
-
-        {/* Text size buttons */}
+      <div
+        role="group"
+        aria-label="Text size"
+        className="flex items-center gap-3"
+      >
+        <span className="text-xs text-zinc-400">Text size</span>
         <div className="flex items-center gap-1">
-          <span className="mr-1 text-[10px] uppercase tracking-wider text-zinc-600">Size</span>
-          {[80, 100, 125].map((preset) => (
+          {PRESETS.map((preset) => (
             <button
-              key={preset}
-              onClick={() => setSize(preset)}
-              title={`${preset}%`}
-              className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold transition-all ${
-                size === preset
-                  ? 'bg-white text-zinc-900'
-                  : 'text-zinc-500 hover:bg-zinc-800 hover:text-zinc-200'
+              key={preset.value}
+              type="button"
+              onClick={() => setSize(preset.value)}
+              aria-label={`${preset.label} text (${preset.value}%)`}
+              aria-pressed={size === preset.value}
+              title={`${preset.label} text (${preset.value}%)`}
+              className={`flex size-8 items-center justify-center rounded-md border font-medium transition-colors ${preset.className} ${
+                size === preset.value
+                  ? 'border-white/10 bg-white/[0.07] text-zinc-100'
+                  : 'border-transparent text-zinc-400 hover:bg-white/5 hover:text-zinc-100'
               }`}
-              style={{ fontSize: preset === 80 ? '10px' : preset === 100 ? '12px' : '14px' }}
             >
-              A
+              <span aria-hidden="true">A</span>
             </button>
           ))}
         </div>
       </div>
     </div>
-  )
-}
-
-// ─── Desktop floating pill ────────────────────────────────────────────────────
-
-function DesktopReadingPanel({
-  readingTimeMinutes,
-  currentProgress,
-  timeRemaining,
-  size,
-  setSize,
-}: {
-  readingTimeMinutes?: number
-  currentProgress: number
-  timeRemaining: string | null
-  size: number
-  setSize: (size: number) => void
-}) {
-  const showProgress = readingTimeMinutes && currentProgress >= 5 && currentProgress <= 98
-
-  return (
-    <div className="fixed bottom-8 right-6 z-50 hidden md:flex flex-col items-end gap-2">
-      {/* Reading progress pill — only when scrolling */}
-      {showProgress && (
-        <div
-          className="flex items-center gap-3 rounded-full px-4 py-2 text-xs"
-          style={{
-            background: 'rgba(0,0,0,0.5)',
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            border: '1px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          {/* Circular progress ring */}
-          <svg className="h-5 w-5 -rotate-90" viewBox="0 0 20 20">
-            <circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
-            <circle
-              cx="10" cy="10" r="8" fill="none"
-              stroke="#34d399"
-              strokeWidth="2"
-              strokeDasharray={`${2 * Math.PI * 8}`}
-              strokeDashoffset={`${2 * Math.PI * 8 * (1 - currentProgress / 100)}`}
-              strokeLinecap="round"
-              className="transition-all duration-300"
-            />
-          </svg>
-          <span className="font-medium text-zinc-200">{timeRemaining}</span>
-        </div>
-      )}
-
-      {/* Text size control */}
-      <div
-        className="flex items-center gap-1.5 rounded-full px-3 py-2"
-        style={{
-          background: 'rgba(0,0,0,0.5)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          border: '1px solid rgba(255,255,255,0.1)',
-        }}
-      >
-        <span className="mr-0.5 text-[10px] uppercase tracking-wider text-zinc-600">Aa</span>
-        {[80, 100, 125].map((preset) => (
-          <button
-            key={preset}
-            onClick={() => setSize(preset)}
-            title={`Text size ${preset}%`}
-            className={`flex h-6 w-6 items-center justify-center rounded-full font-bold transition-all ${
-              size === preset
-                ? 'bg-white text-zinc-900'
-                : 'text-zinc-500 hover:bg-zinc-800 hover:text-zinc-200'
-            }`}
-            style={{ fontSize: preset === 80 ? '9px' : preset === 100 ? '11px' : '13px' }}
-          >
-            A
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// ─── Main export ──────────────────────────────────────────────────────────────
-
-export function TextSizeControl({ readingTimeMinutes }: { readingTimeMinutes?: number }) {
-  const { size, setSize } = useTextSize()
-  const [mounted, setMounted] = useState(false)
-  const { scrollYProgress } = useScroll()
-  const percentage = useTransform(scrollYProgress, [0, 1], [0, 100])
-  const [currentProgress, setCurrentProgress] = useState(0)
-
-  useEffect(() => {
-    setMounted(true)
-    if (!readingTimeMinutes) return
-    const unsubscribe = percentage.on('change', (latest) => {
-      setCurrentProgress(Math.round(latest))
-    })
-    return () => unsubscribe()
-  }, [percentage, readingTimeMinutes])
-
-  const timeRemaining = useMemo(() => {
-    if (!readingTimeMinutes) return null
-    const remaining = readingTimeMinutes * (1 - currentProgress / 100)
-    return formatTimeRemaining(remaining)
-  }, [currentProgress, readingTimeMinutes])
-
-  const showProgress = mounted && readingTimeMinutes && currentProgress >= 5 && currentProgress <= 98
-
-  return (
-    <>
-      <MobileReadingControls
-        readingTimeMinutes={readingTimeMinutes}
-        currentProgress={currentProgress}
-        timeRemaining={timeRemaining}
-        size={size}
-        setSize={setSize}
-      />
-      <DesktopReadingPanel
-        readingTimeMinutes={readingTimeMinutes}
-        currentProgress={currentProgress}
-        timeRemaining={timeRemaining}
-        size={size}
-        setSize={setSize}
-      />
-    </>
   )
 }

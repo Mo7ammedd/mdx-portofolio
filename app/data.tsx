@@ -27,8 +27,8 @@ export const PROJECTS = [
     title: "Aura Decor",
     href: "https://github.com/Mo7ammedd/Aura-Decor",
     active: true,
-    description: "Augmented Reality (AR) application integrating custom 3D models to deliver an immersive shopping experience, allowing users to visualize furniture pieces in their real environment.",
-    technologies: ["ASP.NET Core", "RabbitMQ", "Docker", "Redis"],
+    description: "An AR shopping experience that lets you preview 3D furniture in your own space.",
+    technologies: ["ASP.NET Core", "RabbitMQ", "Redis"],
     links: [
       {
         type: "Source",
@@ -43,8 +43,8 @@ export const PROJECTS = [
     title: "SimuKernel",
     href: "https://github.com/Mo7ammedd/SimuKernel",
     active: true,
-    description: "An educational operating system simulator demonstrating CPU scheduling, memory management, and process control with visualized metrics.",
-    technologies: ["Operating Systems", "CPU Scheduling", "Memory Management", "Process Management"],
+    description: "An OS simulator for exploring CPU scheduling, memory management, and process control.",
+    technologies: ["Operating systems", "Simulation"],
     links: [
       {
         type: "Source",
@@ -59,8 +59,8 @@ export const PROJECTS = [
     title: "LSMSharp",
     href: "https://github.com/Mo7ammedd/LSMSharp",
     active: true,
-    description: "A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.",
-    technologies: ["C#", "LSM-Tree", "ACID", "Concurrent Access", "Benchmarking"],
+    description: "An LSM-tree storage engine in C# with ACID guarantees and concurrent access.",
+    technologies: ["C#", "LSM-Tree", "ACID"],
     links: [
       {
         type: "Source",
@@ -75,8 +75,8 @@ export const PROJECTS = [
     title: "Disk-Mesh",
     href: "https://github.com/Mo7ammedd/Disk-Mesh",
     active: true,
-    description: "A distributed file system built from scratch in Java with chunk replication, failure detection, and automatic recovery.",
-    technologies: ["Java", "Distributed Systems", "Replication", "Failure Recovery"],
+    description: "A distributed file system in Java with chunk replication and automatic failure recovery.",
+    technologies: ["Java", "Replication", "Recovery"],
     links: [
       {
         type: "Source",
@@ -91,8 +91,8 @@ export const PROJECTS = [
     title: "HungerStation Microservices",
     href: "https://github.com/Mo7ammedd/HungerStation_Microservices",
     active: true,
-    description: "Built seven microservices with .NET 8, featuring secure authentication, Azure Service Bus communication",
-    technologies: ["Microservices", "Azure Service Bus", "RabbitMQ"],
+    description: "Seven .NET microservices with secure authentication and Azure Service Bus messaging.",
+    technologies: [".NET 8", "Azure Service Bus"],
     links: [
       {
         type: "Source",
@@ -107,8 +107,8 @@ export const PROJECTS = [
     title: "AeroUDP",
     href: "https://github.com/Mo7ammedd/AeroUDP",
     active: true,
-    description: "A reliable transport protocol built on UDP in asynchronous Rust, featuring ordered delivery, congestion control, retransmissions, sliding windows, and RTT/RTO estimation.",
-    technologies: ["Rust", "Tokio", "UDP", "Networking", "Congestion Control"],
+    description: "Reliable transport over UDP in async Rust, with ordered delivery and congestion control.",
+    technologies: ["Rust", "Tokio", "UDP"],
     links: [
       {
         type: "Source",

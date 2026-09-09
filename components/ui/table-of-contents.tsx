@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { AlignLeft, ChevronDown } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { ChevronDown } from 'lucide-react'
 
 interface Heading {
   id: string
@@ -10,97 +11,71 @@ interface Heading {
 }
 
 export function TableOfContents() {
-  const [headings, setHeadings] = useState<Heading[]>([])
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeId, setActiveId] = useState('')
+  const pathname = usePathname()
+  const [contents, setContents] = useState<{
+    pathname: string
+    headings: Heading[]
+  }>({ pathname: '', headings: [] })
 
   useEffect(() => {
-    const read = () => {
-      const elements = document.querySelectorAll('article h2, article h3')
-      const items: Heading[] = Array.from(elements).map((el) => ({
-        id: el.id,
-        text: el.textContent?.replace(/\s*#\s*$/, '').trim() || '',
-        level: parseInt(el.tagName[1]),
-      })).filter((h) => h.id)
-      setHeadings(items)
-    }
-    // Wait one frame so HeadingAnchor ids are committed to the DOM
-    const frame = requestAnimationFrame(read)
-    return () => cancelAnimationFrame(frame)
-  }, [])
+    // Read after the article and HeadingAnchor IDs have committed.
+    const frame = requestAnimationFrame(() => {
+      const elements = document.querySelectorAll<HTMLHeadingElement>(
+        'article h2, article h3',
+      )
+      const headings = Array.from(elements)
+        .map((element) => {
+          const label = element.cloneNode(true) as HTMLElement
+          label
+            .querySelectorAll('button, [aria-hidden="true"]')
+            .forEach((node) => node.remove())
 
-  useEffect(() => {
-    if (headings.length === 0) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
+          return {
+            id: element.id,
+            text: label.textContent?.trim() || '',
+            level: element.tagName === 'H3' ? 3 : 2,
           }
         })
-      },
-      { rootMargin: '0% 0% -80% 0%' }
-    )
+        .filter((heading) => heading.id && heading.text)
 
-    headings.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
+      setContents({ pathname, headings })
     })
 
-    return () => observer.disconnect()
-  }, [headings])
+    return () => cancelAnimationFrame(frame)
+  }, [pathname])
 
-  if (headings.length === 0) return null
+  if (contents.pathname !== pathname || contents.headings.length === 0) {
+    return null
+  }
 
   return (
-    <div className="my-8 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between px-4 py-3 text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
-      >
-        <div className="flex items-center gap-2">
-          <AlignLeft className="h-4 w-4" />
-          <span className="font-medium">On this page</span>
-        </div>
+    <details
+      key={pathname}
+      className="not-prose group border-y border-white/[0.07]"
+    >
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2 text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-zinc-300 [&::-webkit-details-marker]:hidden">
+        <span>On this page</span>
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+          className="size-3.5 shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none"
         />
-      </button>
-
-      <div
-        className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96' : 'max-h-0'}`}
-      >
-        <div className="space-y-0.5 border-t border-zinc-200 px-4 py-3 dark:border-zinc-800">
-          {headings.map((heading) => (
-            <a
-              key={heading.id}
-              href={`#${heading.id}`}
-              onClick={(e) => {
-                e.preventDefault()
-                const target = document.getElementById(heading.id)
-                if (target) {
-                  const fixedHeader = document.querySelector('[data-blog-header]') as HTMLElement
-                  const offset = (fixedHeader?.getBoundingClientRect().height ?? 52) + 16
-                  const top = target.getBoundingClientRect().top + window.scrollY - offset
-                  window.scrollTo({ top, behavior: 'smooth' })
-                  window.history.pushState(null, '', `#${heading.id}`)
-                }
-                setIsOpen(false)
-              }}
-              className={`block rounded-md py-1.5 text-sm transition-colors no-underline ${
-                heading.level === 3 ? 'pl-4' : 'pl-0'
-              } ${
-                activeId === heading.id
-                  ? 'font-medium text-zinc-900 dark:text-zinc-100'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
-              }`}
-            >
-              {heading.text}
-            </a>
+      </summary>
+      <nav aria-label="On this page" className="pb-4">
+        <ol className="space-y-1">
+          {contents.headings.map((heading) => (
+            <li key={heading.id}>
+              <a
+                href={`#${heading.id}`}
+                className={`block rounded-md py-1.5 text-xs leading-5 text-zinc-400 no-underline transition-colors hover:text-zinc-100 ${
+                  heading.level === 3 ? 'pl-4' : ''
+                }`}
+              >
+                {heading.text}
+              </a>
+            </li>
           ))}
-        </div>
-      </div>
-    </div>
+        </ol>
+      </nav>
+    </details>
   )
 }

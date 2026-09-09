@@ -18,24 +18,28 @@ export function Header() {
   return (
     <>
       <PalestineFlagLine />
-      <header className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <header className="mb-8 flex flex-wrap items-center justify-between gap-x-2 gap-y-3 sm:mb-10 sm:gap-4">
+        <Link
+          href="/"
+          aria-label="Mohammed Mostafa, home"
+          className="group inline-flex min-w-0 items-center gap-2 rounded-lg no-underline sm:gap-3"
+        >
           <Image
-            alt="Mohammed's avatar"
+            alt=""
             src="/avatar.jpg"
-            className="aspect-square rounded-full object-cover grayscale hover:grayscale-0"
-            width={80}
-            height={80}
+            className="size-10 rounded-full border border-white/10 object-cover grayscale transition-[filter] group-hover:grayscale-0 motion-reduce:transition-none sm:size-12"
+            width={48}
+            height={48}
             priority
           />
 
           <div>
-            <Link href="/" className="font-medium text-black dark:text-white">
-              Mohamed Mostafa
-            </Link>
-            <p className="text-zinc-600 dark:text-zinc-500">Software Engineer</p>
+            <p className="text-sm font-medium tracking-tight text-zinc-100 sm:text-base">
+              Mohammed Mostafa
+            </p>
+            <p className="mt-0.5 text-xs text-zinc-400">Software Engineer</p>
           </div>
-        </div>
+        </Link>
 
         <HeaderControls />
       </header>

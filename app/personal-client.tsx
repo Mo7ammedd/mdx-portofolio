@@ -1,16 +1,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ProjectCard } from '@/components/project-card'
 import { ArrowUpRight } from 'lucide-react'
 
-function SocialLink({ children, link }: { children: React.ReactNode; link: string }) {
+import { ProjectCard } from '@/components/project-card'
+import type { PROJECTS, SOCIAL_LINKS, WORK_EXPERIENCE } from './data'
+
+function SocialLink({
+  children,
+  link,
+}: {
+  children: React.ReactNode
+  link: string
+}) {
   return (
     <a
       href={link}
-      className="group relative inline-flex shrink-0 items-center gap-1 rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-600 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex min-h-9 items-center gap-1 text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
     >
       {children}
-      <ArrowUpRight className="h-3 w-3" />
+      <ArrowUpRight aria-hidden="true" className="size-3" />
     </a>
   )
 }
@@ -24,38 +34,113 @@ interface PersonalClientProps {
     publishedTime: string
     readingTime: number
   }>
-  projects: any[]
-  workExperience: any[]
-  socialLinks: any[]
+  projects: typeof PROJECTS
+  workExperience: typeof WORK_EXPERIENCE
+  socialLinks: typeof SOCIAL_LINKS
   email: string
 }
 
-export function PersonalClient({ blogPosts, projects, workExperience, socialLinks, email }: PersonalClientProps) {
+export function PersonalClient({
+  blogPosts,
+  projects,
+  workExperience,
+  socialLinks,
+  email,
+}: PersonalClientProps) {
   return (
-    <main className="space-y-24">
-      <section>
-        {/* <h1 className="mb-4 text-2xl font-medium tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
-          im a software engineer btw
-        </h1> */}
-<p className="text-zinc-600 dark:text-zinc-400">
-  im Mohammed Mostafa, a software engineer and cs graduate from Suez Canal University. im currently working as a software engineer at{" "}
-  <a
-    href="https://medicascopehms.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="font-medium text-zinc-900 underline underline-offset-4 dark:text-zinc-100"
-  >
-    Medica Scope
-  </a>
-  . i specialize in backend engineering, distributed systems, databases, and cloud infrastructure. i enjoy solving complex engineering challenges and building scalable, reliable software with a focus on performance, maintainability, and production readiness.
-</p></section>
+    <main className="space-y-14 sm:space-y-16">
+      <section aria-labelledby="intro-heading">
+        <h1 id="intro-heading" className="sr-only">
+          Mohammed Mostafa — Software Engineer
+        </h1>
+        <div className="space-y-3 text-sm leading-7 text-zinc-400">
+          <p>
+            I’m Mohammed, a software engineer and CS graduate from Suez Canal
+            University. Currently building software at{' '}
+            <a
+              href="https://medicascopehms.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400"
+            >
+              Medica Scope
+            </a>
+            .
+          </p>
+          <p>
+            I focus on backend engineering, distributed systems, databases, and
+            cloud infrastructure, with an eye for performance and reliability.
+          </p>
+        </div>
+      </section>
 
-      <section>
-        <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
+      <section id="work" aria-labelledby="work-heading" className="scroll-mt-8">
+        <div className="mb-3 flex items-center justify-between gap-4">
+          <h2 id="work-heading" className="text-sm font-medium text-zinc-100">
+            Work
+          </h2>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-8 items-center gap-1 text-xs text-zinc-400 transition-colors hover:text-zinc-100"
+          >
+            Résumé
+            <ArrowUpRight aria-hidden="true" className="size-3" />
+          </a>
+        </div>
+        <ul className="divide-y divide-white/[0.07]">
+          {workExperience.map((job) => (
+            <li key={job.id}>
+              <a
+                href={job.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group -mx-2 grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-3 rounded-lg px-2 py-3.5 no-underline transition-colors hover:bg-white/[0.03] sm:grid-cols-[2.5rem_minmax(0,1fr)_auto]"
+              >
+                <div className="relative size-10 overflow-hidden rounded-lg border border-white/10 bg-zinc-950">
+                  <Image
+                    src={job.logo}
+                    alt=""
+                    fill
+                    sizes="40px"
+                    className="object-cover grayscale transition-[filter] group-hover:grayscale-0 motion-reduce:transition-none"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-1.5 text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
+                    {job.company}
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-3 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300"
+                    />
+                  </h3>
+                  <p className="mt-0.5 text-xs text-zinc-400">{job.title}</p>
+                </div>
+                <p className="col-start-2 mt-1 font-mono text-[11px] leading-5 text-zinc-400 sm:col-start-auto sm:mt-0 sm:text-right">
+                  {job.start} <span className="text-zinc-600">—</span> {job.end}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section
+        id="projects"
+        aria-labelledby="projects-heading"
+        className="scroll-mt-8"
+      >
+        <h2
+          id="projects-heading"
+          className="mb-5 text-sm font-medium text-zinc-100"
+        >
+          Small projects
+        </h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <ProjectCard
-              key={index}
+              key={project.href}
               title={project.title}
               description={project.description}
               tags={project.technologies}
@@ -66,96 +151,81 @@ export function PersonalClient({ blogPosts, projects, workExperience, socialLink
         </div>
       </section>
 
-      <section>
-        <h3 className="mb-5 text-lg font-medium">Work Experience</h3>
-        <div className="flex flex-col gap-2">
-          {workExperience.map((job) => (
-            <a
-              key={job.id}
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="theme-card group flex items-center gap-4 rounded-2xl p-4 no-underline transition-all duration-300 hover:scale-[1.01]"
+      {blogPosts.length > 0 && (
+        <section aria-labelledby="writing-heading">
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <h2
+              id="writing-heading"
+              className="text-sm font-medium text-zinc-100"
             >
-              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
-                <Image src={job.logo} alt={`${job.company} logo`} fill className="object-cover" />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{job.title}</p>
-                  {job.end === 'Present' && (
-                    <span className="relative flex h-1.5 w-1.5" title="Currently here">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-zinc-400 opacity-60 dark:bg-zinc-500" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-zinc-500 dark:bg-zinc-400" />
-                    </span>
-                  )}
-                </div>
-                <p className="mt-0.5 text-sm text-zinc-500">{job.company}</p>
-              </div>
-
-              <div className="shrink-0 text-right">
-                <p className="font-mono text-xs text-zinc-500">{job.start}</p>
-                <p className="font-mono text-xs text-zinc-400 dark:text-zinc-600">{job.end}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-lg font-medium">Blog</h3>
-          <Link
-            href="/blog"
-            className="flex items-center gap-1 text-sm text-zinc-500 no-underline transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-          >
-            View all
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-        <div className="flex flex-col">
-          <div>
-            {blogPosts.map((post) => (
-              <Link
-                key={post.uid}
-                className="-mx-3 block rounded-xl px-3 py-3 no-underline transition-colors duration-200 hover:bg-zinc-100 dark:hover:bg-zinc-900/80"
-                href={post.link}
-                prefetch
-              >
-                <div className="flex flex-col space-y-1">
-                  <h4 className="font-normal text-zinc-900 dark:text-zinc-100">{post.title}</h4>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">{post.description}</p>
-                  <div className="flex items-center gap-3 font-mono text-xs text-zinc-400 dark:text-zinc-600">
-                    <time dateTime={post.publishedTime}>
-                      {new Date(post.publishedTime).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    <span>·</span>
-                    <span>{post.readingTime} min read</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+              Writing
+            </h2>
+            <Link
+              href="/blog"
+              className="inline-flex min-h-8 items-center gap-1 text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
+            >
+              View all
+              <ArrowUpRight aria-hidden="true" className="size-3" />
+            </Link>
           </div>
-        </div>
-      </section>
+          <ul className="divide-y divide-white/[0.07]">
+            {blogPosts.slice(0, 3).map((post) => (
+              <li key={post.uid}>
+                <Link
+                  className="group -mx-2 flex items-start justify-between gap-4 rounded-lg px-2 py-4 no-underline transition-colors hover:bg-white/[0.03]"
+                  href={post.link}
+                >
+                  <div className="min-w-0">
+                    <h3 className="text-sm leading-6 text-zinc-200 transition-colors group-hover:text-white">
+                      {post.title}
+                    </h3>
+                    <div className="mt-1.5 flex flex-wrap items-center gap-x-2 font-mono text-[11px] leading-5 text-zinc-400">
+                      <time dateTime={post.publishedTime}>
+                        {new Date(post.publishedTime).toLocaleDateString(
+                          'en-US',
+                          {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            timeZone: 'UTC',
+                          },
+                        )}
+                      </time>
+                      <span aria-hidden="true" className="text-zinc-600">
+                        ·
+                      </span>
+                      <span>{post.readingTime} min read</span>
+                    </div>
+                  </div>
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="mt-1 size-3.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      <section>
-        <h3 className="mb-5 text-lg font-medium">Connect</h3>
-        <p className="mb-5 text-zinc-600 dark:text-zinc-400">
-          Feel free to contact me at{' '}
+      <section aria-labelledby="connect-heading">
+        <h2
+          id="connect-heading"
+          className="mb-4 text-sm font-medium text-zinc-100"
+        >
+          Connect
+        </h2>
+        <p className="text-sm leading-7 text-zinc-400">
+          Feel free to reach out at{' '}
           <a
-            className="font-medium text-zinc-900 no-underline transition-colors hover:text-zinc-600 dark:text-zinc-300 dark:hover:text-zinc-400"
+            className="break-words text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400"
             href={`mailto:${email}`}
           >
             {email}
           </a>
+          .
         </p>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">
           {socialLinks.map((link) => (
             <SocialLink key={link.label} link={link.link}>
               {link.label}

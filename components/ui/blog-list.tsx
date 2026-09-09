@@ -1,198 +1,238 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useMemo } from 'react'
-import { ArrowLeft, Clock, Calendar, ArrowUpRight, Hash } from 'lucide-react'
+import { useMemo, useRef, useState } from 'react'
+import { ArrowUpRight, ChevronDown, Rss, Search } from 'lucide-react'
+
 import type { BlogPost } from '@/lib/blog-utils'
 
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
+const TOPIC_LABELS: Record<string, string> = {
+  'aspnet-core': 'ASP.NET Core',
+  'b-tree': 'B-tree',
+  'cpu-scheduling': 'CPU scheduling',
+  csharp: 'C#',
+  dotnet: '.NET',
+  devops: 'DevOps',
+  nginx: 'Nginx',
+  postgresql: 'PostgreSQL',
+  rust: 'Rust',
+  sql: 'SQL',
+  'sql-server': 'SQL Server',
+  tcp: 'TCP',
+  udp: 'UDP',
+}
+
+function formatTopic(topic: string) {
+  const label = topic.replaceAll('-', ' ')
+  return TOPIC_LABELS[topic] ?? label.charAt(0).toUpperCase() + label.slice(1)
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',
-  })
-}
-
-function formatDateShort(dateString: string) {
-  return new Date(dateString).toLocaleDateString('en-US', {
     month: 'short',
     year: 'numeric',
+    timeZone: 'UTC',
   })
-}
-
-function getTotalReadingTime(posts: BlogPost[]) {
-  return posts.reduce((acc, p) => acc + p.readingTime, 0)
-}
-
-function getAllTags(posts: BlogPost[]): string[] {
-  const tagSet = new Set<string>()
-  posts.forEach((p) => p.tags?.forEach((t) => tagSet.add(t)))
-  return Array.from(tagSet).sort()
 }
 
 export function BlogList({ posts }: { posts: BlogPost[] }) {
-  const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [query, setQuery] = useState('')
+  const [activeTopic, setActiveTopic] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
 
-  const allTags = useMemo(() => getAllTags(posts), [posts])
-  const totalReadingTime = useMemo(() => getTotalReadingTime(posts), [posts])
-
-  const filtered = useMemo(
-    () => (activeTag ? posts.filter((p) => p.tags?.includes(activeTag)) : posts),
-    [posts, activeTag],
+  const topics = useMemo(
+    () =>
+      [...new Set(posts.flatMap((post) => post.tags ?? []))].sort((a, b) =>
+        formatTopic(a).localeCompare(formatTopic(b)),
+      ),
+    [posts],
   )
 
-  const [featured, ...rest] = filtered
+  const filtered = useMemo(() => {
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
+
+    return posts.filter((post) => {
+      if (activeTopic && !post.tags?.includes(activeTopic)) return false
+
+      const searchable = [
+        post.title,
+        post.description,
+        ...(post.tags ?? []).flatMap((tag) => [tag, formatTopic(tag)]),
+      ]
+        .join(' ')
+        .toLowerCase()
+
+      return terms.every((term) => searchable.includes(term))
+    })
+  }, [posts, query, activeTopic])
+
+  const hasFilters = query.trim().length > 0 || activeTopic !== ''
+  const clearFilters = () => {
+    setQuery('')
+    setActiveTopic('')
+    searchRef.current?.focus()
+  }
 
   return (
-    <div className="min-h-screen pb-32">
-      <Link
-        href="/"
-        className="mb-10 inline-flex items-center gap-1.5 text-sm text-zinc-500 no-underline transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" />
-        Back
-      </Link>
-
-      <div className="mb-10">
-        <div className="flex items-end justify-between gap-4 flex-wrap">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-            Blogging about backend engineering, system design, and scalable software.
-            </h1>
-            <p className="mt-1.5 text-sm text-zinc-500 dark:text-zinc-400">
-        Notes on backend systems, performance, and building software that scales.
-      </p>
-          </div>
-
-          <div className="flex items-center gap-5 text-xs text-zinc-500">
-            <div className="text-right">
-              <div className="text-lg font-semibold tabular-nums text-zinc-900 dark:text-zinc-100">
-                {posts.length}
-              </div>
-              <div>articles</div>
-            </div>
-            <div className="h-8 w-px bg-zinc-200 dark:bg-zinc-800" />
-            <div className="text-right">
-              <div className="text-lg font-semibold tabular-nums text-zinc-900 dark:text-zinc-100">
-                {totalReadingTime}
-              </div>
-              <div>min total</div>
-            </div>
-          </div>
+    <main aria-labelledby="writing-title">
+      <div className="mb-8">
+        <div className="flex items-center justify-between gap-4">
+          <h1
+            id="writing-title"
+            className="text-2xl font-medium tracking-tight text-zinc-100"
+          >
+            Writing
+          </h1>
+          <a
+            href="/blog/rss.xml"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
+            aria-label="Subscribe to the blog via RSS"
+          >
+            <Rss aria-hidden="true" className="size-3.5" />
+            RSS
+          </a>
         </div>
-
-        <div className="mt-6 h-px w-full bg-zinc-100 dark:bg-zinc-800/60" />
+        <p className="mt-3 max-w-md text-sm leading-7 text-zinc-400">
+          Notes on backend engineering, systems, and the details behind reliable
+          software.
+        </p>
       </div>
 
-      {allTags.length > 0 && (
-        <div className="mb-8 flex flex-wrap items-center gap-1.5">
-          <button
-            onClick={() => setActiveTag(null)}
-            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-all duration-200 ${
-              activeTag === null
-                ? 'bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900'
-                : 'border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100'
-            }`}
-          >
-            All
-          </button>
-          {allTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium transition-all duration-200 ${
-                activeTag === tag
-                  ? 'bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900'
-                  : 'border border-zinc-200 text-zinc-500 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100'
-              }`}
-            >
-              <Hash className="h-2.5 w-2.5" />
-              {tag}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {filtered.length === 0 && (
-        <p className="py-16 text-center text-sm text-zinc-500">
-          No articles tagged &ldquo;{activeTag}&rdquo;.
-        </p>
-      )}
-
-      {featured && (
-        <Link
-          href={`/blog/${featured.slug}`}
-          className="theme-card group mb-4 block rounded-2xl p-6 no-underline transition-all duration-300 hover:scale-[1.005]"
+      {posts.length > 0 && (
+        <form
+          role="search"
+          aria-label="Find articles"
+          onSubmit={(event) => event.preventDefault()}
+          className="flex flex-col gap-3 sm:flex-row"
         >
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <span className="rounded-full border border-zinc-200 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
-              Latest
-            </span>
-            <span className="flex items-center gap-1.5 text-xs text-zinc-400 dark:text-zinc-500">
-              <Calendar className="h-3 w-3" />
-              {formatDate(featured.publishedTime)}
-            </span>
+          <div className="relative min-w-0 flex-1">
+            <label htmlFor="article-search" className="sr-only">
+              Search articles
+            </label>
+            <Search
+              aria-hidden="true"
+              className="pointer-events-none absolute top-3 left-3 size-4 text-zinc-500"
+            />
+            <input
+              id="article-search"
+              ref={searchRef}
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-controls="article-results"
+              placeholder="Search writing…"
+              autoComplete="off"
+              className="bg-card h-10 w-full rounded-lg border border-white/10 pr-3 pl-10 text-base text-zinc-200 outline-offset-4 transition-colors placeholder:text-zinc-400 hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-sm"
+            />
           </div>
+          {topics.length > 0 && (
+            <div className="relative sm:w-44">
+              <label htmlFor="article-topic" className="sr-only">
+                Filter by topic
+              </label>
+              <select
+                id="article-topic"
+                value={activeTopic}
+                onChange={(event) => setActiveTopic(event.target.value)}
+                aria-controls="article-results"
+                className="bg-card h-10 w-full appearance-none truncate rounded-lg border border-white/10 pr-9 pl-3 text-base text-zinc-300 outline-offset-4 transition-colors hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-xs"
+              >
+                <option value="">All topics</option>
+                {topics.map((topic) => (
+                  <option key={topic} value={topic}>
+                    {formatTopic(topic)}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden="true"
+                className="pointer-events-none absolute top-3 right-3 size-4 text-zinc-500"
+              />
+            </div>
+          )}
+        </form>
+      )}
 
-          <div className="flex items-start justify-between gap-4">
-            <h2 className="text-lg font-bold leading-snug tracking-tight text-zinc-900 transition-colors group-hover:text-zinc-600 dark:text-zinc-100 dark:group-hover:text-zinc-300">
-              {featured.title}
+      <div className="mt-5 flex min-h-8 items-center justify-between gap-4 border-b border-white/[0.07] pb-4">
+        <p
+          role="status"
+          aria-atomic="true"
+          className="font-mono text-[11px] text-zinc-400"
+        >
+          {hasFilters ? `${filtered.length} of ${posts.length}` : posts.length}{' '}
+          {posts.length === 1 ? 'article' : 'articles'}
+        </p>
+        {hasFilters ? (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="min-h-8 text-xs text-zinc-400 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-zinc-100"
+          >
+            Clear filters
+          </button>
+        ) : (
+          <span className="font-mono text-[11px] text-zinc-400">
+            Newest first
+          </span>
+        )}
+      </div>
+
+      <div id="article-results">
+        {filtered.length > 0 ? (
+          <ol aria-label="Articles" className="divide-y divide-white/[0.07]">
+            {filtered.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group -mx-2 block rounded-lg px-2 py-6 no-underline transition-colors hover:bg-white/[0.03]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <h2 className="text-base leading-6 font-medium tracking-tight text-zinc-200 transition-colors group-hover:text-white">
+                      {post.title}
+                    </h2>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="mt-1 size-3.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300"
+                    />
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-zinc-400">
+                    {post.description}
+                  </p>
+                  <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] leading-5 text-zinc-400">
+                    <time dateTime={post.publishedTime}>
+                      {formatDate(post.publishedTime)}
+                    </time>
+                    <span aria-hidden="true" className="text-zinc-600">
+                      ·
+                    </span>
+                    <span>{post.readingTime} min read</span>
+                    {post.slug === posts[0]?.slug && (
+                      <>
+                        <span aria-hidden="true" className="text-zinc-600">
+                          ·
+                        </span>
+                        <span className="text-zinc-300">Latest</span>
+                      </>
+                    )}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <div className="py-14 text-center">
+            <h2 className="text-sm font-medium text-zinc-200">
+              {posts.length === 0 ? 'No articles yet' : 'No articles found'}
             </h2>
-            <ArrowUpRight className="mt-0.5 h-5 w-5 flex-shrink-0 text-zinc-400 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <p className="mt-2 text-sm leading-6 text-zinc-400">
+              {posts.length === 0
+                ? 'New writing will appear here.'
+                : 'Try a different search or choose another topic.'}
+            </p>
           </div>
-
-          <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 line-clamp-2">
-            {featured.description}
-          </p>
-
-          <div className="mt-4 flex items-center gap-3 text-xs text-zinc-400 dark:text-zinc-500">
-            <span className="flex items-center gap-1.5">
-              <Clock className="h-3 w-3" />
-              {featured.readingTime} min read
-            </span>
-          </div>
-        </Link>
-      )}
-
-      {rest.length > 0 && (
-        <div className="flex flex-col divide-y divide-zinc-100 dark:divide-zinc-800/60">
-          {rest.map((post, index) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group -mx-2 flex items-start gap-4 rounded-xl px-2 py-4 no-underline transition-all duration-200 hover:bg-zinc-50 dark:hover:bg-white/[0.02]"
-            >
-              <span className="mt-0.5 w-6 flex-shrink-0 select-none text-right font-mono text-xs tabular-nums text-zinc-300 dark:text-zinc-700">
-                {String(index + 2).padStart(2, '0')}
-              </span>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-sm font-semibold leading-snug text-zinc-900 transition-colors group-hover:text-zinc-600 dark:text-zinc-100 dark:group-hover:text-zinc-300">
-                    {post.title}
-                  </h3>
-                  <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-zinc-400 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
-
-                <p className="mt-1 text-xs leading-relaxed text-zinc-500 line-clamp-1">
-                  {post.description}
-                </p>
-
-                <div className="mt-2 flex items-center gap-3 text-[11px] text-zinc-400 dark:text-zinc-600">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-2.5 w-2.5" />
-                    {formatDateShort(post.publishedTime)}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-2.5 w-2.5" />
-                    {post.readingTime} min
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </main>
   )
 }
