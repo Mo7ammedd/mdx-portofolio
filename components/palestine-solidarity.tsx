@@ -1,46 +1,24 @@
-'use client'
-import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { ChevronDown } from 'lucide-react'
 
 export function PalestineSolidarity() {
-  const [showMessage, setShowMessage] = useState(false)
-  const [counter, setCounter] = useState(0)
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const daysSinceOct7 = Math.floor(
-        (Date.now() - new Date('2023-10-07').getTime()) / 86400000,
-      )
-      setCounter(daysSinceOct7)
-      setShowMessage(true)
-    }, 1500)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Keep the writing pages clear of fixed overlays.
-  const isBlogPage = pathname === '/blog' || pathname.startsWith('/blog/')
-  if (isBlogPage) return null
-
   return (
-    <>
-      {/* Solidarity message banner */}
-      <div
-        aria-hidden={!showMessage}
-        className={`fixed right-0 bottom-0 left-0 z-50 border-t border-white/10 bg-[#080808]/90 p-1.5 text-center text-zinc-200 backdrop-blur-md transition-all duration-700 motion-reduce:transition-none ${
-          showMessage
-            ? 'translate-y-0 opacity-100'
-            : 'translate-y-full opacity-0'
-        }`}
-      >
-        <div className="flex flex-col items-center justify-center space-y-0.5">
-          <p className="text-xs font-medium">From The River To The Sea</p>
-          <p className="text-[10px] text-zinc-400">
-            Day {counter}: We still remember Gaza
-          </p>
-        </div>
+    <details className="group mt-2">
+      <summary className="inline-flex min-h-10 cursor-pointer list-none items-center gap-2 rounded-sm text-xs text-zinc-400 transition-colors hover:text-zinc-100 [&::-webkit-details-marker]:hidden">
+        <span>Standing with Palestine 🇵🇸</span>
+        <ChevronDown
+          aria-hidden="true"
+          className="size-3 transition-transform group-open:rotate-180"
+        />
+      </summary>
+      <div className="max-w-md space-y-2 pt-1 pb-3 text-xs leading-6 text-zinc-400">
+        <p className="text-zinc-300">
+          From the river to the sea. We remember Gaza.
+        </p>
+        <p>
+          Supporting justice, human rights, and the dignity of all people.
+          Technology should empower communities and promote peace worldwide.
+        </p>
       </div>
-    </>
+    </details>
   )
 }

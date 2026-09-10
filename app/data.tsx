@@ -3,6 +3,7 @@ import { Icons } from '@/components/icons'
 type WorkExperience = {
   company: string
   title: string
+  description?: string
   start: string
   end: string
   link: string
@@ -121,18 +122,22 @@ export const PROJECTS = [
   }
 ]
 export const WORK_EXPERIENCE: WorkExperience[] = [
-    {
-    company: "Oblien",
-    title: "SDE",
-    start: "Sep 2025",
-    end: "Present",
-    link: "https://oblien.com/",
-    id: "work0",
-    logo: "/work/oblien.jpg",
+  {
+    company: 'Oblien',
+    title: 'Founding Engineer',
+    description:
+      'Building Firecracker agent sandboxes and Openship deployments.',
+    start: 'Aug 2025',
+    end: 'Present',
+    link: 'https://oblien.com/',
+    id: 'work0',
+    logo: '/work/oblien.jpg',
   },
   {
     company: 'Medica Scope',
     title: 'Backend Engineer',
+    description:
+      'CarLink APIs, AWS vehicle telemetry, and a multi-tenant medical LMS.',
     start: 'Jul 2025',
     end: 'Present',
     link: 'https://medicascopehms.com/',
@@ -142,15 +147,18 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'ONVO',
     title: 'Software Engineer',
-    start: 'Aug 2024',
+    description:
+      'Scaled a Q&A platform to 150k+ users and cut load times by 20%.',
+    start: 'May 2024',
     end: 'Jul 2025',
     link: 'https://onvo.me/',
     id: 'work2',
     logo: '/work/onvo.png',
   },
   {
-    company: 'IT Mentor',
-    title: 'GDG Suez Canal',
+    company: 'GDG Suez Canal',
+    title: 'IT Mentor',
+    description: 'Mentored students in backend development fundamentals.',
     start: 'Oct 2024',
     end: 'May 2025',
     link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',

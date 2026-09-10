@@ -73,7 +73,7 @@ export function BlogLayoutClient({
       )}
 
       <ScrollProgress
-        className="fixed inset-x-0 top-1 z-40 h-px bg-zinc-400"
+        className="fixed inset-x-0 top-0 z-40 h-px bg-zinc-400"
         springOptions={{ bounce: 0 }}
       />
 

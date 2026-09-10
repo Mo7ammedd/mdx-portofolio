@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { ThemeProvider } from 'next-themes'
+import localFont from 'next/font/local'
 
 import './globals.css'
 
 import { siteConfig } from '@/components/siteConfig'
 import { Header } from './header'
 import { Footer } from './footer'
-import { PalestineSolidarity } from '@/components/palestine-solidarity'
 import { StructuredData } from '@/components/structured-data'
 import { Analytics } from '@/components/analytics'
 import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema'
@@ -15,7 +13,7 @@ import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema'
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#080808',
+  themeColor: '#000000',
   colorScheme: 'dark',
 }
 
@@ -26,14 +24,18 @@ export const metadata: Metadata = {
   },
 }
 
-const geist = Geist({
+const geist = localFont({
+  src: '../public/fonts/GeistVF.woff2',
   variable: '--font-geist',
-  subsets: ['latin'],
+  display: 'swap',
+  weight: '100 900',
 })
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: '../public/fonts/GeistMonoVF.woff2',
   variable: '--font-geist-mono',
-  subsets: ['latin'],
+  display: 'swap',
+  weight: '100 900',
 })
 
 export default function RootLayout({
@@ -84,12 +86,7 @@ export default function RootLayout({
   }
 
   return (
-    <html
-      lang="en"
-      className="dark"
-      style={{ colorScheme: 'dark' }}
-      suppressHydrationWarning
-    >
+    <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
       <head>
         {/* Security headers via meta tags */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -104,6 +101,9 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} bg-background text-foreground font-sans antialiased`}
       >
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <StructuredData data={generatePersonSchema(personData)} />
         <StructuredData
           data={generateWebsiteSchema(
@@ -113,23 +113,15 @@ export default function RootLayout({
           )}
         />
         <Analytics />
-        <ThemeProvider
-          enableSystem={false}
-          attribute="class"
-          storageKey="theme"
-          defaultTheme="dark"
-          forcedTheme="dark"
-          disableTransitionOnChange
-        >
-          <PalestineSolidarity />
-          <div className="relative z-10 flex min-h-screen w-full flex-col">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-6 pt-12 pb-24 sm:pt-20">
-              <Header />
+        <div className="relative z-10 flex min-h-screen w-full flex-col">
+          <div className="relative mx-auto w-full max-w-[44rem] flex-1 px-6 pt-6 pb-8 sm:px-8 sm:pt-12 sm:pb-12">
+            <Header />
+            <div id="main-content" tabIndex={-1} className="outline-none">
               {children}
-              <Footer />
             </div>
+            <Footer />
           </div>
-        </ThemeProvider>
+        </div>
       </body>
     </html>
   )

@@ -77,23 +77,24 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
   return (
     <main aria-labelledby="writing-title">
       <div className="mb-8">
+        <p className="section-heading mb-4">Notes & ideas</p>
         <div className="flex items-center justify-between gap-4">
           <h1
             id="writing-title"
-            className="text-2xl font-medium tracking-tight text-zinc-100"
+            className="text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
           >
             Writing
           </h1>
           <a
             href="/blog/rss.xml"
-            className="inline-flex min-h-9 items-center gap-1.5 rounded text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
+            className="text-link"
             aria-label="Subscribe to the blog via RSS"
           >
             <Rss aria-hidden="true" className="size-3.5" />
             RSS
           </a>
         </div>
-        <p className="mt-3 max-w-md text-sm leading-7 text-zinc-400">
+        <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
           Notes on backend engineering, systems, and the details behind reliable
           software.
         </p>
@@ -112,7 +113,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
             </label>
             <Search
               aria-hidden="true"
-              className="pointer-events-none absolute top-3 left-3 size-4 text-zinc-500"
+              className="pointer-events-none absolute top-3.5 left-3 size-4 text-zinc-500"
             />
             <input
               id="article-search"
@@ -123,7 +124,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               aria-controls="article-results"
               placeholder="Search writing…"
               autoComplete="off"
-              className="bg-card h-10 w-full rounded-lg border border-white/10 pr-3 pl-10 text-base text-zinc-200 outline-offset-4 transition-colors placeholder:text-zinc-400 hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-sm"
+              className="h-11 w-full rounded-md border border-white/15 bg-transparent pr-3 pl-10 text-base text-zinc-200 outline-offset-4 transition-colors placeholder:text-zinc-400 hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-sm"
             />
           </div>
           {topics.length > 0 && (
@@ -136,7 +137,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                 value={activeTopic}
                 onChange={(event) => setActiveTopic(event.target.value)}
                 aria-controls="article-results"
-                className="bg-card h-10 w-full appearance-none truncate rounded-lg border border-white/10 pr-9 pl-3 text-base text-zinc-300 outline-offset-4 transition-colors hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-xs"
+                className="bg-background h-11 w-full appearance-none truncate rounded-md border border-white/15 pr-9 pl-3 text-base text-zinc-300 outline-offset-4 transition-colors hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-xs"
               >
                 <option value="">All topics</option>
                 {topics.map((topic) => (
@@ -147,14 +148,14 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               </select>
               <ChevronDown
                 aria-hidden="true"
-                className="pointer-events-none absolute top-3 right-3 size-4 text-zinc-500"
+                className="pointer-events-none absolute top-3.5 right-3 size-4 text-zinc-500"
               />
             </div>
           )}
         </form>
       )}
 
-      <div className="mt-5 flex min-h-8 items-center justify-between gap-4 border-b border-white/[0.07] pb-4">
+      <div className="mt-5 flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
         <p
           role="status"
           aria-atomic="true"
@@ -185,7 +186,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               <li key={post.slug}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group -mx-2 block rounded-lg px-2 py-6 no-underline transition-colors hover:bg-white/[0.03]"
+                  className="list-row group block py-6"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <h2 className="text-base leading-6 font-medium tracking-tight text-zinc-200 transition-colors group-hover:text-white">

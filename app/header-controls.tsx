@@ -11,25 +11,36 @@ export function HeaderControls() {
   return (
     <nav
       aria-label="Main navigation"
-      className="flex shrink-0 items-center gap-1"
+      className="flex shrink-0 items-center gap-4 sm:gap-6"
     >
+      <Link
+        href="/"
+        aria-current={pathname === '/' ? 'page' : undefined}
+        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
+          pathname === '/'
+            ? 'text-zinc-100 underline decoration-zinc-500'
+            : 'text-zinc-400'
+        }`}
+      >
+        Home
+      </Link>
       <Link
         href="/blog"
         aria-current={pathname === '/blog' ? 'page' : undefined}
-        className={`rounded-lg px-3 py-2 text-xs transition-colors hover:bg-white/5 ${
+        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
           pathname.startsWith('/blog')
-            ? 'font-medium text-zinc-100'
-            : 'text-zinc-400 hover:text-zinc-100'
+            ? 'text-zinc-100 underline decoration-zinc-500'
+            : 'text-zinc-400'
         }`}
       >
-        Blog
+        Writing
       </Link>
 
       <a
         href="https://github.com/mo7ammedd"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex size-9 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-100"
+        className="-mr-3 flex size-11 items-center justify-center text-zinc-400 transition-colors hover:text-white [&_svg]:size-4"
         aria-label="GitHub profile"
       >
         <Github />

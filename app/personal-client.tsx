@@ -17,7 +17,7 @@ function SocialLink({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex min-h-9 items-center gap-1 text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
+      className="text-link"
     >
       {children}
       <ArrowUpRight aria-hidden="true" className="size-3" />
@@ -48,46 +48,70 @@ export function PersonalClient({
   email,
 }: PersonalClientProps) {
   return (
-    <main className="space-y-14 sm:space-y-16">
+    <main className="space-y-12 sm:space-y-14">
       <section aria-labelledby="intro-heading">
-        <h1 id="intro-heading" className="sr-only">
-          Mohammed Mostafa — Software Engineer
+        <p className="section-heading">Software engineer · Egypt</p>
+        <h1
+          id="intro-heading"
+          className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
+        >
+          Mohammed Mostafa<span className="text-zinc-500">.</span>
         </h1>
-        <div className="space-y-3 text-sm leading-7 text-zinc-400">
+        <div className="mt-5 max-w-xl space-y-3 text-sm leading-7 text-zinc-400 sm:text-[15px]">
           <p>
-            I’m Mohammed, a software engineer and CS graduate from Suez Canal
-            University. Currently building software at{' '}
+            I build backend systems, databases, and cloud infrastructure with a
+            focus on performance and reliability.
+          </p>
+          <p>
+            Currently building at{' '}
+            <a
+              href="https://oblien.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-link"
+            >
+              Oblien
+            </a>{' '}
+            and{' '}
             <a
               href="https://medicascopehms.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400"
+              className="inline-link"
             >
               Medica Scope
             </a>
-            .
-          </p>
-          <p>
-            I focus on backend engineering, distributed systems, databases, and
-            cloud infrastructure, with an eye for performance and reliability.
+            . CS graduate from Suez Canal University.
           </p>
         </div>
-      </section>
-
-      <section id="work" aria-labelledby="work-heading" className="scroll-mt-8">
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <h2 id="work-heading" className="text-sm font-medium text-zinc-100">
-            Work
-          </h2>
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1">
+          <a
+            href={`mailto:${email}`}
+            className="text-link font-medium text-zinc-200"
+          >
+            Get in touch
+            <ArrowUpRight aria-hidden="true" className="size-3" />
+          </a>
           <a
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-8 items-center gap-1 text-xs text-zinc-400 transition-colors hover:text-zinc-100"
+            className="text-link"
           >
             Résumé
             <ArrowUpRight aria-hidden="true" className="size-3" />
           </a>
+        </div>
+      </section>
+
+      <section id="work" aria-labelledby="work-heading" className="scroll-mt-8">
+        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+          <h2 id="work-heading" className="section-heading">
+            Experience
+          </h2>
+          <span className="font-mono text-[11px] text-zinc-400">
+            2024 — Now
+          </span>
         </div>
         <ul className="divide-y divide-white/[0.07]">
           {workExperience.map((job) => (
@@ -96,30 +120,36 @@ export function PersonalClient({
                 href={job.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group -mx-2 grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-3 rounded-lg px-2 py-3.5 no-underline transition-colors hover:bg-white/[0.03] sm:grid-cols-[2.5rem_minmax(0,1fr)_auto]"
+                className="list-row group grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-x-3"
               >
-                <div className="relative size-10 overflow-hidden rounded-lg border border-white/10 bg-zinc-950">
+                <div className="relative mt-0.5 size-8 overflow-hidden rounded-md border border-white/10 bg-zinc-950">
                   <Image
                     src={job.logo}
                     alt=""
                     fill
-                    sizes="40px"
-                    className="object-cover grayscale transition-[filter] group-hover:grayscale-0 motion-reduce:transition-none"
+                    sizes="32px"
+                    className="object-cover grayscale"
                   />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="flex items-center gap-1.5 text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
-                    {job.company}
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="size-3 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300"
-                    />
-                  </h3>
-                  <p className="mt-0.5 text-xs text-zinc-400">{job.title}</p>
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                      <h3 className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
+                        {job.company}
+                      </h3>
+                      <p className="text-xs text-zinc-400">{job.title}</p>
+                    </div>
+                    <p className="font-mono text-[11px] leading-5 whitespace-nowrap text-zinc-400">
+                      {job.start} <span className="text-zinc-600">—</span>{' '}
+                      {job.end}
+                    </p>
+                  </div>
+                  {job.description && (
+                    <p className="mt-1.5 text-xs leading-5 text-zinc-400">
+                      {job.description}
+                    </p>
+                  )}
                 </div>
-                <p className="col-start-2 mt-1 font-mono text-[11px] leading-5 text-zinc-400 sm:col-start-auto sm:mt-0 sm:text-right">
-                  {job.start} <span className="text-zinc-600">—</span> {job.end}
-                </p>
               </a>
             </li>
           ))}
@@ -131,39 +161,36 @@ export function PersonalClient({
         aria-labelledby="projects-heading"
         className="scroll-mt-8"
       >
-        <h2
-          id="projects-heading"
-          className="mb-5 text-sm font-medium text-zinc-100"
-        >
-          Small projects
-        </h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.href}
-              title={project.title}
-              description={project.description}
-              tags={project.technologies}
-              links={project.links}
-              href={project.href}
-            />
-          ))}
+        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+          <h2 id="projects-heading" className="section-heading">
+            Selected projects
+          </h2>
+          <span className="font-mono text-[11px] text-zinc-400">
+            {String(projects.length).padStart(2, '0')}
+          </span>
         </div>
+        <ul className="divide-y divide-white/[0.07]">
+          {projects.map((project) => (
+            <li key={project.href}>
+              <ProjectCard
+                title={project.title}
+                description={project.description}
+                tags={project.technologies}
+                links={project.links}
+                href={project.href}
+              />
+            </li>
+          ))}
+        </ul>
       </section>
 
       {blogPosts.length > 0 && (
         <section aria-labelledby="writing-heading">
-          <div className="mb-3 flex items-center justify-between gap-4">
-            <h2
-              id="writing-heading"
-              className="text-sm font-medium text-zinc-100"
-            >
+          <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+            <h2 id="writing-heading" className="section-heading">
               Writing
             </h2>
-            <Link
-              href="/blog"
-              className="inline-flex min-h-8 items-center gap-1 text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100"
-            >
+            <Link href="/blog" className="text-link -my-2">
               View all
               <ArrowUpRight aria-hidden="true" className="size-3" />
             </Link>
@@ -172,7 +199,7 @@ export function PersonalClient({
             {blogPosts.slice(0, 3).map((post) => (
               <li key={post.uid}>
                 <Link
-                  className="group -mx-2 flex items-start justify-between gap-4 rounded-lg px-2 py-4 no-underline transition-colors hover:bg-white/[0.03]"
+                  className="list-row group flex items-start justify-between gap-4"
                   href={post.link}
                 >
                   <div className="min-w-0">
@@ -209,18 +236,12 @@ export function PersonalClient({
       )}
 
       <section aria-labelledby="connect-heading">
-        <h2
-          id="connect-heading"
-          className="mb-4 text-sm font-medium text-zinc-100"
-        >
+        <h2 id="connect-heading" className="section-heading mb-4">
           Connect
         </h2>
         <p className="text-sm leading-7 text-zinc-400">
-          Feel free to reach out at{' '}
-          <a
-            className="break-words text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400"
-            href={`mailto:${email}`}
-          >
+          Have something in mind? Reach out at{' '}
+          <a className="inline-link break-words" href={`mailto:${email}`}>
             {email}
           </a>
           .

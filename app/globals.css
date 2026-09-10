@@ -29,9 +29,9 @@
 :root,
 .dark {
   color-scheme: dark;
-  --background: #080808;
-  --foreground: oklch(0.985 0 0);
-  --card: #0e0e0e;
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #080808;
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -45,10 +45,10 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: #242424;
+  --border: #202020;
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
-  --radius: 0.625rem;
+  --radius: 0.375rem;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -115,29 +115,25 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: #ededed;
+    color: #000;
   }
 
   /* Sitewide keyboard focus ring (only shows for keyboard nav, not mouse clicks) */
   a:focus-visible,
   button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  summary:focus-visible,
   [role='button']:focus-visible,
   [tabindex]:focus-visible {
     outline: 2px solid rgba(212, 212, 216, 0.8);
     outline-offset: 4px;
     border-radius: 4px;
-  }
-
-  .theme-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    transition:
-      background-color 0.2s,
-      border-color 0.2s;
-  }
-  .theme-card:hover,
-  .theme-card:focus-within {
-    background: #121212;
-    border-color: #3f3f46;
   }
 
   /* Enhanced blog post typography */
@@ -233,11 +229,20 @@
   /* Smooth scrolling for anchor links */
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 
@@ -248,5 +253,27 @@
 
   article blockquote p:last-of-type::after {
     content: none;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply font-mono text-[11px] font-normal tracking-[0.14em] text-zinc-400 uppercase;
+  }
+
+  .text-link {
+    @apply inline-flex min-h-10 items-center gap-1.5 text-xs text-zinc-400 no-underline transition-colors hover:text-white;
+  }
+
+  .inline-link {
+    @apply text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400;
+  }
+
+  .list-row {
+    @apply -mx-3 rounded-md px-3 py-5 no-underline transition-colors focus-within:bg-white/[0.03] hover:bg-white/[0.03];
+  }
+
+  .skip-link {
+    @apply fixed top-4 left-4 z-50 -translate-y-24 rounded-md bg-zinc-100 px-4 py-3 text-sm font-medium text-black focus:translate-y-0;
   }
 }
