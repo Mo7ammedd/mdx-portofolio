@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { WEBSITE_URL } from './constants'
+import { DEFAULT_OG_IMAGE, getBlogOGImagePath, OG_IMAGE_SIZE } from './og-metadata'
 
 interface SEOParams {
   title: string
@@ -17,7 +18,7 @@ export function generateSEO({
   title,
   description,
   path,
-  ogImage = '/og-image.png',
+  ogImage = DEFAULT_OG_IMAGE,
   noIndex = false,
   publishedTime,
   modifiedTime,
@@ -62,8 +63,7 @@ export function generateSEO({
       images: [
         {
           url: `${WEBSITE_URL}${ogImage}`,
-          width: 1200,
-          height: 630,
+          ...OG_IMAGE_SIZE,
           alt: fullTitle,
           type: 'image/png',
         },
@@ -127,7 +127,7 @@ export function generateBlogPostSEO({
     title,
     description,
     path: `/blog/${slug}`,
-    ogImage: `/og/${slug}.png`,
+    ogImage: getBlogOGImagePath(slug),
     type: 'article',
     publishedTime,
     modifiedTime: modifiedTime || publishedTime,

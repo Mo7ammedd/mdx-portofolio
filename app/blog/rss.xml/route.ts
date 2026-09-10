@@ -1,5 +1,6 @@
 import { getAllBlogPosts } from '@/lib/blog-utils'
 import { WEBSITE_URL } from '@/lib/constants'
+import { getBlogOGImagePath } from '@/lib/og-metadata'
 import fs from 'fs'
 import path from 'path'
 
@@ -78,7 +79,10 @@ export async function GET() {
     .map(
       (post) => {
         const fullContent = getFullPostContent(post.slug)
-        const imageUrl = post.image ? `${WEBSITE_URL}${post.image}` : `${WEBSITE_URL}/og/${post.slug}.png`
+        const imageUrl = new URL(
+          post.image ?? getBlogOGImagePath(post.slug),
+          WEBSITE_URL,
+        ).toString()
         
         return `
     <item>

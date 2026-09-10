@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { getBlogOGImagePath } from './og-metadata'
 
 export interface BlogPost {
   slug: string
@@ -92,7 +93,7 @@ function extractMetadataFromMDX(content: string, slug: string): BlogPost | null 
       modifiedTime,
       tags,
       readingTime,
-      image: `/og/${slug}.png`,
+      image: getBlogOGImagePath(slug),
     }
   } catch (error) {
     console.error(`Error parsing metadata for ${slug}:`, error)

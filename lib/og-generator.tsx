@@ -1,283 +1,151 @@
-import React from 'react'
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from 'next/og'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
-export interface BlogPostMeta {
+import type { BlogPost } from './blog-utils'
+import { WEBSITE_URL } from './constants'
+import { OG_IMAGE_SIZE } from './og-metadata'
+
+type OGImageContent = {
   title: string
   description: string
-  author?: string
-  date?: string
-  readTime?: string
+  label: string
+  footer: string
+  detail: string
 }
 
-export async function generateOGImage(blogPost: BlogPostMeta): Promise<Buffer> {
-  const imageResponse = new ImageResponse(
+// Satori needs TTF/OTF/WOFF fonts; the site's WOFF2 fonts are not supported.
+const assets = Promise.all([
+  readFile(join(process.cwd(), 'public/fonts/og/Geist-Regular.ttf')),
+  readFile(join(process.cwd(), 'public/fonts/og/Geist-SemiBold.ttf')),
+  readFile(join(process.cwd(), 'public/fonts/og/GeistMono-Regular.ttf')),
+  readFile(join(process.cwd(), 'public/avatar.jpg'), 'base64'),
+])
+
+export async function generateOGImage({
+  title,
+  description,
+  label,
+  footer,
+  detail,
+}: OGImageContent) {
+  const [regular, semibold, mono, avatar] = await assets
+
+  return new ImageResponse(
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #0f0f0f 50%, #1a1a1a 75%, #0a0a0a 100%)',
-          width: '100%',
-          height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '40px',
-          fontFamily: 'Inter, sans-serif',
-          position: 'relative',
-          overflow: 'hidden',
+          width: '100%',
+          height: '100%',
+          padding: '52px 64px',
+          background: '#000000',
+          color: '#ededed',
+          fontFamily: 'Geist',
         }}
       >
-        {/* Simplified background effects */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 60%)',
-            zIndex: 1,
-          }}
-        />
-
-        {/* Main content container */}
-        <div
-          style={{
-            background: 'rgba(17, 17, 19, 0.85)',
-            border: '1px solid rgba(63, 63, 70, 0.3)',
-            borderRadius: '24px',
-            padding: '60px',
-            maxWidth: '900px',
-            width: '100%',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
-            textAlign: 'center',
-            zIndex: 3,
-            position: 'relative',
+            justifyContent: 'space-between',
+            fontFamily: 'Geist Mono',
           }}
         >
-
-          {/* Blog title with enhanced styling */}
-          <h1
-            style={{
-              fontSize: '48px',
-              fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #ffffff 0%, #e4e4e7 100%)',
-              backgroundClip: 'text',
-              color: 'transparent',
-              margin: '0 0 24px 0',
-              lineHeight: '1.2',
-              maxWidth: '800px',
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)',
-            }}
-          >
-            {blogPost.title}
-          </h1>
-
-          {/* Description with subtle glow */}
-          <p
-            style={{
-              fontSize: '22px',
-              color: '#d4d4d8',
-              margin: '0 0 40px 0',
-              lineHeight: '1.4',
-              maxWidth: '700px',
-              textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-            }}
-          >
-            {blogPost.description}
-          </p>
-
-          {/* Enhanced metadata section */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '20px',
-              fontSize: '18px',
-              color: '#a1a1aa',
-              background: 'rgba(39, 39, 42, 0.4)',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              border: '1px solid rgba(63, 63, 70, 0.2)',
-            }}
-          >
-            <span style={{ 
-              fontWeight: '600',
-              color: '#e4e4e7'
-            }}>
-              {blogPost.author || 'Mohammed Mostafa'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            {/* ImageResponse renders images directly, without next/image. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`data:image/jpeg;base64,${avatar}`}
+              alt=""
+              width={48}
+              height={48}
+              style={{ borderRadius: 24, objectFit: 'cover' }}
+            />
+            <span style={{ fontSize: 22 }}>
+              {new URL(WEBSITE_URL).hostname.replace(/^www\./, '')}
             </span>
-            {blogPost.date && (
-              <>
-                <span style={{ color: '#71717a' }}>•</span>
-                <span>{blogPost.date}</span>
-              </>
-            )}
-            {blogPost.readTime && (
-              <>
-                <span style={{ color: '#71717a' }}>•</span>
-                <span>{blogPost.readTime} read</span>
-              </>
-            )}
           </div>
+          <span style={{ fontSize: 15, color: '#a1a1aa', letterSpacing: 2 }}>
+            {label}
+          </span>
+        </div>
 
-          {/* Enhanced brand section */}
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            padding: '28px 0',
+          }}
+        >
           <div
             style={{
-              marginTop: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '16px',
-              color: '#a1a1aa',
-              fontWeight: '500',
-              background: 'linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
-              padding: '8px 16px',
-              borderRadius: '20px',
-              border: '1px solid rgba(59, 130, 246, 0.2)',
+              fontSize: title.length > 70 ? 54 : title.length > 40 ? 64 : 80,
+              fontWeight: 600,
+              letterSpacing: -2.5,
+              lineHeight: 1.1,
+              lineClamp: 3,
             }}
           >
-            mohammedd.tech
+            {title}
+          </div>
+          <div
+            style={{
+              marginTop: 24,
+              maxWidth: 960,
+              fontSize: 26,
+              lineHeight: 1.45,
+              color: '#a1a1aa',
+              lineClamp: 3,
+            }}
+          >
+            {description}
           </div>
         </div>
 
-        {/* Enhanced floating orbs with glassy effect */}
         <div
           style={{
-            position: 'absolute',
-            top: '15%',
-            right: '8%',
-            width: '120px',
-            height: '120px',
-            borderRadius: '50%',
-            background: `
-              radial-gradient(circle at 30% 30%, 
-                rgba(59, 130, 246, 0.25) 0%, 
-                rgba(59, 130, 246, 0.1) 50%, 
-                transparent 100%
-              )
-            `,
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(59, 130, 246, 0.2)',
-            zIndex: 2,
-            boxShadow: '0 8px 32px rgba(59, 130, 246, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderTop: '1px solid #27272a',
+            paddingTop: 24,
+            fontFamily: 'Geist Mono',
+            fontSize: 17,
           }}
-        />
-        
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '12%',
-            left: '6%',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            background: `
-              radial-gradient(circle at 30% 30%, 
-                rgba(139, 92, 246, 0.25) 0%, 
-                rgba(139, 92, 246, 0.1) 50%, 
-                transparent 100%
-              )
-            `,
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(139, 92, 246, 0.2)',
-            zIndex: 2,
-            boxShadow: '0 6px 24px rgba(139, 92, 246, 0.2)',
-          }}
-        />
-        
-        <div
-          style={{
-            position: 'absolute',
-            top: '45%',
-            left: '4%',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            background: `
-              radial-gradient(circle at 30% 30%, 
-                rgba(34, 197, 94, 0.2) 0%, 
-                rgba(34, 197, 94, 0.08) 50%, 
-                transparent 100%
-              )
-            `,
-            backdropFilter: 'blur(6px)',
-            border: '1px solid rgba(34, 197, 94, 0.15)',
-            zIndex: 2,
-            boxShadow: '0 4px 16px rgba(34, 197, 94, 0.15)',
-          }}
-        />
-
-        <div
-          style={{
-            position: 'absolute',
-            top: '25%',
-            left: '15%',
-            width: '35px',
-            height: '35px',
-            borderRadius: '50%',
-            background: `
-              radial-gradient(circle at 30% 30%, 
-                rgba(236, 72, 153, 0.2) 0%, 
-                rgba(236, 72, 153, 0.08) 50%, 
-                transparent 100%
-              )
-            `,
-            backdropFilter: 'blur(4px)',
-            border: '1px solid rgba(236, 72, 153, 0.15)',
-            zIndex: 2,
-            boxShadow: '0 3px 12px rgba(236, 72, 153, 0.15)',
-          }}
-        />
-
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '20%',
-            right: '15%',
-            width: '65px',
-            height: '65px',
-            borderRadius: '50%',
-            background: `
-              radial-gradient(circle at 30% 30%, 
-                rgba(245, 158, 11, 0.2) 0%, 
-                rgba(245, 158, 11, 0.08) 50%, 
-                transparent 100%
-              )
-            `,
-            backdropFilter: 'blur(7px)',
-            border: '1px solid rgba(245, 158, 11, 0.15)',
-            zIndex: 2,
-            boxShadow: '0 5px 20px rgba(245, 158, 11, 0.15)',
-          }}
-        />
+        >
+          <span>{footer}</span>
+          <span style={{ color: '#a1a1aa' }}>{detail}</span>
+        </div>
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
-    }
+      ...OG_IMAGE_SIZE,
+      fonts: [
+        { name: 'Geist', data: regular, weight: 400, style: 'normal' },
+        { name: 'Geist', data: semibold, weight: 600, style: 'normal' },
+        { name: 'Geist Mono', data: mono, weight: 400, style: 'normal' },
+      ],
+    },
   )
-
-  return Buffer.from(await imageResponse.arrayBuffer())
 }
 
-export async function generateOGImageForPost(
-  title: string,
-  description: string,
-  options?: {
-    author?: string
-    date?: string
-    readTime?: string
-  }
-): Promise<Buffer> {
+export function generateBlogOGImage(post: BlogPost) {
+  const date = new Date(post.publishedTime).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+
   return generateOGImage({
-    title,
-    description,
-    author: options?.author,
-    date: options?.date,
-    readTime: options?.readTime,
+    title: post.title,
+    description: post.description,
+    label: 'WRITING',
+    footer: 'Mohammed Mostafa',
+    detail: `${date} · ${post.readingTime} min read`,
   })
 }

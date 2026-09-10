@@ -93,22 +93,6 @@ export const siteConfig: Metadata = {
     title: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js)',
     description:
       'Backend Software Engineer from Egypt specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
-    images: [
-      {
-        url: 'https://www.modev.me/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Mohammed Mostafa Software Engineer Portfolio - ASP.NET Core & Node.js Developer',
-        type: 'image/png',
-      },
-      {
-        url: 'https://www.modev.me/avatar.jpg',
-        width: 400,
-        height: 400,
-        alt: 'Mohammed Mostafa Professional Photo - Software Engineer',
-        type: 'image/jpeg',
-      },
-    ],
     emails: ['mohammedmostafanazih@gmail.com'],
     countryName: 'Egypt',
   },
@@ -120,7 +104,6 @@ export const siteConfig: Metadata = {
     title: 'Mohammed Mostafa | Backend Software Engineer',
     description:
       'Backend Software Engineer specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
-    images: ['https://www.modev.me/og-image.png'],
   },
   
   robots: {
