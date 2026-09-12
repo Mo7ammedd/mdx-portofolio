@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }: Props) {
               key={stage.title}
               className="rounded-md border border-white/10 bg-white/[0.02] p-5"
             >
-              <p className="font-mono text-[11px] text-zinc-500">
+              <p className="font-mono text-[11px] text-zinc-400">
                 0{index + 1}
               </p>
               <h3 className="mt-3 text-sm font-medium text-zinc-200">
@@ -174,19 +174,26 @@ export default async function ProjectPage({ params }: Props) {
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
-        {slug === 'lsmsharp' && (
-          <a
-            href={`${project.source}#performance-benchmark-results`}
-            className="text-link mt-3"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-project-name={project.title}
-            data-link-type="source"
-          >
-            Published benchmark and test source{' '}
-            <ArrowUpRight aria-hidden="true" className="size-3" />
-          </a>
-        )}
+        <ul
+          aria-label="Repository references"
+          className="mt-4 flex flex-wrap gap-x-5 gap-y-1"
+        >
+          {project.references.map((reference) => (
+            <li key={reference.href}>
+              <a
+                href={reference.href}
+                className="text-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-project-name={project.title}
+                data-link-type="source"
+              >
+                {reference.title}{' '}
+                <ArrowUpRight aria-hidden="true" className="size-3" />
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {project.experiment && (

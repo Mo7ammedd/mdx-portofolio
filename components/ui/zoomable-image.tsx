@@ -42,7 +42,7 @@ export function ZoomableImage({ src, alt, width, height }: ZoomableImageProps) {
           />
         </div>
         {alt && (
-          <figcaption className="mt-2.5 text-center font-mono text-xs text-zinc-400 dark:text-zinc-600">
+          <figcaption className="mt-2.5 text-center font-mono text-xs text-zinc-400">
             {alt}
           </figcaption>
         )}
@@ -78,7 +78,7 @@ export function ZoomableImage({ src, alt, width, height }: ZoomableImageProps) {
             />
 
             {alt && (
-              <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-xs text-zinc-500">
+              <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-xs text-zinc-400">
                 {alt}
               </p>
             )}

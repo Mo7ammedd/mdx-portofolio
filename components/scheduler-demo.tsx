@@ -227,9 +227,10 @@ export function SchedulerDemo() {
       </fieldset>
 
       <div className="mt-4 flex flex-wrap items-end gap-4">
-        <label className="min-w-0 flex-1 text-xs text-zinc-300">
-          Example workload
+        <div className="min-w-0 flex-1 text-xs text-zinc-300">
+          <label htmlFor="scheduler-workload">Example workload</label>
           <select
+            id="scheduler-workload"
             value={preset}
             onChange={(event) => loadPreset(event.target.value)}
             className={`${inputClass} mt-2 min-w-0`}
@@ -243,7 +244,7 @@ export function SchedulerDemo() {
               Custom workload
             </option>
           </select>
-        </label>
+        </div>
         {algorithm === 'round-robin' && (
           <label className="w-28 text-xs text-zinc-300">
             Time quantum

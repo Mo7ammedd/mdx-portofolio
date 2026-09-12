@@ -6,7 +6,7 @@ export const metadata = generateBlogPostSEO({
     'A practical guide to reliable transport, congestion control, flow control, and connection management, using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
   slug: 'aeroudp-networking-concepts',
   publishedTime: '2026-07-01T10:00:00.000Z',
-  modifiedTime: '2026-07-01T10:00:00.000Z',
+  modifiedTime: '2026-09-12T00:00:00.000Z',
   tags: ['networking', 'transport-protocols', 'congestion-control', 'udp', 'tcp', 'rust'],
 })
 
@@ -209,7 +209,7 @@ A fast sender talking to a slow receiver (or one whose application is slow to re
 **Concept:**
 The receiver advertises how much buffer space it currently has, the **receive window** (the `window` field in the header, measured in packets in AeroUDP). The sender must never have more unacknowledged data in flight than the window allows.
 
-**How it works:**
+**Intended sliding-window behavior:**
 ```
 Receiver advertises window = 8 packets
 Sender may have at most 8 unacknowledged packets in flight.
@@ -218,6 +218,8 @@ As the application reads and drains the buffer, the window grows.
 As the buffer fills, the window shrinks toward zero.
 window = 0  →  sender pauses entirely until space frees up.
 ```
+
+AeroUDP currently clamps the advertised receive window to at least one packet. An advertised zero therefore still permits a one-packet effective window; complete zero-window backpressure remains a limitation. The `peer_window` used below is this effective window.
 
 The window "slides" forward as ACKs confirm old data and new data is sent, hence *sliding window*.
 
@@ -388,17 +390,17 @@ It also emits structured `tracing` events (`aeroudp::state`, `aeroudp::engine`, 
 
 ### Testing Against a Hostile Network
 
-Real networks misbehave rarely and unpredictably, which makes bugs hard to reproduce. AeroUDP ships a **configurable network simulator** that deliberately drops, reorders, delays, and jitters packets:
+AeroUDP includes a seeded network simulator with configurable packet loss, duplication, latency, and jitter. From a repository checkout with Rust installed, run the analyzer proxy:
 
 ```
-aeroudp-analyzer proxy \
+cargo run --release -p aeroudp-cli --bin aeroudp-analyzer -- proxy \
     --listen 127.0.0.1:9500 \
     --upstream 127.0.0.1:9000 \
     --loss 0.05 --reorder 0.03 \
     --min-latency-ms 20 --max-latency-ms 60 --jitter-ms 10
 ```
 
-Pointing a client at this proxy forces every reliability and congestion mechanism to actually work, turning "it passes on localhost" into "it survives 5% loss with reordering and jitter."
+Run the server on port 9000 and point the client at port 9500. These flags configure fault inputs; verify delivered data and inspect retransmission, RTT, and congestion-window metrics to evaluate a run. The current proxy forwards packets serially per direction, so its reordering flag adds delay without demonstrating reordered delivery.
 
 ---
 

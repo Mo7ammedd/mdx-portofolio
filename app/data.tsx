@@ -25,23 +25,6 @@ type SocialLink = {
 
 export const PROJECTS = [
   {
-    title: 'Aura Decor',
-    href: 'https://github.com/Mo7ammedd/Aura-Decor',
-    active: true,
-    description:
-      'An AR shopping experience that lets you preview 3D furniture in your own space.',
-    technologies: ['ASP.NET Core', 'RabbitMQ', 'Redis'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/Aura-Decor',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
-  },
-  {
     title: 'SimuKernel',
     href: 'https://github.com/Mo7ammedd/SimuKernel',
     caseStudyHref: '/projects/simukernel',
@@ -49,8 +32,8 @@ export const PROJECTS = [
     demoHref: '/projects/simukernel#scheduler',
     active: true,
     description:
-      'An OS simulator for exploring CPU scheduling, memory management, and process control.',
-    technologies: ['Operating systems', 'Simulation'],
+      'A C#/.NET 8 console simulator for CPU scheduling, page replacement, and process management.',
+    technologies: ['C#', '.NET 8', 'Operating systems'],
     links: [
       {
         type: 'Source',
@@ -84,8 +67,8 @@ export const PROJECTS = [
     href: 'https://github.com/Mo7ammedd/Disk-Mesh',
     active: true,
     description:
-      'A distributed file system in Java with chunk replication and automatic failure recovery.',
-    technologies: ['Java', 'Replication', 'Recovery'],
+      'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
+    technologies: ['Java 22+', 'TCP', 'Replication'],
     links: [
       {
         type: 'Source',
@@ -101,8 +84,8 @@ export const PROJECTS = [
     href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     active: true,
     description:
-      'Seven .NET microservices with secure authentication and Azure Service Bus messaging.',
-    technologies: ['.NET 8', 'Azure Service Bus'],
+      'Seven .NET 8 services for food ordering, with JWT authentication, Stripe checkout, and Azure Service Bus messaging.',
+    technologies: ['.NET 8', 'Azure Service Bus', 'Stripe'],
     links: [
       {
         type: 'Source',

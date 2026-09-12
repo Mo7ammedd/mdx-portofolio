@@ -30,12 +30,19 @@ before the running process is requeued.
 Case-study measurements are attributed to their sources. The LSMSharp figure is
 a published write-submission sample, not a new benchmark or a synchronous durable
 commit result. AeroUDP's proxy percentages describe an example test workload.
+Case-study references link to the reviewed GitHub revisions. SimuKernel's C#
+console simulator and the companion browser playground are described separately
+because they offer different scheduling policies.
 
 ## Analytics and Vercel
 
 The existing `NEXT_PUBLIC_GA_ID` enables Google Analytics. Navigation emits one
 manual `page_view` per pathname/query change; automatic configuration page views
 are disabled. The existing optional `NEXT_PUBLIC_CLARITY_ID` still enables Clarity.
+For this manual page-view strategy, open the GA4 web stream's **Enhanced
+measurement → Page views** settings and disable **Page changes based on browser
+history events**. Otherwise GA4 can send an additional event for the same
+navigation.
 
 | Event            | Meaning                               | Parameters                                                                 |
 | ---------------- | ------------------------------------- | -------------------------------------------------------------------------- |

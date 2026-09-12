@@ -139,6 +139,7 @@
   /* Enhanced blog post typography */
   article {
     @apply text-zinc-700 dark:text-zinc-300;
+    overflow-wrap: anywhere;
   }
 
   /* Code block styling synced with theme */
@@ -150,7 +151,6 @@
     @apply text-zinc-800 dark:text-zinc-200;
     display: block;
     padding: 1rem;
-    overflow-x: auto;
   }
 
   /* Syntax highlighting colors that adapt to theme */

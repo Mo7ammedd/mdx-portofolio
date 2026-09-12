@@ -10,6 +10,7 @@ export type ProjectCaseStudy = {
   architectureNote: string
   decisions: { title: string; description: string }[]
   validation: string[]
+  references: { title: string; href: string }[]
   experiment?: { title: string; description: string; command: string }
 }
 
@@ -62,14 +63,28 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The repository includes functional checks for CRUD operations, repeated updates, deletes, binary values, and concurrent access, alongside performance and recovery workloads.',
+      'The repository includes functional checks for CRUD operations, repeated updates, deletes, binary values, and concurrent access, alongside performance and reopen workloads. A checked-in test run records a post-compaction integrity failure, so fresh correctness checks should precede performance comparisons.',
       'The published sequential-write example reports 5,000 operations in 207 ms, or about 24,155 operations per second. It is a repository-reported sample: the timer covers write submission and excludes the final flush. Hardware details were not recorded, so this is not a durable-commit benchmark or a cross-machine comparison.',
       'For a meaningful rerun, record the runtime, hardware, value sizes, cache state, and flush policy; verify retrieved values as well as throughput. Multi-operation transactions and snapshot isolation remain separate design work.',
+    ],
+    references: [
+      {
+        title: 'Published benchmark',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/README.md#L263-L275',
+      },
+      {
+        title: 'WAL implementation',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/WAL/WriteAheadLog.cs#L22-L100',
+      },
+      {
+        title: 'Recorded test run',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/Tests/full_test_results.txt#L95-L125',
+      },
     ],
     experiment: {
       title: 'Reproduce the workload',
       description:
-        'From a checkout of the repository, run the functional suite before comparing performance. The performance runner uses a fixed random seed and 5,000-operation workloads.',
+        'From a checkout of the repository, run the functional suite before comparing performance. The read/write samples use 5,000 operations and fixed random-key seeds; the sequential-write sample uses 256-byte values.',
       command:
         'cd Tests\ndotnet run -c Release -- functional\ndotnet run -c Release -- performance',
     },
@@ -108,7 +123,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Use two independent limits',
         description:
-          'The sender uses the smaller of the congestion window and the advertised receive window. One protects the network; the other protects the receiving application. Treating them separately makes backpressure easier to reason about.',
+          'The send buffer combines the congestion window with the peer’s advertised receive window: separate budgets for network and receiver capacity. The current engine clamps a zero receive window to one packet, so complete zero-window backpressure remains a limitation.',
       },
       {
         title: 'Keep the feedback loop observable',
@@ -122,16 +137,30 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The project includes a network-simulation proxy for deliberate packet loss, reordering, latency, and jitter. These controls make failure scenarios repeatable instead of relying on occasional real-network failures.',
-      'The documented example injects 5% loss and 3% reordering, with 20–60 ms latency and 10 ms jitter. Those are test inputs, not a measured throughput or reliability claim.',
+      'The CLI includes a network-simulation proxy with seeded random choices for packet loss, duplication, latency, and jitter. It lets you configure network faults and observe the protocol’s response; end-to-end timing still depends on execution.',
+      'The documented example configures 5% loss and 3% reordering, with 20–60 ms latency and 10 ms jitter. These are inputs, not measured results. The proxy forwards packets serially, so enabling its reordering flag is not proof of reordered delivery.',
       'Useful observations include delivered-data correctness, duplicate delivery, retransmissions, smoothed RTT, timeout backoff, and congestion-window recovery. The detailed walkthrough connects each metric to the mechanism it explains.',
+    ],
+    references: [
+      {
+        title: 'Protocol specification',
+        href: 'https://github.com/Mo7ammedd/AeroUDP/blob/fd747a4c3ed5d26065b87af517b38875aaff6fd9/docs/PROTOCOL.md',
+      },
+      {
+        title: 'Network proxy',
+        href: 'https://github.com/Mo7ammedd/AeroUDP/blob/fd747a4c3ed5d26065b87af517b38875aaff6fd9/crates/aeroudp-cli/src/analyzer.rs',
+      },
+      {
+        title: 'Codec tests',
+        href: 'https://github.com/Mo7ammedd/AeroUDP/blob/fd747a4c3ed5d26065b87af517b38875aaff6fd9/crates/aeroudp/tests/reliability.rs',
+      },
     ],
     experiment: {
       title: 'Make the network misbehave',
       description:
-        'With the analyzer installed from the repository, point the client at port 9500 and run the server on port 9000. The proxy applies the configured failure workload between them.',
+        'From a repository checkout with Rust installed, run the proxy below. Run the server on port 9000 and point the client at port 9500 to send traffic through it.',
       command:
-        'aeroudp-analyzer proxy \\\n  --listen 127.0.0.1:9500 \\\n  --upstream 127.0.0.1:9000 \\\n  --loss 0.05 --reorder 0.03 \\\n  --min-latency-ms 20 --max-latency-ms 60 \\\n  --jitter-ms 10',
+        'cargo run --release -p aeroudp-cli --bin aeroudp-analyzer -- proxy \\\n  --listen 127.0.0.1:9500 \\\n  --upstream 127.0.0.1:9000 \\\n  --loss 0.05 --reorder 0.03 \\\n  --min-latency-ms 20 --max-latency-ms 60 \\\n  --jitter-ms 10',
     },
   },
   {
@@ -139,11 +168,11 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     title: 'SimuKernel',
     subtitle: 'Make operating-system decisions visible',
     description:
-      'An operating-system simulator for exploring CPU scheduling, memory management, and process control, with a browser scheduling playground.',
-    technologies: ['Operating systems', 'Scheduling', 'Simulation'],
+      'A C#/.NET 8 console simulator for CPU scheduling, page replacement, and process management, with a companion browser scheduling playground.',
+    technologies: ['C#', '.NET 8', 'Operating systems', 'Scheduling'],
     source: 'https://github.com/Mo7ammedd/SimuKernel',
     problem:
-      'A scheduling policy can be simple to describe and still produce surprising waiting times. SimuKernel explores how operating-system policies affect individual processes. The companion playground below makes the scheduling tradeoffs visible on a small, editable workload.',
+      'A scheduling policy can be simple to describe and still produce surprising waiting times. SimuKernel’s console project implements Round Robin, priority scheduling, and multilevel feedback queues with aging. Its memory simulator compares FIFO, LRU, and optimal page replacement. The companion browser playground below compares FCFS, non-preemptive SJF, and Round Robin on editable workloads.',
     architecture: [
       {
         title: 'Arrivals',
@@ -185,6 +214,26 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       'The playground computes waiting time as completion minus arrival minus burst, turnaround as completion minus arrival, and response as first start minus arrival. It shows both the timeline and per-process results.',
       'The scheduling engine is checked against known examples, idle periods, simultaneous arrivals, arrivals on a quantum boundary, and invalid workloads. No process can run before it arrives, and every process must receive its requested CPU time.',
     ],
+    references: [
+      {
+        title: 'Repository guide',
+        href: 'https://github.com/Mo7ammedd/SimuKernel/blob/1e0df8b5e0a2e92a72f0935e304f64cdf6ae558b/README.md',
+      },
+      {
+        title: 'Scheduling & paging menus',
+        href: 'https://github.com/Mo7ammedd/SimuKernel/blob/1e0df8b5e0a2e92a72f0935e304f64cdf6ae558b/CLI/MenuSystem.cs',
+      },
+      {
+        title: 'Process management',
+        href: 'https://github.com/Mo7ammedd/SimuKernel/blob/1e0df8b5e0a2e92a72f0935e304f64cdf6ae558b/KernelSim/MiniKernel.cs',
+      },
+    ],
+    experiment: {
+      title: 'Run the console simulator',
+      description:
+        'With the .NET 8 SDK installed, run this command from a repository checkout to open the scheduling and page-replacement menu.',
+      command: 'dotnet run --project SimuKernel.csproj',
+    },
   },
 ]
 
