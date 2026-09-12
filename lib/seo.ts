@@ -1,6 +1,10 @@
 import { Metadata } from 'next'
 import { WEBSITE_URL } from './constants'
-import { DEFAULT_OG_IMAGE, getBlogOGImagePath, OG_IMAGE_SIZE } from './og-metadata'
+import {
+  DEFAULT_OG_IMAGE,
+  getBlogOGImagePath,
+  OG_IMAGE_SIZE,
+} from './og-metadata'
 
 interface SEOParams {
   title: string
@@ -27,9 +31,9 @@ export function generateSEO({
 }: SEOParams): Metadata {
   const url = `${WEBSITE_URL}${path}`
   const fullTitle = path === '/' ? title : `${title} | Mohammed Mostafa`
-  
+
   return {
-    title: fullTitle,
+    title,
     description,
     keywords: [
       'Mohammed Mostafa',
@@ -122,7 +126,7 @@ export function generateBlogPostSEO({
     'Mohammed Mostafa',
     ...tags,
   ]
-  
+
   return generateSEO({
     title,
     description,

@@ -1,5 +1,5 @@
 interface StructuredDataProps {
-  data: Record<string, any>
+  data: Record<string, unknown>
 }
 
 export function StructuredData({ data }: StructuredDataProps) {
@@ -7,7 +7,7 @@ export function StructuredData({ data }: StructuredDataProps) {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
+        __html: JSON.stringify(data).replace(/</g, '\\u003c'),
       }}
     />
   )

@@ -45,7 +45,10 @@ export function Magnetic({
 
         const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2)
 
-        if (isHovered && absoluteDistance <= range) {
+        if (
+          (actionArea === 'global' || isHovered) &&
+          absoluteDistance <= range
+        ) {
           const scale = 1 - absoluteDistance / range
           x.set(distanceX * intensity * scale)
           y.set(distanceY * intensity * scale)
@@ -61,7 +64,7 @@ export function Magnetic({
     return () => {
       document.removeEventListener('mousemove', calculateDistance)
     }
-  }, [ref, isHovered, intensity, range])
+  }, [isHovered, intensity, range, actionArea, x, y])
 
   useEffect(() => {
     if (actionArea === 'parent' && ref.current?.parentElement) {
@@ -77,8 +80,6 @@ export function Magnetic({
         parent.removeEventListener('mouseenter', handleParentEnter)
         parent.removeEventListener('mouseleave', handleParentLeave)
       }
-    } else if (actionArea === 'global') {
-      setIsHovered(true)
     }
   }, [actionArea])
 

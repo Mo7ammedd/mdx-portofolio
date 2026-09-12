@@ -2,74 +2,121 @@
 
 import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, Suspense } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 
-interface AnalyticsProps {
-  googleAnalyticsId?: string
-  microsoftClarityId?: string
-}
+import {
+  getEngagementEvent,
+  type AnalyticsParameters,
+} from '@/lib/analytics-events'
 
-// Extend the Window interface to include gtag
 declare global {
   interface Window {
-    gtag: (
-      command: string,
-      targetId: string,
-      config?: Record<string, any>
-    ) => void
-    clarity: (command: string, ...args: any[]) => void
+    dataLayer?: unknown[]
+    gtag?: (...args: unknown[]) => void
+    clarity?: (command: string, ...args: unknown[]) => void
   }
 }
 
-function AnalyticsTracker({ googleAnalyticsId }: { googleAnalyticsId?: string }) {
+export function trackEvent(name: string, parameters?: AnalyticsParameters) {
+  if (typeof window !== 'undefined') window.gtag?.('event', name, parameters)
+}
+
+function AnalyticsTracker({
+  googleAnalyticsId,
+}: {
+  googleAnalyticsId?: string
+}) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const configuredId = useRef<string | null>(null)
+  const previousPage = useRef<string | null>(null)
 
-  // Track page views
   useEffect(() => {
-    if (googleAnalyticsId && typeof window.gtag !== 'undefined') {
+    if (!googleAnalyticsId) return
+
+    if (configuredId.current !== googleAnalyticsId) {
+      window.dataLayer ??= []
+      window.gtag ??= function () {
+        // Keep Google's documented dataLayer command format.
+        // eslint-disable-next-line prefer-rest-params
+        window.dataLayer?.push(arguments)
+      }
+      window.gtag('js', new Date())
       window.gtag('config', googleAnalyticsId, {
-        page_path: pathname + searchParams.toString(),
+        send_page_view: false,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
       })
+      configuredId.current = googleAnalyticsId
+      previousPage.current = null
+    }
+
+    const query = searchParams.toString()
+    const pagePath = pathname + (query ? `?${query}` : '')
+    if (previousPage.current !== pagePath) {
+      trackEvent('page_view', {
+        send_to: googleAnalyticsId,
+        page_path: pagePath,
+        page_location: window.location.href,
+      })
+      previousPage.current = pagePath
     }
   }, [pathname, searchParams, googleAnalyticsId])
 
   return null
 }
 
-export function Analytics({ 
+function EngagementTracker() {
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (event.button !== 0 && event.button !== 1) return
+      const anchor =
+        event.target instanceof Element
+          ? event.target.closest<HTMLAnchorElement>('a[href]')
+          : null
+      if (!anchor) return
+
+      const engagement = getEngagementEvent(
+        anchor.href,
+        window.location.origin,
+        anchor.dataset.projectName,
+        anchor.dataset.linkType,
+      )
+      if (engagement) trackEvent(engagement.name, engagement.parameters)
+    }
+
+    document.addEventListener('click', handleClick)
+    document.addEventListener('auxclick', handleClick)
+    return () => {
+      document.removeEventListener('click', handleClick)
+      document.removeEventListener('auxclick', handleClick)
+    }
+  }, [])
+
+  return null
+}
+
+export function Analytics({
   googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID,
-  microsoftClarityId = process.env.NEXT_PUBLIC_CLARITY_ID 
-}: AnalyticsProps) {
+  microsoftClarityId = process.env.NEXT_PUBLIC_CLARITY_ID,
+}: {
+  googleAnalyticsId?: string
+  microsoftClarityId?: string
+}) {
   return (
     <>
-      {/* Google Analytics */}
+      <EngagementTracker />
       {googleAnalyticsId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
             strategy="afterInteractive"
           />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${googleAnalyticsId}', {
-                page_path: window.location.pathname,
-                anonymize_ip: true,
-                allow_google_signals: false,
-                allow_ad_personalization_signals: false
-              });
-            `}
-          </Script>
           <Suspense fallback={null}>
             <AnalyticsTracker googleAnalyticsId={googleAnalyticsId} />
           </Suspense>
         </>
       )}
-
-      {/* Microsoft Clarity */}
       {microsoftClarityId && (
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
@@ -77,42 +124,10 @@ export function Analytics({
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${microsoftClarityId}");
+            })(window, document, "clarity", "script", ${JSON.stringify(microsoftClarityId)});
           `}
         </Script>
       )}
     </>
   )
-}
-
-// Custom event tracking utility
-export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', eventName, parameters)
-  }
-}
-
-// Track contact form submissions
-export const trackContactSubmission = () => {
-  trackEvent('contact_form_submit', {
-    event_category: 'engagement',
-    event_label: 'Contact Form',
-  })
-}
-
-export const trackProjectClick = (projectName: string, linkType: 'demo' | 'source') => {
-  trackEvent('project_click', {
-    event_category: 'engagement',
-    event_label: projectName,
-    link_type: linkType,
-  })
-}
-
-// Track blog post engagement
-export const trackBlogEngagement = (postTitle: string, action: 'view' | 'scroll_50' | 'scroll_100') => {
-  trackEvent('blog_engagement', {
-    event_category: 'content',
-    event_label: postTitle,
-    action,
-  })
 }

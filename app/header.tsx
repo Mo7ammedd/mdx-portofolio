@@ -19,7 +19,7 @@ export function Header() {
           height={32}
           priority
         />
-        <span className="font-mono text-xs tracking-tight text-zinc-400 transition-colors group-hover:text-white">
+        <span className="hidden font-mono text-xs tracking-tight text-zinc-400 transition-colors group-hover:text-white min-[360px]:inline">
           modev.me
         </span>
       </Link>

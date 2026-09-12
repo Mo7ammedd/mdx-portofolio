@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next'
 import { WEBSITE_URL } from '@/lib/constants'
 import { getAllBlogPosts } from '@/lib/blog-utils'
+import { PROJECT_CASE_STUDIES } from '@/lib/project-case-studies'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString()
-  
+
   // Main pages with their priorities and update frequencies
   const mainRoutes = [
     {
@@ -31,22 +32,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Add other important routes if they exist
-  const additionalRoutes: MetadataRoute.Sitemap = [
-    // Uncomment when these pages are created
-    // {
-    //   url: `${WEBSITE_URL}/projects`,
-    //   lastModified: currentDate,
-    //   changeFrequency: 'monthly' as const,
-    //   priority: 0.6,
-    // },
-    // {
-    //   url: `${WEBSITE_URL}/contact`,
-    //   lastModified: currentDate,
-    //   changeFrequency: 'yearly' as const,
-    //   priority: 0.5,
-    // },
-  ]
+  const projectRoutes: MetadataRoute.Sitemap = [
+    '/projects',
+    ...PROJECT_CASE_STUDIES.map((project) => `/projects/${project.slug}`),
+  ].map((route) => ({
+    url: `${WEBSITE_URL}${route}`,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
 
-  return [...mainRoutes, ...blogRoutes, ...additionalRoutes]
+  return [...mainRoutes, ...blogRoutes, ...projectRoutes]
 }

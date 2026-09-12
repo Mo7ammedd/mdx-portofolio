@@ -1,5 +1,60 @@
 # Mohammed Mostafa - Portfolio Website
 
+## Development
+
+```sh
+npm run dev
+npm run lint
+npm test
+npm run build
+```
+
+Lint uses the Next.js 16 flat ESLint configuration. Tests cover scheduler
+correctness, related-article ranking, and engagement-event classification.
+
+## Projects and writing
+
+`/projects` links to the portfolio's repositories and case studies. Edit
+`lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel narratives.
+Project-to-article relationships live in `lib/project-links.ts`; related articles
+are ranked by shared tags, then publication date, without recommending the
+current article or unrelated topics.
+
+The scheduling playground is at `/projects/simukernel#scheduler`. It supports
+FCFS, non-preemptive SJF, and Round Robin, editable workloads, idle intervals,
+playback, and per-process results. `lib/scheduler.ts` contains the pure scheduling
+engine. The model uses a single CPU, known integer bursts, no I/O, and zero
+context-switch cost. New arrivals at a quantum boundary enter the ready queue
+before the running process is requeued.
+
+Case-study measurements are attributed to their sources. The LSMSharp figure is
+a published write-submission sample, not a new benchmark or a synchronous durable
+commit result. AeroUDP's proxy percentages describe an example test workload.
+
+## Analytics and Vercel
+
+The existing `NEXT_PUBLIC_GA_ID` enables Google Analytics. Navigation emits one
+manual `page_view` per pathname/query change; automatic configuration page views
+are disabled. The existing optional `NEXT_PUBLIC_CLARITY_ID` still enables Clarity.
+
+| Event            | Meaning                               | Parameters                                                                 |
+| ---------------- | ------------------------------------- | -------------------------------------------------------------------------- |
+| `resume_open`    | A visitor opens the résumé link       | `file_name`                                                                |
+| `contact_click`  | A visitor clicks an email link        | `contact_method`                                                           |
+| `project_click`  | A visitor opens a project destination | `project_name`, `link_type` (`source`, `case_study`, `article`, or `demo`) |
+| `scheduler_play` | A visitor starts or resumes the demo  | `algorithm`, `process_count`, `quantum`                                    |
+
+Click tracking uses one delegated listener, so server-rendered links retain their
+normal navigation and middle-click behavior. New project links should include
+`data-project-name` and `data-link-type`. Résumé and email links are recognized
+automatically. These events measure clicks, not completed file downloads or sent
+emails; no email address or message body is included in event parameters.
+
+`@vercel/speed-insights/next` is installed in the root layout. Enable **Speed
+Insights** for this project in the Vercel dashboard, then deploy to collect real
+visitor performance data. The SDK does not collect metrics in development.
+See [Vercel's setup guide](https://vercel.com/docs/speed-insights/quickstart).
+
 ## Open Graph images on Vercel
 
 Social cards use Next.js `ImageResponse` from `next/og`, which includes Vercel's
@@ -11,6 +66,7 @@ image renderer. The standard build (`npm run build`) generates and caches the
 - `/og/<post-slug>` is an article card. `generateStaticParams` discovers every
   MDX post through `getAllBlogPosts`, so adding or editing an article updates its
   card on the next deployment. Unknown slugs return 404.
+- `/og/projects/<project-slug>` is the matching card for a project case study.
 - Article Open Graph metadata, Twitter cards, and RSS all use the generated URL.
 
 Edit `lib/og-generator.tsx` to change the shared design and

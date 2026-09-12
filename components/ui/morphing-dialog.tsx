@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from 'react'
 import {
   motion,
@@ -20,6 +21,8 @@ import { createPortal } from 'react-dom'
 import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
 import useClickOutside from '@/hooks/useClickOutside'
+
+const subscribeToMount = () => () => {}
 
 export type MorphingDialogContextType = {
   isOpen: boolean
@@ -145,28 +148,29 @@ function MorphingDialogContent({
 }: MorphingDialogContentProps) {
   const { setIsOpen, isOpen, uniqueId, triggerRef } = useMorphingDialog()
   const containerRef = useRef<HTMLDivElement>(null!)
-  const [firstFocusableElement, setFirstFocusableElement] =
-    useState<HTMLElement | null>(null)
-  const [lastFocusableElement, setLastFocusableElement] =
-    useState<HTMLElement | null>(null)
+  const firstFocusableElement = useRef<HTMLElement | null>(null)
+  const lastFocusableElement = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
+    if (!isOpen) return
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false)
       }
       if (event.key === 'Tab') {
-        if (!firstFocusableElement || !lastFocusableElement) return
+        const first = firstFocusableElement.current
+        const last = lastFocusableElement.current
+        if (!first || !last) return
 
         if (event.shiftKey) {
-          if (document.activeElement === firstFocusableElement) {
+          if (document.activeElement === first) {
             event.preventDefault()
-            lastFocusableElement.focus()
+            last.focus()
           }
         } else {
-          if (document.activeElement === lastFocusableElement) {
+          if (document.activeElement === last) {
             event.preventDefault()
-            firstFocusableElement.focus()
+            first.focus()
           }
         }
       }
@@ -177,7 +181,7 @@ function MorphingDialogContent({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [setIsOpen, firstFocusableElement, lastFocusableElement])
+  }, [setIsOpen, isOpen])
 
   useEffect(() => {
     if (isOpen) {
@@ -186,10 +190,10 @@ function MorphingDialogContent({
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       )
       if (focusableElements && focusableElements.length > 0) {
-        setFirstFocusableElement(focusableElements[0] as HTMLElement)
-        setLastFocusableElement(
-          focusableElements[focusableElements.length - 1] as HTMLElement,
-        )
+        firstFocusableElement.current = focusableElements[0] as HTMLElement
+        lastFocusableElement.current = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement
         ;(focusableElements[0] as HTMLElement).focus()
       }
     } else {
@@ -228,12 +232,11 @@ export type MorphingDialogContainerProps = {
 
 function MorphingDialogContainer({ children }: MorphingDialogContainerProps) {
   const { isOpen, uniqueId } = useMorphingDialog()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
+  const mounted = useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  )
 
   if (!mounted) return null
 

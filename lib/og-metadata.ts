@@ -5,3 +5,7 @@ export const DEFAULT_OG_IMAGE = '/opengraph-image'
 export function getBlogOGImagePath(slug: string): string {
   return `/og/${encodeURIComponent(slug)}`
 }
+
+export function getProjectOGImagePath(slug: string): string {
+  return `/og/projects/${encodeURIComponent(slug)}`
+}

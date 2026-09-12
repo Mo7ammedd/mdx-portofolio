@@ -5,15 +5,20 @@ import {
   Children,
   cloneElement,
   ReactElement,
-  useEffect,
   useState,
   useId,
+  type HTMLAttributes,
 } from 'react'
+
+type BackgroundChildProps = HTMLAttributes<HTMLElement> & {
+  'data-id': string
+  'data-checked'?: string
+}
 
 export type AnimatedBackgroundProps = {
   children:
-    | ReactElement<{ 'data-id': string }>[]
-    | ReactElement<{ 'data-id': string }>
+    | ReactElement<BackgroundChildProps>[]
+    | ReactElement<BackgroundChildProps>
   defaultValue?: string
   onValueChange?: (newActiveId: string | null) => void
   className?: string
@@ -29,24 +34,32 @@ export function AnimatedBackground({
   transition,
   enableHover = false,
 }: AnimatedBackgroundProps) {
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [selection, setSelection] = useState<{
+    defaultValue: string | undefined
+    activeId: string | null
+  }>({
+    defaultValue,
+    activeId: defaultValue ?? null,
+  })
   const uniqueId = useId()
 
+  if (selection.defaultValue !== defaultValue) {
+    setSelection({
+      defaultValue,
+      activeId: defaultValue ?? selection.activeId,
+    })
+  }
+  const activeId = selection.activeId
+
   const handleSetActiveId = (id: string | null) => {
-    setActiveId(id)
+    setSelection({ defaultValue, activeId: id })
 
     if (onValueChange) {
       onValueChange(id)
     }
   }
 
-  useEffect(() => {
-    if (defaultValue !== undefined) {
-      setActiveId(defaultValue)
-    }
-  }, [defaultValue])
-
-  return Children.map(children, (child: any, index) => {
+  return Children.map(children, (child, index) => {
     const id = child.props['data-id']
 
     const interactionProps = enableHover

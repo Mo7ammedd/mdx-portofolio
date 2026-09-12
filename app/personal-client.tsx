@@ -178,6 +178,9 @@ export function PersonalClient({
                 tags={project.technologies}
                 links={project.links}
                 href={project.href}
+                caseStudyHref={project.caseStudyHref}
+                articleHref={project.articleHref}
+                demoHref={project.demoHref}
               />
             </li>
           ))}

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import './globals.css'
 
@@ -113,6 +114,7 @@ export default function RootLayout({
           )}
         />
         <Analytics />
+        <SpeedInsights />
         <div className="relative z-10 flex min-h-screen w-full flex-col">
           <div className="relative mx-auto w-full max-w-[44rem] flex-1 px-6 pt-6 pb-8 sm:px-8 sm:pt-12 sm:pb-12">
             <Header />

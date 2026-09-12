@@ -22,104 +22,116 @@ type SocialLink = {
   label: string
   link: string
 }
- 
+
 export const PROJECTS = [
   {
-    title: "Aura Decor",
-    href: "https://github.com/Mo7ammedd/Aura-Decor",
+    title: 'Aura Decor',
+    href: 'https://github.com/Mo7ammedd/Aura-Decor',
     active: true,
-    description: "An AR shopping experience that lets you preview 3D furniture in your own space.",
-    technologies: ["ASP.NET Core", "RabbitMQ", "Redis"],
+    description:
+      'An AR shopping experience that lets you preview 3D furniture in your own space.',
+    technologies: ['ASP.NET Core', 'RabbitMQ', 'Redis'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/Aura-Decor",
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/Aura-Decor',
         icon: <Icons.github className="size-3" />,
-      }
+      },
     ],
-    image: "",
-    video: ""
+    image: '',
+    video: '',
   },
   {
-    title: "SimuKernel",
-    href: "https://github.com/Mo7ammedd/SimuKernel",
+    title: 'SimuKernel',
+    href: 'https://github.com/Mo7ammedd/SimuKernel',
+    caseStudyHref: '/projects/simukernel',
+    articleHref: '/blog/simukernel-operating-system-concepts',
+    demoHref: '/projects/simukernel#scheduler',
     active: true,
-    description: "An OS simulator for exploring CPU scheduling, memory management, and process control.",
-    technologies: ["Operating systems", "Simulation"],
+    description:
+      'An OS simulator for exploring CPU scheduling, memory management, and process control.',
+    technologies: ['Operating systems', 'Simulation'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/SimuKernel",
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/SimuKernel',
         icon: <Icons.github className="size-3" />,
-      }
+      },
     ],
-    image: "",
-    video: ""
+    image: '',
+    video: '',
   },
   {
-    title: "LSMSharp",
-    href: "https://github.com/Mo7ammedd/LSMSharp",
+    title: 'LSMSharp',
+    href: 'https://github.com/Mo7ammedd/LSMSharp',
+    caseStudyHref: '/projects/lsmsharp',
     active: true,
-    description: "An LSM-tree storage engine in C# with ACID guarantees and concurrent access.",
-    technologies: ["C#", "LSM-Tree", "ACID"],
+    description:
+      'An LSM-tree storage engine in C# with write-ahead logging, Bloom filters, and background compaction.',
+    technologies: ['C#', 'LSM-Tree', 'WAL'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/LSMSharp",
-        icon  : <Icons.github className="size-3" />,
-      }
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/LSMSharp',
+        icon: <Icons.github className="size-3" />,
+      },
     ],
-    image: "",
-    video: ""
+    image: '',
+    video: '',
   },
   {
-    title: "Disk-Mesh",
-    href: "https://github.com/Mo7ammedd/Disk-Mesh",
+    title: 'Disk-Mesh',
+    href: 'https://github.com/Mo7ammedd/Disk-Mesh',
     active: true,
-    description: "A distributed file system in Java with chunk replication and automatic failure recovery.",
-    technologies: ["Java", "Replication", "Recovery"],
+    description:
+      'A distributed file system in Java with chunk replication and automatic failure recovery.',
+    technologies: ['Java', 'Replication', 'Recovery'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/Disk-Mesh",
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/Disk-Mesh',
         icon: <Icons.github className="size-3" />,
-      }
+      },
     ],
-    image: "",
-    video: ""
+    image: '',
+    video: '',
   },
   {
-    title: "HungerStation Microservices",
-    href: "https://github.com/Mo7ammedd/HungerStation_Microservices",
+    title: 'HungerStation Microservices',
+    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     active: true,
-    description: "Seven .NET microservices with secure authentication and Azure Service Bus messaging.",
-    technologies: [".NET 8", "Azure Service Bus"],
+    description:
+      'Seven .NET microservices with secure authentication and Azure Service Bus messaging.',
+    technologies: ['.NET 8', 'Azure Service Bus'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/HungerStation_Microservices",
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
         icon: <Icons.github className="size-3" />,
-      }
+      },
     ],
-    image: "",
-    video: ""
+    image: '',
+    video: '',
   },
   {
-    title: "AeroUDP",
-    href: "https://github.com/Mo7ammedd/AeroUDP",
+    title: 'AeroUDP',
+    href: 'https://github.com/Mo7ammedd/AeroUDP',
+    caseStudyHref: '/projects/aeroudp',
+    articleHref: '/blog/aeroudp-networking-concepts',
     active: true,
-    description: "Reliable transport over UDP in async Rust, with ordered delivery and congestion control.",
-    technologies: ["Rust", "Tokio", "UDP"],
+    description:
+      'Reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
+    technologies: ['Rust', 'Tokio', 'UDP'],
     links: [
       {
-        type: "Source",
-        href: "https://github.com/Mo7ammedd/AeroUDP",
+        type: 'Source',
+        href: 'https://github.com/Mo7ammedd/AeroUDP',
         icon: <Icons.github className="size-3" />,
-      }
+      },
     ],
-    image: "",
-    video: ""
-  }
+    image: '',
+    video: '',
+  },
 ]
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {

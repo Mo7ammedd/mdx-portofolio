@@ -1,6 +1,8 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 import { StructuredData } from '@/components/structured-data'
 import { BlogHeader } from '@/components/ui/blog-header'
@@ -14,6 +16,8 @@ import {
 } from '@/components/ui/text-size-control'
 import type { BlogPost } from '@/lib/blog-utils'
 import { generateBlogPostSchema } from '@/lib/schema'
+import { getRelatedPosts } from '@/lib/related-posts'
+import { getProjectsForArticle } from '@/lib/project-links'
 
 const author = {
   name: 'Mohammed Mostafa',
@@ -55,6 +59,8 @@ export function BlogLayoutClient({
   const post = posts[postIndex]
   const previousPost = postIndex >= 0 ? posts[postIndex + 1] : undefined
   const nextPost = postIndex > 0 ? posts[postIndex - 1] : undefined
+  const relatedPosts = post ? getRelatedPosts(post, posts) : []
+  const relatedProjects = post ? getProjectsForArticle(post.slug) : []
 
   return (
     <TextSizeProvider>
@@ -91,6 +97,41 @@ export function BlogLayoutClient({
           <TableOfContents />
         </div>
 
+        {relatedProjects.length > 0 && (
+          <aside
+            aria-label="Related projects"
+            className="mb-8 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3"
+          >
+            {relatedProjects.map((project) => (
+              <div
+                key={project.slug}
+                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1"
+              >
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="text-link text-zinc-300"
+                  data-project-name={project.title}
+                  data-link-type="case_study"
+                >
+                  Explore {project.title}{' '}
+                  <ArrowUpRight aria-hidden="true" className="size-3" />
+                </Link>
+                {project.slug === 'simukernel' && (
+                  <Link
+                    href="/projects/simukernel#scheduler"
+                    className="text-link"
+                    data-project-name={project.title}
+                    data-link-type="demo"
+                  >
+                    Try the scheduling playground{' '}
+                    <ArrowUpRight aria-hidden="true" className="size-3" />
+                  </Link>
+                )}
+              </div>
+            ))}
+          </aside>
+        )}
+
         <article
           id="article-content"
           className="prose prose-zinc prose-invert prose-strong:font-semibold max-w-none [&_pre_code]:rounded-none [&_pre_code]:border-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0"
@@ -99,6 +140,39 @@ export function BlogLayoutClient({
           {children}
         </article>
 
+        {relatedPosts.length > 0 && (
+          <section
+            aria-labelledby="related-reading-title"
+            className="mt-10 border-t border-white/10 pt-6"
+          >
+            <h2 id="related-reading-title" className="section-heading mb-2">
+              Related reading
+            </h2>
+            <ul className="divide-y divide-white/[0.07]">
+              {relatedPosts.map((relatedPost) => (
+                <li key={relatedPost.slug}>
+                  <Link
+                    href={`/blog/${relatedPost.slug}`}
+                    className="list-row flex items-start justify-between gap-4"
+                  >
+                    <div>
+                      <p className="text-sm leading-6 text-zinc-200">
+                        {relatedPost.title}
+                      </p>
+                      <p className="mt-1 text-xs leading-6 text-zinc-400">
+                        {relatedPost.description}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="mt-1 size-3.5 shrink-0 text-zinc-500"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <BlogNavigation previousPost={previousPost} nextPost={nextPost} />
         {post && <BlogSocialShare title={post.title} />}
       </main>
