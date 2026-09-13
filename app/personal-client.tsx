@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
 
 import { ProjectCard } from '@/components/project-card'
 import type { PROJECTS, SOCIAL_LINKS, WORK_EXPERIENCE } from './data'
@@ -118,12 +118,7 @@ export function PersonalClient({
         <ul className="divide-y divide-white/[0.07]">
           {workExperience.map((job) => (
             <li key={job.id}>
-              <a
-                href={job.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="list-row group grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-x-3"
-              >
+              <div className="list-row group grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-x-3">
                 <div className="relative mt-0.5 size-8 overflow-hidden rounded-md border border-white/10 bg-zinc-950">
                   <Image
                     src={job.logo}
@@ -136,7 +131,18 @@ export function PersonalClient({
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                     <h3 className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
-                      {job.company}
+                      <a
+                        href={job.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-6 items-center gap-1 rounded-sm"
+                      >
+                        {job.company}
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-3 text-zinc-500"
+                        />
+                      </a>
                     </h3>
                     <p className="text-xs text-zinc-400">{job.title}</p>
                   </div>
@@ -148,8 +154,34 @@ export function PersonalClient({
                       {job.description}
                     </p>
                   )}
+                  {job.highlights && job.highlights.length > 0 && (
+                    <details className="group/work mt-1">
+                      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-sm text-[11px] text-zinc-400 transition-colors hover:text-zinc-200 [&::-webkit-details-marker]:hidden">
+                        <span>
+                          Selected work
+                          <span className="sr-only"> at {job.company}</span>
+                        </span>
+                        <ChevronDown
+                          aria-hidden="true"
+                          className="size-3 transition-transform group-open/work:rotate-180 motion-reduce:transition-none"
+                        />
+                      </summary>
+                      <ul className="space-y-3 border-l border-white/10 pb-1 pl-3">
+                        {job.highlights.map((highlight) => (
+                          <li key={highlight.title}>
+                            <h4 className="text-xs font-medium text-zinc-300">
+                              {highlight.title}
+                            </h4>
+                            <p className="mt-1 text-xs leading-6 text-zinc-400">
+                              {highlight.description}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
                 </div>
-              </a>
+              </div>
             </li>
           ))}
         </ul>

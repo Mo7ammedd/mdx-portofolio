@@ -13,6 +13,14 @@ Lint uses the Next.js 16 flat ESLint configuration. Tests cover scheduler and
 replica-recovery correctness, related-article ranking, and engagement-event
 classification.
 
+## Experience
+
+Edit `WORK_EXPERIENCE` in `app/data.tsx` for company summaries, roles, dates,
+and optional `highlights`. Highlights appear in native "Selected work"
+disclosures, keeping the homepage compact. CarLink and the learning platforms
+share the Medica Scope entry. Keep descriptions about product capabilities;
+private repository URLs, credentials, and operational data do not belong here.
+
 ## Projects and writing
 
 The homepage features compact rows for SimuKernel, LSMSharp, and AeroUDP, each
