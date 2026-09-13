@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons'
+import type { ProjectVisualKind } from '@/components/project-visual'
 
 type WorkExperience = {
   company: string
@@ -23,97 +23,94 @@ type SocialLink = {
   link: string
 }
 
-export const PROJECTS = [
+export type PortfolioProject = {
+  slug: string
+  title: string
+  category: string
+  description: string
+  technologies: readonly string[]
+  href: string
+  caseStudyHref: string
+  articleHref?: string
+  demoHref?: string
+  visual: ProjectVisualKind
+  featured: boolean
+  highlight: string
+}
+
+export const PROJECTS: PortfolioProject[] = [
   {
+    slug: 'simukernel',
     title: 'SimuKernel',
+    category: 'Operating systems',
     href: 'https://github.com/Mo7ammedd/SimuKernel',
     caseStudyHref: '/projects/simukernel',
     articleHref: '/blog/simukernel-operating-system-concepts',
     demoHref: '/projects/simukernel#scheduler',
-    active: true,
+    visual: 'scheduler',
+    featured: true,
     description:
-      'A C#/.NET 8 console simulator for CPU scheduling, page replacement, and process management.',
-    technologies: ['C#', '.NET 8', 'Operating systems'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/SimuKernel',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
+      'Explore CPU scheduling and memory management in C#, then compare scheduling policies in the companion browser playground.',
+    technologies: ['C#', '.NET 8', 'TypeScript'],
+    highlight:
+      'Three browser scheduling policies, checked against known and generated workloads.',
   },
   {
+    slug: 'lsmsharp',
     title: 'LSMSharp',
+    category: 'Storage engine',
     href: 'https://github.com/Mo7ammedd/LSMSharp',
     caseStudyHref: '/projects/lsmsharp',
-    active: true,
+    visual: 'storage',
+    featured: true,
     description:
       'An LSM-tree storage engine in C# with write-ahead logging, Bloom filters, and background compaction.',
-    technologies: ['C#', 'LSM-Tree', 'WAL'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/LSMSharp',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
+    technologies: ['C#', '.NET 8', 'LSM-tree'],
+    highlight:
+      'Functional checks cover updates, deletes, binary values, and concurrent access.',
   },
   {
+    slug: 'disk-mesh',
     title: 'Disk-Mesh',
+    category: 'Distributed systems',
     href: 'https://github.com/Mo7ammedd/Disk-Mesh',
-    active: true,
+    caseStudyHref: '/projects/disk-mesh',
+    visual: 'replication',
+    featured: false,
     description:
       'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
     technologies: ['Java 22+', 'TCP', 'Replication'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/Disk-Mesh',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
+    highlight:
+      'Includes a four-node recovery scenario that checks restoration to three replicas.',
   },
   {
+    slug: 'hungerstation-microservices',
     title: 'HungerStation Microservices',
+    category: 'Backend services',
     href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
-    active: true,
+    caseStudyHref: '/projects/hungerstation-microservices',
+    visual: 'services',
+    featured: false,
     description:
-      'Seven .NET 8 services for food ordering, with JWT authentication, Stripe checkout, and Azure Service Bus messaging.',
+      'Seven .NET 8 services for food ordering, connecting authentication, Stripe checkout, and Azure Service Bus messaging.',
     technologies: ['.NET 8', 'Azure Service Bus', 'Stripe'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
+    highlight:
+      'Stripe payment approval publishes a rewards message through Azure Service Bus.',
   },
   {
+    slug: 'aeroudp',
     title: 'AeroUDP',
+    category: 'Networking',
     href: 'https://github.com/Mo7ammedd/AeroUDP',
     caseStudyHref: '/projects/aeroudp',
     articleHref: '/blog/aeroudp-networking-concepts',
-    active: true,
+    visual: 'transport',
+    featured: true,
     description:
-      'Reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
+      'Experimental reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
     technologies: ['Rust', 'Tokio', 'UDP'],
-    links: [
-      {
-        type: 'Source',
-        href: 'https://github.com/Mo7ammedd/AeroUDP',
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: '',
-    video: '',
+    highlight:
+      'Buffer and codec tests cover reordering, duplicates, and corruption.',
   },
 ]
 export const WORK_EXPERIENCE: WorkExperience[] = [

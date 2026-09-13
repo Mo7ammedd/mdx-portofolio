@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowDown, ArrowLeft, ArrowUpRight } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 
+import { PROJECTS } from '@/app/data'
+import { ProjectVisual } from '@/components/project-visual'
 import { SchedulerDemo } from '@/components/scheduler-demo'
 import { getAllBlogPosts } from '@/lib/blog-utils'
 import {
@@ -38,6 +40,7 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
   const project = getProjectCaseStudy(slug)
   if (!project) notFound()
+  const presentation = PROJECTS.find((entry) => entry.slug === slug)
   const relatedSlugs =
     PROJECT_LINKS.find((entry) => entry.slug === slug)?.articles ?? []
   const posts = (await getAllBlogPosts()).filter((post) =>
@@ -72,7 +75,17 @@ export default async function ProjectPage({ params }: Props) {
             <li key={technology}>{technology}</li>
           ))}
         </ul>
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+          {slug === 'simukernel' && (
+            <a
+              href="#scheduler"
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-zinc-100 px-4 text-xs font-medium text-zinc-950 transition-colors hover:bg-white"
+              data-project-name={project.title}
+              data-link-type="demo"
+            >
+              Try demo <ArrowDown aria-hidden="true" className="size-3.5" />
+            </a>
+          )}
           <a
             href={project.source}
             target="_blank"
@@ -81,19 +94,8 @@ export default async function ProjectPage({ params }: Props) {
             data-project-name={project.title}
             data-link-type="source"
           >
-            View source <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            GitHub <ArrowUpRight aria-hidden="true" className="size-3.5" />
           </a>
-          {slug === 'simukernel' && (
-            <Link
-              href="#scheduler"
-              className="text-link text-zinc-200"
-              data-project-name={project.title}
-              data-link-type="demo"
-            >
-              Try the playground{' '}
-              <ArrowDown aria-hidden="true" className="size-3.5" />
-            </Link>
-          )}
           {posts[0] && (
             <Link
               href={`/blog/${posts[0].slug}`}
@@ -101,11 +103,30 @@ export default async function ProjectPage({ params }: Props) {
               data-project-name={project.title}
               data-link-type="article"
             >
-              {slug === 'lsmsharp' ? 'Related writing' : 'Read the walkthrough'}{' '}
-              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+              {slug === 'lsmsharp' ? 'Related writing' : 'Read walkthrough'}{' '}
+              <ArrowRight aria-hidden="true" className="size-3.5" />
             </Link>
           )}
         </div>
+        {presentation && (
+          <a
+            href="#evidence"
+            className="mt-5 flex items-start gap-3 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3 text-xs leading-6 text-zinc-300 transition-colors hover:border-white/20 hover:text-white"
+            data-project-name={project.title}
+            data-link-type="case_study"
+          >
+            <span>
+              <span className="mr-2 font-mono text-[10px] tracking-wide text-zinc-400 uppercase">
+                Evidence
+              </span>
+              {presentation.highlight}
+            </span>
+            <ArrowDown
+              aria-hidden="true"
+              className="mt-1 size-3.5 shrink-0 text-zinc-500"
+            />
+          </a>
+        )}
       </div>
 
       <section aria-labelledby="problem-title">
@@ -119,6 +140,12 @@ export default async function ProjectPage({ params }: Props) {
         <h2 id="architecture-title" className="section-heading mb-5">
           How it fits together
         </h2>
+        {presentation && (
+          <ProjectVisual
+            kind={presentation.visual}
+            className="mx-auto mb-6 max-w-md"
+          />
+        )}
         <ol
           className="grid gap-3 sm:grid-cols-2"
           aria-label="Architecture, in execution order"
@@ -165,7 +192,11 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section aria-labelledby="validation-title">
+      <section
+        id="evidence"
+        aria-labelledby="validation-title"
+        className="scroll-mt-8"
+      >
         <h2 id="validation-title" className="section-heading mb-4">
           Evidence & validation
         </h2>
@@ -239,7 +270,7 @@ export default async function ProjectPage({ params }: Props) {
                       {post.description}
                     </p>
                   </div>
-                  <ArrowUpRight
+                  <ArrowRight
                     aria-hidden="true"
                     className="mt-1 size-3.5 shrink-0 text-zinc-500"
                   />

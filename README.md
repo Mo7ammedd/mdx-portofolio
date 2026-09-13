@@ -14,8 +14,22 @@ correctness, related-article ranking, and engagement-event classification.
 
 ## Projects and writing
 
-`/projects` links to the portfolio's repositories and case studies. Edit
-`lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel narratives.
+The homepage features SimuKernel, LSMSharp, and AeroUDP. `/projects` shows all
+five projects, including Disk-Mesh and HungerStation Microservices, with case
+studies, source links, technical previews, and evidence highlights. SimuKernel's
+featured card links directly to its browser playground.
+
+Edit `app/data.tsx` for project summaries, evidence highlights, visual kinds,
+and homepage selection (`featured`). `components/project-visual.tsx` contains
+the accessible SVG architecture sketches; these are static illustrations.
+Edit `lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel
+narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh and
+HungerStation. All entries share the main registry, which also generates case
+study routes, sitemap entries, and Open Graph cards. Highlights link to each
+case study's `#evidence` section and its pinned repository references.
+Demo and evidence links use native fragment navigation so the browser resolves
+the scroll destination after the case study loads.
+
 Project-to-article relationships live in `lib/project-links.ts`; related articles
 are ranked by shared tags, then publication date, without recommending the
 current article or unrelated topics.

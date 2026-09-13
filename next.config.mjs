@@ -1,6 +1,7 @@
 import createMDX from '@next/mdx'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeUnwrapImages from 'rehype-unwrap-images'
+import githubDark from 'shiki/themes/github-dark.mjs'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -27,7 +28,17 @@ const nextConfig = {
 
 /** @type {import('rehype-pretty-code').Options} */
 const prettyCodeOptions = {
-  theme: 'github-dark',
+  theme: {
+    ...githubDark,
+    tokenColors: [
+      ...githubDark.tokenColors,
+      // Keep comments readable against the site's dark code background.
+      {
+        scope: ['comment', 'punctuation.definition.comment', 'string.comment'],
+        settings: { foreground: '#8b949e' },
+      },
+    ],
+  },
   keepBackground: true,
   defaultLang: 'plaintext',
 }

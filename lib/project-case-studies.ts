@@ -1,3 +1,5 @@
+import { ADDITIONAL_PROJECT_CASE_STUDIES } from './additional-project-case-studies'
+
 export type ProjectCaseStudy = {
   slug: string
   title: string
@@ -69,6 +71,10 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     ],
     references: [
       {
+        title: 'Functional checks',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/Tests/FunctionalTests.cs',
+      },
+      {
         title: 'Published benchmark',
         href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/README.md#L263-L275',
       },
@@ -137,6 +143,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
+      'Receive-buffer unit tests cover packets arriving out of order and duplicate detection. Codec property tests exercise arbitrary payload round-trips and corruption rejection.',
       'The CLI includes a network-simulation proxy with seeded random choices for packet loss, duplication, latency, and jitter. It lets you configure network faults and observe the protocol’s response; end-to-end timing still depends on execution.',
       'The documented example configures 5% loss and 3% reordering, with 20–60 ms latency and 10 ms jitter. These are inputs, not measured results. The proxy forwards packets serially, so enabling its reordering flag is not proof of reordered delivery.',
       'Useful observations include delivered-data correctness, duplicate delivery, retransmissions, smoothed RTT, timeout backoff, and congestion-window recovery. The detailed walkthrough connects each metric to the mechanism it explains.',
@@ -149,6 +156,10 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Network proxy',
         href: 'https://github.com/Mo7ammedd/AeroUDP/blob/fd747a4c3ed5d26065b87af517b38875aaff6fd9/crates/aeroudp-cli/src/analyzer.rs',
+      },
+      {
+        title: 'Receive-buffer tests',
+        href: 'https://github.com/Mo7ammedd/AeroUDP/blob/fd747a4c3ed5d26065b87af517b38875aaff6fd9/crates/aeroudp/src/transport/receive.rs#L125-L144',
       },
       {
         title: 'Codec tests',
@@ -212,9 +223,13 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     ],
     validation: [
       'The playground computes waiting time as completion minus arrival minus burst, turnaround as completion minus arrival, and response as first start minus arrival. It shows both the timeline and per-process results.',
-      'The scheduling engine is checked against known examples, idle periods, simultaneous arrivals, arrivals on a quantum boundary, and invalid workloads. No process can run before it arrives, and every process must receive its requested CPU time.',
+      'The browser scheduling engine is checked against known examples, idle periods, simultaneous arrivals, arrivals on a quantum boundary, and invalid workloads. A generated-workload test exercises 80 workloads under each of the three policies. No process can run before it arrives, and every process must receive its requested CPU time. These checks cover the companion playground; the C# repository has no automated test suite at the linked revision.',
     ],
     references: [
+      {
+        title: 'Browser scheduler tests',
+        href: 'https://github.com/Mo7ammedd/mdx-portofolio/blob/7877aa6571356fc9986785a48cbbd702d5417e6d/tests/scheduler.test.ts',
+      },
       {
         title: 'Repository guide',
         href: 'https://github.com/Mo7ammedd/SimuKernel/blob/1e0df8b5e0a2e92a72f0935e304f64cdf6ae558b/README.md',
@@ -235,6 +250,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       command: 'dotnet run --project SimuKernel.csproj',
     },
   },
+  ...ADDITIONAL_PROJECT_CASE_STUDIES,
 ]
 
 export function getProjectCaseStudy(slug: string) {

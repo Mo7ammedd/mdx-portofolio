@@ -1,121 +1,153 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Play } from 'lucide-react'
 import Link from 'next/link'
 
+import type { PortfolioProject } from '@/app/data'
+import { ProjectVisual } from '@/components/project-visual'
+import { cn } from '@/lib/utils'
+
 interface Props {
-  title: string
-  description: string
-  tags: readonly string[]
-  href?: string
-  caseStudyHref?: string
-  articleHref?: string
-  demoHref?: string
-  links?: readonly {
-    icon: React.ReactNode
-    type: string
-    href: string
-  }[]
+  project: PortfolioProject
+  featured?: boolean
+  headingLevel?: 2 | 3
 }
 
 export function ProjectCard({
-  title,
-  description,
-  tags,
-  links,
-  href,
-  caseStudyHref,
-  articleHref,
-  demoHref,
+  project,
+  featured = false,
+  headingLevel = 3,
 }: Props) {
-  const primaryHref = caseStudyHref ?? href
-  const primaryLink = links?.find((link) => link.href === primaryHref)
-  const secondaryLinks =
-    links?.filter((link) => link.href !== primaryHref) ?? []
-  const PrimaryLink = caseStudyHref ? Link : 'a'
+  const titleId = `project-${project.slug}-title`
+  const Heading = headingLevel === 2 ? 'h2' : 'h3'
 
   return (
-    <div className="list-row group relative grid min-w-0 grid-cols-[minmax(0,1fr)_auto] gap-x-5 gap-y-2 sm:grid-cols-[10rem_minmax(0,1fr)_auto]">
-      <h3 className="text-sm leading-6 font-medium text-zinc-200 transition-colors group-hover:text-white">
-        {primaryHref ? (
-          <PrimaryLink
-            href={primaryHref}
-            target={caseStudyHref ? undefined : '_blank'}
-            rel={caseStudyHref ? undefined : 'noopener noreferrer'}
-            aria-label={`${caseStudyHref ? 'Read case study' : (primaryLink?.type ?? 'View project')}: ${title}`}
-            data-project-name={title}
-            data-link-type={caseStudyHref ? 'case_study' : 'source'}
-            className="rounded-sm after:absolute after:inset-0 after:rounded-md"
-          >
-            {title}
-          </PrimaryLink>
-        ) : (
-          title
+    <article
+      aria-labelledby={titleId}
+      className={cn(
+        'group min-w-0',
+        featured
+          ? 'overflow-hidden rounded-lg border border-white/15 bg-zinc-950'
+          : 'border-b border-white/[0.08] py-6',
+      )}
+    >
+      <div
+        className={cn(
+          'grid items-center gap-5',
+          featured
+            ? 'p-5 sm:grid-cols-[minmax(0,1fr)_15rem] sm:gap-6 sm:p-6'
+            : 'sm:grid-cols-[minmax(0,1fr)_12rem] sm:gap-6',
         )}
-      </h3>
-
-      <div className="col-start-1 row-start-2 min-w-0 sm:col-start-2 sm:row-start-1">
-        <p className="text-[13px] leading-6 text-zinc-400">{description}</p>
-        {tags.length > 0 && (
-          <ul
-            aria-label="Technologies"
-            className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] leading-5 text-zinc-400"
+      >
+        <div className="min-w-0">
+          <p className="font-mono text-[10px] leading-5 tracking-[0.12em] text-zinc-400 uppercase">
+            {featured && <span className="text-zinc-200">Featured · </span>}
+            {project.category}
+          </p>
+          <Heading
+            id={titleId}
+            className={cn(
+              'mt-2 font-medium tracking-tight text-zinc-100',
+              featured ? 'text-2xl' : 'text-lg',
+            )}
           >
-            {tags.map((tag) => (
-              <li key={tag}>{tag}</li>
+            <Link
+              href={project.caseStudyHref}
+              className="rounded-sm transition-colors hover:text-white"
+              data-project-name={project.title}
+              data-link-type="case_study"
+            >
+              {project.title}
+            </Link>
+          </Heading>
+          <p className="mt-3 text-[13px] leading-6 text-zinc-400">
+            {project.description}
+          </p>
+          <ul
+            aria-label={`${project.title} technologies`}
+            className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] leading-5 text-zinc-400"
+          >
+            {project.technologies.map((technology) => (
+              <li key={technology}>{technology}</li>
             ))}
           </ul>
-        )}
-        {(caseStudyHref || articleHref || demoHref) && (
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-            {caseStudyHref && <span className="text-zinc-300">Case study</span>}
-            {articleHref && (
-              <Link
-                href={articleHref}
-                className="relative z-10 inline-flex min-h-9 items-center text-zinc-400 underline decoration-zinc-700 underline-offset-4 hover:text-white"
-                data-project-name={title}
-                data-link-type="article"
-              >
-                Read walkthrough
-              </Link>
-            )}
-            {demoHref && (
-              <Link
-                href={demoHref}
-                className="relative z-10 inline-flex min-h-9 items-center text-zinc-300 underline decoration-zinc-700 underline-offset-4 hover:text-white"
-                data-project-name={title}
-                data-link-type="demo"
-              >
-                Try the demo
-              </Link>
-            )}
-          </div>
-        )}
+        </div>
+
+        <ProjectVisual
+          kind={project.visual}
+          className={cn(
+            'w-full rounded-md border border-white/[0.07] bg-black',
+            !featured && 'max-sm:mx-auto max-sm:max-w-xs',
+          )}
+        />
       </div>
 
-      <div className="col-start-2 row-start-1 flex items-start gap-1 sm:col-start-3">
-        {secondaryLinks.map((link) => (
+      <div
+        className={cn(
+          featured
+            ? 'border-t border-white/[0.08] px-5 pt-4 pb-5 sm:px-6 sm:pb-6'
+            : 'mt-4',
+        )}
+      >
+        <a
+          href={`${project.caseStudyHref}#evidence`}
+          className="inline-flex min-h-9 items-start gap-2 rounded-sm py-1 text-xs leading-6 text-zinc-400 transition-colors hover:text-zinc-200"
+          data-project-name={project.title}
+          data-link-type="case_study"
+        >
+          <span className="shrink-0 font-medium text-zinc-300">Evidence</span>
+          <span aria-hidden="true" className="text-zinc-600">
+            /
+          </span>
+          <span>{project.highlight}</span>
+        </a>
+
+        <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1">
+          {project.demoHref && (
+            <a
+              href={project.demoHref}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-zinc-100 px-4 text-xs font-medium text-zinc-950 transition-colors hover:bg-white"
+              aria-label={`Try demo: ${project.title}`}
+              data-project-name={project.title}
+              data-link-type="demo"
+            >
+              <Play aria-hidden="true" className="size-3.5" />
+              Try demo
+            </a>
+          )}
+          <Link
+            href={project.caseStudyHref}
+            className="text-link min-h-11 text-zinc-200"
+            aria-label={`Read case study: ${project.title}`}
+            data-project-name={project.title}
+            data-link-type="case_study"
+          >
+            Read case study{' '}
+            <ArrowRight aria-hidden="true" className="size-3.5" />
+          </Link>
           <a
-            key={`${link.type}-${link.href}`}
-            href={link.href}
+            href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`${link.type}: ${title}`}
-            title={link.type}
-            data-project-name={title}
-            data-link-type={
-              link.type.toLowerCase() === 'source' ? 'source' : 'demo'
-            }
-            className="relative z-10 -my-2 flex size-10 items-center justify-center rounded-sm text-zinc-400 transition-colors hover:text-white"
+            className="text-link min-h-11"
+            aria-label={`${project.title} on GitHub`}
+            data-project-name={project.title}
+            data-link-type="source"
           >
-            <span aria-hidden="true">{link.icon}</span>
+            GitHub <ArrowUpRight aria-hidden="true" className="size-3.5" />
           </a>
-        ))}
-        {href && (
-          <ArrowUpRight
-            aria-hidden="true"
-            className="mt-1.5 size-3.5 text-zinc-500 transition-colors group-hover:text-zinc-200"
-          />
-        )}
+          {project.articleHref && (
+            <Link
+              href={project.articleHref}
+              className="text-link min-h-11"
+              aria-label={`Read walkthrough: ${project.title}`}
+              data-project-name={project.title}
+              data-link-type="article"
+            >
+              Read walkthrough{' '}
+              <ArrowRight aria-hidden="true" className="size-3.5" />
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
+    </article>
   )
 }

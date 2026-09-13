@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { ProjectCard } from '@/components/project-card'
 import type { PROJECTS, SOCIAL_LINKS, WORK_EXPERIENCE } from './data'
@@ -47,6 +47,8 @@ export function PersonalClient({
   socialLinks,
   email,
 }: PersonalClientProps) {
+  const selectedProjects = projects.filter((project) => project.featured)
+
   return (
     <main className="space-y-12 sm:space-y-14">
       <section aria-labelledby="intro-heading">
@@ -165,23 +167,21 @@ export function PersonalClient({
           <h2 id="projects-heading" className="section-heading">
             Selected projects
           </h2>
-          <span className="font-mono text-[11px] text-zinc-400">
-            {String(projects.length).padStart(2, '0')}
-          </span>
+          <Link href="/projects" className="text-link -my-2">
+            View all projects
+            <span
+              aria-hidden="true"
+              className="font-mono text-[10px] text-zinc-400"
+            >
+              {String(projects.length).padStart(2, '0')}
+            </span>
+            <ArrowRight aria-hidden="true" className="size-3" />
+          </Link>
         </div>
-        <ul className="divide-y divide-white/[0.07]">
-          {projects.map((project) => (
-            <li key={project.href}>
-              <ProjectCard
-                title={project.title}
-                description={project.description}
-                tags={project.technologies}
-                links={project.links}
-                href={project.href}
-                caseStudyHref={project.caseStudyHref}
-                articleHref={project.articleHref}
-                demoHref={project.demoHref}
-              />
+        <ul className="mt-5">
+          {selectedProjects.map((project, index) => (
+            <li key={project.slug}>
+              <ProjectCard project={project} featured={index === 0} />
             </li>
           ))}
         </ul>
