@@ -56,11 +56,6 @@ export function generateWebsiteSchema(url: string, name: string, description: st
       '@type': 'Person',
       name: 'Mohammed Mostafa',
     },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${url}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
   }
 }
 

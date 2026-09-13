@@ -23,8 +23,8 @@ export default function ProjectsPage() {
       </h1>
       <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
         Storage engines, transport protocols, and backend services. Explore the
-        architecture, inspect the evidence, or start with the scheduling
-        playground.
+        architecture, inspect the evidence, or try the scheduling and replica
+        recovery demos.
       </p>
       <ul className="mt-8">
         {PROJECTS.map((project, index) => (

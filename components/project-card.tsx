@@ -26,7 +26,7 @@ export function ProjectCard({
       aria-labelledby={titleId}
       className={cn(
         'group min-w-0',
-        featured
+        featured || compact
           ? 'overflow-hidden rounded-lg border border-white/15 bg-zinc-950'
           : 'border-b border-white/[0.08] py-6',
       )}

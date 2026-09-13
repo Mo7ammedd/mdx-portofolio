@@ -75,6 +75,7 @@ export const PROJECTS: PortfolioProject[] = [
     category: 'Distributed systems',
     href: 'https://github.com/Mo7ammedd/Disk-Mesh',
     caseStudyHref: '/projects/disk-mesh',
+    demoHref: '/projects/disk-mesh#replication',
     visual: 'replication',
     featured: false,
     description:

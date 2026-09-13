@@ -4,6 +4,7 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { PROJECTS } from '@/app/data'
 import { ProjectVisual } from '@/components/project-visual'
+import { ReplicationDemo } from '@/components/replication-demo'
 import { SchedulerDemo } from '@/components/scheduler-demo'
 import { getAllBlogPosts } from '@/lib/blog-utils'
 import {
@@ -76,9 +77,9 @@ export default async function ProjectPage({ params }: Props) {
           ))}
         </ul>
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
-          {slug === 'simukernel' && (
+          {presentation?.demoHref && (
             <a
-              href="#scheduler"
+              href={presentation.demoHref}
               className="inline-flex min-h-11 items-center gap-2 rounded-md bg-zinc-100 px-4 text-xs font-medium text-zinc-950 transition-colors hover:bg-white"
               data-project-name={project.title}
               data-link-type="demo"
@@ -173,6 +174,7 @@ export default async function ProjectPage({ params }: Props) {
       </section>
 
       {slug === 'simukernel' && <SchedulerDemo />}
+      {slug === 'disk-mesh' && <ReplicationDemo />}
 
       <section aria-labelledby="decisions-title">
         <h2 id="decisions-title" className="section-heading mb-5">

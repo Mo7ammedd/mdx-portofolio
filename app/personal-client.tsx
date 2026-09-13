@@ -175,14 +175,10 @@ export function PersonalClient({
             <ArrowRight aria-hidden="true" className="size-3" />
           </Link>
         </div>
-        <ul className="mt-5">
+        <ul className="mt-5 space-y-4">
           {selectedProjects.map((project, index) => (
             <li key={project.slug}>
-              <ProjectCard
-                project={project}
-                featured={index === 0}
-                compact={index === 0}
-              />
+              <ProjectCard project={project} featured={index === 0} compact />
             </li>
           ))}
         </ul>

@@ -9,15 +9,17 @@ npm test
 npm run build
 ```
 
-Lint uses the Next.js 16 flat ESLint configuration. Tests cover scheduler
-correctness, related-article ranking, and engagement-event classification.
+Lint uses the Next.js 16 flat ESLint configuration. Tests cover scheduler and
+replica-recovery correctness, related-article ranking, and engagement-event
+classification.
 
 ## Projects and writing
 
-The homepage features SimuKernel, LSMSharp, and AeroUDP. `/projects` shows all
-five projects, including Disk-Mesh and HungerStation Microservices, with case
-studies, source links, technical previews, and evidence highlights. SimuKernel's
-featured card links directly to its browser playground.
+The homepage features compact cards for SimuKernel, LSMSharp, and AeroUDP, each
+with a small architecture thumbnail. `/projects` shows all five projects,
+including Disk-Mesh and HungerStation Microservices, with case studies, source
+links, technical previews, and evidence highlights. SimuKernel and Disk-Mesh
+cards link directly to their browser demos on the case-study pages.
 
 Edit `app/data.tsx` for project summaries, evidence highlights, visual kinds,
 and homepage selection (`featured`). `components/project-visual.tsx` contains
@@ -40,6 +42,17 @@ playback, and per-process results. `lib/scheduler.ts` contains the pure scheduli
 engine. The model uses a single CPU, known integer bursts, no I/O, and zero
 context-switch cost. New arrivals at a quantum boundary enter the ready queue
 before the running process is requeued.
+
+The replica recovery demo is at `/projects/disk-mesh#replication`. Visitors can
+take any of four storage nodes offline, bring them back, and play or step through
+heartbeat detection and direct chunk copies. `lib/replication.ts` models three
+equal-size chunks with a target of three live replicas, a two-step timeout, and
+one repair at a time. Partial copies do not count; playback stops when recovery
+finishes or needs another node. Returning nodes retain their stored chunks and
+can leave extra replicas. This companion model illustrates event order without
+running the Java cluster or measuring network and disk performance. Tests cover
+node failures during transfers, missing sources, too few live nodes, playback,
+reset, and deterministic state transitions.
 
 Case-study measurements are attributed to their sources. The LSMSharp figure is
 a published write-submission sample, not a new benchmark or a synchronous durable
