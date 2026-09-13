@@ -18,8 +18,8 @@ classification.
 Edit `WORK_EXPERIENCE` in `app/data.tsx` for company summaries, roles, dates,
 and optional `highlights`. Highlights appear in native "Selected work"
 disclosures, keeping the homepage compact. CarLink and the learning platforms
-share the Medica Scope entry. Keep descriptions about product capabilities;
-private repository URLs, credentials, and operational data do not belong here.
+share the Medica Scope entry. Descriptions summarize the organization
+repositories at the product level.
 
 ## Projects and writing
 

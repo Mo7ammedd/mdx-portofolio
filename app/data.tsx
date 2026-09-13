@@ -201,7 +201,20 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   {
     company: 'GDG Suez Canal',
     title: 'IT Mentor',
-    description: 'Mentored students in backend development fundamentals.',
+    description:
+      'Mentored students in backend development through a structured .NET learning path.',
+    highlights: [
+      {
+        title: 'Database foundations',
+        description:
+          'Teaching notes and SQL demos covering relational modeling, normalization, joins, aggregation, and transactions.',
+      },
+      {
+        title: '.NET curriculum',
+        description:
+          'A progression through C#, object-oriented design, LINQ, Entity Framework Core, and ASP.NET APIs.',
+      },
+    ],
     start: 'Oct 2024',
     end: 'May 2025',
     link: 'https://www.facebook.com/share/19tEMtQDZb/?mibextid=wwXIfr',
@@ -210,7 +223,9 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
   },
   {
     company: 'Manara',
-    title: 'Backend Engineer',
+    title: 'Backend Engineering Intern',
+    description:
+      'Backend engineering internship focused on practical development, problem-solving, and software engineering fundamentals.',
     start: 'Mar 2024',
     end: 'Jul 2024',
     link: 'https://app.manara.tech/auth/',
