@@ -26,16 +26,18 @@ export function ProjectCard({
       aria-labelledby={titleId}
       className={cn(
         'group min-w-0',
-        featured || compact
-          ? 'overflow-hidden rounded-lg border border-white/15 bg-zinc-950'
-          : 'border-b border-white/[0.08] py-6',
+        compact
+          ? 'py-5'
+          : featured
+            ? 'overflow-hidden rounded-lg border border-white/15 bg-zinc-950'
+            : 'border-b border-white/[0.08] py-6',
       )}
     >
       <div
         className={cn(
           'grid items-center gap-5',
           compact
-            ? 'grid-cols-[minmax(0,1fr)_7rem] items-start gap-x-3 gap-y-0 p-4 sm:grid-cols-[minmax(0,1fr)_8rem] sm:gap-x-5'
+            ? 'grid-cols-[minmax(0,1fr)_7rem] items-start gap-x-3 gap-y-0 sm:grid-cols-[minmax(0,1fr)_8rem] sm:gap-x-5'
             : featured
               ? 'p-5 sm:grid-cols-[minmax(0,1fr)_15rem] sm:gap-6 sm:p-6'
               : 'sm:grid-cols-[minmax(0,1fr)_12rem] sm:gap-6',
@@ -102,7 +104,7 @@ export function ProjectCard({
       <div
         className={cn(
           compact
-            ? 'border-t border-white/[0.08] px-4 pt-2 pb-4'
+            ? 'mt-3'
             : featured
               ? 'border-t border-white/[0.08] px-5 pt-4 pb-5 sm:px-6 sm:pb-6'
               : 'mt-4',

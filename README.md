@@ -15,7 +15,7 @@ classification.
 
 ## Projects and writing
 
-The homepage features compact cards for SimuKernel, LSMSharp, and AeroUDP, each
+The homepage features compact rows for SimuKernel, LSMSharp, and AeroUDP, each
 with a small architecture thumbnail. `/projects` shows all five projects,
 including Disk-Mesh and HungerStation Microservices, with case studies, source
 links, technical previews, and evidence highlights. SimuKernel and Disk-Mesh

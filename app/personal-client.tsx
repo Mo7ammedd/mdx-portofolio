@@ -175,7 +175,7 @@ export function PersonalClient({
             <ArrowRight aria-hidden="true" className="size-3" />
           </Link>
         </div>
-        <ul className="mt-5 space-y-4">
+        <ul className="divide-y divide-white/[0.07]">
           {selectedProjects.map((project, index) => (
             <li key={project.slug}>
               <ProjectCard project={project} featured={index === 0} compact />
