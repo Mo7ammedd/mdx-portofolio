@@ -134,18 +134,15 @@ export function PersonalClient({
                   />
                 </div>
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                      <h3 className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
-                        {job.company}
-                      </h3>
-                      <p className="text-xs text-zinc-400">{job.title}</p>
-                    </div>
-                    <p className="font-mono text-[11px] leading-5 whitespace-nowrap text-zinc-400">
-                      {job.start} <span className="text-zinc-600">—</span>{' '}
-                      {job.end}
-                    </p>
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <h3 className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
+                      {job.company}
+                    </h3>
+                    <p className="text-xs text-zinc-400">{job.title}</p>
                   </div>
+                  <p className="mt-1 font-mono text-[11px] leading-5 text-zinc-300">
+                    {job.start} <span aria-hidden="true">—</span> {job.end}
+                  </p>
                   {job.description && (
                     <p className="mt-1.5 text-xs leading-5 text-zinc-400">
                       {job.description}
@@ -181,7 +178,11 @@ export function PersonalClient({
         <ul className="mt-5">
           {selectedProjects.map((project, index) => (
             <li key={project.slug}>
-              <ProjectCard project={project} featured={index === 0} />
+              <ProjectCard
+                project={project}
+                featured={index === 0}
+                compact={index === 0}
+              />
             </li>
           ))}
         </ul>
