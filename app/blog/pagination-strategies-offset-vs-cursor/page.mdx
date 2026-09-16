@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'OFFSET and cursor based pagination strategies: covering database internals, B-tree traversal, performance characteristics, data consistency problems.',
   slug: 'pagination-strategies-offset-vs-cursor',
   publishedTime: '2026-03-13T10:00:00.000Z',
-  modifiedTime: '2026-03-13T10:00:00.000Z',
+  modifiedTime: '2026-09-16T00:00:00.000Z',
   tags: ['database', 'pagination', 'performance', 'sql', 'backend', 'postgresql'],
 })
 
@@ -15,6 +15,11 @@ Pagination is one of the most deceptively simple problems in backend engineering
 
 This post tears into both strategies at the database internals level. We'll look at how each approach interacts with B-tree indexes, what query plans they produce, where their O-complexity comes from, and how to implement each one correctly.
 
+<Callout type="success" title="Key takeaway">
+
+Use OFFSET when readers need to jump to a page in a small or stable dataset. For deep, sequential browsing, use a cursor with a unique sort order and a matching index.
+
+</Callout>
 
 ## What Is Pagination, Really?
 
@@ -31,7 +36,7 @@ That single question leads to two fundamentally different answers.
 
 OFFSET pagination works by telling the database: "skip the first N rows and give me the next M."
 
-```sql
+```sql title="offset-pagination.sql" {5,11,17} showLineNumbers
 -- Page 1: skip 0, take 10
 SELECT id, title, created_at
 FROM posts
@@ -107,7 +112,7 @@ The cost of OFFSET pagination is **O(offset)**: linear in the number of rows to 
   caption="OFFSET query time grows linearly with page number. Cursor pagination maintains constant O(log n) time regardless of depth."
 />
 
-At page 1 you're reading 10 rows. At page 1,000 (with page size 10), you're reading 10,010 rows to return 10. At page 10,000, you're reading 100,010 rows to return 10. The database does proportionally more work for every deeper page, even though the client receives the same 10 rows each time.
+At page 1 you're reading 10 rows. At page 1,000 (with page size 10), you're reading 10,000 rows to return 10. At page 10,000, you're reading 100,000 rows to return 10. The database does proportionally more work for every deeper page, even though the client receives the same 10 rows each time.
 
 This "performance cliff" is often invisible in development (small datasets) and during early production (few users reaching deep pages). It becomes catastrophic as data grows and users or crawlers navigate deep into result sets.
 
@@ -147,7 +152,7 @@ Despite its problems, OFFSET pagination has legitimate use cases:
 
 Instead of asking "skip N rows", cursor pagination asks: "give me rows *after* this specific position." The position is encoded in a **cursor**: an opaque token the client receives with each response and sends back on the next request.
 
-```sql
+```sql title="cursor-pagination.sql" {10-11} showLineNumbers
 -- First page (no cursor)
 SELECT id, title, created_at
 FROM posts
@@ -170,6 +175,12 @@ The `WHERE` clause anchors the query to a specific position in the index. The da
   caption="Cursor pagination uses a WHERE clause to seek directly to the cursor position in the B-tree index: no rows are skipped or wasted"
 />
 
+### Try the Pagination Scan Model
+
+Change the page depth and compare the index entries each strategy visits for one request. This model assumes the cursor for that page is already available from a previous response.
+
+<PaginationDemo />
+
 ### B-Tree Internals: Why Cursors Are Fast
 
 To understand why cursor pagination outperforms OFFSET at scale, you need to understand how B-tree indexes work.
@@ -190,9 +201,24 @@ A B-tree index is a balanced tree structure. The leaf nodes are doubly-linked an
 Step 2 dominates. For `OFFSET 500000`, you're touching ~500,000 leaf entries sequentially. Each leaf page holds ~100-200 entries, so that's ~2,500-5,000 buffer reads just to reach the starting position.
 
 **Cursor traversal:**
-1. Descend from root to the correct leaf using the cursor value (O(log n))
-2. Read LIMIT rows forward from that leaf (O(limit))
-3. Done
+
+<Steps>
+<Step title="Seek to the cursor">
+
+Descend from the root to the correct leaf using the cursor value: **O(log n)**.
+
+</Step>
+<Step title="Read the next page">
+
+Read the next `LIMIT` rows from that position: **O(limit)**.
+
+</Step>
+<Step title="Continue from the last row">
+
+Return the page and use its final row as the cursor for the next request.
+
+</Step>
+</Steps>
 
 For a table with 10M rows, `log₂(10,000,000) ≈ 23`. Regardless of which "page" you're on: page 1 or page 1,000,000: cursor pagination only traverses ~23 tree levels to find the starting position. The complexity is **O(log n + limit)**, effectively constant relative to dataset size.
 
@@ -207,7 +233,11 @@ ORDER BY created_at DESC
 LIMIT 10;
 ```
 
-If multiple rows share the same `created_at` timestamp (common with bulk inserts), rows at the boundary will be skipped or duplicated. The fix: use a **composite cursor** that includes a tiebreaker: typically the primary key.
+<Callout type="warning" title="Common mistake: a cursor without a tiebreaker">
+
+If multiple rows share the same `created_at` timestamp (common with bulk inserts), rows at the boundary can be skipped. Use a **composite cursor** that includes a unique tiebreaker, typically the primary key, in both the filter and the sort order.
+
+</Callout>
 
 ```sql
 -- CORRECT: composite cursor with tiebreaker
@@ -705,3 +735,8 @@ ORDER BY id ASC
 LIMIT 10;
 ```
 
+## Verified Examples
+
+Checked on **September 16, 2026** with **PostgreSQL 18.6**. The SQL check used 103 rows with tied timestamps and 10-row pages. It compared OFFSET and composite-cursor results across all 11 pages, including the final partial page and an exhausted cursor, and confirmed that a timestamp-only cursor can skip tied rows.
+
+The reproducible check is `scripts/verify-blog/pagination.sql` in the portfolio repository. It verifies query results and page boundaries; the interactive model above illustrates index entry counts under its stated assumptions.

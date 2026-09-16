@@ -2,6 +2,7 @@ import createMDX from '@next/mdx'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeUnwrapImages from 'rehype-unwrap-images'
 import githubDark from 'shiki/themes/github-dark.mjs'
+import rehypeBlogPost from './lib/rehype-blog-post.mjs'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -46,7 +47,11 @@ const prettyCodeOptions = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-      rehypePlugins: [[rehypePrettyCode, prettyCodeOptions], rehypeUnwrapImages],
+    rehypePlugins: [
+      [rehypePrettyCode, prettyCodeOptions],
+      rehypeUnwrapImages,
+      rehypeBlogPost,
+    ],
   },
 })
 

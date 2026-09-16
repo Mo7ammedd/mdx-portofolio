@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'Three practical ways to build custom middleware in ASP.NET Core.',
   slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
   publishedTime: '2024-03-15T10:00:00.000Z',
-  modifiedTime: '2024-03-15T10:00:00.000Z',
+  modifiedTime: '2026-09-16T00:00:00.000Z',
   tags: ['aspnet-core', 'middleware', 'dotnet', 'web-development', 'request-pipeline', 'csharp'],
 })
 
@@ -114,14 +114,16 @@ app.Use(async (context, next) =>
         context.Request.Path
     );
 
+    context.Response.OnStarting(() =>
+    {
+        context.Response.Headers["X-Response-Time"] =
+            timer.ElapsedMilliseconds.ToString();
+        return Task.CompletedTask;
+    });
+
     await next(context);
 
     timer.Stop();
-
-    context.Response.Headers.Add(
-        "X-Response-Time",
-        timer.ElapsedMilliseconds.ToString()
-    );
 
     logger?.LogInformation(
         "Completed {Method} {Path} in {ElapsedMs}ms",
@@ -138,6 +140,8 @@ This approach is useful for:
 * Header manipulation
 * Debugging
 * Rapid prototyping
+
+Register `OnStarting` before calling `next`: downstream middleware can start writing the response, after which headers become read-only. The header measures elapsed time until headers are sent; the completion log measures the full downstream duration.
 
 #### Limitations
 
@@ -449,3 +453,9 @@ Key takeaways:
 * Treat middleware as infrastructure, not business logic
 
 Well-designed middleware leads to cleaner controllers, consistent cross-cutting behavior, and scalable applications.
+
+## Verified Examples
+
+Checked on **September 16, 2026** with **ASP.NET Core 10.0.12** and **.NET 10.0.12**, using SDK 10.0.112. A local Kestrel server handled two real HTTP requests to verify delegate ordering, one-time construction of conventional middleware, per-request resolution of transient `IMiddleware`, and a response timing header registered through `OnStarting`.
+
+The verification harness is `scripts/verify-blog/dotnet/Program.cs` in the portfolio repository. The logging and metrics helpers in the article remain application-specific examples.

@@ -5,6 +5,8 @@ import { useMemo, useRef, useState } from 'react'
 import { ArrowUpRight, ChevronDown, Rss, Search } from 'lucide-react'
 
 import type { BlogPost } from '@/lib/blog-utils'
+import { BlogSearchResults } from './blog-search-results'
+import { meaningfulUpdatedDate } from '@/lib/blog-freshness'
 
 const TOPIC_LABELS: Record<string, string> = {
   'aspnet-core': 'ASP.NET Core',
@@ -98,6 +100,10 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           Notes on backend engineering, systems, and the details behind reliable
           software.
         </p>
+        <Link href="/blog/paths" className="text-link mt-2">
+          Explore guided reading paths{' '}
+          <ArrowUpRight aria-hidden="true" className="size-3" />
+        </Link>
       </div>
 
       {posts.length > 0 && (
@@ -122,7 +128,8 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               aria-controls="article-results"
-              placeholder="Search writing…"
+              placeholder="Search articles and sections…"
+              maxLength={160}
               autoComplete="off"
               className="h-11 w-full rounded-md border border-white/15 bg-transparent pr-3 pl-10 text-base text-zinc-200 outline-offset-4 transition-colors placeholder:text-zinc-400 hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-sm"
             />
@@ -161,8 +168,16 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           aria-atomic="true"
           className="font-mono text-[11px] text-zinc-400"
         >
-          {hasFilters ? `${filtered.length} of ${posts.length}` : posts.length}{' '}
-          {posts.length === 1 ? 'article' : 'articles'}
+          {query.trim() ? (
+            'Full article search'
+          ) : (
+            <>
+              {hasFilters
+                ? `${filtered.length} of ${posts.length}`
+                : posts.length}{' '}
+              {posts.length === 1 ? 'article' : 'articles'}
+            </>
+          )}
         </p>
         {hasFilters ? (
           <button
@@ -180,7 +195,9 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
       </div>
 
       <div id="article-results">
-        {filtered.length > 0 ? (
+        {query.trim() ? (
+          <BlogSearchResults query={query} topic={activeTopic} />
+        ) : filtered.length > 0 ? (
           <ol aria-label="Articles" className="divide-y divide-white/[0.07]">
             {filtered.map((post) => (
               <li key={post.slug}>
@@ -208,6 +225,17 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                       ·
                     </span>
                     <span>{post.readingTime} min read</span>
+                    {meaningfulUpdatedDate(
+                      post.publishedTime,
+                      post.modifiedTime,
+                    ) && (
+                      <>
+                        <span aria-hidden="true" className="text-zinc-600">
+                          ·
+                        </span>
+                        <span>Updated {formatDate(post.modifiedTime!)}</span>
+                      </>
+                    )}
                     {post.slug === posts[0]?.slug && (
                       <>
                         <span aria-hidden="true" className="text-zinc-600">

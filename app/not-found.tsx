@@ -1,18 +1,10 @@
-'use client'
-
 import Link from 'next/link'
-import { motion } from 'motion/react'
 import { ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 0.4 }}
-        className="flex flex-col items-center gap-6"
-      >
+      <div className="not-found-enter flex flex-col items-center gap-6">
         {/* Glassy card */}
         <div
           className="flex flex-col items-center gap-4 rounded-2xl px-12 py-10"
@@ -43,7 +35,7 @@ export default function NotFound() {
           <ArrowLeft className="h-4 w-4" />
           Back to home
         </Link>
-      </motion.div>
+      </div>
     </div>
   )
 }

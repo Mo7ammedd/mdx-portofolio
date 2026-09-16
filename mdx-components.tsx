@@ -1,14 +1,25 @@
 import type { MDXComponents } from 'mdx/types'
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { ZoomableImage } from '@/components/ui/zoomable-image'
 import { CodeBlock } from '@/components/ui/code-block'
 import { HeadingAnchor } from '@/components/ui/heading-anchor'
+import { BlogPostLayout } from '@/components/blog-post-layout'
+import { Callout } from '@/components/ui/mdx-callout'
+import { Steps, Step } from '@/components/ui/mdx-steps'
+import { Tabs, Tab } from '@/components/ui/mdx-tabs'
+import { PaginationDemo } from '@/components/ui/pagination-demo'
 import { getBlogImageDimensions } from '@/lib/blog-image-metadata'
-import { Info, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
+    BlogPostLayout,
+    Callout,
+    Steps,
+    Step,
+    Tabs,
+    Tab,
+    PaginationDemo,
     h1: (props: ComponentPropsWithoutRef<'h1'>) => (
       <h1
         className="mt-0 mb-6 scroll-mt-8 text-2xl leading-tight font-medium tracking-tight text-zinc-100 sm:text-3xl"
@@ -43,7 +54,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </HeadingAnchor>
     ),
     p: (props: ComponentPropsWithoutRef<'p'>) => (
-      <p className="my-5 leading-[1.85] text-zinc-300" {...props} />
+      <p className="my-5 leading-[1.8] text-zinc-300" {...props} />
     ),
     a: (props: ComponentPropsWithoutRef<'a'>) => (
       <a
@@ -69,24 +80,30 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <ol className="my-5 list-decimal space-y-2 pl-5" {...props} />
     ),
     li: (props: ComponentPropsWithoutRef<'li'>) => (
-      <li className="leading-[1.85] text-zinc-300" {...props} />
+      <li className="leading-[1.8] text-zinc-300" {...props} />
     ),
     // rehype-pretty-code handles all fenced code blocks — this only covers inline backtick code
     code: ({
       children,
       className,
+      style,
       ...rest
     }: ComponentPropsWithoutRef<'code'>) => {
-      // If it has a language class, it's inside a pre — render plainly, CodeBlock wraps it
-      if (className?.includes('language-')) {
+      // Both inline and fenced Shiki code carry data-language. Only fenced
+      // code uses the grid display that lays out its highlighted lines.
+      if (style?.display === 'grid' || className?.includes('language-')) {
         return (
-          <code className={className} {...rest}>
+          <code className={className} style={style} {...rest}>
             {children}
           </code>
         )
       }
       return (
-        <code className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.85em] font-medium text-zinc-200 before:content-none after:content-none">
+        <code
+          {...rest}
+          style={{ ...style, background: 'rgb(255 255 255 / 6%)' }}
+          className={`rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.9em] font-medium text-zinc-200 before:content-none after:content-none ${className || ''}`}
+        >
           {children}
         </code>
       )
@@ -144,70 +161,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }: {
       src: string
       alt: string
-      caption: string
+      caption?: string
       width?: number
       height?: number
     }) => {
       const dimensions = getBlogImageDimensions(src)
       return (
-        <figure className="my-8">
-          <ZoomableImage
-            src={src}
-            alt={alt}
-            width={width || dimensions?.width || 1200}
-            height={height || dimensions?.height || 675}
-          />
-          <figcaption className="mt-3 text-center text-xs leading-6 text-zinc-400">
-            {caption}
-          </figcaption>
-        </figure>
-      )
-    },
-    Callout: ({
-      children,
-      type = 'info',
-    }: {
-      children: ReactNode
-      type?: 'info' | 'warning' | 'success' | 'error'
-    }) => {
-      const config = {
-        info: {
-          classes:
-            'bg-blue-50 dark:bg-blue-950/30 border-blue-300 dark:border-blue-800 text-blue-900 dark:text-blue-100',
-          icon: (
-            <Info className="h-4 w-4 shrink-0 text-blue-500 dark:text-blue-400" />
-          ),
-        },
-        warning: {
-          classes:
-            'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-300 dark:border-yellow-800 text-yellow-900 dark:text-yellow-100',
-          icon: (
-            <AlertTriangle className="h-4 w-4 shrink-0 text-yellow-500 dark:text-yellow-400" />
-          ),
-        },
-        success: {
-          classes:
-            'bg-green-50 dark:bg-green-950/30 border-green-300 dark:border-green-800 text-green-900 dark:text-green-100',
-          icon: (
-            <CheckCircle className="h-4 w-4 shrink-0 text-green-500 dark:text-green-400" />
-          ),
-        },
-        error: {
-          classes:
-            'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-800 text-red-900 dark:text-red-100',
-          icon: (
-            <XCircle className="h-4 w-4 shrink-0 text-red-500 dark:text-red-400" />
-          ),
-        },
-      }
-
-      const { classes, icon } = config[type]
-
-      return (
-        <div className={`my-6 flex gap-3 rounded-lg border-l-4 p-4 ${classes}`}>
-          <span className="mt-0.5">{icon}</span>
-          <div className="flex-1 text-sm leading-relaxed">{children}</div>
-        </div>
+        <ZoomableImage
+          src={src}
+          alt={alt}
+          caption={caption}
+          width={width || dimensions?.width || 1200}
+          height={height || dimensions?.height || 675}
+        />
       )
     },
   }

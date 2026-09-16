@@ -20,6 +20,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
+    {
+      url: `${WEBSITE_URL}/blog/paths`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
   ]
 
   // Auto-discover blog posts from filesystem

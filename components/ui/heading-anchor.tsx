@@ -12,15 +12,7 @@ import {
 import { Check, Hash } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-
-function slugify(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]/g, '')
-    .replace(/--+/g, '-')
-    .trim()
-}
+import { slugifyHeading } from '@/lib/heading-slug.mjs'
 
 function getChildText(children: ReactNode): string {
   if (typeof children === 'string') return children
@@ -50,7 +42,7 @@ export function HeadingAnchor({
   >('idle')
 
   const headingText = useMemo(() => getChildText(children), [children])
-  const id = providedId ?? slugify(headingText)
+  const id = providedId ?? slugifyHeading(headingText)
   const headingLabel = headingText.trim() || id || 'section'
 
   useEffect(

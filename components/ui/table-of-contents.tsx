@@ -1,81 +1,103 @@
-'use client'
+import { ChevronDown, List } from 'lucide-react'
+import { TableOfContentsObserver } from './table-of-contents-observer'
 
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { ChevronDown } from 'lucide-react'
-
-interface Heading {
+export interface BlogHeading {
   id: string
   text: string
-  level: number
+  level: 2 | 3
 }
 
-export function TableOfContents() {
-  const pathname = usePathname()
-  const [contents, setContents] = useState<{
-    pathname: string
-    headings: Heading[]
-  }>({ pathname: '', headings: [] })
-
-  useEffect(() => {
-    // Read after the article and HeadingAnchor IDs have committed.
-    const frame = requestAnimationFrame(() => {
-      const elements = document.querySelectorAll<HTMLHeadingElement>(
-        'article h2, article h3',
-      )
-      const headings = Array.from(elements)
-        .map((element) => {
-          const label = element.cloneNode(true) as HTMLElement
-          label
-            .querySelectorAll('button, [aria-hidden="true"]')
-            .forEach((node) => node.remove())
-
-          return {
-            id: element.id,
-            text: label.textContent?.trim() || '',
-            level: element.tagName === 'H3' ? 3 : 2,
-          }
-        })
-        .filter((heading) => heading.id && heading.text)
-
-      setContents({ pathname, headings })
-    })
-
-    return () => cancelAnimationFrame(frame)
-  }, [pathname])
-
-  if (contents.pathname !== pathname || contents.headings.length === 0) {
-    return null
+function SectionLinks({ headings }: { headings: BlogHeading[] }) {
+  const sections: { heading: BlogHeading; children: BlogHeading[] }[] = []
+  for (const heading of headings) {
+    const parent = sections.at(-1)
+    if (heading.level === 3 && parent?.heading.level === 2) {
+      parent.children.push(heading)
+    } else {
+      sections.push({ heading, children: [] })
+    }
   }
 
   return (
-    <details
-      key={pathname}
-      className="not-prose group border-y border-white/[0.07]"
-    >
-      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-2 text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-zinc-300 [&::-webkit-details-marker]:hidden">
-        <span>On this page</span>
-        <ChevronDown
-          aria-hidden="true"
-          className="size-3.5 shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none"
-        />
-      </summary>
-      <nav aria-label="On this page" className="pb-4">
-        <ol className="space-y-1">
-          {contents.headings.map((heading) => (
-            <li key={heading.id}>
-              <a
-                href={`#${heading.id}`}
-                className={`block rounded-md py-1.5 text-xs leading-5 text-zinc-400 no-underline transition-colors hover:text-zinc-100 ${
-                  heading.level === 3 ? 'pl-4' : ''
-                }`}
-              >
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </nav>
-    </details>
+    <ol className="space-y-1">
+      {sections.map(({ heading, children }) => (
+        <li key={heading.id} className="relative">
+          <a
+            href={`#${heading.id}`}
+            data-section-link
+            className={`blog-toc-link ${children.length ? 'pr-9' : ''}`}
+          >
+            {heading.text}
+          </a>
+          {children.length > 0 && (
+            <details data-toc-subsections className="group/subsections">
+              <summary className="absolute top-0 right-0 flex size-8 cursor-pointer list-none items-center justify-center rounded-md text-zinc-500 hover:bg-white/5 hover:text-zinc-200 [&::-webkit-details-marker]:hidden">
+                <span className="sr-only">Subsections of {heading.text}</span>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="size-3.5 transition-transform group-open/subsections:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <ol className="my-1 ml-3 space-y-0.5 border-l border-white/10 pl-2">
+                {children.map((child) => (
+                  <li key={child.id}>
+                    <a
+                      href={`#${child.id}`}
+                      data-section-link
+                      className="blog-toc-link"
+                    >
+                      {child.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          )}
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+export function TableOfContents({
+  headings,
+  slug,
+}: {
+  headings: BlogHeading[]
+  slug?: string
+}) {
+  if (headings.length === 0) return null
+
+  return (
+    <TableOfContentsObserver slug={slug}>
+      <details
+        data-toc-mobile
+        className="blog-toc-mobile group/toc border-y border-white/[0.07]"
+      >
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 py-3 text-sm text-zinc-300 [&::-webkit-details-marker]:hidden">
+          <span className="flex items-center gap-2">
+            <List aria-hidden="true" className="size-4 text-zinc-500" />
+            On this page
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            className="size-4 shrink-0 transition-transform group-open/toc:rotate-180 motion-reduce:transition-none"
+          />
+        </summary>
+        <nav aria-label="On this page" className="blog-toc-scroll pb-3">
+          <SectionLinks headings={headings} />
+        </nav>
+      </details>
+
+      <div className="blog-toc-desktop">
+        <p className="section-heading mb-4 px-2">On this page</p>
+        <nav aria-label="On this page" className="blog-toc-scroll">
+          <SectionLinks headings={headings} />
+        </nav>
+        <a href="#main-content" className="text-link mt-4 px-2">
+          Back to top <span aria-hidden="true">↑</span>
+        </a>
+      </div>
+    </TableOfContentsObserver>
   )
 }

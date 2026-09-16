@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'A practical guide to boxing and unboxing in C# and their performance impact.',
   slug: 'boxing-and-unboxing-in-csharp',
   publishedTime: '2023-08-22T10:00:00.000Z',
-  modifiedTime: '2023-08-22T10:00:00.000Z',
+  modifiedTime: '2026-09-16T00:00:00.000Z',
   tags: ['csharp', 'dotnet', 'performance', 'memory-management', 'programming-fundamentals'],
 })
 
@@ -177,7 +177,12 @@ These costs are often invisible in small programs but become severe in:
 
 ### Boxing in Collections
 
-```csharp
+Compare the same loop with an object-based collection and a generic collection:
+
+<Tabs label="Collection implementations" labels={['ArrayList (boxing)', 'List<int> (no boxing)']}>
+<Tab>
+
+```csharp title="ArrayListExample.cs" {4} showLineNumbers
 ArrayList list = new ArrayList();
 for (int i = 0; i < 1_000_000; i++)
 {
@@ -187,9 +192,10 @@ for (int i = 0; i < 1_000_000; i++)
 
 Each `Add` call boxes `int` into `object`.
 
-Compare with generics:
+</Tab>
+<Tab>
 
-```csharp
+```csharp title="GenericListExample.cs" {1,4} showLineNumbers
 List<int> list = new List<int>();
 for (int i = 0; i < 1_000_000; i++)
 {
@@ -202,6 +208,9 @@ The generic version:
 * Avoids boxing entirely
 * Uses contiguous memory
 * Is easier for the JIT to optimize
+
+</Tab>
+</Tabs>
 
 ### Memory Footprint Comparison
 
@@ -430,3 +439,9 @@ They should be avoided in:
 * Allocation-sensitive systems
 
 Understanding boxing is not optional for performance-critical .NET development. It is a core part of writing efficient, scalable C# code.
+
+## Verified Examples
+
+Checked on **September 16, 2026** with **.NET 10.0.12** using SDK 10.0.112. The functional checks cover copying a value into a box, unboxing it to the exact stored type, rejecting an invalid cast, and preserving the same values in `ArrayList` and `List<int>`.
+
+The verification harness is `scripts/verify-blog/dotnet/Program.cs` in the portfolio repository. These checks exercise behavior; allocation sizes and performance measurements require their own workload and runtime configuration.

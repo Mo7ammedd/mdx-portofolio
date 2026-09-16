@@ -3,15 +3,17 @@
 ## Development
 
 ```sh
+npm ci
 npm run dev
 npm run lint
 npm test
 npm run build
 ```
 
-Lint uses the Next.js 16 flat ESLint configuration. Tests cover scheduler and
-replica-recovery correctness, related-article ranking, and engagement-event
-classification.
+Use npm and the committed `package-lock.json` for reproducible installs.
+Lint uses the Next.js 16 flat ESLint configuration. Tests cover MDX navigation,
+scheduler and replica-recovery correctness, related-article ranking, and
+engagement-event classification.
 
 ## Experience
 
@@ -43,6 +45,30 @@ the scroll destination after the case study loads.
 Project-to-article relationships live in `lib/project-links.ts`; related articles
 are ranked by shared tags, then publication date, without recommending the
 current article or unrelated topics.
+
+Articles live in `app/blog/<slug>/page.mdx`. During compilation,
+`lib/rehype-blog-post.mjs` assigns stable, unique IDs to Markdown headings and
+builds the table of contents from the same headings. It wraps each article with
+the server component in `components/blog-post-layout.tsx`, registered through
+`mdx-components.tsx`. Metadata exports stay in the MDX file. The article header,
+table of contents, related links, navigation, and structured data render on the
+server; interactive reading controls remain client components. No per-article
+layout or hand-maintained list of headings is needed.
+Pages render their static content directly, without a global loading fallback,
+so articles and native heading navigation remain visible when JavaScript is
+disabled.
+
+The first Markdown H1 becomes the article header, with the metadata description
+as its introduction. The contents list groups subsections and stays beside the
+article on wide screens; a small client component highlights the current section.
+See [the blog authoring guide](docs/blog-authoring.md) for code filenames, line
+highlights, callouts, steps, tabs, and image captions.
+
+Full-content search is served from the statically built `/blog/search-index.json`
+and fetched only when a reader searches. Its section anchors share the article
+compiler's heading logic. Guided paths live at `/blog/paths`; browser-local
+progress offers an explicit resume link. Scoped PostgreSQL and .NET example
+checks support freshness labels; see [the verification record](docs/verification/2026-09-16.md).
 
 The scheduling playground is at `/projects/simukernel#scheduler`. It supports
 FCFS, non-preemptive SJF, and Round Robin, editable workloads, idle intervals,

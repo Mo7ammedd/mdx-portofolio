@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, FileCode2 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
@@ -32,11 +32,13 @@ const LANGUAGE_LABELS: Record<string, string> = {
 
 interface CodeBlockProps extends React.ComponentProps<'pre'> {
   'data-language'?: string
+  'data-filename'?: string
 }
 
 export function CodeBlock({
   children,
   'data-language': dataLanguage,
+  'data-filename': filename,
   className,
   style,
   tabIndex = 0,
@@ -63,7 +65,7 @@ export function CodeBlock({
   const language =
     LANGUAGE_LABELS[dataLanguage?.toLowerCase() ?? ''] ??
     (dataLanguage ? dataLanguage.toUpperCase() : 'Code')
-  const codeLabel = dataLanguage ? `${language} code` : 'code'
+  const codeLabel = filename || (dataLanguage ? `${language} code` : 'code')
 
   const handleCopy = async () => {
     const request = ++copyRequestRef.current
@@ -90,29 +92,43 @@ export function CodeBlock({
   }
 
   return (
-    <div className="not-prose bg-card my-6 overflow-hidden rounded-lg border border-white/10">
+    <div className="code-block not-prose bg-card my-6 overflow-hidden rounded-lg border border-white/10">
       <div className="bg-background flex items-center justify-between gap-4 border-b border-white/[0.07] px-4 py-2">
-        <span className="font-mono text-xs text-zinc-400">{language}</span>
-
-        <button
-          type="button"
-          onClick={handleCopy}
-          disabled={copyStatus === 'copying'}
-          aria-label={`Copy ${codeLabel}`}
-          aria-busy={copyStatus === 'copying'}
-          className="inline-flex min-h-8 items-center gap-1.5 rounded-md px-2 font-mono text-xs text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-100 disabled:cursor-wait disabled:opacity-60 motion-reduce:transition-none"
-        >
-          {copyStatus === 'copied' ? (
-            <Check aria-hidden="true" className="size-3.5" />
-          ) : (
-            <Copy aria-hidden="true" className="size-3.5" />
+        <span className="flex min-w-0 items-center gap-2 font-mono text-xs text-zinc-400">
+          {filename && (
+            <FileCode2 aria-hidden="true" className="size-3.5 shrink-0" />
           )}
-          {copyStatus === 'copied'
-            ? 'Copied'
-            : copyStatus === 'copying'
-              ? 'Copying…'
-              : 'Copy'}
-        </button>
+          <span className="truncate" title={filename}>
+            {filename || language}
+          </span>
+        </span>
+
+        <div className="flex shrink-0 items-center gap-3">
+          {filename && (
+            <span className="hidden font-mono text-[11px] text-zinc-500 sm:inline">
+              {language}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={handleCopy}
+            disabled={copyStatus === 'copying'}
+            aria-label={`Copy ${codeLabel}`}
+            aria-busy={copyStatus === 'copying'}
+            className="inline-flex min-h-8 items-center gap-1.5 rounded-md px-2 font-mono text-xs text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-100 disabled:cursor-wait disabled:opacity-60 motion-reduce:transition-none"
+          >
+            {copyStatus === 'copied' ? (
+              <Check aria-hidden="true" className="size-3.5" />
+            ) : (
+              <Copy aria-hidden="true" className="size-3.5" />
+            )}
+            {copyStatus === 'copied'
+              ? 'Copied'
+              : copyStatus === 'copying'
+                ? 'Copying…'
+                : 'Copy'}
+          </button>
+        </div>
       </div>
 
       <pre
@@ -123,7 +139,7 @@ export function CodeBlock({
         role={props.role ?? 'region'}
         aria-label={props['aria-label'] ?? codeLabel}
         className={cn(
-          'm-0 max-w-full overflow-x-auto rounded-none border-0 px-4 py-4 text-sm leading-7 shadow-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-zinc-400',
+          'm-0 max-w-full overflow-x-auto rounded-none border-0 py-4 shadow-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-zinc-400',
           className,
         )}
         style={{
