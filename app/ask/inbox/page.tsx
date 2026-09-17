@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 import { Inbox } from '@/components/ask/inbox'
 import { InboxLogin } from '@/components/ask/inbox-login'
 import {
-  adminPassword,
+  adminConfig,
   ASK_SESSION_COOKIE,
   verifySession,
 } from '@/lib/ask/security'
@@ -20,10 +20,10 @@ export const metadata = generateSEO({
 })
 
 export default async function InboxPage() {
-  const password = adminPassword()
+  const admin = adminConfig()
   const session = (await cookies()).get(ASK_SESSION_COOKIE)?.value
-  if (!verifySession(session, password)) {
-    return <InboxLogin configured={Boolean(password)} />
+  if (!verifySession(session, admin?.sessionSecret ?? null)) {
+    return <InboxLogin configured={Boolean(admin)} />
   }
   let questions: Question[] = []
   let loadError = false

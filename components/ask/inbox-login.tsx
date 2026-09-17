@@ -11,6 +11,7 @@ import './ask.css'
 export function InboxLogin({ configured }: { configured: boolean }) {
   const hydrated = useHydrated()
   const router = useRouter()
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [visible, setVisible] = useState(false)
   const [pending, setPending] = useState(false)
@@ -24,7 +25,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
     try {
       await askRequest('/api/ask/session', {
         method: 'POST',
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ email, password }),
       })
       setPassword('')
       router.refresh()
@@ -61,10 +62,37 @@ export function InboxLogin({ configured }: { configured: boolean }) {
         {configured ? (
           <>
             <label
-              htmlFor="inbox-password"
+              htmlFor="inbox-email"
               className="text-xs font-medium text-zinc-300"
             >
-              Inbox password
+              Email address
+            </label>
+            <input
+              id="inbox-email"
+              name="email"
+              type="email"
+              inputMode="email"
+              required
+              autoComplete="username"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              maxLength={254}
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value)
+                setError('')
+              }}
+              disabled={pending || !hydrated}
+              aria-describedby={error ? 'login-error' : undefined}
+              className="ask-field mt-3"
+              placeholder="you@example.com"
+            />
+            <label
+              htmlFor="inbox-password"
+              className="mt-5 block text-xs font-medium text-zinc-300"
+            >
+              Password
             </label>
             <div className="relative mt-3">
               <input
@@ -82,7 +110,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
                 disabled={pending || !hydrated}
                 aria-describedby={error ? 'login-error' : undefined}
                 className="ask-field pr-12"
-                placeholder="Your private inbox password"
+                placeholder="Your password"
               />
               <button
                 type="button"
@@ -108,7 +136,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
             )}
             <button
               type="submit"
-              disabled={pending || !password || !hydrated}
+              disabled={pending || !email.trim() || !password || !hydrated}
               className="ask-primary mt-4"
             >
               {pending ? (
@@ -130,13 +158,17 @@ export function InboxLogin({ configured }: { configured: boolean }) {
               The inbox isn’t configured yet.
             </h2>
             <p>
-              Set a server-only{' '}
+              Set{' '}
+              <code className="font-mono text-xs text-zinc-200">
+                ASK_ADMIN_EMAIL
+              </code>{' '}
+              and a server-only{' '}
               <code className="font-mono text-xs text-zinc-200">
                 ASK_ADMIN_PASSWORD
               </code>{' '}
               of at least 16 characters. For local development, run{' '}
               <code className="font-mono text-xs text-zinc-200">
-                node scripts/setup-ask.mjs
+                node scripts/setup-ask.mjs --email you@example.com
               </code>{' '}
               and restart the server.
             </p>

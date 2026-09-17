@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { AskPage } from '@/components/ask/ask-page'
-import { adminPassword } from '@/lib/ask/security'
+import { adminConfig } from '@/lib/ask/security'
 import { getPublicQuestions } from '@/lib/ask/storage'
 import { ASK_URL, type PublicQuestion } from '@/lib/ask/types'
 import { generateSEO } from '@/lib/seo'
@@ -33,7 +33,7 @@ export default async function Ask() {
   return (
     <AskPage
       initialQuestions={questions}
-      acceptingQuestions={Boolean(adminPassword()) && !loadError}
+      acceptingQuestions={Boolean(adminConfig()) && !loadError}
       loadError={loadError}
     />
   )

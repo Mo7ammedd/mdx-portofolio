@@ -13,13 +13,15 @@ There are no seeded questions or simulated submissions.
 ## Local development
 
 ```sh
-node scripts/setup-ask.mjs
+node scripts/setup-ask.mjs --email you@example.com
 npm run dev
 ```
 
-The setup command adds a randomly generated `ASK_ADMIN_PASSWORD` to the ignored
-`.env.local` file, without overwriting existing values. Copy the password from
-that file to sign in at `http://localhost:3000/ask/inbox`.
+The setup command adds `ASK_ADMIN_EMAIL` and a randomly generated
+`ASK_ADMIN_PASSWORD` to the ignored `.env.local` file, preserving existing
+credentials. Sign in at `http://localhost:3000/ask/inbox` with those values.
+The inbox accepts only the configured admin email and password. Email matching
+ignores capitalization and surrounding spaces; passwords are matched exactly.
 
 When Supabase is not configured, development saves questions in the ignored
 `.data/ask.json` file. Writes are serialized in the development server and saved
@@ -43,6 +45,7 @@ For a local subdomain preview, open `http://ask.localhost:3000` and
    | --------------------- | ----------------------------------------------------------------- |
    | `SUPABASE_URL`        | The project URL, e.g. `https://your-project.supabase.co`          |
    | `SUPABASE_SECRET_KEY` | A secret key beginning with `sb_secret_` from Settings → API Keys |
+   | `ASK_ADMIN_EMAIL`     | The email address allowed to sign in to the private inbox         |
    | `ASK_ADMIN_PASSWORD`  | A unique random password, at least 16 characters                  |
 
 3. Deploy this Next.js project. Vercel's Node.js runtime handles all database
@@ -59,13 +62,15 @@ question tables are private, and all access goes through the Next.js server.
 
 Use a separate Supabase project for preview deployments if you do not want
 preview questions mixed into the live inbox. Keep the secret key and inbox
-password out of `NEXT_PUBLIC_*` variables and source control. Changing the inbox password
-invalidates all existing sessions. Local questions are development data; they
+credentials out of `NEXT_PUBLIC_*` variables and source control. Changing the
+admin email or password invalidates all existing sessions. When upgrading from
+the password-only inbox, add `ASK_ADMIN_EMAIL` and keep the existing password;
+sign in again with both fields after deployment. Local questions are development data; they
 are not automatically migrated into Supabase.
 
 Without a working database, production returns an unavailable state and never
 reports a successful submission. The form also stays closed until an inbox
-password has been configured.
+email and password have been configured.
 
 ## Storage and access
 
@@ -76,7 +81,9 @@ Supabase's anonymous and authenticated roles. Only the server's service role can
 access records. Public clients call the Next.js API, which projects only
 published question text, topic, answer, publication date, and an opaque ID.
 
-All inbox reads and changes require a signed, eight-hour, HttpOnly session.
+Next.js validates the configured admin email and password on the server.
+Supabase stores questions and rate limits. All inbox reads and changes require
+a signed, eight-hour, HttpOnly session bound to that admin configuration.
 Cookies use SameSite=Strict and Secure in production. API responses are never
 cached. Mutations check the request origin, bound the request body, and validate
 content again on the server. An unanswered or archived question is never included

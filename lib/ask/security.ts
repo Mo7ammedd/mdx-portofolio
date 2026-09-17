@@ -5,16 +5,24 @@ import {
   timingSafeEqual,
 } from 'node:crypto'
 import { isIP } from 'node:net'
-import { AskError } from './validation'
+import { AskError, normalizeEmail, type AdminCredentials } from './validation'
 
 export const ASK_SESSION_COOKIE = 'ask_inbox_session'
 export const ASK_SESSION_SECONDS = 60 * 60 * 8
 
-export function adminPassword() {
+export function adminConfig() {
+  const email = normalizeEmail(process.env.ASK_ADMIN_EMAIL)
   const password = process.env.ASK_ADMIN_PASSWORD
-  return password && password.length >= 16 && password.length <= 256
-    ? password
-    : null
+  if (!email || !password || password.length < 16 || password.length > 256)
+    return null
+  return {
+    email,
+    password,
+    // Bind sessions to the admin identity and reject legacy password-only cookies.
+    sessionSecret: createHmac('sha256', password)
+      .update(`ask-admin-identity:v1:${email}`)
+      .digest('hex'),
+  }
 }
 
 export function passwordMatches(input: string, expected: string) {
@@ -22,6 +30,16 @@ export function passwordMatches(input: string, expected: string) {
     createHash('sha256').update(input).digest(),
     createHash('sha256').update(expected).digest(),
   )
+}
+
+export function credentialsMatch(
+  input: AdminCredentials,
+  expected: AdminCredentials,
+) {
+  // Always compare both fields before deciding; neither error reveals which matched.
+  const emailMatches = passwordMatches(input.email, expected.email)
+  const secretMatches = passwordMatches(input.password, expected.password)
+  return emailMatches && secretMatches
 }
 
 function signature(payload: string, secret: string) {

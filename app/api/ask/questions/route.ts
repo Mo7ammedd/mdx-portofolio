@@ -2,9 +2,9 @@ import {
   askHandler,
   askJson,
   limitAskRequest,
-  requireAskPassword,
+  requireAskAdminConfig,
 } from '@/lib/ask/http'
-import { adminPassword, readJson, requireSameOrigin } from '@/lib/ask/security'
+import { adminConfig, readJson, requireSameOrigin } from '@/lib/ask/security'
 import { getAskStore, getPublicQuestions } from '@/lib/ask/storage'
 import { validateQuestion } from '@/lib/ask/validation'
 
@@ -15,7 +15,7 @@ export async function GET() {
   return askHandler(async () =>
     askJson({
       questions: await getPublicQuestions(),
-      acceptingQuestions: Boolean(adminPassword()),
+      acceptingQuestions: Boolean(adminConfig()),
     }),
   )
 }
@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(request: Request) {
   return askHandler(async () => {
     requireSameOrigin(request)
-    requireAskPassword()
+    requireAskAdminConfig()
     const input = validateQuestion(await readJson(request))
     await limitAskRequest(request, 'question')
     const question = await getAskStore().create(input)

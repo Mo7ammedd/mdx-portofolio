@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
-  adminPassword,
+  adminConfig,
   ASK_SESSION_COOKIE,
   requestFingerprint,
   verifySession,
@@ -39,22 +39,22 @@ export async function askHandler(handler: () => Promise<NextResponse>) {
   }
 }
 
-export function requireAskPassword() {
-  const password = adminPassword()
-  if (!password) {
+export function requireAskAdminConfig() {
+  const admin = adminConfig()
+  if (!admin) {
     throw new AskError(
       'Questions are temporarily closed. Please check back shortly.',
       503,
     )
   }
-  return password
+  return admin
 }
 
 export function requireAskAdmin(request: NextRequest) {
   if (
     !verifySession(
       request.cookies.get(ASK_SESSION_COOKIE)?.value,
-      adminPassword(),
+      adminConfig()?.sessionSecret ?? null,
     )
   ) {
     throw new AskError('Your session has ended. Please sign in again.', 401)
@@ -65,7 +65,7 @@ export async function limitAskRequest(
   request: Request,
   purpose: 'question' | 'login',
 ) {
-  const secret = requireAskPassword()
+  const secret = requireAskAdminConfig().password
   const key = `${purpose}:${requestFingerprint(request, secret)}`
   const retryAfter = await getAskStore().consumeLimit(key, 5, 15 * 60)
   if (retryAfter) {

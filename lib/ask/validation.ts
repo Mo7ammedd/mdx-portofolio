@@ -63,12 +63,28 @@ export function validateUpdate(value: unknown): QuestionUpdate {
   return { action: 'publish', answer, topic: data.topic }
 }
 
-export function validatePassword(value: unknown) {
+export function normalizeEmail(value: unknown): string | null {
+  if (typeof value !== 'string') return null
+  const email = value.trim().toLowerCase()
+  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ? email
+    : null
+}
+
+export type AdminCredentials = { email: string; password: string }
+
+export function validateCredentials(value: unknown): AdminCredentials {
   const data = object(value)
-  if (typeof data.password !== 'string' || data.password.length > 256) {
-    throw new AskError('Please enter your inbox password.')
+  const email = normalizeEmail(data.email)
+  if (
+    !email ||
+    typeof data.password !== 'string' ||
+    !data.password.length ||
+    data.password.length > 256
+  ) {
+    throw new AskError('Please enter a valid email address and password.')
   }
-  return data.password
+  return { email, password: data.password }
 }
 
 export function validateQuestionId(id: string) {
