@@ -2,14 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Eye,
-  EyeOff,
-  LoaderCircle,
-  LockKeyhole,
-} from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff, LoaderCircle } from 'lucide-react'
 import { askRequest, requestError } from './client'
 import { SiteLink } from '@/components/site-link'
 import { useHydrated } from '@/lib/use-hydrated'
@@ -44,44 +37,32 @@ export function InboxLogin({ configured }: { configured: boolean }) {
 
   return (
     <main
-      className="ask-inbox ask-enter"
+      className="ask-inbox"
       aria-labelledby="inbox-title"
       data-clarity-mask="true"
     >
-      <p className="section-heading flex items-center gap-2">
-        <LockKeyhole aria-hidden="true" className="size-3" /> Private inbox
-      </p>
+      <p className="section-heading">Private Q&A</p>
       <h1
         id="inbox-title"
-        className="mt-5 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
+        className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
       >
-        Your side of
-        <br />
-        <span className="text-zinc-500">the conversation.</span>
+        Inbox<span className="text-zinc-500">.</span>
       </h1>
       <p className="mt-5 max-w-md text-sm leading-7 text-zinc-400">
-        A quiet place to read questions, collect your thoughts, and send an
-        answer out into the world.
+        Sign in to read questions and publish answers.
       </p>
       <form
         action="/api/ask/session"
         method="post"
         onSubmit={submit}
-        className="mt-8 rounded-xl border border-white/15 bg-[#080808] p-5 sm:p-6"
+        className="mt-8 max-w-sm"
         aria-busy={pending}
       >
-        <div className="mb-5 flex size-10 items-center justify-center rounded-lg border border-white/10">
-          <LockKeyhole
-            aria-hidden="true"
-            className="size-4 text-zinc-400"
-            strokeWidth={1.5}
-          />
-        </div>
         {configured ? (
           <>
             <label
               htmlFor="inbox-password"
-              className="text-sm font-medium text-zinc-200"
+              className="text-xs font-medium text-zinc-300"
             >
               Inbox password
             </label>
@@ -128,31 +109,25 @@ export function InboxLogin({ configured }: { configured: boolean }) {
             <button
               type="submit"
               disabled={pending || !password || !hydrated}
-              className="ask-primary mt-5 w-full"
+              className="ask-primary mt-4"
             >
               {pending ? (
                 <>
-                  Opening inbox{' '}
+                  Signing in{' '}
                   <LoaderCircle
                     aria-hidden="true"
                     className="size-3.5 animate-spin"
                   />
                 </>
               ) : (
-                <>
-                  Open inbox{' '}
-                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
-                </>
+                'Sign in'
               )}
             </button>
-            <p className="mt-4 text-center text-[11px] leading-6 text-zinc-400">
-              For Mohammed only. Visitors can ask without signing in.
-            </p>
           </>
         ) : (
           <div className="space-y-3 text-sm leading-7 text-zinc-400">
             <h2 className="font-medium text-zinc-200">
-              Set up your inbox first.
+              The inbox isn’t configured yet.
             </h2>
             <p>
               Set a server-only{' '}
@@ -178,8 +153,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
         </p>
       </noscript>
       <SiteLink href="/ask" className="text-link mt-5">
-        <ArrowLeft aria-hidden="true" className="size-3" /> Back to the
-        conversation
+        <ArrowLeft aria-hidden="true" className="size-3" /> Back to questions
       </SiteLink>
     </main>
   )

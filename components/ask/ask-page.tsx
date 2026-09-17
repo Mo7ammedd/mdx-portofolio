@@ -1,20 +1,12 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
-  ArrowDown,
   ArrowUpRight,
-  Check,
   ChevronDown,
-  CornerDownRight,
-  Link2,
   LoaderCircle,
-  MessageCircle,
-  MessageSquare,
   RefreshCw,
   Search,
-  ShieldCheck,
   X,
 } from 'lucide-react'
 import {
@@ -26,77 +18,17 @@ import {
   type AskTopic,
   type PublicQuestion,
 } from '@/lib/ask/types'
-import { askRequest, questionDate, requestError } from './client'
 import { useHydrated } from '@/lib/use-hydrated'
+import { askRequest, questionDate, requestError } from './client'
 import './ask.css'
 
-const prompts: { label: string; question: string; topic: AskTopic }[] = [
-  {
-    label: 'Getting started',
-    question:
-      'What would you focus on first if you were learning backend development today?',
-    topic: 'career',
-  },
-  {
-    label: 'Under the hood',
-    question:
-      'What did building your own storage engine teach you about databases?',
-    topic: 'databases',
-  },
-  {
-    label: 'Your process',
-    question:
-      'How do you approach a system design problem before writing any code?',
-    topic: 'backend',
-  },
-]
-
-function ConversationMark() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 112 112"
-      className="ask-mark hidden size-28 shrink-0 sm:block"
-      fill="none"
-    >
-      <circle
-        cx="56"
-        cy="56"
-        r="54"
-        stroke="currentColor"
-        strokeDasharray="2 6"
-        className="text-zinc-800"
-      />
-      <path
-        d="M44 49h40a8 8 0 0 1 8 8v21a8 8 0 0 1-8 8h-5v10L66 86H44a8 8 0 0 1-8-8V57a8 8 0 0 1 8-8Z"
-        fill="#080808"
-        stroke="#3f3f46"
-      />
-      <path
-        d="M27 22h39a9 9 0 0 1 9 9v24a9 9 0 0 1-9 9H45L31 75V64h-4a9 9 0 0 1-9-9V31a9 9 0 0 1 9-9Z"
-        fill="#0c0c0c"
-        stroke="#71717a"
-      />
-      <path
-        d="M41 37a6 6 0 1 1 10 4.5c-2 1.5-4 2-4 5"
-        stroke="#e4e4e7"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="47" cy="52" r="1" fill="#e4e4e7" />
-      <path
-        d="m60 73 4 4 9-10"
-        stroke="#a1a1aa"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="88" cy="26" r="3" fill="#a1a1aa" />
-    </svg>
-  )
-}
-
-function AnswerCard({ question }: { question: PublicQuestion }) {
+function AnswerRow({
+  question,
+  initiallyOpen,
+}: {
+  question: PublicQuestion
+  initiallyOpen: boolean
+}) {
   const details = useRef<HTMLDetailsElement>(null)
   const [copied, setCopied] = useState(false)
   const [copyError, setCopyError] = useState(false)
@@ -136,63 +68,39 @@ function AnswerCard({ question }: { question: PublicQuestion }) {
     <details
       ref={details}
       id={`question-${question.id}`}
-      className="ask-answer group scroll-mt-8 overflow-hidden rounded-xl border border-white/10 bg-[#060606] transition-colors open:border-white/20 hover:border-white/20"
+      open={initiallyOpen}
+      className="ask-answer group scroll-mt-8 border-b border-white/10"
     >
-      <summary className="cursor-pointer list-none p-5 sm:p-6 [&::-webkit-details-marker]:hidden">
-        <span className="mb-3 flex items-center gap-2 font-mono text-[10px] text-zinc-400">
-          <span
-            className="size-1 rounded-full bg-zinc-500"
-            aria-hidden="true"
-          />
-          Anonymous
-          <span aria-hidden="true" className="text-zinc-700">
-            /
-          </span>
+      <summary className="cursor-pointer list-none py-5 [&::-webkit-details-marker]:hidden">
+        <span className="mb-2 block font-mono text-[11px] text-zinc-400">
           {topicLabel(question.topic)}
         </span>
         <span className="flex items-start justify-between gap-5">
-          <span className="text-[15px] leading-7 font-medium break-words text-zinc-100 sm:text-base">
+          <span className="text-[15px] leading-7 font-medium break-words text-zinc-200 transition-colors group-hover:text-white">
             {question.question}
           </span>
           <ChevronDown
             aria-hidden="true"
-            className="mt-1.5 size-4 shrink-0 text-zinc-500 transition-transform group-open:rotate-180"
+            className="mt-1.5 size-3.5 shrink-0 text-zinc-400 transition-transform group-open:rotate-180 motion-reduce:transition-none"
           />
         </span>
       </summary>
-      <div className="ask-answer-body border-t border-white/[0.07] px-5 pb-5 sm:px-6 sm:pb-6">
-        <div className="my-5 flex items-center gap-2.5">
-          <Image
-            src="/avatar.jpg"
-            alt=""
-            width={26}
-            height={26}
-            className="size-[26px] rounded-full grayscale"
-          />
-          <span className="text-xs font-medium text-zinc-300">Mohammed</span>
-          <span className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-[9px] text-zinc-400">
-            AUTHOR
-          </span>
-        </div>
+      <div className="pb-5">
         <p className="text-sm leading-7 break-words whitespace-pre-wrap text-zinc-400">
           {question.answer}
         </p>
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 border-t border-white/[0.06] pt-3">
-          <time
-            dateTime={question.answeredAt}
-            className="font-mono text-[10px] text-zinc-400"
-          >
-            {questionDate(question.answeredAt)}
-          </time>
-          <button type="button" onClick={copyLink} className="text-link gap-2">
-            {copied ? (
-              <Check aria-hidden="true" className="size-3" />
-            ) : (
-              <Link2 aria-hidden="true" className="size-3" />
-            )}
-            <span aria-live="polite">
-              {copied ? 'Link copied' : 'Share answer'}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4">
+          <div className="flex flex-wrap items-center gap-x-2 text-[11px] leading-6">
+            <span className="text-zinc-300">Mohammed</span>
+            <span aria-hidden="true" className="text-zinc-500">
+              ·
             </span>
+            <time dateTime={question.answeredAt} className="text-zinc-400">
+              {questionDate(question.answeredAt)}
+            </time>
+          </div>
+          <button type="button" onClick={copyLink} className="text-link">
+            <span aria-live="polite">{copied ? 'Copied' : 'Copy link'}</span>
           </button>
         </div>
         {copyError && (
@@ -255,9 +163,7 @@ export function AskPage({
     if (sendingRef.current) return
     const form = new FormData(event.currentTarget)
     if (question.trim().length < QUESTION_MIN_LENGTH) {
-      setError(
-        `A little more detail, please — at least ${QUESTION_MIN_LENGTH} characters.`,
-      )
+      setError(`Please write at least ${QUESTION_MIN_LENGTH} characters.`)
       textarea.current?.focus()
       return
     }
@@ -303,268 +209,186 @@ export function AskPage({
       aria-labelledby="ask-title"
       data-clarity-mask="true"
     >
-      <section className="ask-enter">
-        <p className="section-heading flex items-center gap-2.5">
-          <span className="h-px w-5 bg-zinc-500" aria-hidden="true" />
-          Questions & answers
+      <section>
+        <p className="section-heading">Questions & answers</p>
+        <h1
+          id="ask-title"
+          className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
+        >
+          Ask me anything<span className="text-zinc-500">.</span>
+        </h1>
+        <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
+          Code, career, or whatever’s on your mind. Ask away. No name needed.
         </p>
-        <div className="mt-5 flex items-center justify-between gap-6">
-          <h1
-            id="ask-title"
-            className="text-[2.4rem] leading-[1.13] font-medium tracking-[-0.05em] text-zinc-100 sm:text-5xl"
-          >
-            Good questions.
-            <br />
-            <span className="text-zinc-500">Honest answers.</span>
-          </h1>
-          <ConversationMark />
-        </div>
-        <p className="mt-5 max-w-[29rem] text-sm leading-7 text-zinc-400 sm:text-[15px]">
-          On building software, figuring things out, and everything in between.
-          Leave a question. I’ll share what I know.
-        </p>
-        <div className="mt-5 flex items-center gap-2.5 text-xs text-zinc-400">
-          <Image
-            src="/avatar.jpg"
-            alt=""
-            width={22}
-            height={22}
-            className="size-[22px] rounded-full grayscale"
-          />
-          <span>
-            A conversation with <span className="text-zinc-200">Mohammed</span>
-          </span>
-        </div>
       </section>
 
       <section
         id="ask-question"
         aria-labelledby="question-title"
-        className="ask-enter mt-9 scroll-mt-8 [animation-delay:70ms]"
+        className="mt-8 scroll-mt-8"
       >
-        <div className="ask-composer relative overflow-hidden rounded-xl border border-white/15 bg-[#080808] transition-colors focus-within:border-white/35">
-          {submitted ? (
-            <div className="ask-enter flex min-h-[300px] flex-col items-center justify-center px-6 py-8 text-center">
-              <span className="mb-5 flex size-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.03]">
-                <Check
-                  aria-hidden="true"
-                  className="size-5 text-zinc-200"
-                  strokeWidth={1.5}
-                />
-              </span>
-              <h2
-                ref={successTitle}
-                tabIndex={-1}
-                id="question-title"
-                className="text-xl font-medium tracking-tight text-zinc-100 outline-none"
-              >
-                Your question is in.
-              </h2>
-              <p className="mt-3 max-w-xs text-sm leading-6 text-zinc-400">
-                It’s in my private inbox. If I publish an answer, you’ll find it
-                below.
-              </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-x-5">
-                <button
-                  type="button"
-                  className="text-link text-zinc-200"
-                  onClick={() => {
-                    setSubmitted(false)
-                    requestAnimationFrame(() => textarea.current?.focus())
-                  }}
-                >
-                  Ask another{' '}
-                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
-                </button>
-                <a href="#answers" className="text-link">
-                  Browse answers{' '}
-                  <ArrowDown aria-hidden="true" className="size-3" />
-                </a>
-              </div>
-            </div>
-          ) : (
-            <form
-              action="/api/ask/questions"
-              method="post"
-              onSubmit={submit}
-              className="relative"
-              aria-busy={sending}
+        {submitted ? (
+          <div className="border-y border-white/10 py-7">
+            <h2
+              ref={successTitle}
+              tabIndex={-1}
+              id="question-title"
+              className="text-base font-medium text-zinc-200 outline-none"
             >
-              <div className="flex items-center justify-between gap-4 px-5 pt-5 sm:px-6 sm:pt-6">
-                <h2 id="question-title">
-                  <label
-                    htmlFor="question"
-                    className="text-sm font-medium text-zinc-200"
-                  >
-                    What’s on your mind?
-                  </label>
-                </h2>
-                <MessageSquare
-                  aria-hidden="true"
-                  className="size-4 text-zinc-500"
-                  strokeWidth={1.5}
-                />
-              </div>
-              <textarea
-                ref={textarea}
-                id="question"
-                name="question"
-                required
-                minLength={QUESTION_MIN_LENGTH}
-                maxLength={QUESTION_MAX_LENGTH}
-                disabled={sending || !available || !hydrated}
-                value={question}
-                onChange={(event) => {
-                  setQuestion(event.target.value)
-                  setError('')
-                }}
-                placeholder="Something you’re stuck on. Something you’re curious about. There’s no perfect question."
-                aria-describedby={`question-privacy question-count${error ? ' question-error' : ''}`}
-                aria-invalid={Boolean(error)}
-                className="ask-question-input mx-5 mt-4 block min-h-32 w-[calc(100%-2.5rem)] resize-y rounded-sm bg-transparent py-1 text-base leading-7 text-zinc-200 placeholder:text-zinc-400 focus-visible:outline-offset-4 disabled:cursor-not-allowed disabled:opacity-50 sm:mx-6 sm:w-[calc(100%-3rem)] sm:text-sm"
+              Question sent.
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-zinc-400">
+              It’s in my private inbox. If I publish an answer, it will appear
+              below.
+            </p>
+            <button
+              type="button"
+              className="text-link mt-2 text-zinc-200"
+              onClick={() => {
+                setSubmitted(false)
+                requestAnimationFrame(() => textarea.current?.focus())
+              }}
+            >
+              Ask another question{' '}
+              <ArrowUpRight aria-hidden="true" className="size-3" />
+            </button>
+          </div>
+        ) : (
+          <form
+            action="/api/ask/questions"
+            method="post"
+            onSubmit={submit}
+            className="relative"
+            aria-busy={sending}
+          >
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 id="question-title">
+                <label
+                  htmlFor="question"
+                  className="text-xs font-medium text-zinc-300"
+                >
+                  Your question
+                </label>
+              </h2>
+              <span
+                id="question-count"
+                className="font-mono text-[11px] text-zinc-400 tabular-nums"
+              >
+                {question.length} / {QUESTION_MAX_LENGTH.toLocaleString('en')}
+              </span>
+            </div>
+            <textarea
+              ref={textarea}
+              id="question"
+              name="question"
+              required
+              rows={3}
+              minLength={QUESTION_MIN_LENGTH}
+              maxLength={QUESTION_MAX_LENGTH}
+              disabled={sending || !available || !hydrated}
+              value={question}
+              onChange={(event) => {
+                setQuestion(event.target.value)
+                setError('')
+              }}
+              placeholder="What would you like to know?"
+              aria-describedby={`question-privacy question-count${error ? ' question-error' : ''}`}
+              aria-invalid={Boolean(error)}
+              className="ask-field mt-3 block min-h-28 resize-y"
+            />
+            <div className="ask-honeypot" aria-hidden="true" inert>
+              <label htmlFor="question-website">Leave this field empty</label>
+              <input
+                id="question-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
               />
-              <div className="flex items-center justify-between gap-4 px-5 pt-3 pb-4 sm:px-6">
-                <div className="relative">
-                  <label htmlFor="question-topic" className="sr-only">
-                    Question topic
-                  </label>
-                  <select
-                    id="question-topic"
-                    value={topic}
-                    disabled={sending || !available || !hydrated}
-                    onChange={(event) =>
-                      setTopic(event.target.value as AskTopic)
-                    }
-                    className="ask-select min-h-10 appearance-none rounded-md border border-white/10 bg-black py-2 pr-8 pl-3 font-mono text-[11px] text-zinc-300 disabled:opacity-50"
-                  >
-                    {ASK_TOPICS.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-1/2 right-2.5 size-3 -translate-y-1/2 text-zinc-500"
-                  />
-                </div>
-                <span
-                  id="question-count"
-                  className={`font-mono text-[10px] tabular-nums ${question.length > 950 ? 'text-zinc-200' : 'text-zinc-400'}`}
+            </div>
+            {error && (
+              <p
+                id="question-error"
+                role="alert"
+                className="mt-3 text-xs leading-6 text-red-300"
+              >
+                {error}
+              </p>
+            )}
+            {!available && (
+              <p role="status" className="mt-3 text-xs leading-6 text-zinc-400">
+                Questions are closed for the moment. Please check back soon.
+              </p>
+            )}
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+              <div className="relative">
+                <label htmlFor="question-topic" className="sr-only">
+                  Question topic
+                </label>
+                <select
+                  id="question-topic"
+                  value={topic}
+                  disabled={sending || !available || !hydrated}
+                  onChange={(event) => setTopic(event.target.value as AskTopic)}
+                  className="ask-select"
                 >
-                  {question.length}{' '}
-                  <span className="text-zinc-400">/ {QUESTION_MAX_LENGTH}</span>
-                </span>
-              </div>
-              <div className="ask-honeypot" aria-hidden="true" inert>
-                <label htmlFor="question-website">Leave this field empty</label>
-                <input
-                  id="question-website"
-                  name="website"
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
+                  {ASK_TOPICS.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-1/2 right-3 size-3 -translate-y-1/2 text-zinc-400"
                 />
               </div>
-              {error && (
-                <p
-                  id="question-error"
-                  role="alert"
-                  className="px-5 pb-4 text-xs leading-6 text-red-300 sm:px-6"
-                >
-                  {error}
-                </p>
-              )}
-              {!available && (
-                <p
-                  role="status"
-                  className="px-5 pb-4 text-xs leading-6 text-zinc-400 sm:px-6"
-                >
-                  Questions are closed for the moment. Please check back soon.
-                </p>
-              )}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.08] bg-white/[0.015] px-5 py-4 sm:px-6">
-                <span className="flex items-center gap-2 text-[11px] text-zinc-400">
-                  <ShieldCheck aria-hidden="true" className="size-3.5" />
-                  Anonymous question
-                </span>
-                <button
-                  type="submit"
-                  disabled={sending || !available || !hydrated}
-                  className="ask-primary min-w-36"
-                >
-                  {sending ? (
-                    <>
-                      Sending{' '}
-                      <LoaderCircle
-                        aria-hidden="true"
-                        className="size-3.5 animate-spin"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      Send question{' '}
-                      <ArrowUpRight aria-hidden="true" className="size-3.5" />
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
+              <button
+                type="submit"
+                disabled={sending || !available || !hydrated}
+                className="ask-primary"
+              >
+                {sending ? 'Sending' : 'Send question'}
+                {sending ? (
+                  <LoaderCircle
+                    aria-hidden="true"
+                    className="size-3.5 animate-spin"
+                  />
+                ) : (
+                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                )}
+              </button>
+            </div>
+          </form>
+        )}
         <noscript>
           <p className="mt-3 text-xs leading-6 text-zinc-400">
             Enable JavaScript to send a question. You can still read the
             published answers below.
           </p>
         </noscript>
-        <p
-          id="question-privacy"
-          className="mt-3 text-center text-[11px] leading-6 text-zinc-400"
-        >
-          No name or email needed. Questions stay private until I publish an
-          answer.
-        </p>
-        {!submitted && !question && available && (
-          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="mr-1 text-[11px] text-zinc-400">
-              Need a starting point?
-            </span>
-            {prompts.map((prompt) => (
-              <button
-                key={prompt.label}
-                type="button"
-                onClick={() => {
-                  setQuestion(prompt.question)
-                  setTopic(prompt.topic)
-                  setError('')
-                  textarea.current?.focus()
-                }}
-                className="inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-[11px] text-zinc-400 transition-colors hover:bg-white/5 hover:text-zinc-100"
-              >
-                <CornerDownRight
-                  aria-hidden="true"
-                  className="size-3 text-zinc-600"
-                />
-                {prompt.label}
-              </button>
-            ))}
-          </div>
+        {!submitted && (
+          <p
+            id="question-privacy"
+            className="mt-3 text-xs leading-6 text-zinc-400"
+          >
+            No name or email. Questions stay private until I publish a reply.
+          </p>
         )}
       </section>
 
       <section
         id="answers"
         aria-labelledby="answers-title"
-        className="ask-enter mt-12 scroll-mt-8 [animation-delay:140ms] sm:mt-14"
+        className="mt-12 scroll-mt-8 sm:mt-14"
       >
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+          <div className="flex items-baseline gap-3">
             <h2 id="answers-title" className="section-heading">
-              The conversation
+              Answers
             </h2>
             <span className="font-mono text-[11px] text-zinc-400 tabular-nums">
-              {String(questions.length).padStart(2, '0')}
+              {questions.length}
             </span>
           </div>
           <button
@@ -572,7 +396,7 @@ export function AskPage({
             onClick={refresh}
             disabled={refreshing}
             aria-label="Refresh answers"
-            className="flex size-11 items-center justify-center rounded-md text-zinc-500 transition-colors hover:bg-white/5 hover:text-zinc-200 disabled:opacity-50"
+            className="-my-2 flex size-11 items-center justify-center text-zinc-400 transition-colors hover:text-white disabled:opacity-50"
           >
             <RefreshCw
               aria-hidden="true"
@@ -580,71 +404,75 @@ export function AskPage({
             />
           </button>
         </div>
-        <div className="relative mt-4">
-          <Search
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-zinc-500"
-          />
-          <label htmlFor="answer-search" className="sr-only">
-            Search answered questions
-          </label>
-          <input
-            id="answer-search"
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            maxLength={160}
-            autoComplete="off"
-            placeholder="Search questions and answers…"
-            className="ask-search h-12 w-full rounded-lg border border-white/10 bg-[#060606] pr-11 pl-10 text-base text-zinc-200 placeholder:text-xs placeholder:text-zinc-400 sm:text-sm"
-          />
-          {query && (
-            <button
-              type="button"
-              aria-label="Clear search"
-              onClick={() => setQuery('')}
-              className="absolute top-0 right-0 flex size-12 items-center justify-center rounded-md text-zinc-400"
-            >
-              <X aria-hidden="true" className="size-3.5" />
-            </button>
-          )}
-        </div>
-        <div
-          role="group"
-          aria-label="Filter answers by topic"
-          className="mt-3 flex flex-wrap gap-1"
-        >
-          {[{ value: 'all', label: 'All questions' }, ...ASK_TOPICS].map(
-            (item) => (
-              <button
-                key={item.value}
-                type="button"
-                aria-pressed={filter === item.value}
-                onClick={() => setFilter(item.value as AskTopic | 'all')}
-                className={`min-h-10 rounded-md px-3 text-[11px] transition-colors ${filter === item.value ? 'bg-white/[0.09] text-zinc-100' : 'text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200'}`}
+        {questions.length > 0 && (
+          <div className="flex items-center gap-3 border-b border-white/10 py-2">
+            <div className="relative min-w-0 flex-1">
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute top-1/2 left-0 size-3.5 -translate-y-1/2 text-zinc-400"
+              />
+              <label htmlFor="answer-search" className="sr-only">
+                Search answered questions
+              </label>
+              <input
+                id="answer-search"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                maxLength={160}
+                autoComplete="off"
+                placeholder="Search answers"
+                className="ask-search h-11 w-full bg-transparent pr-10 pl-6 text-base text-zinc-200 placeholder:text-zinc-400 sm:text-xs"
+              />
+              {query && (
+                <button
+                  type="button"
+                  aria-label="Clear search"
+                  onClick={() => setQuery('')}
+                  className="absolute top-0 right-0 flex h-11 w-10 items-center justify-center text-zinc-400"
+                >
+                  <X aria-hidden="true" className="size-3.5" />
+                </button>
+              )}
+            </div>
+            <div className="relative shrink-0">
+              <label htmlFor="answer-topic" className="sr-only">
+                Filter answers by topic
+              </label>
+              <select
+                id="answer-topic"
+                value={filter}
+                onChange={(event) =>
+                  setFilter(event.target.value as AskTopic | 'all')
+                }
+                className="h-11 max-w-32 appearance-none bg-black pr-5 pl-2 text-xs text-zinc-400"
               >
-                {item.label}
-              </button>
-            ),
-          )}
-        </div>
+                <option value="all">All topics</option>
+                {ASK_TOPICS.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden="true"
+                className="pointer-events-none absolute top-1/2 right-0 size-3 -translate-y-1/2 text-zinc-400"
+              />
+            </div>
+          </div>
+        )}
         <p className="sr-only" role="status">
           {filtered.length} answered{' '}
           {filtered.length === 1 ? 'question' : 'questions'} found.
         </p>
         {loadError ? (
-          <div className="mt-5 rounded-xl border border-dashed border-white/15 px-6 py-10 text-center">
-            <p className="text-sm text-zinc-300">
-              The conversation couldn’t load.
-            </p>
-            <p className="mt-2 text-xs leading-6 text-zinc-400">
-              Give it a moment, then try refreshing the answers.
-            </p>
+          <div className="py-7">
+            <p className="text-sm text-zinc-300">Answers couldn’t load.</p>
             <button
               type="button"
               onClick={refresh}
               disabled={refreshing}
-              className="text-link mt-3"
+              className="text-link mt-1"
             >
               Try again{' '}
               <RefreshCw
@@ -654,34 +482,22 @@ export function AskPage({
             </button>
           </div>
         ) : filtered.length ? (
-          <div className="mt-5 space-y-3">
-            {filtered.map((item) => (
-              <AnswerCard key={item.id} question={item} />
+          <div>
+            {filtered.map((item, index) => (
+              <AnswerRow
+                key={item.id}
+                question={item}
+                initiallyOpen={index === 0}
+              />
             ))}
           </div>
         ) : (
-          <div className="ask-empty mt-5 flex flex-col items-center rounded-xl border border-dashed border-white/10 px-6 py-10 text-center sm:py-12">
-            <div className="relative mb-5 flex size-12 items-center justify-center rounded-xl border border-white/10 bg-[#0a0a0a]">
-              <MessageCircle
-                aria-hidden="true"
-                className="size-5 text-zinc-400"
-                strokeWidth={1.5}
-              />
-              <span
-                aria-hidden="true"
-                className="absolute -top-1 -right-1 size-2 rounded-full border-2 border-black bg-zinc-400"
-              />
-            </div>
-            <h3 className="text-sm font-medium text-zinc-200">
+          <div className="py-7">
+            <h3 className="text-sm text-zinc-300">
               {questions.length
-                ? 'No questions found. Yet.'
-                : 'Every good conversation starts somewhere.'}
+                ? 'No matching answers.'
+                : 'No answers published yet.'}
             </h3>
-            <p className="mt-2 max-w-xs text-xs leading-6 text-zinc-400">
-              {questions.length
-                ? 'Try another keyword or topic. Or send in the question you were hoping to find.'
-                : 'Be the first to ask. Once I’ve answered, the question and reply will appear right here.'}
-            </p>
             {questions.length ? (
               <button
                 type="button"
@@ -689,32 +505,17 @@ export function AskPage({
                   setQuery('')
                   setFilter('all')
                 }}
-                className="text-link mt-3 text-zinc-300"
+                className="text-link mt-1"
               >
                 Clear filters <X aria-hidden="true" className="size-3" />
               </button>
             ) : (
-              <a
-                href="#ask-question"
-                onClick={() => textarea.current?.focus({ preventScroll: true })}
-                className="text-link mt-3 text-zinc-300"
-              >
-                Start the conversation{' '}
-                <ArrowUpRight aria-hidden="true" className="size-3" />
-              </a>
+              <p className="mt-2 text-xs leading-6 text-zinc-400">
+                Replies will appear here as I answer your questions.
+              </p>
             )}
           </div>
         )}
-        <div className="mt-6 flex items-start gap-2.5 text-[11px] leading-6 text-zinc-400">
-          <MessageSquare
-            aria-hidden="true"
-            className="mt-1.5 size-3 shrink-0"
-          />
-          <p>
-            A small space for thoughtful questions. Be curious, be kind, and
-            leave personal details out of anything you’d like answered publicly.
-          </p>
-        </div>
       </section>
     </main>
   )

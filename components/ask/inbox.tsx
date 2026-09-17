@@ -8,11 +8,8 @@ import {
   Check,
   ChevronDown,
   CornerUpLeft,
-  Inbox as InboxIcon,
   LoaderCircle,
-  LockKeyhole,
   LogOut,
-  MessageSquare,
   RefreshCw,
   Search,
 } from 'lucide-react'
@@ -72,7 +69,7 @@ function AnswerEditor({
         maxLength={ANSWER_MAX_LENGTH}
         required
         disabled={pending}
-        placeholder="Take your time. A thoughtful answer goes a long way."
+        placeholder="Write your answer…"
         className="ask-field mt-3 min-h-44 resize-y"
       />
       <div className="mt-3 flex items-center justify-between gap-3">
@@ -85,7 +82,7 @@ function AnswerEditor({
             value={topic}
             onChange={(event) => setTopic(event.target.value as AskTopic)}
             disabled={pending}
-            className="min-h-10 appearance-none rounded-md border border-white/15 bg-black py-2 pr-8 pl-3 text-xs text-zinc-300"
+            className="ask-select"
           >
             {ASK_TOPICS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -241,14 +238,12 @@ export function Inbox({
 
   return (
     <main
-      className="ask-inbox ask-enter"
+      className="ask-inbox"
       aria-labelledby="inbox-title"
       data-clarity-mask="true"
     >
       <div className="flex items-center justify-between gap-4">
-        <p className="section-heading flex items-center gap-2">
-          <LockKeyhole aria-hidden="true" className="size-3" /> Just for you
-        </p>
+        <p className="section-heading">Private Q&A</p>
         <button
           type="button"
           onClick={logout}
@@ -263,17 +258,16 @@ export function Inbox({
         id="inbox-title"
         className="mt-3 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
       >
-        Question inbox<span className="text-zinc-500">.</span>
+        Inbox<span className="text-zinc-500">.</span>
       </h1>
       <p className="mt-4 text-sm leading-7 text-zinc-400">
-        A little curiosity landed here. Only the answers you publish become part
-        of the conversation.
+        Read questions and publish your replies.
       </p>
-      <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+      <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-b border-white/10">
         <div
           role="group"
           aria-label="Question status"
-          className="flex flex-wrap gap-1"
+          className="flex flex-wrap gap-5"
         >
           {tabs.map((item) => (
             <button
@@ -285,7 +279,7 @@ export function Inbox({
                 setTab(item.value)
                 setEditing(null)
               }}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-xs transition-colors disabled:opacity-50 ${tab === item.value ? 'bg-white/[0.09] text-zinc-100' : 'text-zinc-400 hover:text-zinc-200'}`}
+              className={`-mb-px inline-flex min-h-11 items-center gap-2 border-b text-xs transition-colors disabled:opacity-50 ${tab === item.value ? 'border-zinc-300 text-zinc-100' : 'border-transparent text-zinc-400 hover:text-zinc-200'}`}
             >
               {item.label}
               <span className="font-mono text-[10px] text-zinc-400">
@@ -310,24 +304,26 @@ export function Inbox({
           />
         </button>
       </div>
-      <div className="relative mt-5">
-        <Search
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-3.5 size-3.5 -translate-y-1/2 text-zinc-500"
-        />
-        <label htmlFor="inbox-search" className="sr-only">
-          Search your inbox
-        </label>
-        <input
-          id="inbox-search"
-          type="search"
-          placeholder="Find a question…"
-          value={query}
-          maxLength={160}
-          onChange={(event) => setQuery(event.target.value)}
-          className="ask-field pl-10"
-        />
-      </div>
+      {questions.length > 0 && (
+        <div className="relative mt-5">
+          <Search
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 left-3.5 size-3.5 -translate-y-1/2 text-zinc-500"
+          />
+          <label htmlFor="inbox-search" className="sr-only">
+            Search your inbox
+          </label>
+          <input
+            id="inbox-search"
+            type="search"
+            placeholder="Find a question…"
+            value={query}
+            maxLength={160}
+            onChange={(event) => setQuery(event.target.value)}
+            className="ask-field pl-10"
+          />
+        </div>
+      )}
       {error && (
         <div
           role="alert"
@@ -359,7 +355,7 @@ export function Inbox({
         </div>
       )}
       {loadError ? (
-        <div className="mt-5 rounded-xl border border-dashed border-white/15 p-8 text-center">
+        <div className="py-7">
           <p className="text-sm text-zinc-300">The inbox couldn’t load.</p>
           <p className="mt-2 text-xs leading-6 text-zinc-400">
             Check the Supabase connection and database migration, then refresh.
@@ -374,14 +370,10 @@ export function Inbox({
           </button>
         </div>
       ) : filtered.length ? (
-        <div className="mt-5 space-y-4">
+        <div className="divide-y divide-white/10">
           {filtered.map((question) => (
-            <article
-              key={question.id}
-              className="rounded-xl border border-white/15 bg-[#080808] p-5 sm:p-6"
-            >
+            <article key={question.id} className="py-6">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] text-zinc-400">
-                <MessageSquare aria-hidden="true" className="mr-1 size-3" />
                 <span>Anonymous</span>
                 <span aria-hidden="true" className="text-zinc-700">
                   /
@@ -464,35 +456,29 @@ export function Inbox({
           ))}
         </div>
       ) : (
-        <div className="ask-empty mt-5 flex flex-col items-center rounded-xl border border-dashed border-white/10 px-6 py-12 text-center">
-          <InboxIcon
-            aria-hidden="true"
-            className="mb-5 size-7 text-zinc-500"
-            strokeWidth={1.3}
-          />
-          <h2 className="text-sm font-medium text-zinc-200">
+        <div className="py-7">
+          <h2 className="text-sm text-zinc-300">
             {query
               ? 'Nothing matches that search.'
               : tab === 'pending'
-                ? 'All caught up.'
+                ? 'No new questions.'
                 : tab === 'answered'
-                  ? 'Your first answer is waiting to happen.'
-                  : 'Nothing tucked away.'}
+                  ? 'No published answers.'
+                  : 'No archived questions.'}
           </h2>
-          <p className="mt-2 max-w-xs text-xs leading-6 text-zinc-400">
+          <p className="mt-2 text-xs leading-6 text-zinc-400">
             {query
               ? 'Try another word, or look in a different tab.'
               : tab === 'pending'
-                ? 'New anonymous questions will appear here. There’s no rush — good answers take a little thought.'
+                ? 'New anonymous questions will appear here.'
                 : tab === 'answered'
                   ? 'Published replies will appear here and on the public Q&A page.'
-                  : 'Archived questions stay private. You can bring them back whenever you like.'}
+                  : 'Archived questions stay private. You can restore them to the inbox.'}
           </p>
         </div>
       )}
       <SiteLink href="/ask" className="text-link mt-5">
-        <ArrowLeft aria-hidden="true" className="size-3" /> Back to the
-        conversation
+        <ArrowLeft aria-hidden="true" className="size-3" /> Back to questions
       </SiteLink>
     </main>
   )
