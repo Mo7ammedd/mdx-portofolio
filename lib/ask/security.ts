@@ -13,8 +13,14 @@ export const ASK_SESSION_SECONDS = 60 * 60 * 8
 export function adminConfig() {
   const email = normalizeEmail(process.env.ASK_ADMIN_EMAIL)
   const password = process.env.ASK_ADMIN_PASSWORD
-  if (!email || !password || password.length < 16 || password.length > 256)
+  if (!email) {
+    console.error('[ask] ASK_ADMIN_EMAIL is missing or invalid.')
     return null
+  }
+  if (!password || password.length < 16 || password.length > 256) {
+    console.error('[ask] ASK_ADMIN_PASSWORD must contain 16 to 256 characters.')
+    return null
+  }
   return {
     email,
     password,
