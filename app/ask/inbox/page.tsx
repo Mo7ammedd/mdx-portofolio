@@ -9,6 +9,7 @@ import {
 import { getAskStore } from '@/lib/ask/storage'
 import type { Question } from '@/lib/ask/types'
 import { generateSEO } from '@/lib/seo'
+import { emailNotificationsEnabled } from '@/lib/ask/notifications'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -19,7 +20,11 @@ export const metadata = generateSEO({
   noIndex: true,
 })
 
-export default async function InboxPage() {
+export default async function InboxPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ question?: string | string[] }>
+}) {
   const admin = adminConfig()
   const session = (await cookies()).get(ASK_SESSION_COOKIE)?.value
   if (!verifySession(session, admin?.sessionSecret ?? null)) {
@@ -32,5 +37,15 @@ export default async function InboxPage() {
   } catch {
     loadError = true
   }
-  return <Inbox initialQuestions={questions} loadError={loadError} />
+  const requestedQuestion = (await searchParams).question
+  return (
+    <Inbox
+      initialQuestions={questions}
+      initialQuestionId={
+        typeof requestedQuestion === 'string' ? requestedQuestion : undefined
+      }
+      notificationsEnabled={emailNotificationsEnabled()}
+      loadError={loadError}
+    />
+  )
 }

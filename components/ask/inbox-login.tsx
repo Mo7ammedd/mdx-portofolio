@@ -43,10 +43,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
       data-clarity-mask="true"
     >
       <p className="section-heading">Private Q&A</p>
-      <h1
-        id="inbox-title"
-        className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-      >
+      <h1 id="inbox-title" className="ask-title mt-4">
         Inbox<span className="text-zinc-500">.</span>
       </h1>
       <p className="mt-5 max-w-md text-sm leading-7 text-zinc-400">

@@ -4,10 +4,12 @@ The public page is `/ask`. The private inbox is `/ask/inbox`. The same Next.js
 project also serves `ask.modev.me/` and `ask.modev.me/inbox` through host-based
 rewrites. Main portfolio links return to `www.modev.me` on the subdomain.
 
-Visitors choose a topic and send a question without an account, name, or email.
+Visitors send a question without an account, name, or email. New questions use
+the General topic; the inbox owner can choose a topic while publishing an answer.
 Questions stay private until an inbox owner publishes an answer. Answers can be
 edited, unpublished into the archive, and restored to the inbox. Public visitors
 can search, filter by topic, expand answers, and copy a link to a specific answer.
+Search and topic filters open from the answer list’s Search button.
 There are no seeded questions or simulated submissions.
 
 ## Local development
@@ -71,6 +73,38 @@ are not automatically migrated into Supabase.
 Without a working database, production returns an unavailable state and never
 reports a successful submission. The form also stays closed until an inbox
 email and password have been configured.
+
+## New-question emails
+
+Notifications use Resend’s HTTP API and require no additional runtime service
+or SMTP connection. Set these variables in **Vercel → Production**:
+
+| Variable                  | Value                                            |
+| ------------------------- | ------------------------------------------------ |
+| `RESEND_API_KEY`          | An API key allowed to send email through Resend  |
+| `ASK_EMAIL_NOTIFICATIONS` | `true` to enable notifications                   |
+| `ASK_EMAIL_FROM`          | A sending address on a domain verified in Resend |
+
+Notifications go only to `ASK_ADMIN_EMAIL`. For testing with the email registered
+on your Resend account, `ASK_EMAIL_FROM` can be `onboarding@resend.dev` (the default).
+Use a verified sending domain for other recipients. Redeploy after changing these
+environment variables. The old `EMAIL_USER`/`EMAIL_PASS` variables are not used.
+
+A question is saved before Next.js schedules its email with `after()`, which keeps
+the Vercel function alive after returning the submission response. Email failures
+do not discard a question or report a failed submission. A transient failure gets
+one retry with a stable idempotency key, preventing duplicate messages if the
+first request times out after sending. Final failures are recorded in server logs;
+there is no persistent retry queue. The private inbox remains the source of truth.
+
+Emails contain the question, its topic, and a link that opens the corresponding
+question and answer editor after sign-in. They never contain the admin password,
+API credentials, or visitor IP addresses. Question text is escaped in the HTML
+email and also included in a plain-text version.
+
+Notifications are off unless explicitly enabled. Vercel preview deployments never
+send them, even if credentials are present. Leave `ASK_EMAIL_NOTIFICATIONS=false`
+when using local fixtures or testing the UI.
 
 ## Storage and access
 

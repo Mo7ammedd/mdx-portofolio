@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 const seo = generateSEO({
   title: 'Ask me anything',
   description:
-    'Ask Mohammed Mostafa about backend development, his projects, or your own work. Send an anonymous question and read his answers.',
+    'Whatever is on your mind, ask Mohammed Mostafa. Leave an anonymous question and read his answers. No account needed.',
   path: '/ask',
 })
 

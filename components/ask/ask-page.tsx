@@ -71,12 +71,14 @@ function AnswerRow({
       open={initiallyOpen}
       className="ask-answer group scroll-mt-8 border-b border-white/10"
     >
-      <summary className="cursor-pointer list-none py-5 [&::-webkit-details-marker]:hidden">
-        <span className="mb-2 block font-mono text-[11px] text-zinc-400">
-          {topicLabel(question.topic)}
-        </span>
+      <summary className="cursor-pointer list-none py-6 [&::-webkit-details-marker]:hidden">
+        {question.topic !== 'general' && (
+          <span className="mb-2 block font-mono text-[11px] text-zinc-400">
+            {topicLabel(question.topic)}
+          </span>
+        )}
         <span className="flex items-start justify-between gap-5">
-          <span className="text-[15px] leading-7 font-medium break-words text-zinc-200 transition-colors group-hover:text-white">
+          <span className="min-w-0 flex-1 text-base leading-7 font-medium tracking-[-0.015em] break-words text-zinc-200 transition-colors group-hover:text-white sm:text-[17px]">
             {question.question}
           </span>
           <ChevronDown
@@ -85,11 +87,11 @@ function AnswerRow({
           />
         </span>
       </summary>
-      <div className="pb-5">
-        <p className="text-sm leading-7 break-words whitespace-pre-wrap text-zinc-400">
+      <div className="pb-6">
+        <p className="ask-reply text-[15px] leading-7 break-words whitespace-pre-wrap text-zinc-300">
           {question.answer}
         </p>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 pl-[17px]">
           <div className="flex flex-wrap items-center gap-x-2 text-[11px] leading-6">
             <span className="text-zinc-300">Mohammed</span>
             <span aria-hidden="true" className="text-zinc-500">
@@ -127,14 +129,15 @@ export function AskPage({
   const [available, setAvailable] = useState(acceptingQuestions)
   const [loadError, setLoadError] = useState(initialLoadError)
   const [question, setQuestion] = useState('')
-  const [topic, setTopic] = useState<AskTopic>('general')
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<AskTopic | 'all'>('all')
+  const [searchOpen, setSearchOpen] = useState(false)
   const [sending, setSending] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const textarea = useRef<HTMLTextAreaElement>(null)
+  const searchInput = useRef<HTMLInputElement>(null)
   const successTitle = useRef<HTMLHeadingElement>(null)
   const sendingRef = useRef(false)
   const filtered = filterAnswers(questions, query, filter)
@@ -142,6 +145,10 @@ export function AskPage({
   useEffect(() => {
     if (submitted) successTitle.current?.focus({ preventScroll: true })
   }, [submitted])
+
+  useEffect(() => {
+    if (searchOpen) searchInput.current?.focus()
+  }, [searchOpen])
 
   useEffect(() => {
     function openLinkedAnswer() {
@@ -173,11 +180,14 @@ export function AskPage({
     try {
       await askRequest('/api/ask/questions', {
         method: 'POST',
-        body: JSON.stringify({ question, topic, website: form.get('website') }),
+        body: JSON.stringify({
+          question,
+          topic: 'general',
+          website: form.get('website'),
+        }),
       })
       setSubmitted(true)
       setQuestion('')
-      setTopic('general')
     } catch (error) {
       setError(requestError(error))
     } finally {
@@ -211,24 +221,21 @@ export function AskPage({
     >
       <section>
         <p className="section-heading">Questions & answers</p>
-        <h1
-          id="ask-title"
-          className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-        >
+        <h1 id="ask-title" className="ask-title mt-4">
           Ask me anything<span className="text-zinc-500">.</span>
         </h1>
-        <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
-          Code, career, or whatever’s on your mind. Ask away. No name needed.
+        <p className="mt-4 max-w-lg text-[15px] leading-7 text-zinc-400">
+          Especially the thing you almost didn’t.
         </p>
       </section>
 
       <section
         id="ask-question"
         aria-labelledby="question-title"
-        className="mt-8 scroll-mt-8"
+        className="mt-8 scroll-mt-8 sm:mt-9"
       >
         {submitted ? (
-          <div className="border-y border-white/10 py-7">
+          <div className="ask-composer px-5 py-7 sm:px-6">
             <h2
               ref={successTitle}
               tabIndex={-1}
@@ -238,8 +245,7 @@ export function AskPage({
               Question sent.
             </h2>
             <p className="mt-2 text-sm leading-7 text-zinc-400">
-              It’s in my private inbox. If I publish an answer, it will appear
-              below.
+              It’s in my inbox. If I publish an answer, you’ll find it below.
             </p>
             <button
               type="button"
@@ -258,10 +264,10 @@ export function AskPage({
             action="/api/ask/questions"
             method="post"
             onSubmit={submit}
-            className="relative"
+            className="ask-composer"
             aria-busy={sending}
           >
-            <div className="flex items-baseline justify-between gap-4">
+            <div className="flex items-baseline justify-between gap-4 px-4 pt-4 sm:px-5 sm:pt-5">
               <h2 id="question-title">
                 <label
                   htmlFor="question"
@@ -272,7 +278,11 @@ export function AskPage({
               </h2>
               <span
                 id="question-count"
-                className="font-mono text-[11px] text-zinc-400 tabular-nums"
+                className={
+                  question.length
+                    ? 'font-mono text-[11px] text-zinc-400 tabular-nums'
+                    : 'sr-only'
+                }
               >
                 {question.length} / {QUESTION_MAX_LENGTH.toLocaleString('en')}
               </span>
@@ -291,10 +301,10 @@ export function AskPage({
                 setQuestion(event.target.value)
                 setError('')
               }}
-              placeholder="What would you like to know?"
+              placeholder="What’s on your mind?"
               aria-describedby={`question-privacy question-count${error ? ' question-error' : ''}`}
               aria-invalid={Boolean(error)}
-              className="ask-field mt-3 block min-h-28 resize-y"
+              className="ask-compose-input"
             />
             <div className="ask-honeypot" aria-hidden="true" inert>
               <label htmlFor="question-website">Leave this field empty</label>
@@ -310,43 +320,27 @@ export function AskPage({
               <p
                 id="question-error"
                 role="alert"
-                className="mt-3 text-xs leading-6 text-red-300"
+                className="px-4 pb-2 text-xs leading-6 text-red-300 sm:px-5"
               >
                 {error}
               </p>
             )}
             {!available && (
-              <p role="status" className="mt-3 text-xs leading-6 text-zinc-400">
+              <p
+                role="status"
+                className="px-4 pb-2 text-xs leading-6 text-zinc-400 sm:px-5"
+              >
                 Questions are closed for the moment. Please check back soon.
               </p>
             )}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-              <div className="relative">
-                <label htmlFor="question-topic" className="sr-only">
-                  Question topic
-                </label>
-                <select
-                  id="question-topic"
-                  value={topic}
-                  disabled={sending || !available || !hydrated}
-                  onChange={(event) => setTopic(event.target.value as AskTopic)}
-                  className="ask-select"
-                >
-                  {ASK_TOPICS.map((item) => (
-                    <option key={item.value} value={item.value}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-1/2 right-3 size-3 -translate-y-1/2 text-zinc-400"
-                />
-              </div>
+            <div className="ask-compose-footer">
+              <span className="text-[11px] text-zinc-400">No name needed</span>
               <button
                 type="submit"
-                disabled={sending || !available || !hydrated}
-                className="ask-primary"
+                disabled={
+                  sending || !available || !hydrated || !question.trim()
+                }
+                className="ask-primary gap-2 px-3.5"
               >
                 {sending ? 'Sending' : 'Send question'}
                 {sending ? (
@@ -370,9 +364,9 @@ export function AskPage({
         {!submitted && (
           <p
             id="question-privacy"
-            className="mt-3 text-xs leading-6 text-zinc-400"
+            className="mt-3 text-[11px] leading-6 text-zinc-400"
           >
-            No name or email. Questions stay private until I publish a reply.
+            Questions stay private until I publish an answer.
           </p>
         )}
       </section>
@@ -380,7 +374,7 @@ export function AskPage({
       <section
         id="answers"
         aria-labelledby="answers-title"
-        className="mt-12 scroll-mt-8 sm:mt-14"
+        className="mt-12 scroll-mt-8 sm:mt-16"
       >
         <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
           <div className="flex items-baseline gap-3">
@@ -391,21 +385,49 @@ export function AskPage({
               {questions.length}
             </span>
           </div>
-          <button
-            type="button"
-            onClick={refresh}
-            disabled={refreshing}
-            aria-label="Refresh answers"
-            className="-my-2 flex size-11 items-center justify-center text-zinc-400 transition-colors hover:text-white disabled:opacity-50"
-          >
-            <RefreshCw
-              aria-hidden="true"
-              className={`size-3.5 ${refreshing ? 'animate-spin' : ''}`}
-            />
-          </button>
+          <div className="-my-2 flex items-center gap-2">
+            {questions.length > 0 && (
+              <button
+                type="button"
+                aria-expanded={searchOpen}
+                aria-controls="answer-filters"
+                disabled={!hydrated}
+                onClick={() => {
+                  setSearchOpen(!searchOpen)
+                  if (searchOpen) {
+                    setQuery('')
+                    setFilter('all')
+                  }
+                }}
+                className="text-link gap-2 px-2"
+              >
+                {searchOpen ? (
+                  <X aria-hidden="true" className="size-3.5" />
+                ) : (
+                  <Search aria-hidden="true" className="size-3.5" />
+                )}
+                {searchOpen ? 'Close search' : 'Search'}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={refresh}
+              disabled={refreshing || !hydrated}
+              aria-label="Refresh answers"
+              className="ask-icon-button"
+            >
+              <RefreshCw
+                aria-hidden="true"
+                className={`size-3.5 ${refreshing ? 'animate-spin' : ''}`}
+              />
+            </button>
+          </div>
         </div>
-        {questions.length > 0 && (
-          <div className="flex items-center gap-3 border-b border-white/10 py-2">
+        {questions.length > 0 && searchOpen && (
+          <div
+            id="answer-filters"
+            className="flex items-center gap-3 border-b border-white/10 py-2"
+          >
             <div className="relative min-w-0 flex-1">
               <Search
                 aria-hidden="true"
@@ -415,6 +437,7 @@ export function AskPage({
                 Search answered questions
               </label>
               <input
+                ref={searchInput}
                 id="answer-search"
                 type="search"
                 value={query}

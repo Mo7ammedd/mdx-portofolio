@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   Archive,
   ArrowLeft,
@@ -10,6 +10,7 @@ import {
   CornerUpLeft,
   LoaderCircle,
   LogOut,
+  Mail,
   RefreshCw,
   Search,
 } from 'lucide-react'
@@ -138,16 +139,29 @@ const tabs: { value: QuestionStatus; label: string }[] = [
 
 export function Inbox({
   initialQuestions,
+  initialQuestionId,
+  notificationsEnabled,
   loadError: initialLoadError,
 }: {
   initialQuestions: Question[]
+  initialQuestionId?: string
+  notificationsEnabled: boolean
   loadError: boolean
 }) {
   const router = useRouter()
+  const linkedQuestion = initialQuestions.find(
+    (question) => question.id === initialQuestionId,
+  )
   const [questions, setQuestions] = useState(initialQuestions)
-  const [tab, setTab] = useState<QuestionStatus>('pending')
+  const [tab, setTab] = useState<QuestionStatus>(
+    linkedQuestion?.status ?? 'pending',
+  )
   const [query, setQuery] = useState('')
-  const [editing, setEditing] = useState<string | null>(null)
+  const [editing, setEditing] = useState<string | null>(
+    linkedQuestion && linkedQuestion.status !== 'archived'
+      ? linkedQuestion.id
+      : null,
+  )
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -155,6 +169,9 @@ export function Inbox({
   const [loadError, setLoadError] = useState(initialLoadError)
   const [expired, setExpired] = useState(false)
   const busyRef = useRef(false)
+  const awaitingReply = questions.filter(
+    (question) => question.status === 'pending',
+  ).length
   const filtered = questions.filter(
     (question) =>
       question.status === tab &&
@@ -162,6 +179,13 @@ export function Inbox({
         .toLocaleLowerCase()
         .includes(query.trim().toLocaleLowerCase()),
   )
+
+  useEffect(() => {
+    if (linkedQuestion)
+      document
+        .getElementById(`inbox-question-${linkedQuestion.id}`)
+        ?.scrollIntoView({ block: 'start' })
+  }, [linkedQuestion])
 
   function report(error: unknown) {
     if (error instanceof AskRequestError && error.status === 401)
@@ -254,15 +278,21 @@ export function Inbox({
           Sign out
         </button>
       </div>
-      <h1
-        id="inbox-title"
-        className="mt-3 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-      >
+      <h1 id="inbox-title" className="ask-title mt-4">
         Inbox<span className="text-zinc-500">.</span>
       </h1>
-      <p className="mt-4 text-sm leading-7 text-zinc-400">
-        Read questions and publish your replies.
-      </p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
+        <p className="text-sm leading-7 text-zinc-400">
+          {awaitingReply
+            ? `${awaitingReply} ${awaitingReply === 1 ? 'question' : 'questions'} waiting for a reply.`
+            : 'You’re all caught up.'}
+        </p>
+        {notificationsEnabled && (
+          <p className="flex items-center gap-2 text-[11px] text-zinc-400">
+            <Mail aria-hidden="true" className="size-3.5" /> Email alerts on
+          </p>
+        )}
+      </div>
       <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-b border-white/10">
         <div
           role="group"
@@ -372,7 +402,11 @@ export function Inbox({
       ) : filtered.length ? (
         <div className="divide-y divide-white/10">
           {filtered.map((question) => (
-            <article key={question.id} className="py-6">
+            <article
+              key={question.id}
+              id={`inbox-question-${question.id}`}
+              className="scroll-mt-8 py-6"
+            >
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] text-zinc-400">
                 <span>Anonymous</span>
                 <span aria-hidden="true" className="text-zinc-700">
