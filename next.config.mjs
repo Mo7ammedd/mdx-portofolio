@@ -22,6 +22,49 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   turbopack: {},
+  // Local development questions must never be bundled into a deployment.
+  outputFileTracingExcludes: {
+    '/*': ['./.data/**/*'],
+  },
+  async rewrites() {
+    const askHost = [{ type: 'host', value: 'ask\\.(modev\\.me|localhost)' }]
+    return {
+      beforeFiles: [
+        { source: '/', has: askHost, destination: '/ask' },
+        { source: '/inbox', has: askHost, destination: '/ask/inbox' },
+      ],
+    }
+  },
+  async redirects() {
+    const askHost = [{ type: 'host', value: 'ask\\.(modev\\.me|localhost)' }]
+    return [
+      { source: '/ask', has: askHost, destination: '/', permanent: true },
+      {
+        source: '/ask/inbox',
+        has: askHost,
+        destination: '/inbox',
+        permanent: true,
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/ask/inbox',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
+      },
+      {
+        source: '/inbox',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
+      },
+    ]
+  },
   experimental: {
     optimizePackageImports: ['lucide-react', 'motion'],
   },

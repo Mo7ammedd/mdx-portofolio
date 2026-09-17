@@ -15,6 +15,16 @@ Lint uses the Next.js 16 flat ESLint configuration. Tests cover MDX navigation,
 scheduler and replica-recovery correctness, related-article ranking, and
 engagement-event classification.
 
+## Anonymous Q&A
+
+`/ask` accepts anonymous questions and shows searchable, topic-filtered answers.
+Review questions and publish replies at the password-protected `/ask/inbox`.
+Host-based routing also supports `ask.modev.me` in the same Vercel project.
+Next.js server routes use Supabase in production and an ignored local file in
+development. Run `node scripts/setup-ask.mjs` to generate a local inbox password.
+See [Q&A setup](docs/ask-setup.md) for the database migration, environment
+variables, privacy behavior, and domain setup.
+
 ## Experience
 
 Edit `WORK_EXPERIENCE` in `app/data.tsx` for company summaries, roles, dates,

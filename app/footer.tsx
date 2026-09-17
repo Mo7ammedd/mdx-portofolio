@@ -1,5 +1,6 @@
 import { Rss } from 'lucide-react'
 import { PalestineSolidarity } from '@/components/palestine-solidarity'
+import { SiteLink } from '@/components/site-link'
 
 export function Footer() {
   return (
@@ -13,14 +14,15 @@ export function Footer() {
         >
           © {new Date().getFullYear()} Mohammed Mostafa
         </a>
-        <a
+        <SiteLink
           href="/blog/rss.xml"
+          reloadDocument
           className="text-link"
           aria-label="Subscribe via RSS"
         >
           <Rss aria-hidden="true" className="size-3" />
           RSS
-        </a>
+        </SiteLink>
       </div>
       <PalestineSolidarity />
     </footer>

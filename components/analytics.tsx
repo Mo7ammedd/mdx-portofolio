@@ -3,6 +3,8 @@
 import Script from 'next/script'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, useRef } from 'react'
+import { useHydrated } from '@/lib/use-hydrated'
+import { isAskHost } from '@/components/site-link'
 
 import {
   getEngagementEvent,
@@ -18,7 +20,13 @@ declare global {
 }
 
 export function trackEvent(name: string, parameters?: AnalyticsParameters) {
-  if (typeof window !== 'undefined') window.gtag?.('event', name, parameters)
+  if (
+    typeof window !== 'undefined' &&
+    !isAskHost(window.location.hostname) &&
+    !window.location.pathname.startsWith('/ask')
+  ) {
+    window.gtag?.('event', name, parameters)
+  }
 }
 
 function AnalyticsTracker({
@@ -103,6 +111,15 @@ export function Analytics({
   googleAnalyticsId?: string
   microsoftClarityId?: string
 }) {
+  const pathname = usePathname()
+  const hydrated = useHydrated()
+  if (
+    !hydrated ||
+    pathname.startsWith('/ask') ||
+    isAskHost(window.location.hostname)
+  )
+    return null
+
   return (
     <>
       <EngagementTracker />
