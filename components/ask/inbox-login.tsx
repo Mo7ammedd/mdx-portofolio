@@ -43,10 +43,10 @@ export function InboxLogin({ configured }: { configured: boolean }) {
       data-clarity-mask="true"
     >
       <p className="section-heading">Private Q&A</p>
-      <h1 id="inbox-title" className="ask-title mt-4">
+      <h1 id="inbox-title" className="page-title mt-4">
         Inbox<span className="text-zinc-500">.</span>
       </h1>
-      <p className="mt-5 max-w-md text-sm leading-7 text-zinc-400">
+      <p className="page-description mt-5 max-w-md">
         Sign in to read questions and publish answers.
       </p>
       <form
@@ -60,7 +60,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
           <>
             <label
               htmlFor="inbox-email"
-              className="text-xs font-medium text-zinc-300"
+              className="text-[13px] font-medium text-zinc-300"
             >
               Email address
             </label>
@@ -82,12 +82,12 @@ export function InboxLogin({ configured }: { configured: boolean }) {
               }}
               disabled={pending || !hydrated}
               aria-describedby={error ? 'login-error' : undefined}
-              className="ask-field mt-3"
+              className="field-control mt-3"
               placeholder="you@example.com"
             />
             <label
               htmlFor="inbox-password"
-              className="mt-5 block text-xs font-medium text-zinc-300"
+              className="mt-5 block text-[13px] font-medium text-zinc-300"
             >
               Password
             </label>
@@ -106,7 +106,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
                 maxLength={256}
                 disabled={pending || !hydrated}
                 aria-describedby={error ? 'login-error' : undefined}
-                className="ask-field pr-12"
+                className="field-control pr-12"
                 placeholder="Your password"
               />
               <button
@@ -134,7 +134,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
             <button
               type="submit"
               disabled={pending || !email.trim() || !password || !hydrated}
-              className="ask-primary mt-4"
+              className="button-primary mt-4"
             >
               {pending ? (
                 <>

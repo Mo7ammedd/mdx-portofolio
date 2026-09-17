@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react'
 
 import { ProjectCard } from '@/components/project-card'
+import { RecentAnswer } from '@/components/ask/recent-answer'
 import type { PROJECTS, SOCIAL_LINKS, WORK_EXPERIENCE } from './data'
 
 function SocialLink({
@@ -53,13 +54,10 @@ export function PersonalClient({
     <main className="space-y-12 sm:space-y-14">
       <section aria-labelledby="intro-heading">
         <p className="section-heading">Software engineer · Egypt</p>
-        <h1
-          id="intro-heading"
-          className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-        >
+        <h1 id="intro-heading" className="page-title mt-4">
           Mohammed Mostafa<span className="text-zinc-500">.</span>
         </h1>
-        <div className="mt-5 max-w-xl space-y-3 text-sm leading-7 text-zinc-400 sm:text-[15px]">
+        <div className="page-description mt-5 space-y-3">
           <p>
             I build backend systems, databases, and cloud infrastructure with a
             focus on performance and reliability.
@@ -107,13 +105,11 @@ export function PersonalClient({
       </section>
 
       <section id="work" aria-labelledby="work-heading" className="scroll-mt-8">
-        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+        <div className="section-header">
           <h2 id="work-heading" className="section-heading">
             Experience
           </h2>
-          <span className="font-mono text-[11px] text-zinc-400">
-            2024 — Now
-          </span>
+          <span className="meta-text">2024 — Now</span>
         </div>
         <ul className="divide-y divide-white/[0.07]">
           {workExperience.map((job) => (
@@ -130,7 +126,7 @@ export function PersonalClient({
                 </div>
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <h3 className="text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
+                    <h3 className="item-title transition-colors group-hover:text-white">
                       <a
                         href={job.link}
                         target="_blank"
@@ -144,19 +140,19 @@ export function PersonalClient({
                         />
                       </a>
                     </h3>
-                    <p className="text-xs text-zinc-400">{job.title}</p>
+                    <p className="text-[13px] text-zinc-400">{job.title}</p>
                   </div>
-                  <p className="mt-1 font-mono text-[11px] leading-5 text-zinc-300">
+                  <p className="meta-text mt-1">
                     {job.start} <span aria-hidden="true">—</span> {job.end}
                   </p>
                   {job.description && (
-                    <p className="mt-1.5 text-xs leading-5 text-zinc-400">
+                    <p className="mt-1.5 text-sm leading-6 text-zinc-400">
                       {job.description}
                     </p>
                   )}
                   {job.highlights && job.highlights.length > 0 && (
                     <details className="group/work mt-1">
-                      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-sm text-[11px] text-zinc-400 transition-colors hover:text-zinc-200 [&::-webkit-details-marker]:hidden">
+                      <summary className="text-link cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                         <span>
                           Selected work
                           <span className="sr-only"> at {job.company}</span>
@@ -169,10 +165,10 @@ export function PersonalClient({
                       <ul className="space-y-3 border-l border-white/10 pb-1 pl-3">
                         {job.highlights.map((highlight) => (
                           <li key={highlight.title}>
-                            <h4 className="text-xs font-medium text-zinc-300">
+                            <h4 className="text-sm font-medium text-zinc-300">
                               {highlight.title}
                             </h4>
-                            <p className="mt-1 text-xs leading-6 text-zinc-400">
+                            <p className="mt-1 text-sm leading-6 text-zinc-400">
                               {highlight.description}
                             </p>
                           </li>
@@ -192,7 +188,7 @@ export function PersonalClient({
         aria-labelledby="projects-heading"
         className="scroll-mt-8"
       >
-        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+        <div className="section-header">
           <h2 id="projects-heading" className="section-heading">
             Selected projects
           </h2>
@@ -218,7 +214,7 @@ export function PersonalClient({
 
       {blogPosts.length > 0 && (
         <section aria-labelledby="writing-heading">
-          <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+          <div className="section-header">
             <h2 id="writing-heading" className="section-heading">
               Writing
             </h2>
@@ -235,10 +231,10 @@ export function PersonalClient({
                   href={post.link}
                 >
                   <div className="min-w-0">
-                    <h3 className="text-sm leading-6 text-zinc-200 transition-colors group-hover:text-white">
+                    <h3 className="item-title transition-colors group-hover:text-white">
                       {post.title}
                     </h3>
-                    <div className="mt-1.5 flex flex-wrap items-center gap-x-2 font-mono text-[11px] leading-5 text-zinc-400">
+                    <div className="meta-text mt-1.5 flex flex-wrap items-center gap-x-2">
                       <time dateTime={post.publishedTime}>
                         {new Date(post.publishedTime).toLocaleDateString(
                           'en-US',
@@ -267,11 +263,13 @@ export function PersonalClient({
         </section>
       )}
 
+      <RecentAnswer />
+
       <section aria-labelledby="connect-heading">
         <h2 id="connect-heading" className="section-heading mb-4">
           Connect
         </h2>
-        <p className="text-sm leading-7 text-zinc-400">
+        <p className="body-copy">
           Have something in mind? Reach out at{' '}
           <a className="inline-link break-words" href={`mailto:${email}`}>
             {email}

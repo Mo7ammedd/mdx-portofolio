@@ -49,25 +49,20 @@ export default async function ProjectPage({ params }: Props) {
   )
 
   return (
-    <main aria-labelledby="project-title" className="space-y-10 sm:space-y-12">
+    <main aria-labelledby="project-title" className="space-y-12 sm:space-y-14">
       <div>
         <Link href="/projects" className="text-link mb-6">
           <ArrowLeft aria-hidden="true" className="size-3.5" />
           All projects
         </Link>
         <p className="section-heading">Project case study</p>
-        <h1
-          id="project-title"
-          className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-        >
+        <h1 id="project-title" className="page-title mt-4">
           {project.title}
         </h1>
         <p className="mt-2 text-lg leading-7 tracking-tight text-zinc-300">
           {project.subtitle}
         </p>
-        <p className="mt-5 text-sm leading-7 text-zinc-400 sm:text-[15px]">
-          {project.description}
-        </p>
+        <p className="page-description mt-5">{project.description}</p>
         <ul
           aria-label="Technologies"
           className="mt-4 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[11px] text-zinc-400"
@@ -80,7 +75,7 @@ export default async function ProjectPage({ params }: Props) {
           {presentation?.demoHref && (
             <a
               href={presentation.demoHref}
-              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-zinc-100 px-4 text-xs font-medium text-zinc-950 transition-colors hover:bg-white"
+              className="button-primary"
               data-project-name={project.title}
               data-link-type="demo"
             >
@@ -134,7 +129,7 @@ export default async function ProjectPage({ params }: Props) {
         <h2 id="problem-title" className="section-heading mb-4">
           The problem
         </h2>
-        <p className="text-sm leading-7 text-zinc-400">{project.problem}</p>
+        <p className="body-copy">{project.problem}</p>
       </section>
 
       <section aria-labelledby="architecture-title">
@@ -159,16 +154,14 @@ export default async function ProjectPage({ params }: Props) {
               <p className="font-mono text-[11px] text-zinc-400">
                 0{index + 1}
               </p>
-              <h3 className="mt-3 text-sm font-medium text-zinc-200">
-                {stage.title}
-              </h3>
-              <p className="mt-2 text-xs leading-6 text-zinc-400">
+              <h3 className="item-title mt-3">{stage.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-zinc-400">
                 {stage.description}
               </p>
             </li>
           ))}
         </ol>
-        <p className="mt-4 text-xs leading-6 text-zinc-400">
+        <p className="mt-4 text-sm leading-6 text-zinc-400">
           {project.architectureNote}
         </p>
       </section>
@@ -183,12 +176,8 @@ export default async function ProjectPage({ params }: Props) {
         <div className="space-y-6">
           {project.decisions.map((decision) => (
             <div key={decision.title}>
-              <h3 className="text-sm font-medium text-zinc-200">
-                {decision.title}
-              </h3>
-              <p className="mt-2 text-sm leading-7 text-zinc-400">
-                {decision.description}
-              </p>
+              <h3 className="item-title">{decision.title}</h3>
+              <p className="body-copy mt-2">{decision.description}</p>
             </div>
           ))}
         </div>
@@ -202,7 +191,7 @@ export default async function ProjectPage({ params }: Props) {
         <h2 id="validation-title" className="section-heading mb-4">
           Evidence & validation
         </h2>
-        <div className="space-y-3 text-sm leading-7 text-zinc-400">
+        <div className="body-copy space-y-3">
           {project.validation.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
@@ -234,9 +223,7 @@ export default async function ProjectPage({ params }: Props) {
           <h2 id="experiment-title" className="section-heading mb-4">
             {project.experiment.title}
           </h2>
-          <p className="text-sm leading-7 text-zinc-400">
-            {project.experiment.description}
-          </p>
+          <p className="body-copy">{project.experiment.description}</p>
           <pre
             tabIndex={0}
             aria-label="Commands to run the experiment"
@@ -265,10 +252,8 @@ export default async function ProjectPage({ params }: Props) {
                   data-link-type="article"
                 >
                   <div>
-                    <p className="text-sm leading-6 text-zinc-200">
-                      {post.title}
-                    </p>
-                    <p className="mt-1 text-xs leading-6 text-zinc-400">
+                    <p className="item-title">{post.title}</p>
+                    <p className="mt-1 text-sm leading-6 text-zinc-400">
                       {post.description}
                     </p>
                   </div>

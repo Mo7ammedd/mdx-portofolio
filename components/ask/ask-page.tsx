@@ -88,7 +88,7 @@ function AnswerRow({
         </span>
       </summary>
       <div className="pb-6">
-        <p className="ask-reply text-[15px] leading-7 break-words whitespace-pre-wrap text-zinc-300">
+        <p className="ask-reply body-copy break-words whitespace-pre-wrap text-zinc-300">
           {question.answer}
         </p>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 pl-[17px]">
@@ -221,10 +221,10 @@ export function AskPage({
     >
       <section>
         <p className="section-heading">Questions & answers</p>
-        <h1 id="ask-title" className="ask-title mt-4">
+        <h1 id="ask-title" className="page-title mt-4">
           Ask me anything<span className="text-zinc-500">.</span>
         </h1>
-        <p className="mt-4 max-w-lg text-[15px] leading-7 text-zinc-400">
+        <p className="page-description mt-5">
           Especially the thing you almost didn’t.
         </p>
       </section>
@@ -340,7 +340,7 @@ export function AskPage({
                 disabled={
                   sending || !available || !hydrated || !question.trim()
                 }
-                className="ask-primary gap-2 px-3.5"
+                className="button-primary gap-2 px-3.5"
               >
                 {sending ? 'Sending' : 'Send question'}
                 {sending ? (
@@ -376,7 +376,7 @@ export function AskPage({
         aria-labelledby="answers-title"
         className="mt-12 scroll-mt-8 sm:mt-16"
       >
-        <div className="flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
+        <div className="section-header">
           <div className="flex items-baseline gap-3">
             <h2 id="answers-title" className="section-heading">
               Answers
@@ -414,7 +414,7 @@ export function AskPage({
               onClick={refresh}
               disabled={refreshing || !hydrated}
               aria-label="Refresh answers"
-              className="ask-icon-button"
+              className="icon-button"
             >
               <RefreshCw
                 aria-hidden="true"

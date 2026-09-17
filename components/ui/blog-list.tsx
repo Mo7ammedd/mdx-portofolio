@@ -81,10 +81,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
       <div className="mb-8">
         <p className="section-heading mb-4">Notes & ideas</p>
         <div className="flex items-center justify-between gap-4">
-          <h1
-            id="writing-title"
-            className="text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-          >
+          <h1 id="writing-title" className="page-title">
             Writing
           </h1>
           <a
@@ -96,7 +93,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
             RSS
           </a>
         </div>
-        <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
+        <p className="page-description mt-5">
           Notes on backend engineering, systems, and the details behind reliable
           software.
         </p>
@@ -119,7 +116,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
             </label>
             <Search
               aria-hidden="true"
-              className="pointer-events-none absolute top-3.5 left-3 size-4 text-zinc-500"
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-zinc-500"
             />
             <input
               id="article-search"
@@ -131,7 +128,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               placeholder="Search articles and sections…"
               maxLength={160}
               autoComplete="off"
-              className="h-11 w-full rounded-md border border-white/15 bg-transparent pr-3 pl-10 text-base text-zinc-200 outline-offset-4 transition-colors placeholder:text-zinc-400 hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-sm"
+              className="field-control pl-10"
             />
           </div>
           {topics.length > 0 && (
@@ -144,7 +141,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                 value={activeTopic}
                 onChange={(event) => setActiveTopic(event.target.value)}
                 aria-controls="article-results"
-                className="bg-background h-11 w-full appearance-none truncate rounded-md border border-white/15 pr-9 pl-3 text-base text-zinc-300 outline-offset-4 transition-colors hover:border-zinc-700 focus-visible:outline-2 focus-visible:outline-zinc-400 sm:text-xs"
+                className="field-control field-select truncate"
               >
                 <option value="">All topics</option>
                 {topics.map((topic) => (
@@ -155,19 +152,15 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               </select>
               <ChevronDown
                 aria-hidden="true"
-                className="pointer-events-none absolute top-3.5 right-3 size-4 text-zinc-500"
+                className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-zinc-500"
               />
             </div>
           )}
         </form>
       )}
 
-      <div className="mt-5 flex min-h-10 items-center justify-between gap-4 border-b border-white/10 pb-3">
-        <p
-          role="status"
-          aria-atomic="true"
-          className="font-mono text-[11px] text-zinc-400"
-        >
+      <div className="section-header mt-5">
+        <p role="status" aria-atomic="true" className="meta-text">
           {query.trim() ? (
             'Full article search'
           ) : (
@@ -183,14 +176,12 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           <button
             type="button"
             onClick={clearFilters}
-            className="min-h-8 text-xs text-zinc-400 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-zinc-100"
+            className="text-link underline decoration-zinc-700 underline-offset-4"
           >
             Clear filters
           </button>
         ) : (
-          <span className="font-mono text-[11px] text-zinc-400">
-            Newest first
-          </span>
+          <span className="meta-text">Newest first</span>
         )}
       </div>
 
@@ -206,7 +197,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                   className="list-row group block py-6"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <h2 className="text-base leading-6 font-medium tracking-tight text-zinc-200 transition-colors group-hover:text-white">
+                    <h2 className="item-title transition-colors group-hover:text-white">
                       {post.title}
                     </h2>
                     <ArrowUpRight
@@ -214,10 +205,10 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                       className="mt-1 size-3.5 shrink-0 text-zinc-500 transition-colors group-hover:text-zinc-300"
                     />
                   </div>
-                  <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-zinc-400">
+                  <p className="body-copy mt-2 line-clamp-2">
                     {post.description}
                   </p>
-                  <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] leading-5 text-zinc-400">
+                  <div className="meta-text mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
                     <time dateTime={post.publishedTime}>
                       {formatDate(post.publishedTime)}
                     </time>

@@ -72,7 +72,7 @@ export function BlogSearchDialog() {
               type="button"
               onClick={close}
               aria-label="Close search"
-              className="flex size-11 items-center justify-center rounded-md text-zinc-400 hover:bg-white/5 hover:text-white"
+              className="icon-button"
             >
               <X aria-hidden="true" className="size-5" />
             </button>
@@ -90,7 +90,7 @@ export function BlogSearchDialog() {
             placeholder="Find a concept, API, or code example…"
             autoComplete="off"
             aria-controls={`${id}-results`}
-            className="h-12 w-full rounded-md border border-white/15 bg-black px-3 text-base text-zinc-100 placeholder:text-zinc-500"
+            className="field-control"
           />
           <div
             id={`${id}-results`}
@@ -99,7 +99,7 @@ export function BlogSearchDialog() {
             {query.trim() ? (
               <BlogSearchResults query={query} onNavigate={close} />
             ) : (
-              <p className="py-5 text-sm leading-6 text-zinc-400">
+              <p className="body-copy py-5">
                 Search across the full articles and jump to a matching section.
                 Try “composite cursor”, “IMiddleware”, or “round robin”.
               </p>

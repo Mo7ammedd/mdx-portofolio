@@ -142,7 +142,7 @@ export function TextSizeControl({
               aria-label={`${preset.label} text (${preset.value}%)`}
               aria-pressed={size === preset.value}
               title={`${preset.label} text (${preset.value}%)`}
-              className={`flex size-8 items-center justify-center rounded-md border font-medium transition-colors ${preset.className} ${
+              className={`icon-button border font-medium ${preset.className} ${
                 size === preset.value
                   ? 'border-white/10 bg-white/[0.07] text-zinc-100'
                   : 'border-transparent text-zinc-400 hover:bg-white/5 hover:text-zinc-100'

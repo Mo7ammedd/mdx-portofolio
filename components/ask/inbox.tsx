@@ -59,7 +59,7 @@ function AnswerEditor({
     >
       <label
         htmlFor={`answer-${question.id}`}
-        className="text-xs font-medium text-zinc-300"
+        className="text-[13px] font-medium text-zinc-300"
       >
         Your answer
       </label>
@@ -71,7 +71,7 @@ function AnswerEditor({
         required
         disabled={pending}
         placeholder="Write your answer…"
-        className="ask-field mt-3 min-h-44 resize-y"
+        className="field-control mt-3 min-h-44 resize-y"
       />
       <div className="mt-3 flex items-center justify-between gap-3">
         <div className="relative">
@@ -83,7 +83,7 @@ function AnswerEditor({
             value={topic}
             onChange={(event) => setTopic(event.target.value as AskTopic)}
             disabled={pending}
-            className="ask-select"
+            className="field-control field-select"
           >
             {ASK_TOPICS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -107,7 +107,7 @@ function AnswerEditor({
         <button
           type="submit"
           disabled={pending || !answer.trim()}
-          className="ask-primary"
+          className="button-primary"
         >
           {pending ? (
             <>
@@ -278,11 +278,11 @@ export function Inbox({
           Sign out
         </button>
       </div>
-      <h1 id="inbox-title" className="ask-title mt-4">
+      <h1 id="inbox-title" className="page-title mt-4">
         Inbox<span className="text-zinc-500">.</span>
       </h1>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-2">
-        <p className="text-sm leading-7 text-zinc-400">
+        <p className="body-copy">
           {awaitingReply
             ? `${awaitingReply} ${awaitingReply === 1 ? 'question' : 'questions'} waiting for a reply.`
             : 'You’re all caught up.'}
@@ -326,7 +326,7 @@ export function Inbox({
           onClick={refresh}
           disabled={Boolean(busy)}
           aria-label="Refresh inbox"
-          className="flex size-11 items-center justify-center rounded-md text-zinc-500 hover:bg-white/5 hover:text-zinc-200 disabled:opacity-50"
+          className="icon-button"
         >
           <RefreshCw
             aria-hidden="true"
@@ -350,7 +350,7 @@ export function Inbox({
             value={query}
             maxLength={160}
             onChange={(event) => setQuery(event.target.value)}
-            className="ask-field pl-10"
+            className="field-control pl-10"
           />
         </div>
       )}

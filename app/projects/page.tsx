@@ -15,13 +15,10 @@ export default function ProjectsPage() {
       <p className="section-heading">
         Selected work · {String(PROJECTS.length).padStart(2, '0')} projects
       </p>
-      <h1
-        id="projects-title"
-        className="mt-4 text-[2rem] leading-tight font-medium tracking-[-0.045em] text-zinc-100 sm:text-[2.75rem]"
-      >
+      <h1 id="projects-title" className="page-title mt-4">
         Projects
       </h1>
-      <p className="mt-5 max-w-lg text-sm leading-7 text-zinc-400 sm:text-[15px]">
+      <p className="page-description mt-5">
         Storage engines, transport protocols, and backend services. Explore the
         architecture, inspect the evidence, or try the scheduling and replica
         recovery demos.

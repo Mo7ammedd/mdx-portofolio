@@ -28,20 +28,13 @@ export function BlogHeader({
 
   return (
     <header data-blog-header className="not-prose">
-      <Link
-        href="/blog"
-        className="mb-5 inline-flex min-h-9 items-center gap-1.5 text-xs text-zinc-400 no-underline transition-colors hover:text-zinc-100 motion-reduce:transition-none"
-      >
+      <Link href="/blog" className="text-link mb-5">
         <ArrowLeft aria-hidden="true" className="size-3.5" />
         All writing
       </Link>
 
-      <h1 className="text-[2rem] leading-[1.16] font-medium tracking-[-0.035em] text-balance text-zinc-100 sm:text-[2.5rem]">
-        {title}
-      </h1>
-      <p className="mt-5 text-base leading-relaxed text-zinc-400 sm:text-lg">
-        {description.trim()}
-      </p>
+      <h1 className="page-title">{title}</h1>
+      <p className="page-description mt-5">{description.trim()}</p>
 
       <div className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-5 text-zinc-400">
         <time dateTime={datePublished}>{formattedDate}</time>

@@ -19,10 +19,8 @@ export default async function ReadingPathsPage() {
         <ArrowLeft aria-hidden="true" className="size-3.5" />
         All writing
       </Link>
-      <h1 className="text-3xl font-medium tracking-tight text-zinc-100">
-        Reading paths
-      </h1>
-      <p className="mt-4 text-sm leading-7 text-zinc-400">
+      <h1 className="page-title">Reading paths</h1>
+      <p className="page-description mt-5">
         Choose a topic and build on each article in order. Each path starts with
         what you should already know.
       </p>
@@ -37,7 +35,7 @@ export default async function ReadingPathsPage() {
               key={path.slug}
               id={path.slug}
               aria-labelledby={`${path.slug}-title`}
-              className="scroll-mt-8 rounded-xl border border-white/10 p-5 sm:p-6"
+              className="scroll-mt-8 rounded-md border border-white/10 p-5 sm:p-6"
             >
               <p className="section-heading mb-3">
                 {steps.length} articles ·{' '}
@@ -53,9 +51,7 @@ export default async function ReadingPathsPage() {
               >
                 {path.title}
               </h2>
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
-                {path.description}
-              </p>
+              <p className="body-copy mt-3">{path.description}</p>
               <p className="mt-4 border-l border-white/15 pl-3 text-xs leading-6 text-zinc-400">
                 <span className="text-zinc-200">Before you start:</span>{' '}
                 {path.prerequisites.join('; ')}.
@@ -74,10 +70,8 @@ export default async function ReadingPathsPage() {
                         0{index + 1}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-sm leading-6 font-medium text-zinc-200">
-                          {step.post.title}
-                        </h3>
-                        <p className="mt-1 text-xs leading-6 text-zinc-400">
+                        <h3 className="item-title">{step.post.title}</h3>
+                        <p className="mt-1 text-sm leading-6 text-zinc-400">
                           {step.outcome}
                         </p>
                       </div>

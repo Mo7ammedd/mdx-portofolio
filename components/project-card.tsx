@@ -46,7 +46,7 @@ export function ProjectCard({
         <div className={cn('min-w-0', compact && 'contents')}>
           <p
             className={cn(
-              'font-mono text-[10px] leading-5 tracking-[0.12em] text-zinc-400 uppercase',
+              'font-mono text-[11px] leading-5 tracking-[0.1em] text-zinc-400 uppercase',
               compact && 'col-start-1 row-start-1',
             )}
           >
@@ -72,7 +72,7 @@ export function ProjectCard({
           </Heading>
           <p
             className={cn(
-              'mt-3 text-[13px] leading-6 text-zinc-400',
+              'body-copy mt-3',
               compact && 'col-span-2 row-start-3',
             )}
           >
@@ -81,7 +81,7 @@ export function ProjectCard({
           <ul
             aria-label={`${project.title} technologies`}
             className={cn(
-              'mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] leading-5 text-zinc-400',
+              'meta-text mt-3 flex flex-wrap gap-x-3 gap-y-1',
               compact && 'col-span-2 row-start-4 mt-2',
             )}
           >
@@ -112,7 +112,7 @@ export function ProjectCard({
       >
         <a
           href={`${project.caseStudyHref}#evidence`}
-          className="inline-flex min-h-9 items-start gap-2 rounded-sm py-1 text-xs leading-6 text-zinc-400 transition-colors hover:text-zinc-200"
+          className="inline-flex min-h-11 items-start gap-2 rounded-sm py-1 text-[13px] leading-6 text-zinc-400 transition-colors hover:text-zinc-200"
           data-project-name={project.title}
           data-link-type="case_study"
         >
@@ -132,10 +132,7 @@ export function ProjectCard({
           {project.demoHref && (
             <a
               href={project.demoHref}
-              className={cn(
-                'inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-zinc-100 px-4 text-xs font-medium text-zinc-950 transition-colors hover:bg-white',
-                compact && 'px-3',
-              )}
+              className={cn('button-primary', compact && 'px-3')}
               aria-label={`Try demo: ${project.title}`}
               data-project-name={project.title}
               data-link-type="demo"

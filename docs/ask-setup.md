@@ -12,6 +12,13 @@ can search, filter by topic, expand answers, and copy a link to a specific answe
 Search and topic filters open from the answer list’s Search button.
 There are no seeded questions or simulated submissions.
 
+The portfolio homepage previews the most recently published answer and links to
+its full question on Ask. It reads the same public API after the static homepage
+loads, and refreshes when the visitor returns to the tab. If there are no answers
+or Ask is unavailable, it keeps an invitation to ask a question. Drafts and
+archived questions are excluded by the public API. The homepage does not depend
+on the question database during its build or initial response.
+
 ## Local development
 
 ```sh

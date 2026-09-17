@@ -127,6 +127,7 @@
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
+  textarea:focus-visible,
   select:focus-visible,
   summary:focus-visible,
   [role='button']:focus-visible,
@@ -257,12 +258,53 @@
 }
 
 @layer components {
+  .page-title {
+    @apply text-[2rem] leading-[1.15] font-medium tracking-[-0.04em] text-balance text-zinc-100 sm:text-[2.75rem];
+    overflow-wrap: anywhere;
+  }
+
+  .page-description {
+    @apply max-w-xl text-base leading-7 text-zinc-400;
+  }
+
+  .body-copy {
+    @apply text-[15px] leading-7 text-zinc-400;
+  }
+
+  .item-title {
+    @apply text-base leading-7 font-medium tracking-[-0.015em] text-zinc-200;
+  }
+
+  .section-header {
+    @apply flex min-h-11 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-white/10 pb-3;
+  }
+
   .section-heading {
-    @apply font-mono text-[11px] font-normal tracking-[0.14em] text-zinc-400 uppercase;
+    @apply font-mono text-xs leading-6 font-normal tracking-[0.1em] text-zinc-300 uppercase;
+  }
+
+  .meta-text {
+    @apply font-mono text-xs leading-6 text-zinc-400;
   }
 
   .text-link {
-    @apply inline-flex min-h-10 items-center gap-1.5 text-xs text-zinc-400 no-underline transition-colors hover:text-white;
+    @apply inline-flex min-h-11 items-center gap-1.5 rounded-sm text-[13px] text-zinc-400 no-underline transition-colors hover:text-white;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-zinc-100 px-4 text-[13px] font-medium text-black no-underline transition-colors hover:bg-white disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-400;
+  }
+
+  .field-control {
+    @apply min-h-11 w-full rounded-md border border-white/15 bg-[#060606] px-3.5 py-3 text-base leading-6 text-zinc-200 transition-colors placeholder:text-zinc-400 hover:border-white/25 disabled:cursor-not-allowed disabled:opacity-50 sm:text-[15px];
+  }
+
+  .field-select {
+    @apply appearance-none py-3 pr-9;
+  }
+
+  .icon-button {
+    @apply flex size-11 shrink-0 items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-white/[0.04] hover:text-white disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .inline-link {

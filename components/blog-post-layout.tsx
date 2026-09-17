@@ -179,10 +179,8 @@ export async function BlogPostLayout({
                       className="list-row flex items-start justify-between gap-4"
                     >
                       <div>
-                        <p className="text-sm leading-6 text-zinc-200">
-                          {relatedPost.title}
-                        </p>
-                        <p className="mt-1 text-xs leading-6 text-zinc-400">
+                        <p className="item-title">{relatedPost.title}</p>
+                        <p className="mt-1 text-sm leading-6 text-zinc-400">
                           {relatedPost.description}
                         </p>
                       </div>

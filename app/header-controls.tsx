@@ -18,7 +18,7 @@ export function HeaderControls() {
       <SiteLink
         href="/"
         aria-current={!onAsk && pathname === '/' ? 'page' : undefined}
-        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
+        className={`text-link underline-offset-8 ${
           !onAsk && pathname === '/'
             ? 'text-zinc-100 underline decoration-zinc-500'
             : 'text-zinc-400'
@@ -29,7 +29,7 @@ export function HeaderControls() {
       <SiteLink
         href="/projects"
         aria-current={pathname === '/projects' ? 'page' : undefined}
-        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
+        className={`text-link underline-offset-8 ${
           pathname.startsWith('/projects')
             ? 'text-zinc-100 underline decoration-zinc-500'
             : 'text-zinc-400'
@@ -40,7 +40,7 @@ export function HeaderControls() {
       <SiteLink
         href="/blog"
         aria-current={pathname === '/blog' ? 'page' : undefined}
-        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
+        className={`text-link underline-offset-8 ${
           pathname.startsWith('/blog')
             ? 'text-zinc-100 underline decoration-zinc-500'
             : 'text-zinc-400'
@@ -51,7 +51,7 @@ export function HeaderControls() {
       <SiteLink
         href="/ask"
         aria-current={onAsk ? 'page' : undefined}
-        className={`inline-flex min-h-11 items-center text-xs underline-offset-8 transition-colors hover:text-white ${
+        className={`text-link underline-offset-8 ${
           onAsk
             ? 'text-zinc-100 underline decoration-zinc-500'
             : 'text-zinc-400'
@@ -64,7 +64,7 @@ export function HeaderControls() {
         href="https://github.com/mo7ammedd"
         target="_blank"
         rel="noopener noreferrer"
-        className="-mr-3 flex size-11 items-center justify-center text-zinc-400 transition-colors hover:text-white [&_svg]:size-4"
+        className="icon-button -mr-3 [&_svg]:size-4"
         aria-label="GitHub profile"
       >
         <Github />

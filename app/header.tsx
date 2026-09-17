@@ -5,7 +5,7 @@ import { HeaderControls } from './header-controls'
 
 export function Header() {
   return (
-    <header className="mb-12 flex items-center justify-between gap-3 border-b border-white/10 pb-5 sm:mb-16">
+    <header className="mb-12 flex items-center justify-between gap-3 border-b border-white/10 pb-5 sm:mb-14">
       <SiteLink
         href="/"
         aria-label="Mohammed Mostafa, home"
