@@ -9,3 +9,7 @@ export function getBlogOGImagePath(slug: string): string {
 export function getProjectOGImagePath(slug: string): string {
   return `/og/projects/${encodeURIComponent(slug)}`
 }
+
+export function getQuestionOGImagePath(id: string): string {
+  return `/og/ask/${encodeURIComponent(id)}`
+}

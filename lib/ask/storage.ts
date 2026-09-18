@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import { AskError, type QuestionUpdate } from './validation'
+import { AskError, validateQuestionId, type QuestionUpdate } from './validation'
 import { publicQuestion, type AskTopic, type Question } from './types'
 
 type NewQuestion = { question: string; topic: AskTopic }
@@ -14,6 +14,7 @@ type FileData = {
 
 export interface AskStore {
   list(publishedOnly?: boolean): Promise<Question[]>
+  findPublished(id: string): Promise<Question | null>
   create(input: NewQuestion): Promise<Question>
   update(id: string, input: QuestionUpdate): Promise<Question | null>
   consumeLimit(
@@ -99,6 +100,14 @@ export function createFileStore(path: string): AskStore {
           (question) => !publishedOnly || publicQuestion(question) !== null,
         )
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    },
+    async findPublished(id) {
+      const data = await read()
+      return (
+        data.questions.find(
+          (question) => question.id === id && publicQuestion(question) !== null,
+        ) ?? null
+      )
     },
     create(input) {
       return transaction((data) => {
@@ -198,6 +207,12 @@ export function createSupabaseStore(url: string, key: string): AskStore {
       }
       return rows.map(fromDatabase)
     },
+    async findPublished(id) {
+      const rows = await query<DatabaseQuestion[]>(
+        `ask_questions?select=*&id=eq.${encodeURIComponent(id)}&status=eq.answered&limit=1`,
+      )
+      return rows[0] ? fromDatabase(rows[0]) : null
+    },
     async create(input) {
       const question = newQuestion(input)
       const rows = await query<DatabaseQuestion[]>('ask_questions', {
@@ -268,4 +283,10 @@ export async function getPublicQuestions() {
     .map(publicQuestion)
     .filter((question) => question !== null)
     .sort((a, b) => b.answeredAt.localeCompare(a.answeredAt))
+}
+
+export async function getPublicQuestion(id: string) {
+  validateQuestionId(id)
+  const question = await getAskStore().findPublished(id.toLowerCase())
+  return question ? publicQuestion(question) : null
 }

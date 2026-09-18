@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useSyncExternalStore, type ComponentProps } from 'react'
-import { isAskHost, siteHref } from '@/lib/ask/routing'
+import { isAskHost, isAskPath, siteHref } from '@/lib/ask/routing'
 
 export { isAskHost } from '@/lib/ask/routing'
 
@@ -30,13 +30,7 @@ export function SiteLink({
   )
   // Crossing into/out of Q&A uses a full navigation so session-replay scripts
   // loaded on the portfolio are never carried into the anonymous form or inbox.
-  if (
-    reloadDocument ||
-    href === '/ask' ||
-    href.startsWith('/ask/') ||
-    href.startsWith('/ask#') ||
-    isAskHost(hostname)
-  ) {
+  if (reloadDocument || isAskPath(href) || isAskHost(hostname)) {
     return <a href={resolved} {...props} />
   }
   return <Link href={resolved} {...props} />

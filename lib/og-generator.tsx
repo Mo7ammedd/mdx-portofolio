@@ -83,23 +83,28 @@ export async function generateOGImage({
         >
           <div
             style={{
+              // Satori applies lineClamp only to block text elements.
+              display: 'block',
               fontSize: title.length > 70 ? 54 : title.length > 40 ? 64 : 80,
               fontWeight: 600,
               letterSpacing: -2.5,
               lineHeight: 1.1,
               lineClamp: 3,
+              wordBreak: 'break-word',
             }}
           >
             {title}
           </div>
           <div
             style={{
+              display: 'block',
               marginTop: 24,
               maxWidth: 960,
               fontSize: 26,
               lineHeight: 1.45,
               color: '#a1a1aa',
               lineClamp: 3,
+              wordBreak: 'break-word',
             }}
           >
             {description}

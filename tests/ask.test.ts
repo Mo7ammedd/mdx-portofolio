@@ -233,18 +233,21 @@ test('file storage persists submissions and serializes concurrent moderation and
   assert.equal((await first.list(true)).length, 0)
 
   const question = saved[0]
+  assert.equal(await first.findPublished(question.id), null)
   await first.update(question.id, {
     action: 'publish',
     answer: 'Inspect the query plan first.',
     topic: 'backend',
   })
   assert.equal((await second.list(true))[0].topic, 'backend')
+  assert.equal((await second.findPublished(question.id))?.topic, 'backend')
   assert.equal(
     publicQuestion((await second.list(true))[0])!.answer,
     'Inspect the query plan first.',
   )
   await second.update(question.id, { action: 'archive' })
   assert.equal((await first.list(true)).length, 0)
+  assert.equal(await first.findPublished(question.id), null)
   await first.update(question.id, { action: 'restore' })
   const restored = (await second.list()).find(
     (item) => item.id === question.id,
@@ -252,6 +255,8 @@ test('file storage persists submissions and serializes concurrent moderation and
   assert.equal(restored.status, 'pending')
   assert.equal(restored.answer, 'Inspect the query plan first.')
   assert.equal((await first.list(true)).length, 0)
+  assert.equal(await first.findPublished(question.id), null)
+  assert.equal(await first.findPublished('missing'), null)
   assert.equal(await first.update('missing', { action: 'archive' }), null)
 
   const attempts = await Promise.all(

@@ -19,6 +19,15 @@ or Ask is unavailable, it keeps an invitation to ask a question. Drafts and
 archived questions are excluded by the public API. The homepage does not depend
 on the question database during its build or initial response.
 
+Shared answer links include `?question=<id>` as well as the scroll anchor, so
+social crawlers receive that question's title, answer excerpt, and a dedicated
+Open Graph image at `/og/ask/<id>`. The main Ask page uses its own invitation
+card for both Open Graph and Twitter. Old anchor-only links still open answers
+in the browser, but crawlers cannot see anchors; copy a fresh link to share a
+question-specific preview. Preview images only read published answers and are
+not cached by the app, so archiving removes access to the image. Social sites
+may retain previews they have already fetched.
+
 ## Local development
 
 ```sh

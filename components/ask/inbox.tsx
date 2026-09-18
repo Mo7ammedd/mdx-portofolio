@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { SiteLink } from '@/components/site-link'
+import { getQuestionHref } from '@/lib/ask/routing'
 import {
   ANSWER_MAX_LENGTH,
   ASK_TOPICS,
@@ -376,7 +377,7 @@ export function Inbox({
           {message}
           {publishedId && (
             <SiteLink
-              href={`/ask#question-${publishedId}`}
+              href={getQuestionHref(publishedId)}
               className="inline-flex items-center gap-1 underline underline-offset-4"
             >
               View answer <ArrowUpRight aria-hidden="true" className="size-3" />

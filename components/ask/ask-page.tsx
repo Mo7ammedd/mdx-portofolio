@@ -51,6 +51,7 @@ function AnswerRow({
   async function copyLink() {
     const url = new URL(window.location.href)
     url.search = ''
+    url.searchParams.set('question', question.id)
     url.hash = `question-${question.id}`
     try {
       await navigator.clipboard.writeText(url.href)
@@ -117,10 +118,12 @@ function AnswerRow({
 
 export function AskPage({
   initialQuestions,
+  initialQuestionId,
   acceptingQuestions,
   loadError: initialLoadError,
 }: {
   initialQuestions: PublicQuestion[]
+  initialQuestionId?: string
   acceptingQuestions: boolean
   loadError: boolean
 }) {
@@ -152,7 +155,9 @@ export function AskPage({
 
   useEffect(() => {
     function openLinkedAnswer() {
-      const id = window.location.hash.slice(1)
+      const id =
+        window.location.hash.slice(1) ||
+        (initialQuestionId ? `question-${initialQuestionId}` : '')
       if (!/^question-[\da-f-]{36}$/i.test(id)) return
       const answer = document.getElementById(id)
       if (answer instanceof HTMLDetailsElement) {
@@ -163,7 +168,7 @@ export function AskPage({
     openLinkedAnswer()
     window.addEventListener('hashchange', openLinkedAnswer)
     return () => window.removeEventListener('hashchange', openLinkedAnswer)
-  }, [questions])
+  }, [questions, initialQuestionId])
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -510,7 +515,11 @@ export function AskPage({
               <AnswerRow
                 key={item.id}
                 question={item}
-                initiallyOpen={index === 0}
+                initiallyOpen={
+                  initialQuestionId
+                    ? item.id === initialQuestionId
+                    : index === 0
+                }
               />
             ))}
           </div>

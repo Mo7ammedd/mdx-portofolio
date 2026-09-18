@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { SiteLink } from '@/components/site-link'
+import { getQuestionHref } from '@/lib/ask/routing'
 import type { PublicQuestion } from '@/lib/ask/types'
 import { questionDate } from './client'
 
@@ -69,7 +70,7 @@ export function RecentAnswer() {
           <article aria-labelledby="home-question-title">
             <h3 id="home-question-title" className="item-title">
               <SiteLink
-                href={`/ask#question-${question.id}`}
+                href={getQuestionHref(question.id)}
                 className="line-clamp-2 break-words transition-colors hover:text-white"
               >
                 {question.question}
@@ -83,7 +84,7 @@ export function RecentAnswer() {
                 {questionDate(question.answeredAt)}
               </time>
               <SiteLink
-                href={`/ask#question-${question.id}`}
+                href={getQuestionHref(question.id)}
                 className="text-link"
               >
                 Read answer
