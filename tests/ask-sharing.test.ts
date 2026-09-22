@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import test, { type TestContext } from 'node:test'
+import sharp from 'sharp'
 import { GET as questionImage } from '../app/og/ask/[id]/route'
 import { generateAskMetadata, previewText } from '../lib/ask/metadata'
 import { getQuestionHref, isAskPath, siteHref } from '../lib/ask/routing'
@@ -169,6 +170,33 @@ test('published question previews render a 1200 × 630 PNG without persistent ca
   assert.deepEqual(bytes.subarray(0, 8), Buffer.from('89504e470d0a1a0a', 'hex'))
   assert.equal(bytes.readUInt32BE(16), 1200)
   assert.equal(bytes.readUInt32BE(20), 630)
+})
+
+test('Arabic question previews render offline in the neutral theme and escape text markup', async (t) => {
+  const requests = mockDatabase(t, {
+    ...answered,
+    question: 'كيف تعمل فهارس <SQL> & قواعد البيانات؟ 🙂',
+    answer:
+      'ابدأ بخطة التنفيذ، ثم جرّب الاستعلام مع بيانات حقيقية. لا تفترض أن إضافة فهرس أسرع دائمًا.',
+  })
+  const response = await imageRequest()
+  assert.equal(response.status, 200)
+  const bytes = Buffer.from(await response.arrayBuffer())
+  const image = sharp(bytes)
+  const metadata = await image.metadata()
+  assert.equal(metadata.width, 1200)
+  assert.equal(metadata.height, 630)
+  const background = await image
+    .extract({ left: 0, top: 0, width: 1, height: 1 })
+    .removeAlpha()
+    .raw()
+    .toBuffer()
+  assert.deepEqual([...background], [28, 28, 28])
+  assert.equal(
+    requests.length,
+    1,
+    'Only the database is fetched; fonts must be bundled.',
+  )
 })
 
 test('malformed question IDs return 404 before reaching the database', async (t) => {
