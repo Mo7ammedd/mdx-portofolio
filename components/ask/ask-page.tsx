@@ -79,7 +79,10 @@ function AnswerRow({
           </span>
         )}
         <span className="flex items-start justify-between gap-5">
-          <span className="min-w-0 flex-1 text-base leading-7 font-medium tracking-[-0.015em] break-words text-zinc-200 transition-colors group-hover:text-white sm:text-[17px]">
+          <span
+            dir="auto"
+            className="min-w-0 flex-1 text-start text-base leading-7 font-medium tracking-[-0.015em] break-words text-zinc-200 transition-colors group-hover:text-white sm:text-[17px]"
+          >
             {question.question}
           </span>
           <ChevronDown
@@ -89,7 +92,10 @@ function AnswerRow({
         </span>
       </summary>
       <div className="pb-6">
-        <p className="ask-reply body-copy break-words whitespace-pre-wrap text-zinc-300">
+        <p
+          dir="auto"
+          className="ask-reply body-copy break-words whitespace-pre-wrap text-zinc-300"
+        >
           {question.answer}
         </p>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 pl-[17px]">
@@ -296,6 +302,7 @@ export function AskPage({
               ref={textarea}
               id="question"
               name="question"
+              dir="auto"
               required
               rows={3}
               minLength={QUESTION_MIN_LENGTH}
@@ -473,7 +480,7 @@ export function AskPage({
                 onChange={(event) =>
                   setFilter(event.target.value as AskTopic | 'all')
                 }
-                className="h-11 max-w-32 appearance-none bg-black pr-5 pl-2 text-xs text-zinc-400"
+                className="bg-background h-11 max-w-32 appearance-none pr-5 pl-2 text-xs text-zinc-400"
               >
                 <option value="all">All topics</option>
                 {ASK_TOPICS.map((item) => (

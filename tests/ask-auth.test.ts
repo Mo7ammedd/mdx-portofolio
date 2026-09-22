@@ -16,7 +16,7 @@ import {
 import { AskError, validateCredentials } from '../lib/ask/validation'
 
 const email = 'owner@example.com'
-const password = 'a-private-admin-test-password'
+const password = 'Test-admin!'
 const origin = 'https://ask.example.com'
 
 function configure(t: TestContext) {
@@ -112,13 +112,17 @@ test('inbox configuration fails closed and sessions are bound to the admin email
     assert.equal(adminConfig(), null)
   }
   process.env.ASK_ADMIN_EMAIL = email
+  for (const length of [10, 256]) {
+    process.env.ASK_ADMIN_PASSWORD = 'a'.repeat(length)
+    assert.equal(adminConfig()?.password, 'a'.repeat(length))
+  }
   for (const value of ['', 'too-short', 'a'.repeat(257)]) {
     process.env.ASK_ADMIN_PASSWORD = value
     assert.equal(adminConfig(), null)
   }
 })
 
-test('the login API rejects other emails, requires both credentials, and protects sessions and rate limits', async (t) => {
+test('the login API accepts an 11-character password and protects credentials, sessions, and rate limits', async (t) => {
   configure(t)
   let retryAfter = 0
   const requests: Request[] = []

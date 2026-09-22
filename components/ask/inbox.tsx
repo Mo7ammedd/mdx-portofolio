@@ -66,6 +66,7 @@ function AnswerEditor({
       </label>
       <textarea
         id={`answer-${question.id}`}
+        dir="auto"
         value={answer}
         onChange={(event) => setAnswer(event.target.value)}
         maxLength={ANSWER_MAX_LENGTH}
@@ -418,11 +419,17 @@ export function Inbox({
                   {questionDate(question.createdAt)}
                 </time>
               </div>
-              <h2 className="mt-4 text-sm leading-7 font-medium break-words whitespace-pre-wrap text-zinc-200">
+              <h2
+                dir="auto"
+                className="mt-4 text-sm leading-7 font-medium break-words whitespace-pre-wrap text-zinc-200"
+              >
                 {question.question}
               </h2>
               {question.status === 'answered' && editing !== question.id && (
-                <p className="mt-4 line-clamp-3 text-sm leading-7 whitespace-pre-wrap text-zinc-400">
+                <p
+                  dir="auto"
+                  className="mt-4 line-clamp-3 text-sm leading-7 whitespace-pre-wrap text-zinc-400"
+                >
                   {question.answer}
                 </p>
               )}

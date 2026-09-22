@@ -68,7 +68,7 @@ export function RecentAnswer() {
       <div className="min-h-52 pt-5">
         {question ? (
           <article aria-labelledby="home-question-title">
-            <h3 id="home-question-title" className="item-title">
+            <h3 id="home-question-title" dir="auto" className="item-title">
               <SiteLink
                 href={getQuestionHref(question.id)}
                 className="line-clamp-2 break-words transition-colors hover:text-white"
@@ -76,7 +76,10 @@ export function RecentAnswer() {
                 {question.question}
               </SiteLink>
             </h3>
-            <p className="body-copy mt-3 line-clamp-3 border-l border-white/15 pl-4 break-words whitespace-pre-line text-zinc-300">
+            <p
+              dir="auto"
+              className="body-copy mt-3 line-clamp-3 border-s border-white/15 ps-4 break-words whitespace-pre-line text-zinc-300"
+            >
               {question.answer}
             </p>
             <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4">

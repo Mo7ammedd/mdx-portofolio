@@ -40,8 +40,8 @@ export async function generateOGImage({
           width: '100%',
           height: '100%',
           padding: '52px 64px',
-          background: '#000000',
-          color: '#ededed',
+          background: '#1c1c1c',
+          color: '#f3f4f6',
           fontFamily: 'Geist',
         }}
       >
@@ -67,7 +67,7 @@ export async function generateOGImage({
               {new URL(WEBSITE_URL).hostname.replace(/^www\./, '')}
             </span>
           </div>
-          <span style={{ fontSize: 15, color: '#a1a1aa', letterSpacing: 2 }}>
+          <span style={{ fontSize: 15, color: '#a3a3a3', letterSpacing: 2 }}>
             {label}
           </span>
         </div>
@@ -102,7 +102,7 @@ export async function generateOGImage({
               maxWidth: 960,
               fontSize: 26,
               lineHeight: 1.45,
-              color: '#a1a1aa',
+              color: '#a3a3a3',
               lineClamp: 3,
               wordBreak: 'break-word',
             }}
@@ -116,14 +116,14 @@ export async function generateOGImage({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            borderTop: '1px solid #27272a',
+            borderTop: '1px solid #404040',
             paddingTop: 24,
             fontFamily: 'Geist Mono',
             fontSize: 17,
           }}
         >
           <span>{footer}</span>
-          <span style={{ color: '#a1a1aa' }}>{detail}</span>
+          <span style={{ color: '#a3a3a3' }}>{detail}</span>
         </div>
       </div>
     ),

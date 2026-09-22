@@ -29,44 +29,57 @@
 :root,
 .dark {
   color-scheme: dark;
-  --background: #000000;
-  --foreground: #ededed;
-  --card: #080808;
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #1c1c1c;
+  --foreground: #f3f4f6;
+  --card: #222222;
+  --card-foreground: #f3f4f6;
+  --popover: #222222;
+  --popover-foreground: #f3f4f6;
+  --primary: #f5f5f5;
+  --primary-hover: #d4d4d4;
+  --primary-foreground: #1c1c1c;
+  --secondary: #333333;
+  --secondary-foreground: #f5f5f5;
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  --accent: #333333;
+  --accent-foreground: #f5f5f5;
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: #202020;
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
+  --border: #404040;
+  --input: #404040;
+  --ring: #d4d4d4;
   --radius: 0.375rem;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --sidebar: #222222;
+  --sidebar-foreground: #f3f4f6;
+  --sidebar-primary: #f5f5f5;
+  --sidebar-primary-foreground: #1c1c1c;
+  --sidebar-accent: #333333;
+  --sidebar-accent-foreground: #f5f5f5;
+  --sidebar-border: #404040;
+  --sidebar-ring: #d4d4d4;
 }
 /*
   ---break---
 */
 @theme inline {
+  /* Neutral grays for the existing zinc utility classes. */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f5f5f5;
+  --color-zinc-200: #e5e5e5;
+  --color-zinc-300: #d4d4d4;
+  --color-zinc-400: #a3a3a3;
+  --color-zinc-500: #8a8a8a;
+  --color-zinc-600: #525252;
+  --color-zinc-700: #404040;
+  --color-zinc-800: #333333;
+  --color-zinc-900: #222222;
+  --color-zinc-950: #171717;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-background: var(--background);
@@ -76,6 +89,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -292,11 +306,11 @@
   }
 
   .button-primary {
-    @apply inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-zinc-100 px-4 text-[13px] font-medium text-black no-underline transition-colors hover:bg-white disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-400;
+    @apply inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-4 text-[13px] font-medium text-primary-foreground no-underline transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-400;
   }
 
   .field-control {
-    @apply min-h-11 w-full rounded-md border border-white/15 bg-[#060606] px-3.5 py-3 text-base leading-6 text-zinc-200 transition-colors placeholder:text-zinc-400 hover:border-white/25 disabled:cursor-not-allowed disabled:opacity-50 sm:text-[15px];
+    @apply min-h-11 w-full rounded-md border border-white/15 bg-card px-3.5 py-3 text-base leading-6 text-zinc-200 transition-colors placeholder:text-zinc-400 hover:border-white/25 disabled:cursor-not-allowed disabled:opacity-50 sm:text-[15px];
   }
 
   .field-select {
@@ -316,7 +330,7 @@
   }
 
   .skip-link {
-    @apply fixed top-4 left-4 z-50 -translate-y-24 rounded-md bg-zinc-100 px-4 py-3 text-sm font-medium text-black focus:translate-y-0;
+    @apply fixed top-4 left-4 z-50 -translate-y-24 rounded-md bg-primary px-4 py-3 text-sm font-medium text-primary-foreground focus:translate-y-0;
   }
 
   @media (prefers-reduced-motion: no-preference) {

@@ -29,7 +29,7 @@ export function ProjectCard({
         compact
           ? 'py-5'
           : featured
-            ? 'overflow-hidden rounded-lg border border-white/15 bg-zinc-950'
+            ? 'overflow-hidden rounded-lg border border-white/15 bg-card'
             : 'border-b border-white/[0.08] py-6',
       )}
     >
@@ -94,7 +94,7 @@ export function ProjectCard({
         <ProjectVisual
           kind={project.visual}
           className={cn(
-            'w-full rounded-md border border-white/[0.07] bg-black',
+            'w-full rounded-md border border-white/[0.07] bg-card',
             !featured && 'max-sm:mx-auto max-sm:max-w-xs',
             compact && 'col-start-2 row-span-2 row-start-1 self-center',
           )}

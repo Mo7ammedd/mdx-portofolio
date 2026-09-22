@@ -51,9 +51,9 @@ if (!configured.ASK_ADMIN_EMAIL && !email) {
 }
 if (
   configured.ASK_ADMIN_PASSWORD &&
-  configured.ASK_ADMIN_PASSWORD.length < 16
+  configured.ASK_ADMIN_PASSWORD.length < 10
 ) {
   console.log(
-    'The existing local password is shorter than 16 characters; it was preserved but cannot be used to sign in locally.',
+    'The existing local password is shorter than 10 characters; it was preserved but cannot be used to sign in locally.',
   )
 }

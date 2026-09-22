@@ -20,11 +20,11 @@ const LABELS: Record<ProjectVisualKind, string> = {
     'Illustrative AeroUDP packet exchange, not live traffic. Packet one reaches the receiver and is acknowledged. Packet two is lost and then retransmitted.',
 }
 
-const INK = '#d4d4d8'
-const MUTED = '#a1a1aa'
-const LINE = '#71717a'
-const BORDER = '#52525b'
-const GRID = '#27272a'
+const INK = '#d4d4d4'
+const MUTED = '#a3a3a3'
+const LINE = '#8a8a8a'
+const BORDER = '#525252'
+const GRID = '#404040'
 
 function Node({
   x,
@@ -47,7 +47,7 @@ function Node({
         width={width}
         height={height}
         rx="4"
-        fill="#09090b"
+        fill="#222222"
         stroke={BORDER}
         strokeWidth="1.25"
       />
@@ -69,9 +69,9 @@ function Node({
 
 function SchedulerVisual() {
   const rows = [
-    { label: 'P1', y: 48, slices: [0, 3], fill: '#e4e4e7' },
-    { label: 'P2', y: 80, slices: [1, 4], fill: '#a1a1aa' },
-    { label: 'P3', y: 112, slices: [2, 5], fill: '#71717a' },
+    { label: 'P1', y: 48, slices: [0, 3], fill: '#e5e5e5' },
+    { label: 'P2', y: 80, slices: [1, 4], fill: '#a3a3a3' },
+    { label: 'P3', y: 112, slices: [2, 5], fill: '#8a8a8a' },
   ]
 
   return (

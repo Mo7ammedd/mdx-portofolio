@@ -17,8 +17,8 @@ export function adminConfig() {
     console.error('[ask] ASK_ADMIN_EMAIL is missing or invalid.')
     return null
   }
-  if (!password || password.length < 16 || password.length > 256) {
-    console.error('[ask] ASK_ADMIN_PASSWORD must contain 16 to 256 characters.')
+  if (!password || password.length < 10 || password.length > 256) {
+    console.error('[ask] ASK_ADMIN_PASSWORD must contain 10 to 256 characters.')
     return null
   }
   return {

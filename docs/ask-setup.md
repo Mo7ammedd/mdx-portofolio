@@ -10,7 +10,7 @@ Questions stay private until an inbox owner publishes an answer. Answers can be
 edited, unpublished into the archive, and restored to the inbox. Public visitors
 can search, filter by topic, expand answers, and copy a link to a specific answer.
 Search and topic filters open from the answer list’s Search button.
-There are no seeded questions or simulated submissions.
+Published answers can also be imported from Onvo; there are no simulated submissions.
 
 The portfolio homepage previews the most recently published answer and links to
 its full question on Ask. It reads the same public API after the static homepage
@@ -40,6 +40,8 @@ The setup command adds `ASK_ADMIN_EMAIL` and a randomly generated
 credentials. Sign in at `http://localhost:3000/ask/inbox` with those values.
 The inbox accepts only the configured admin email and password. Email matching
 ignores capitalization and surrounding spaces; passwords are matched exactly.
+To use your own password, set `ASK_ADMIN_PASSWORD` in `.env.local` to a value
+between 10 and 256 characters, then restart the development server.
 
 When Supabase is not configured, development saves questions in the ignored
 `.data/ask.json` file. Writes are serialized in the development server and saved
@@ -54,9 +56,9 @@ For a local subdomain preview, open `http://ask.localhost:3000` and
 
 ## Supabase and Vercel
 
-1. Create or select a Supabase project. Run
-   [`supabase/migrations/202609170001_ask.sql`](../supabase/migrations/202609170001_ask.sql)
-   in its SQL editor, or apply it with the Supabase CLI.
+1. Create or select a Supabase project. Run the SQL files in
+   [`supabase/migrations`](../supabase/migrations) in timestamp order using its
+   SQL editor, or apply them with the Supabase CLI.
 2. Set these **server-only** Vercel environment variables:
 
    | Variable              | Value                                                             |
@@ -64,7 +66,7 @@ For a local subdomain preview, open `http://ask.localhost:3000` and
    | `SUPABASE_URL`        | The project URL, e.g. `https://your-project.supabase.co`          |
    | `SUPABASE_SECRET_KEY` | A secret key beginning with `sb_secret_` from Settings → API Keys |
    | `ASK_ADMIN_EMAIL`     | The email address allowed to sign in to the private inbox         |
-   | `ASK_ADMIN_PASSWORD`  | A unique random password, at least 16 characters                  |
+   | `ASK_ADMIN_PASSWORD`  | A unique password, between 10 and 256 characters                 |
 
 3. Deploy this Next.js project. Vercel's Node.js runtime handles all database
    requests; there is no separate backend to deploy.
@@ -89,6 +91,41 @@ are not automatically migrated into Supabase.
 Without a working database, production returns an unavailable state and never
 reports a successful submission. The form also stays closed until an inbox
 email and password have been configured.
+
+## Import published Onvo answers
+
+Apply [`202609230001_onvo_imports.sql`](../supabase/migrations/202609230001_onvo_imports.sql)
+before importing. It adds a unique source identifier and allows short historical
+questions only when marked as imports. New portfolio submissions still require
+at least 15 characters.
+
+```sh
+node --env-file=.env.local scripts/import-onvo-posts.mjs
+node --env-file=.env.local scripts/import-onvo-posts.mjs --input /path/from-preview.json --apply --allow-skipped
+```
+
+The first command starts at `https://api.onvo.me/v3/users/mo/posts?limit=20`
+and follows every `next_cursor` until `has_more` is false; 20 is the page size.
+It handles rate limits and rejects broken or repeated cursors. When legacy
+profile pages repeat records because their date order differs from their ID
+order, it checks the older feed using its stable ID cursor. Every recovered
+candidate must also be available from its public thread. Full threads restore
+question text omitted by the profile response, including legacy Q&A pairs
+without parent IDs.
+
+The preview prints counts and skipped entries, then saves a source snapshot
+under the ignored `.data/ask-imports/` directory. Pass that printed path to
+`--input` to import the same reviewed data without fetching it again. No Onvo
+bearer token is needed. An input file with more pages remaining cannot be
+applied. `--allow-skipped` acknowledges entries that cannot be represented as
+text Q&A, such as media questions, standalone posts, and other users' reposts.
+
+Imports preserve the original text and question/answer dates. They exclude
+sender identities and report unsupported content instead of truncating it or
+inventing a replacement. Repeating an import skips existing source records,
+preserving any edits or archive actions made in the inbox. A receipt is saved
+under the ignored `.data/ask-imports/` directory. Direct database imports do not
+send new-question notification emails.
 
 ## New-question emails
 

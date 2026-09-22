@@ -14,7 +14,7 @@ import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema'
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#000000',
+  themeColor: '#1c1c1c',
   colorScheme: 'dark',
 }
 

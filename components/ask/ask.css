@@ -2,7 +2,7 @@
 
 @layer components {
   .ask-composer {
-    @apply relative rounded-md border border-white/15 bg-[#060606] transition-colors;
+    @apply bg-card relative rounded-md border border-white/15 transition-colors;
   }
 
   .ask-compose-input {
@@ -14,7 +14,7 @@
   }
 
   .ask-reply {
-    @apply border-l border-white/15 pl-4;
+    @apply border-s border-white/15 ps-4;
   }
 }
 

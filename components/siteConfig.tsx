@@ -82,7 +82,7 @@ export const siteConfig: Metadata = {
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
     'mobile-web-app-capable': 'yes',
-    'theme-color': '#09090b',
+    'theme-color': '#1c1c1c',
   },
   
   openGraph: {

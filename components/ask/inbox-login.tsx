@@ -163,7 +163,7 @@ export function InboxLogin({ configured }: { configured: boolean }) {
               <code className="font-mono text-xs text-zinc-200">
                 ASK_ADMIN_PASSWORD
               </code>{' '}
-              of at least 16 characters. For local development, run{' '}
+              of at least 10 characters. For local development, run{' '}
               <code className="font-mono text-xs text-zinc-200">
                 node scripts/setup-ask.mjs --email you@example.com
               </code>{' '}
