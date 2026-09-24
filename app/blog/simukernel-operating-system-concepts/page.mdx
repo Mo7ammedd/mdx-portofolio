@@ -6,7 +6,7 @@ export const metadata = generateBlogPostSEO({
     'A practical guide to CPU scheduling, memory management, and process control using SimuKernel an educational operating system simulator.',
   slug: 'simukernel-operating-system-concepts',
   publishedTime: '2025-10-29T10:00:00.000Z',
-  modifiedTime: '2025-10-29T10:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['operating-systems', 'cpu-scheduling', 'memory-management', 'process-management'],
 })
 
@@ -38,7 +38,7 @@ A process transitions through several states:
 #### 1. Round Robin (RR)
 
 **How it works:**
-- Each process gets a fixed time slice (quantum)
+- Each process gets a fixed time slice (<Term id="time-quantum">quantum</Term>)
 - After quantum expires, process moves to end of ready queue
 - Next process in queue gets CPU
 - Preemptive algorithm
@@ -65,7 +65,7 @@ Processes: P1(burst=10), P2(burst=5), P3(burst=8)
 Quantum = 4
 
 Execution Order:
-P1[0-4] → P2[4-8] → P3[8-12] → P1[12-16] → P2[16-17] → P3[17-21] → P1[21-22]
+P1[0-4] → P2[4-8] → P3[8-12] → P1[12-16] → P2[16-17] → P3[17-21] → P1[21-23]
 ```
 
 #### 2. Priority Scheduling
@@ -446,6 +446,10 @@ Memory Utilization = (Used Memory / Total Memory) × 100%
 
 ---
 
+## Check Your Understanding
+
+<Exercise id="round-robin" />
+
 ## Further Reading
 
 - **Books:**
@@ -457,5 +461,4 @@ Memory Utilization = (Used Memory / Total Memory) × 100%
   - [OSDev Wiki](https://wiki.osdev.org/)
   - [Linux Kernel Documentation](https://www.kernel.org/doc/)
   - [MIT 6.828 Operating System Engineering](https://pdos.csail.mit.edu/6.828/)
-
 

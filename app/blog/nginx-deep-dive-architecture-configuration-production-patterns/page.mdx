@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'Nginx architecture and production configuration.',
   slug: 'nginx-deep-dive-architecture-configuration-production-patterns',
   publishedTime: '2026-01-15T10:00:00.000Z',
-  modifiedTime: '2026-01-15T10:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['nginx', 'web-server', 'reverse-proxy', 'load-balancing', 'devops', 'performance', 'configuration'],
 })
 
@@ -245,15 +245,14 @@ http {
 ## Location Matching: The Most Critical Concept
 
 
-Location matching determines which block handles a request. Getting this wrong causes 90% of Nginx misconfigurations.
+<Term id="location-rule">Location matching</Term> determines which block handles a request. A rule that wins unexpectedly can send API traffic to a static file handler or bypass the intended configuration.
 
 ### Match Types (in priority order)
 
 1. **Exact match** `= /path`
-2. **Preferential prefix** `^~ /path`
-3. **Regex (case-sensitive)** `~ pattern`
-4. **Regex (case-insensitive)** `~* pattern`
-5. **Longest prefix** `/path`
+2. **Preferential prefix** `^~ /path`, when it is the longest matching prefix
+3. **Regex** `~ pattern` or `~* pattern`, tested together in declaration order; `~*` makes that pattern case-insensitive
+4. **Remembered longest prefix** `/path`, if no regex matches
 
 ### Matching Algorithm
 
@@ -269,6 +268,12 @@ Location matching determines which block handles a request. Getting this wrong c
 
 4. If no regex matched, use stored prefix
 ```
+
+### Try Location Matching
+
+Enter a path and follow the decision trace. Try `/api/users.css`, then compare `/assets/logo.svg` with the `^~` modifier enabled and disabled. This example uses flat location blocks in one server.
+
+<NginxRoutingDemo />
 
 ### Common Pitfalls
 
@@ -1177,6 +1182,10 @@ Nginx is infrastructure, not application logic. Don't use Nginx for:
 **Rule**: If it requires understanding your domain model, it doesn't belong in Nginx.
 
 ---
+
+## Check Your Understanding
+
+<Exercise id="nginx-regex-order" />
 
 ## Conclusion
 

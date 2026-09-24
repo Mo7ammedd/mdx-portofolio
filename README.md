@@ -36,19 +36,19 @@ repositories at the product level.
 ## Projects and writing
 
 The homepage features compact rows for SimuKernel, LSMSharp, and AeroUDP, each
-with a small architecture thumbnail. `/projects` shows all five projects,
-including Disk-Mesh and HungerStation Microservices, with case studies, source
-links, technical previews, and evidence highlights. SimuKernel and Disk-Mesh
-cards link directly to their browser demos on the case-study pages.
+with a small architecture thumbnail. `/projects` shows all six projects,
+including Disk-Mesh, HungerStation Microservices, and LLMProxy, with case studies,
+source links, technical previews, and evidence highlights. SimuKernel and
+Disk-Mesh cards link directly to their browser demos on the case-study pages.
 
 Edit `app/data.tsx` for project summaries, evidence highlights, visual kinds,
 and homepage selection (`featured`). `components/project-visual.tsx` contains
 the accessible SVG architecture sketches; these are static illustrations.
 Edit `lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel
-narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh and
-HungerStation. All entries share the main registry, which also generates case
-study routes, sitemap entries, and Open Graph cards. Highlights link to each
-case study's `#evidence` section and its pinned repository references.
+narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh,
+HungerStation, and LLMProxy. All entries share the main registry, which also
+generates case study routes, sitemap entries, and Open Graph cards. Highlights
+link to each case study's `#evidence` section and its pinned repository references.
 Demo and evidence links use native fragment navigation so the browser resolves
 the scroll destination after the case study loads.
 
@@ -79,6 +79,17 @@ and fetched only when a reader searches. Its section anchors share the article
 compiler's heading logic. Guided paths live at `/blog/paths`; browser-local
 progress offers an explicit resume link. Scoped PostgreSQL and .NET example
 checks support freshness labels; see [the verification record](docs/verification/2026-09-16.md).
+
+Readers can save articles at `/blog/saved` and explicitly mark them as read to
+track path completion. Both use local browser storage and synchronize between
+tabs. Inline glossary terms open native popovers; the complete glossary is at
+`/blog/glossary`. Every article includes an optional exercise with explanations,
+and the Nginx article includes a location matching playground.
+
+RSS is generated statically from parsed MDX, preserving code filenames, tables,
+images, callouts, steps, and tab alternatives. The feed includes static demo
+examples, exercise answers, and glossary definitions without executing article
+imports or JavaScript expressions.
 
 The scheduling playground is at `/projects/simukernel#scheduler`. It supports
 FCFS, non-preemptive SJF, and Round Robin, editable workloads, idle intervals,

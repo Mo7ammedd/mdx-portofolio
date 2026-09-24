@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'OFFSET and cursor based pagination strategies: covering database internals, B-tree traversal, performance characteristics, data consistency problems.',
   slug: 'pagination-strategies-offset-vs-cursor',
   publishedTime: '2026-03-13T10:00:00.000Z',
-  modifiedTime: '2026-09-16T00:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['database', 'pagination', 'performance', 'sql', 'backend', 'postgresql'],
 })
 
@@ -191,7 +191,7 @@ To understand why cursor pagination outperforms OFFSET at scale, you need to und
   caption="OFFSET must traverse all leaf nodes up to the skip count. Cursor pagination performs a direct seek using binary search: O(log n) regardless of position."
 />
 
-A B-tree index is a balanced tree structure. The leaf nodes are doubly-linked and contain the actual sorted key values. Every lookup starts at the root and descends through internal nodes using binary comparisons until reaching the correct leaf.
+A <Term id="b-tree">B-tree</Term> index is a balanced tree structure. The leaf nodes are doubly-linked and contain the actual sorted key values. Every lookup starts at the root and descends through internal nodes using binary comparisons until reaching the correct leaf.
 
 **OFFSET traversal:**
 1. Descend from root to leftmost leaf (O(log n))
@@ -223,6 +223,8 @@ Return the page and use its final row as the cursor for the next request.
 For a table with 10M rows, `log₂(10,000,000) ≈ 23`. Regardless of which "page" you're on: page 1 or page 1,000,000: cursor pagination only traverses ~23 tree levels to find the starting position. The complexity is **O(log n + limit)**, effectively constant relative to dataset size.
 
 ### The Composite Cursor Problem
+
+A <Term id="composite-cursor">composite cursor</Term> records every ordering value needed to identify a unique position.
 
 Simple cursors based on a single monotonically increasing integer ID work perfectly. Real world queries are messier. What if you're ordering by `created_at`, which is not unique?
 
@@ -475,18 +477,16 @@ Ensure the composite index exists: `CREATE INDEX idx_posts_cursor ON posts (crea
 
 ### SQL Server
 
-SQL Server supports row value expressions with `(a, b) < ($1, $2)` syntax and uses it correctly with covering indexes. Additionally, SQL Server's `FETCH NEXT ... ROWS ONLY` syntax (standard OFFSET-FETCH) has the same performance characteristics as `LIMIT ... OFFSET`.
+SQL Server does not support tuple inequality syntax such as `(created_at, id) < (@created_at, @id)`. Expand the cursor predicate to `created_at < @created_at OR (created_at = @created_at AND id < @id)`, with a matching index and ordering. SQL Server's `OFFSET ... ROWS FETCH NEXT ... ROWS ONLY` syntax still pays the cost of skipping the offset rows.
 
 
 ## Concurrency and Snapshot Isolation
 
-One underappreciated advantage of cursor pagination: it **naturally respects snapshot isolation** in databases that support it (PostgreSQL, MySQL InnoDB with REPEATABLE READ, SQL Server with snapshot isolation).
+A cursor records an ordering position; it does **not** preserve a database snapshot. <Term id="mvcc">MVCC</Term> and the transaction isolation level determine which row versions a query can see. Page requests in separate transactions can therefore observe different committed data, even when each request uses repeatable read or snapshot isolation.
 
-When a cursor-paginated query runs, the WHERE condition `(created_at, id) < (cursor_value)` is deterministic and set-based. Rows that have been inserted or deleted since the first page was fetched affect only the pages where they would logically appear. Rows the user has already seen remain unchanged. Rows ahead of the cursor are fetched as they exist at query time.
+With a unique, immutable sort order, keyset pagination avoids shifting its boundary when rows before the cursor are inserted or deleted. Each query still sees the rows visible to its own transaction. New rows after the boundary may appear on a later page, and changing a row's ordering values can cause it to be skipped or returned again.
 
-In contrast, OFFSET shifts the entire logical position of every row, so any change anywhere in the table can corrupt results for any active pagination session.
-
-Cursor pagination provides **stable pagination windows** in the presence of concurrent writes. New rows inserted after the cursor position appear in subsequent pages; rows before the cursor are unaffected. This is particularly valuable for real-time feeds (Twitter/X, Instagram, notification inboxes).
+For an export that must represent one consistent point in time, use a database-supported consistent snapshot spanning the operation, or materialize the result set. A long-lived snapshot has its own database and resource costs; putting a cursor in an HTTP response does not create one.
 
 
 ## Compound Ordering and Edge Cases
@@ -734,6 +734,10 @@ WHERE id > $1::uuid
 ORDER BY id ASC
 LIMIT 10;
 ```
+
+## Check Your Understanding
+
+<Exercise id="pagination-delete" />
 
 ## Verified Examples
 

@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'Three practical ways to build custom middleware in ASP.NET Core.',
   slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
   publishedTime: '2024-03-15T10:00:00.000Z',
-  modifiedTime: '2026-09-16T00:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['aspnet-core', 'middleware', 'dotnet', 'web-development', 'request-pipeline', 'csharp'],
 })
 
@@ -16,7 +16,7 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction
 
-In ASP.NET Core, middleware is the fundamental mechanism that processes every HTTP request and response. Every request that enters the application and every response that leaves it flows through the middleware pipeline.
+In ASP.NET Core, <Term id="middleware">middleware</Term> is the fundamental mechanism that processes every HTTP request and response. Every request that enters the application and every response that leaves it flows through the middleware pipeline.
 
 A middleware component can:
 
@@ -453,6 +453,10 @@ Key takeaways:
 * Treat middleware as infrastructure, not business logic
 
 Well-designed middleware leads to cleaner controllers, consistent cross-cutting behavior, and scalable applications.
+
+## Check Your Understanding
+
+<Exercise id="middleware-order" />
 
 ## Verified Examples
 

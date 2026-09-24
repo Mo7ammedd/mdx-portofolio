@@ -87,7 +87,7 @@ export function PersonalClient({
         <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1">
           <a
             href={`mailto:${email}`}
-            className="text-link font-medium text-zinc-200"
+            className="text-link font-medium text-primary hover:text-primary-hover"
           >
             Get in touch
             <ArrowUpRight aria-hidden="true" className="size-3" />

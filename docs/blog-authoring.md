@@ -127,3 +127,48 @@ change it. Add version labels in `lib/blog-freshness.ts` only after running scop
 example checks. Include a matching `## Verified Examples` section, the observed
 runtime/version, date, scope, and reproducible evidence. See
 [the verification record](verification/2026-09-16.md).
+
+## Nginx routing playground
+
+`<NginxRoutingDemo />` renders the location matching model used in the Nginx
+article. Readers can enter a path or HTTP URL, try supplied examples, and toggle
+the `^~` modifier on `/assets/`. The decision trace covers exact matches, the
+longest prefix, and regexes in declaration order. Its scope is flat locations
+on a case-sensitive server, with default slash merging and no rewrites.
+
+## Glossary terms
+
+Use `<Term id="mvcc">MVCC</Term>` inline at a useful first mention. Definitions
+live in `lib/blog-glossary.mjs`. A term opens a small native popover with a
+definition and example; `/blog/glossary` contains the full list and article
+references. Keep headings outside the popover and avoid repeating the control
+at every occurrence of a term.
+
+## Practical exercises
+
+Add `<Exercise id="boxing-copy" />` beneath a Markdown section heading. Questions,
+choices, explanations, and review links live in `lib/blog-exercises.mjs`. Each
+exercise is optional, supports keyboard selection and retry, and includes a
+native disclosure with the answer when JavaScript is disabled. Neither answers
+nor scores are recorded. Search indexes the referenced question and explanation.
+
+## Bookmarks and completion
+
+“Save article” adds a post to `/blog/saved`. “Mark as read” at the end of an article
+updates its reading path; clicking it again clears completion. These flags are
+independent of each other and of the existing section resume position. They
+persist in local browser storage and synchronize between tabs. If storage is
+blocked, controls work for the current visit and explain that limitation.
+
+## RSS rendering
+
+The RSS feed is generated at build time from the parsed MDX tree. It preserves
+native Markdown and tables, code filenames, captions, callouts, steps, and every
+tab panel. Demos get a static worked example and a link back to the interactive
+article; exercises include their answer, and glossary definitions appear at the
+end of the feed entry. Imports and expressions are never evaluated. Attribute
+values can be literal strings or static literal arrays, such as tab labels.
+
+When adding a new custom MDX component, add its readable feed representation in
+`lib/blog-feed.ts`. Feed URLs are absolute, code is escaped, and update timestamps
+come from article metadata rather than the time the feed is requested.

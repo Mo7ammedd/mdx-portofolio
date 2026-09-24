@@ -3,6 +3,10 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { getAllBlogPosts } from '@/lib/blog-utils'
 import { readingPaths } from '@/lib/reading-paths'
 import { generateSEO } from '@/lib/seo'
+import {
+  ArticleReadBadge,
+  ReadingPathProgress,
+} from '@/components/ui/reading-library'
 
 export const metadata = generateSEO({
   title: 'Reading paths',
@@ -52,6 +56,7 @@ export default async function ReadingPathsPage() {
                 {path.title}
               </h2>
               <p className="body-copy mt-3">{path.description}</p>
+              <ReadingPathProgress slugs={steps.map((step) => step.slug)} />
               <p className="mt-4 border-l border-white/15 pl-3 text-xs leading-6 text-zinc-400">
                 <span className="text-zinc-200">Before you start:</span>{' '}
                 {path.prerequisites.join('; ')}.
@@ -74,6 +79,7 @@ export default async function ReadingPathsPage() {
                         <p className="mt-1 text-sm leading-6 text-zinc-400">
                           {step.outcome}
                         </p>
+                        <ArticleReadBadge slug={step.slug} />
                       </div>
                       <ArrowUpRight
                         aria-hidden="true"

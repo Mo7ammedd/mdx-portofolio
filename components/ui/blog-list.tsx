@@ -7,6 +7,7 @@ import { ArrowUpRight, ChevronDown, Rss, Search } from 'lucide-react'
 import type { BlogPost } from '@/lib/blog-utils'
 import { BlogSearchResults } from './blog-search-results'
 import { meaningfulUpdatedDate } from '@/lib/blog-freshness'
+import { ArticleReadBadge } from './reading-library'
 
 const TOPIC_LABELS: Record<string, string> = {
   'aspnet-core': 'ASP.NET Core',
@@ -97,10 +98,18 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           Notes on backend engineering, systems, and the details behind reliable
           software.
         </p>
-        <Link href="/blog/paths" className="text-link mt-2">
-          Explore guided reading paths{' '}
-          <ArrowUpRight aria-hidden="true" className="size-3" />
-        </Link>
+        <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
+          <Link href="/blog/paths" className="text-link">
+            Explore guided reading paths{' '}
+            <ArrowUpRight aria-hidden="true" className="size-3" />
+          </Link>
+          <Link href="/blog/saved" className="text-link">
+            Saved articles
+          </Link>
+          <Link href="/blog/glossary" className="text-link">
+            Glossary
+          </Link>
+        </div>
       </div>
 
       {posts.length > 0 && (
@@ -216,6 +225,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
                       ·
                     </span>
                     <span>{post.readingTime} min read</span>
+                    <ArticleReadBadge slug={post.slug} />
                     {meaningfulUpdatedDate(
                       post.publishedTime,
                       post.modifiedTime,

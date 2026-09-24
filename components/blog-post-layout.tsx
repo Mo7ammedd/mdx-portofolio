@@ -11,6 +11,10 @@ import { BlogSearchDialog } from '@/components/ui/blog-search-dialog'
 import { ResumeReading } from '@/components/ui/resume-reading'
 import { ArticleFragment } from '@/components/ui/article-fragment'
 import {
+  ReadingStorageNotice,
+  SaveArticleButton,
+} from '@/components/ui/reading-library'
+import {
   ArticleReadingPath,
   ContinueReadingPath,
 } from '@/components/ui/article-reading-path'
@@ -108,8 +112,12 @@ export async function BlogPostLayout({
           />
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-4">
             <TextSizeControl />
-            <BlogSearchDialog />
+            <div className="flex flex-wrap items-center gap-2">
+              <BlogSearchDialog />
+              <SaveArticleButton slug={slug} />
+            </div>
           </div>
+          <ReadingStorageNotice />
         </div>
 
         <aside className="blog-contents" aria-label="Article navigation">

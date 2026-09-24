@@ -6,7 +6,7 @@ export const metadata = generateBlogPostSEO({
     'A practical guide to reliable transport, congestion control, flow control, and connection management, using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
   slug: 'aeroudp-networking-concepts',
   publishedTime: '2026-07-01T10:00:00.000Z',
-  modifiedTime: '2026-09-12T00:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['networking', 'transport-protocols', 'congestion-control', 'udp', 'tcp', 'rust'],
 })
 
@@ -227,13 +227,15 @@ The window "slides" forward as ACKs confirm old data and new data is sent, hence
 
 Because UDP can reorder packets, the receiver may get packet 7 before packet 5. AeroUDP **buffers out-of-order packets** until the gap fills, then delivers everything to the application in strict order. The application never sees the reordering.
 
+Waiting for the missing packet is <Term id="head-of-line-blocking">head-of-line blocking</Term> within this ordered stream. Using UDP underneath does not remove that consequence of ordered delivery.
+
 ---
 
 ## Congestion Control: Don't Overwhelm the Network
 
 Flow control protects the *receiver*. **Congestion control** protects the *network itself*, the shared routers and links between the two endpoints. Without it, many senders can collectively cause **congestion collapse**, where the network is so overloaded that almost nothing gets through.
 
-AeroUDP implements a **NewReno-style** controller, the classic TCP congestion algorithm. Its central variable is the **congestion window (cwnd)**: the sender's own estimate of how much it may safely have in flight. The true limit is:
+AeroUDP implements a **NewReno-style** controller, the classic TCP congestion algorithm. Its central variable is the <Term id="congestion-window">congestion window (cwnd)</Term>: the sender's own estimate of how much it may safely have in flight. The true limit is:
 
 ```
 in_flight <= min(cwnd, peer_window)
@@ -418,6 +420,10 @@ A single `send()` call in AeroUDP quietly exercises every concept in this articl
 None of this is visible to the application, which simply sees a reliable, ordered byte stream, exactly the illusion a transport protocol exists to provide.
 
 ---
+
+## Check Your Understanding
+
+<Exercise id="udp-ordering" />
 
 ## Further Reading
 

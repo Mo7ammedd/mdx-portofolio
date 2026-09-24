@@ -2,6 +2,11 @@ import Link from 'next/link'
 import { ArrowRight, ChevronDown, Route } from 'lucide-react'
 import type { BlogPost } from '@/lib/blog-utils'
 import { getArticleReadingPath } from '@/lib/reading-paths'
+import {
+  ArticleCompletion,
+  ArticleReadBadge,
+  ReadingPathProgress,
+} from './reading-library'
 
 export function ArticleReadingPath({
   slug,
@@ -31,6 +36,7 @@ export function ArticleReadingPath({
           <span className="text-zinc-200">Before you start:</span>{' '}
           {path.prerequisites.join('; ')}.
         </p>
+        <ReadingPathProgress slugs={path.steps.map((step) => step.slug)} />
         <ol className="mt-3 space-y-2">
           {path.steps.map((step, position) => {
             const title = posts.find((post) => post.slug === step.slug)?.title
@@ -53,6 +59,7 @@ export function ArticleReadingPath({
                     {title}
                   </Link>
                 )}
+                <ArticleReadBadge slug={step.slug} />
               </li>
             )
           })}
@@ -74,25 +81,32 @@ export function ContinueReadingPath({
   posts: BlogPost[]
 }) {
   const context = getArticleReadingPath(slug)
-  if (!context) return null
-  const next = posts.find((post) => post.slug === context.next?.slug)
+  const next = posts.find((post) => post.slug === context?.next?.slug)
   return (
     <section
-      aria-label="Continue your reading path"
+      aria-label={context ? 'Continue your reading path' : 'Reading progress'}
       className="mt-10 rounded-lg border border-white/10 px-5 py-4"
     >
-      <p className="section-heading mb-2">{context.path.title}</p>
-      <Link
-        href={next ? `/blog/${next.slug}` : '/blog/paths'}
-        className="flex min-h-10 items-center justify-between gap-4 text-sm leading-6 text-zinc-200 hover:text-white"
-      >
-        <span>
-          {next
-            ? `Next: ${next.title}`
-            : 'You’ve reached the end of this path. Explore another.'}
-        </span>
-        <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
-      </Link>
+      <ArticleCompletion slug={slug} />
+      {context && (
+        <>
+          <p className="section-heading mb-2">{context.path.title}</p>
+          <ReadingPathProgress
+            slugs={context.path.steps.map((step) => step.slug)}
+          />
+          <Link
+            href={next ? `/blog/${next.slug}` : '/blog/paths'}
+            className="flex min-h-10 items-center justify-between gap-4 text-sm leading-6 text-zinc-200 hover:text-white"
+          >
+            <span>
+              {next
+                ? `Next: ${next.title}`
+                : 'You’ve reached the end of this path. Explore another.'}
+            </span>
+            <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
+          </Link>
+        </>
+      )}
     </section>
   )
 }

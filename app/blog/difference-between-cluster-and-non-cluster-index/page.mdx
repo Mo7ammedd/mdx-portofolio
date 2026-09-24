@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'Database indexing with comprehensive guide on clustered and non-clustered indexes. Learn B-Tree architecture. ',
   slug: 'difference-between-cluster-and-non-cluster-index',
   publishedTime: '2023-11-10T10:00:00.000Z',
-  modifiedTime: '2023-11-10T10:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['database', 'sql-server', 'indexing', 'performance', 'b-tree', 'database-optimization'],
 })
 
@@ -49,7 +49,7 @@ Understanding how each option affects storage, reads, and writes is critical for
 
 ## B-Tree Architecture: How Indexes Work
 
-Most relational databases use **B-Tree structures** for indexes. This includes SQL Server, PostgreSQL, MySQL (InnoDB), and Oracle.
+Most relational databases use <Term id="b-tree">B-tree</Term> structures for indexes. This includes SQL Server, PostgreSQL, MySQL (InnoDB), and Oracle.
 
 A B-Tree keeps data balanced and shallow, which guarantees predictable performance even as tables grow to millions or billions of rows.
 
@@ -223,7 +223,7 @@ CustomerID | Row Locator
 
 If a query selects columns not present in the index, the engine performs a **key lookup** to fetch the remaining columns from the clustered index.
 
-Covering indexes eliminate this cost.
+A <Term id="covering-index">covering index</Term> includes the columns this query needs and can eliminate the key lookup.
 
 ---
 
@@ -452,6 +452,10 @@ SELECT * FROM sys.dm_db_index_usage_stats;
 Never create indexes blindly based only on missing index suggestions.
 
 ---
+
+## Check Your Understanding
+
+<Exercise id="index-coverage" />
 
 ## Conclusion
 

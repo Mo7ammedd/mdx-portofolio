@@ -2,12 +2,18 @@ import { MetadataRoute } from 'next'
 import { WEBSITE_URL } from '@/lib/constants'
 import { getAllBlogPosts } from '@/lib/blog-utils'
 import { PROJECT_CASE_STUDIES } from '@/lib/project-case-studies'
+import { ASK_URL } from '@/lib/ask/types'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const currentDate = new Date().toISOString()
 
   // Main pages with their priorities and update frequencies
   const mainRoutes = [
+    {
+      url: ASK_URL,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
     {
       url: `${WEBSITE_URL}`,
       lastModified: currentDate,
@@ -24,6 +30,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${WEBSITE_URL}/blog/paths`,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
+    },
+    {
+      url: `${WEBSITE_URL}/blog/glossary`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
     },
   ]
 

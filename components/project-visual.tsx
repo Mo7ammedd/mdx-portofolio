@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 
 export type ProjectVisualKind =
+  | 'gateway'
   | 'scheduler'
   | 'storage'
   | 'replication'
@@ -8,6 +9,8 @@ export type ProjectVisualKind =
   | 'transport'
 
 const LABELS: Record<ProjectVisualKind, string> = {
+  gateway:
+    'Conceptual LLMProxy request flow. A client sends requests through a gateway that enforces quotas and routes to a compatible provider, illustrated by OpenAI, Gemini, and Ollama.',
   scheduler:
     'Illustrative Round Robin schedule, not live data. Three processes each need four time units and take turns in two-unit slices, completing after twelve units.',
   storage:
@@ -25,6 +28,7 @@ const MUTED = '#a3a3a3'
 const LINE = '#8a8a8a'
 const BORDER = '#525252'
 const GRID = '#404040'
+const ACCENT = 'var(--primary)'
 
 function Node({
   x,
@@ -32,12 +36,14 @@ function Node({
   width,
   height = 40,
   lines,
+  highlighted = false,
 }: {
   x: number
   y: number
   width: number
   height?: number
   lines: readonly string[]
+  highlighted?: boolean
 }) {
   return (
     <g>
@@ -47,14 +53,15 @@ function Node({
         width={width}
         height={height}
         rx="4"
-        fill="#222222"
-        stroke={BORDER}
+        fill={highlighted ? ACCENT : '#222222'}
+        fillOpacity={highlighted ? 0.08 : 1}
+        stroke={highlighted ? ACCENT : BORDER}
         strokeWidth="1.25"
       />
       <text
         x={x + width / 2}
         y={y + height / 2 + 5 - (lines.length - 1) * 10}
-        fill={INK}
+        fill={highlighted ? ACCENT : INK}
         textAnchor="middle"
       >
         {lines.map((line, index) => (
@@ -69,7 +76,7 @@ function Node({
 
 function SchedulerVisual() {
   const rows = [
-    { label: 'P1', y: 48, slices: [0, 3], fill: '#e5e5e5' },
+    { label: 'P1', y: 48, slices: [0, 3], fill: ACCENT },
     { label: 'P2', y: 80, slices: [1, 4], fill: '#a3a3a3' },
     { label: 'P3', y: 112, slices: [2, 5], fill: '#8a8a8a' },
   ]
@@ -121,7 +128,7 @@ function StorageVisual() {
   return (
     <>
       <Node x={12} y={40} width={58} lines={['WAL']} />
-      <Node x={96} y={40} width={102} lines={['memtable']} />
+      <Node x={96} y={40} width={102} lines={['memtable']} highlighted />
       <rect
         x="230"
         y="34"
@@ -134,7 +141,7 @@ function StorageVisual() {
       />
       <Node x={224} y={40} width={80} lines={['SSTable']} />
       <Node x={16} y={112} width={130} lines={['merged table']} />
-      <g fill="none" stroke={LINE} strokeWidth="1.5">
+      <g fill="none" stroke={ACCENT} strokeWidth="1.5">
         <path d="M75 60H90M85 55L90 60L85 65" />
         <path d="M203 60H218M213 55L218 60L213 65" />
         <path d="M264 86V132H153M158 127L153 132L158 137" />
@@ -149,7 +156,7 @@ function StorageVisual() {
 function ReplicationVisual() {
   return (
     <>
-      <Node x={110} y={14} width={100} lines={['master']} />
+      <Node x={110} y={14} width={100} lines={['master']} highlighted />
       <path
         d="M160 60V98M160 78H56V98M160 78H264V98"
         fill="none"
@@ -167,7 +174,7 @@ function ReplicationVisual() {
           lines={[`N${index + 1}`, 'chunk']}
         />
       ))}
-      <g fill="none" stroke={LINE} strokeWidth="1.5">
+      <g fill="none" stroke={ACCENT} strokeWidth="1.5">
         <path d="M101 130H114M109 125L114 130L109 135" />
         <path d="M205 130H218M213 125L218 130L213 135" />
       </g>
@@ -188,9 +195,10 @@ function ServicesVisual() {
         width={160}
         height={52}
         lines={['Azure', 'Service Bus']}
+        highlighted
       />
       <Node x={16} y={124} width={94} lines={['Rewards']} />
-      <g fill="none" stroke={LINE} strokeWidth="1.5">
+      <g fill="none" stroke={ACCENT} strokeWidth="1.5">
         <path d="M116 44H224V60M219 55L224 60L229 55" />
         <path d="M224 124V144H116M121 139L116 144L121 149" />
       </g>
@@ -212,11 +220,11 @@ function TransportVisual() {
       </text>
       <path d="M43 38V167M277 38V167" stroke={BORDER} strokeWidth="1.25" />
       <g fill="none" stroke={LINE} strokeWidth="1.5">
-        <path d="M49 58H271M266 53L271 58L266 63" />
-        <path d="M271 87H49M54 82L49 87L54 92" />
+        <path d="M49 58H271M266 53L271 58L266 63" stroke={ACCENT} />
+        <path d="M271 87H49M54 82L49 87L54 92" stroke={ACCENT} />
         <path d="M49 117H151" strokeDasharray="4 5" />
         <path d="M156 112L166 122M166 112L156 122" />
-        <path d="M49 153H271M266 148L271 153L266 158" />
+        <path d="M49 153H271M266 148L271 153L266 158" stroke={ACCENT} />
       </g>
       <text x="160" y="51" textAnchor="middle">
         packet 1
@@ -230,14 +238,49 @@ function TransportVisual() {
       <text x="210" y="122" textAnchor="middle">
         lost
       </text>
-      <text x="160" y="145" fill={INK} textAnchor="middle">
+      <text x="160" y="145" fill={ACCENT} textAnchor="middle">
         retry
       </text>
     </>
   )
 }
 
+function GatewayVisual() {
+  return (
+    <>
+      <Node x={12} y={70} width={74} lines={['client']} />
+      <Node x={110} y={70} width={94} lines={['proxy']} highlighted />
+      {['OpenAI', 'Gemini', 'Ollama'].map((provider, index) => (
+        <Node
+          key={provider}
+          x={236}
+          y={14 + index * 56}
+          width={76}
+          lines={[provider]}
+        />
+      ))}
+      <g fill="none" stroke={ACCENT} strokeWidth="1.5">
+        <path d="M92 90H104M99 85L104 90L99 95" />
+        <path d="M210 90H220M220 34V146" />
+        {[34, 90, 146].map((y) => (
+          <path
+            key={y}
+            d={`M220 ${y}H230M225 ${y - 5}L230 ${y}L225 ${y + 5}`}
+          />
+        ))}
+      </g>
+      <text x="157" y="51" textAnchor="middle">
+        routing
+      </text>
+      <text x="157" y="139" textAnchor="middle">
+        quotas
+      </text>
+    </>
+  )
+}
+
 const DIAGRAMS = {
+  gateway: GatewayVisual,
   scheduler: SchedulerVisual,
   storage: StorageVisual,
   replication: ReplicationVisual,

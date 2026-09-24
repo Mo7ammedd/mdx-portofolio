@@ -173,4 +173,86 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
   },
+  {
+    slug: 'llmproxy',
+    title: 'LLMProxy',
+    subtitle: 'Route model requests and account for every attempt',
+    description:
+      'A self-hosted LLM gateway in C# and .NET 10, exposing OpenAI-compatible APIs across ten provider adapters with key pools, quotas, usage accounting, and an embedded admin console.',
+    technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
+    source: 'https://github.com/Mo7ammedd/LLMProxy',
+    problem:
+      'Applications that call several model providers have to manage different credentials, protocols, rate limits, and billing rules. LLMProxy puts those responsibilities behind one API: clients use gateway keys and public model aliases while the server chooses a compatible upstream, enforces allowances, and records the work performed.',
+    architecture: [
+      {
+        title: 'Authenticate',
+        description:
+          'Validate the gateway key, permitted model alias, and request limits.',
+      },
+      {
+        title: 'Plan the route',
+        description:
+          'Filter targets by capabilities and order the eligible providers.',
+      },
+      {
+        title: 'Reserve capacity',
+        description:
+          'Acquire concurrency slots and reserve token and spending allowances.',
+      },
+      {
+        title: 'Invoke and settle',
+        description:
+          'Translate the provider response, record attempts, and settle usage.',
+      },
+    ],
+    architectureNote:
+      'Provider adapters handle wire protocols while the application layer owns routing and accounting. PostgreSQL and Redis support multiple gateway replicas; standalone deployments use SQLite and local admission controls. The embedded admin console manages keys, policies, and usage.',
+    decisions: [
+      {
+        title: 'Keep provider differences behind adapters',
+        description:
+          'Clients select public model aliases instead of provider-specific model IDs. The router checks capabilities and feature combinations before dispatch, then applies a strategy such as priority, round-robin, cost, or latency. A common API simplifies client integration, while supported tools, media inputs, and response formats still depend on the chosen adapter and model.',
+      },
+      {
+        title: 'Stop fallback once streaming output begins',
+        description:
+          'Named provider accounts can rotate through multiple keys, cool down rejected credentials, and fall back to another provider after eligible failures. Streaming fallback is allowed before the first event. After output reaches the client, a later failure ends the stream without replaying the request. Retrying upstream requests can still incur additional provider charges.',
+      },
+      {
+        title: 'Reserve allowances before dispatch',
+        description:
+          'A conditional database update reserves tokens and spending before a request starts. Completion settles the reservation and usage record in one transaction, with duplicate finalization handled idempotently. Missing usage or interrupted requests require conservative estimates; invoice reconciliation can later adjust spending from provider records.',
+      },
+    ],
+    validation: [
+      'The repository includes tests for provider fallback, pooled-key failover, and streaming failures before and after the first event. API tests check that failover records both credential fingerprints while settling one gateway request, and that a stream error after output never retries another key.',
+      'Persistence scenarios submit 40 concurrent reservations against an allowance that admits 17, then check both the counters and stored reservations. Separate SQLite and PostgreSQL scenarios check that duplicate finalizers commit usage once.',
+      'These references document the inspected test definitions. Provider calls use deterministic fakes or mock endpoints. PostgreSQL and Redis checks require configured test services and are skipped when their environment variables are absent.',
+    ],
+    references: [
+      {
+        title: 'Architecture and request lifecycle',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/docs/architecture.md',
+      },
+      {
+        title: 'Fallback and streaming tests',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.UnitTests/FallbackTests.cs',
+      },
+      {
+        title: 'Provider key-pool API tests',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.IntegrationTests/ProviderKeyPoolApiTests.cs',
+      },
+      {
+        title: 'Concurrent quota and persistence tests',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.IntegrationTests/PersistenceTests.cs',
+      },
+    ],
+    experiment: {
+      title: 'Exercise routing and accounting',
+      description:
+        'With the .NET 10 SDK installed, run these commands from a repository checkout for unit, provider, and SQLite integration checks. Set LLMPROXY_TEST_POSTGRES and LLMPROXY_TEST_REDIS to include the PostgreSQL and Redis scenarios.',
+      command:
+        'dotnet restore --locked-mode\ndotnet build --configuration Release --no-restore -m:1\ndotnet test --configuration Release --no-build --no-restore',
+    },
+  },
 ]

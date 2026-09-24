@@ -117,6 +117,20 @@ export const PROJECTS: PortfolioProject[] = [
     highlight:
       'Buffer and codec tests cover reordering, duplicates, and corruption.',
   },
+  {
+    slug: 'llmproxy',
+    title: 'LLMProxy',
+    category: 'AI infrastructure',
+    href: 'https://github.com/Mo7ammedd/LLMProxy',
+    caseStudyHref: '/projects/llmproxy',
+    visual: 'gateway',
+    featured: false,
+    description:
+      'A self-hosted .NET 10 gateway for ten LLM providers, with OpenAI-compatible APIs, key rotation, quotas, usage accounting, and a web admin console.',
+    technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
+    highlight:
+      'Tests exercise key failover, stream replay boundaries, and concurrent quota reservations.',
+  },
 ]
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {

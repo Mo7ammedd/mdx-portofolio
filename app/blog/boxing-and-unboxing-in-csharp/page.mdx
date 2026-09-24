@@ -5,7 +5,7 @@ export const metadata = generateBlogPostSEO({
   description: 'A practical guide to boxing and unboxing in C# and their performance impact.',
   slug: 'boxing-and-unboxing-in-csharp',
   publishedTime: '2023-08-22T10:00:00.000Z',
-  modifiedTime: '2026-09-16T00:00:00.000Z',
+  modifiedTime: '2026-09-17T00:00:00.000Z',
   tags: ['csharp', 'dotnet', 'performance', 'memory-management', 'programming-fundamentals'],
 })
 
@@ -17,7 +17,7 @@ export const metadata = generateBlogPostSEO({
 
 ## Understanding the Fundamentals
 
-Boxing and unboxing describe how the .NET runtime moves data between **value types** and **reference types**.
+<Term id="boxing">Boxing</Term> and unboxing describe how the .NET runtime moves data between **value types** and **reference types**.
 
 This behavior is rooted in how the CLR represents data in memory and how the JIT compiler generates machine code.
 
@@ -439,6 +439,10 @@ They should be avoided in:
 * Allocation-sensitive systems
 
 Understanding boxing is not optional for performance-critical .NET development. It is a core part of writing efficient, scalable C# code.
+
+## Check Your Understanding
+
+<Exercise id="boxing-copy" />
 
 ## Verified Examples
 

@@ -133,8 +133,8 @@
   }
 
   ::selection {
-    background: #ededed;
-    color: #000;
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
 
   /* Sitewide keyboard focus ring (only shows for keyboard nav, not mouse clicks) */
@@ -146,7 +146,7 @@
   summary:focus-visible,
   [role='button']:focus-visible,
   [tabindex]:focus-visible {
-    outline: 2px solid rgba(212, 212, 216, 0.8);
+    outline: 2px solid var(--ring);
     outline-offset: 4px;
     border-radius: 4px;
   }
@@ -302,7 +302,7 @@
   }
 
   .text-link {
-    @apply inline-flex min-h-11 items-center gap-1.5 rounded-sm text-[13px] text-zinc-400 no-underline transition-colors hover:text-white;
+    @apply inline-flex min-h-11 items-center gap-1.5 rounded-sm text-[13px] text-zinc-400 no-underline transition-colors hover:text-primary;
   }
 
   .button-primary {
@@ -318,11 +318,11 @@
   }
 
   .icon-button {
-    @apply flex size-11 shrink-0 items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-white/[0.04] hover:text-white disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex size-11 shrink-0 items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-white/[0.04] hover:text-primary disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .inline-link {
-    @apply text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400;
+    @apply text-zinc-200 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary/60;
   }
 
   .list-row {
@@ -374,6 +374,18 @@
   margin-top: 0;
 }
 
+.glossary-popover {
+  position: fixed;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  width: min(22rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+}
+
 .blog-toc-desktop {
   display: none;
 }
@@ -402,14 +414,14 @@
 }
 
 .blog-toc-link:hover {
-  color: #f4f4f5;
+  color: var(--primary);
   background: rgb(255 255 255 / 3%);
 }
 
 .blog-toc-link[aria-current='location'] {
-  color: #f4f4f5;
-  background: rgb(255 255 255 / 7%);
-  box-shadow: inset 2px 0 #a1a1aa;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  box-shadow: inset 2px 0 var(--primary);
 }
 
 .blog-toc-link:has(+ details) {
@@ -446,14 +458,14 @@
 }
 
 .blog-prose .code-block [data-highlighted-line] {
-  border-left-color: #7dd3fc;
-  background: rgb(56 189 248 / 8%);
+  border-left-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
 .blog-prose .code-block [data-highlighted-chars] {
   border-radius: 0.25rem;
-  background: rgb(56 189 248 / 15%);
-  box-shadow: 0 0 0 2px rgb(56 189 248 / 15%);
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 15%, transparent);
 }
 
 .blog-prose code[data-line-numbers] > [data-line]::before {

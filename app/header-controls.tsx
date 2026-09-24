@@ -20,7 +20,7 @@ export function HeaderControls() {
         aria-current={!onAsk && pathname === '/' ? 'page' : undefined}
         className={`text-link underline-offset-8 ${
           !onAsk && pathname === '/'
-            ? 'text-zinc-100 underline decoration-zinc-500'
+            ? 'text-primary underline decoration-primary/60'
             : 'text-zinc-400'
         }`}
       >
@@ -31,7 +31,7 @@ export function HeaderControls() {
         aria-current={pathname === '/projects' ? 'page' : undefined}
         className={`text-link underline-offset-8 ${
           pathname.startsWith('/projects')
-            ? 'text-zinc-100 underline decoration-zinc-500'
+            ? 'text-primary underline decoration-primary/60'
             : 'text-zinc-400'
         }`}
       >
@@ -42,7 +42,7 @@ export function HeaderControls() {
         aria-current={pathname === '/blog' ? 'page' : undefined}
         className={`text-link underline-offset-8 ${
           pathname.startsWith('/blog')
-            ? 'text-zinc-100 underline decoration-zinc-500'
+            ? 'text-primary underline decoration-primary/60'
             : 'text-zinc-400'
         }`}
       >
@@ -53,7 +53,7 @@ export function HeaderControls() {
         aria-current={onAsk ? 'page' : undefined}
         className={`text-link underline-offset-8 ${
           onAsk
-            ? 'text-zinc-100 underline decoration-zinc-500'
+            ? 'text-primary underline decoration-primary/60'
             : 'text-zinc-400'
         }`}
       >

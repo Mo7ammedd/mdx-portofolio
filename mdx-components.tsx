@@ -8,6 +8,9 @@ import { Callout } from '@/components/ui/mdx-callout'
 import { Steps, Step } from '@/components/ui/mdx-steps'
 import { Tabs, Tab } from '@/components/ui/mdx-tabs'
 import { PaginationDemo } from '@/components/ui/pagination-demo'
+import { NginxRoutingDemo } from '@/components/ui/nginx-routing-demo'
+import { GlossaryTerm } from '@/components/ui/glossary-term'
+import { BlogExercise } from '@/components/ui/blog-exercise'
 import { getBlogImageDimensions } from '@/lib/blog-image-metadata'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -20,6 +23,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Tabs,
     Tab,
     PaginationDemo,
+    NginxRoutingDemo,
+    Term: GlossaryTerm,
+    Exercise: BlogExercise,
     h1: (props: ComponentPropsWithoutRef<'h1'>) => (
       <h1
         className="mt-0 mb-6 scroll-mt-8 text-2xl leading-tight font-medium tracking-tight text-zinc-100 sm:text-3xl"
