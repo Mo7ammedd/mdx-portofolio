@@ -7,7 +7,7 @@ export const siteConfig: Metadata = {
     template: '%s | Mohammed Mostafa',
   },
   description:
-    'Mohammed Mostafa - Backend Software Engineer from Egypt specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices, REST APIs, and distributed systems. View projects and technical blog.',
+    'Mohammed Mostafa, backend software engineer in Egypt. 5+ years building microservices, REST APIs, and distributed systems with ASP.NET Core, Node.js, and TypeScript. Projects and technical articles.',
   keywords: [
     // Personal brand keywords
     'Mohammed Mostafa',
@@ -22,9 +22,9 @@ export const siteConfig: Metadata = {
     'Node.js Backend Engineer',
     'TypeScript Full Stack Developer',
     'Express.js REST API Developer',
-    'C# Senior Developer',
+    'C# development',
     'Backend Software Engineer',
-    'Microservices Architect',
+    'Microservices architecture',
     
     // Location-based SEO
     'Software Engineer Egypt',
@@ -37,13 +37,12 @@ export const siteConfig: Metadata = {
     'Remote developer',
     
     // Technologies & Skills
-    'Microservices Architecture',
     'Azure Cloud Developer',
-    'SQL Server DBA',
-    'Redis Cache Expert',
+    'SQL Server',
+    'Redis caching',
     'JWT Authentication Implementation',
     'RESTful API Design',
-    'Database Design Expert',
+    'Database design',
     'System Architecture Design',
     'Docker Containerization',
     'RabbitMQ Message Queue',
@@ -61,7 +60,7 @@ export const siteConfig: Metadata = {
     // Education & Experience
     'Suez Canal University Computer Science',
     '5 years software development experience',
-    'Senior Backend Developer',
+    'Backend development',
   ],
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.modev.me' }],
   creator: 'Mohammed - Software Engineer',
@@ -92,7 +91,7 @@ export const siteConfig: Metadata = {
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
     title: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js)',
     description:
-      'Backend Software Engineer from Egypt specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
+      'Backend software engineer in Egypt with 5+ years building microservices and distributed systems using ASP.NET Core, Node.js, and TypeScript.',
     emails: ['mohammedmostafanazih@gmail.com'],
     countryName: 'Egypt',
   },
@@ -103,7 +102,7 @@ export const siteConfig: Metadata = {
     creator: '@mohameddtv',
     title: 'Mohammed Mostafa | Backend Software Engineer',
     description:
-      'Backend Software Engineer specializing in ASP.NET Core, Node.js, and TypeScript. 5+ years building scalable microservices and distributed systems.',
+      'Backend software engineer with 5+ years building microservices and distributed systems using ASP.NET Core, Node.js, and TypeScript.',
   },
   
   robots: {

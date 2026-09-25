@@ -10,7 +10,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['Java', 'TCP', 'SHA-256', 'Distributed storage'],
     source: 'https://github.com/Mo7ammedd/Disk-Mesh',
     problem:
-      'Copying a file to several machines is only the beginning. A client also needs to locate its chunks, detect damaged bytes, and keep reading when a storage node disappears. Disk-Mesh makes these responsibilities visible through a metadata master, storage nodes, and a client that verifies the data it receives.',
+      'A distributed file system needs to locate chunks, detect corruption, and keep reads working when a storage node disappears. Disk-Mesh uses a metadata master, storage nodes, and a client that checks the data it receives.',
     architecture: [
       {
         title: 'Allocate',
@@ -52,7 +52,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The repository defines nine integration scenarios, including byte-for-byte round trips, concurrent transfers, corrupt-replica handling, node loss, and garbage collection. These are inspected test definitions; no fresh execution results are claimed here.',
+      'The nine integration scenarios include byte-for-byte round trips, concurrent transfers, corrupt-replica handling, node loss, and garbage collection. The links show the test definitions; this page does not include results from a new run.',
       'The recovery scenario starts four storage nodes with a replication factor of three, stops one node, waits for every chunk to have three live replicas again, and compares a downloaded file with its original bytes. This checks storage-node recovery within an in-process cluster; it does not exercise abrupt master failure.',
       'Chunk data and checksum sidecars are written separately without an explicit disk synchronization call. Replication and checksum validation therefore do not establish power-loss durability. Master-crash and interrupted-write scenarios are useful next checks before making stronger persistence claims.',
     ],
@@ -98,7 +98,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 8', 'EF Core', 'Azure Service Bus', 'Stripe'],
     source: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     problem:
-      'A checkout combines product prices, discounts, payment state, and work that can happen afterward. Splitting these responsibilities into services makes the boundaries explicit, but also creates places where one step can succeed while another fails. This project follows those boundaries from a cart request to an order and its reward message.',
+      'Checkout combines product prices, discounts, payment state, and follow-up work. This project splits those steps across services, from the cart request to the order and rewards message. One step can succeed while the next fails.',
     architecture: [
       {
         title: 'Cart',
@@ -138,7 +138,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The linked source traces cart composition, Stripe status validation, message publication, and reward handling. The inspected revision contains no automated test project or reproducible benchmark workload, so this case study makes no measured latency or end-to-end reliability claim.',
+      'The source shows cart composition, Stripe status validation, message publication, and reward handling. The linked revision has no automated test project or reproducible benchmark. This page does not report measured latency or end-to-end reliability.',
       'The reward consumer requests IRewardService, but startup registers only the concrete RewardService. That registration needs correction before exercising the consumer. A local run also needs database, Stripe, and Service Bus configuration; the producer and consumers read different configuration keys.',
       'The reward handler catches database failures without rethrowing, after which the consumer can complete the message. Useful next checks are a failed database write, duplicate delivery, and interruption between order persistence and publication. EmailAPI currently logs generated content without calling a mail transport.',
     ],
@@ -227,7 +227,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     validation: [
       'The repository includes tests for provider fallback, pooled-key failover, and streaming failures before and after the first event. API tests check that failover records both credential fingerprints while settling one gateway request, and that a stream error after output never retries another key.',
       'Persistence scenarios submit 40 concurrent reservations against an allowance that admits 17, then check both the counters and stored reservations. Separate SQLite and PostgreSQL scenarios check that duplicate finalizers commit usage once.',
-      'These references document the inspected test definitions. Provider calls use deterministic fakes or mock endpoints. PostgreSQL and Redis checks require configured test services and are skipped when their environment variables are absent.',
+      'The linked tests use deterministic fakes or mock endpoints for provider calls. PostgreSQL and Redis checks need configured test services and are skipped when their environment variables are missing. The links document the test definitions.',
     ],
     references: [
       {

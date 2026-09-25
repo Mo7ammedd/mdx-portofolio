@@ -15,8 +15,8 @@ export function PalestineSolidarity() {
           From the river to the sea. We remember Gaza.
         </p>
         <p>
-          Supporting justice, human rights, and the dignity of all people.
-          Technology should empower communities and promote peace worldwide.
+          I support justice, human rights, and dignity for everyone. I believe
+          technology should help communities and support peace.
         </p>
       </div>
     </details>

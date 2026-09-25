@@ -3,7 +3,7 @@
 Backend engineer working on APIs, infrastructure, and distributed systems.
 This repo is the source for my personal site, [modev.me](https://www.modev.me).
 
-[Projects](https://www.modev.me/projects) · [Writing](https://www.modev.me/blog) · [Q&A](https://ask.modev.me)
+[About](https://www.modev.me/about) · [Projects](https://www.modev.me/projects) · [Writing](https://www.modev.me/blog) · [Q&A](https://ask.modev.me)
 
 Built with Next.js, TypeScript, Tailwind CSS, and MDX. Deployed on Vercel.
 
@@ -19,6 +19,7 @@ Open [localhost:3000](http://localhost:3000).
 ## Working on the site
 
 - Edit projects and work experience in [`app/data.tsx`](app/data.tsx).
+- Edit the biography and education in [`app/about/page.tsx`](app/about/page.tsx).
 - Write articles in [`app/blog/`](app/blog/) as MDX files.
 - Run `npm run lint`, `npm test`, and `npm run build` before deploying.
 

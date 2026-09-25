@@ -32,21 +32,24 @@ variables, privacy behavior, and domain setup.
 ## Experience
 
 Edit `WORK_EXPERIENCE` in `app/data.tsx` for company summaries, roles, dates,
-and optional `highlights`. Highlights appear in native "Selected work"
-disclosures, keeping the homepage compact. CarLink and the learning platforms
+and optional `highlights`. The full history is on `/about`, with highlights
+shown beneath each role. Edit the biography and education in
+`app/about/page.tsx`. CarLink and the learning platforms
 share the Medica Scope entry. Descriptions summarize the organization
 repositories at the product level.
 
 ## Projects and writing
 
-The homepage features compact rows for SimuKernel, LSMSharp, and AeroUDP, each
-with a small architecture thumbnail. `/projects` shows all six projects,
-including Disk-Mesh, HungerStation Microservices, and LLMProxy, with case studies,
-source links, technical previews, and evidence highlights. SimuKernel and
-Disk-Mesh cards link directly to their browser demos on the case-study pages.
+The homepage lists LSMSharp, Disk-Mesh, and AeroUDP as text links with short
+summaries, followed by the three latest articles and their publication dates.
+The shared footer contains contact links, Ask, and RSS. `/projects` shows all
+six projects with case studies, source links, technical previews, and evidence
+highlights. SimuKernel and Disk-Mesh cards link directly to their browser demos
+on the case-study pages.
 
-Edit `app/data.tsx` for project summaries, evidence highlights, visual kinds,
-and homepage selection (`featured`). `components/project-visual.tsx` contains
+Edit `app/data.tsx` for project descriptions, optional short homepage summaries
+(`summary`), evidence highlights, visual kinds, and homepage selection
+(`featured`). `components/project-visual.tsx` contains
 the accessible SVG architecture sketches; these are static illustrations.
 Edit `lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel
 narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh,

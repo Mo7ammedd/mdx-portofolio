@@ -38,7 +38,7 @@ const author = {
   name: 'Mohammed Mostafa',
   jobTitle: 'Software Engineer',
   description:
-    'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript.',
+    'Software engineer working with ASP.NET Core, Node.js, Express.js, and TypeScript.',
   url: 'https://www.modev.me',
   email: 'mohammedmostafanazih@gmail.com',
   image: 'https://www.modev.me/avatar.jpg',

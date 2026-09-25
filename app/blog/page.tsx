@@ -5,7 +5,7 @@ import { generateSEO } from '@/lib/seo'
 export const metadata = generateSEO({
   title: 'Writing',
   description:
-    'Articles on backend engineering, .NET, Node.js, system design, and more.',
+    'Articles on backend engineering, .NET, Node.js, and system design.',
   path: '/blog',
 })
 

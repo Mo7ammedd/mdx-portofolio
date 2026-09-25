@@ -13,7 +13,7 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction
 
-Nginx is one of the most widely used web servers and reverse proxies in production systems. It powers high-traffic websites, APIs, microservices platforms, and edge gateways worldwide. Companies like Netflix, Dropbox, and WordPress.com rely on Nginx to handle millions of concurrent connections.
+Nginx is widely used for high-traffic websites, APIs, microservices platforms, and edge gateways. Netflix, Dropbox, and WordPress.com use it to handle millions of concurrent connections.
 
 Unlike traditional process-based servers (Apache with prefork MPM), Nginx is built around an **event-driven, non-blocking architecture**. This fundamental design difference allows it to handle tens of thousands of concurrent connections with predictable resource usage and minimal memory footprint.
 
@@ -27,7 +27,7 @@ Nginx is commonly deployed for:
 * **Zero-downtime deployments** - Graceful configuration reloads without dropping connections
 * **Security filtering** - DDoS protection, request validation, WAF integration
 
-To use Nginx effectively in production, you must understand **how requests flow through its processing pipeline**, **how configuration directives are evaluated**, and **how architectural decisions affect performance characteristics**.
+The rest of this article follows request processing, configuration rules, and their effects on performance.
 
 ---
 
@@ -84,9 +84,11 @@ Nginx's event-driven model scales differently:
 
 ---
 
-## Event-Driven Architecture Deep Dive
+<span id="event-driven-architecture-deep-dive" className="block" aria-hidden="true" />
 
-Nginx workers use an event loop similar to Node.js, but implemented in C for maximum performance.
+## Nginx’s event loop and non-blocking I/O
+
+Nginx workers use an event loop implemented in C, similar to the model used by Node.js.
 
 ### The Event Loop
 
@@ -134,7 +136,7 @@ This allows a single worker to juggle thousands of connections without threads.
 
 ![Nginx Request Lifecycle](/blog/nginx/nginx-request-lifecycle-1.png)
 
-Understanding Nginx's request processing phases is crucial for correct configuration.
+The request phases determine when each part of the configuration runs.
 
 ### Processing Phases (in order)
 
@@ -242,7 +244,9 @@ http {
 
 ---
 
-## Location Matching: The Most Critical Concept
+<span id="location-matching-the-most-critical-concept" className="block" aria-hidden="true" />
+
+## How Nginx matches location blocks
 
 
 <Term id="location-rule">Location matching</Term> determines which block handles a request. A rule that wins unexpectedly can send API traffic to a static file handler or bypass the intended configuration.
@@ -365,7 +369,7 @@ server {
 
 ![Nginx Reverse Proxy Architecture](/blog/nginx/nginx-reverse-proxy.png)
 
-Nginx excels as a reverse proxy, sitting between clients and application servers.
+As a reverse proxy, Nginx sits between clients and application servers.
 
 ### Basic Proxy Configuration
 
@@ -375,9 +379,11 @@ location / {
 }
 ```
 
-This works, but is suboptimal for production.
+This example only sets the upstream. The next one adds forwarded headers, timeouts, and buffering settings.
 
-### Production-Grade Proxy Config
+<span id="production-grade-proxy-config" className="block" aria-hidden="true" />
+
+### Proxy configuration with forwarded headers, timeouts, and buffering
 
 ```nginx
 location / {
@@ -555,7 +561,7 @@ upstream backend {
 ```
 
 * Routes to server with lowest average response time
-* Most intelligent algorithm, adapts to backend performance
+* Adapts to backend response times
 * Use when: You have Nginx Plus and mixed backend performance
 
 ### Health Checks and Failure Handling
@@ -749,7 +755,7 @@ listen 443 ssl http2;
 
 ![Nginx Caching](/blog/nginx/nginx-cache-1.jpg)
 
-Nginx can cache proxy responses, dramatically reducing backend load.
+Nginx can cache proxy responses, reducing the requests sent to the backend.
 
 ### Caching Setup
 
@@ -838,7 +844,7 @@ Values: HIT, MISS, EXPIRED, STALE, UPDATING, REVALIDATED, BYPASS
 
 ## Rate Limiting
 
-Nginx provides sophisticated rate limiting to protect backends and enforce quotas.
+Nginx rate limits protect backends and enforce quotas.
 
 ### Basic Rate Limiting
 
@@ -1189,16 +1195,16 @@ Nginx is infrastructure, not application logic. Don't use Nginx for:
 
 ## Conclusion
 
-Nginx is a high-performance traffic control layer that, when properly configured, becomes one of the most reliable components in your infrastructure.
+Nginx handles routing, proxying, caching, and TLS. Its configuration determines how it handles traffic.
 
 **Key takeaways**:
 
-1. **Architecture matters** - Event-driven design enables massive concurrency
+1. **Architecture** — Event-driven workers handle many concurrent connections.
 2. **Request flow understanding** - Know the 11 processing phases
-3. **Location matching** - Most misunderstood feature, most important to get right
+3. **Location matching** — Check which block handles each request.
 4. **Headers in proxy** - Always set Host, X-Real-IP, X-Forwarded-*
 5. **Load balancing** - Choose algorithm based on your workload
-6. **Caching** - Dramatic performance gains for read-heavy workloads
+6. **Caching** — Reduce backend requests for read-heavy workloads.
 7. **Security** - Rate limiting, request size limits, security headers
 8. **Zero-downtime** - Graceful reloads and binary upgrades
 9. **Observability** - Log timing breakdowns, monitor cache hit rates

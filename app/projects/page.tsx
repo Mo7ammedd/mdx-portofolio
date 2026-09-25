@@ -5,7 +5,7 @@ import { generateSEO } from '@/lib/seo'
 export const metadata = generateSEO({
   title: 'Projects',
   description:
-    'Storage engines, transport protocols, and backend services by Mohammed Mostafa. Explore the architecture, tradeoffs, and interactive demos.',
+    'Storage engines, transport protocols, and backend services by Mohammed Mostafa, with architecture notes, tradeoffs, and interactive demos.',
   path: '/projects',
 })
 
@@ -19,9 +19,9 @@ export default function ProjectsPage() {
         Projects
       </h1>
       <p className="page-description mt-5">
-        Storage engines, transport protocols, and backend services. Explore the
-        architecture, inspect the evidence, or try the scheduling and replica
-        recovery demos.
+        Storage engines, transport protocols, and backend services. Each project
+        has architecture notes and source links. You can also try the scheduling
+        and replica recovery demos.
       </p>
       <ul className="mt-8">
         {PROJECTS.map((project, index) => (

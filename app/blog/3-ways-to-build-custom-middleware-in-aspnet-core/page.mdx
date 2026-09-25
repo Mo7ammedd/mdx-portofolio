@@ -2,7 +2,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
   title: '3 Ways to Build Custom Middleware in ASP.NET Core',
-  description: 'Three practical ways to build custom middleware in ASP.NET Core.',
+  description: 'Inline delegates, convention-based middleware, and IMiddleware, with examples and dependency lifetime notes.',
   slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
   publishedTime: '2024-03-15T10:00:00.000Z',
   modifiedTime: '2026-09-17T00:00:00.000Z',
@@ -16,7 +16,7 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction
 
-In ASP.NET Core, <Term id="middleware">middleware</Term> is the fundamental mechanism that processes every HTTP request and response. Every request that enters the application and every response that leaves it flows through the middleware pipeline.
+In ASP.NET Core, <Term id="middleware">middleware</Term> processes HTTP requests and responses through a pipeline.
 
 A middleware component can:
 
@@ -35,7 +35,7 @@ Because middleware sits at the lowest level of the request lifecycle, it is comm
 * Performance monitoring
 * Response transformation
 
-Understanding how to design and implement middleware correctly is critical for building maintainable and high-performance ASP.NET Core applications.
+Middleware runs on every request, so its design affects maintainability and performance.
 
 ---
 
@@ -49,8 +49,6 @@ Each middleware can execute logic in two phases:
 
 * Before calling `next`
 * After the next middleware completes
-
-This enables powerful cross-cutting behavior.
 
 ### Conceptual Pipeline Flow
 
@@ -156,8 +154,6 @@ Inline middleware should remain small and focused.
 
 ### 2. Convention-Based Middleware (Class + Extension Method)
 
-This is the most commonly recommended approach for production code.
-
 It consists of:
 
 * A middleware class
@@ -222,7 +218,7 @@ app.UseRequestLogging();
 * Easy to unit test
 * Reusable across applications
 
-This is the preferred approach for most custom middleware.
+Use convention-based middleware as the default for most custom middleware.
 
 ---
 
@@ -283,7 +279,7 @@ app.UseMiddleware<PerformanceMiddleware>();
 * Easier unit testing
 * Slightly higher allocation cost
 
-This approach is ideal for complex middleware with many dependencies or when strict test isolation is required.
+`IMiddleware` suits components with many dependencies or strict test-isolation requirements.
 
 ---
 
@@ -433,7 +429,7 @@ Pipeline order should be intentional and documented.
       <td>Factory-Based</td>
       <td>High</td>
       <td>Excellent</td>
-      <td>Complex logic, enterprise systems</td>
+      <td>Many dependencies or strict test-isolation needs</td>
     </tr>
   </tbody>
 </table>
@@ -441,8 +437,6 @@ Pipeline order should be intentional and documented.
 ---
 
 ## Summary
-
-Middleware is the backbone of ASP.NET Core request processing.
 
 Key takeaways:
 
@@ -452,7 +446,7 @@ Key takeaways:
 * Use `IMiddleware` for complex, test-heavy scenarios
 * Treat middleware as infrastructure, not business logic
 
-Well-designed middleware leads to cleaner controllers, consistent cross-cutting behavior, and scalable applications.
+Shared request logic belongs in one place. Middleware can keep that logic out of controllers and apply it consistently across requests.
 
 ## Check Your Understanding
 

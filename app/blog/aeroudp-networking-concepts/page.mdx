@@ -3,7 +3,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 export const metadata = generateBlogPostSEO({
   title: 'Building a Transport Protocol on Top of UDP',
   description:
-    'A practical guide to reliable transport, congestion control, flow control, and connection management, using AeroUDP, a TCP-like protocol built on top of UDP in async Rust.',
+    'Reliable transport, congestion control, flow control, and connection management in AeroUDP, a TCP-like protocol built over UDP in async Rust.',
   slug: 'aeroudp-networking-concepts',
   publishedTime: '2026-07-01T10:00:00.000Z',
   modifiedTime: '2026-09-17T00:00:00.000Z',
@@ -12,7 +12,7 @@ export const metadata = generateBlogPostSEO({
 
 # Building a Transport Protocol on Top of UDP
 
-This article explains the core networking concepts that make a reliable transport protocol work, using AeroUDP as a concrete reference implementation. AeroUDP is a reliable, ordered, congestion-controlled transport protocol layered on top of unreliable UDP, essentially a stripped-down hybrid of TCP and QUIC written in idiomatic asynchronous Rust.
+AeroUDP combines simplified TCP and QUIC ideas in an async Rust transport protocol. It adds reliable, ordered delivery and congestion control over UDP. This article explains those mechanisms using the implementation.
 
 > Source code: https://github.com/Mo7ammedd/AeroUDP
 
@@ -373,7 +373,7 @@ To detect a peer that has silently vanished (crash, cable pull), AeroUDP sends *
 
 ## Observability: Seeing Inside the Protocol
 
-A protocol you cannot measure is a protocol you cannot debug or tune. AeroUDP exposes a `ConnectionMetrics` snapshot backed by atomic counters:
+For debugging and tuning, AeroUDP exposes a `ConnectionMetrics` snapshot backed by atomic counters:
 
 **Traffic:**
 - Packets and bytes sent/received in both directions

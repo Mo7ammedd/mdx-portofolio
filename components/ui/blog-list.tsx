@@ -95,8 +95,8 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
           </a>
         </div>
         <p className="page-description mt-5">
-          Notes on backend engineering, systems, and the details behind reliable
-          software.
+          I write about backend engineering, databases, networking, and operating
+          systems.
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
           <Link href="/blog/paths" className="text-link">

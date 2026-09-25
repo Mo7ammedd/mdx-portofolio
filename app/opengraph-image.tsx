@@ -9,9 +9,9 @@ export const dynamic = 'force-static'
 
 export default function Image() {
   return generateOGImage({
-    title: 'Mohammed Mostafa.',
+    title: 'Mohammed Mostafa',
     description:
-      'I build backend systems, databases, and cloud infrastructure with a focus on performance and reliability.',
+      'I’m a software engineer in Egypt. I build backend systems at Oblien and Medica Scope.',
     label: 'SOFTWARE ENGINEER · EGYPT',
     footer: 'ASP.NET Core · Node.js · TypeScript',
     detail: 'Portfolio & writing',

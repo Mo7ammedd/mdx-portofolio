@@ -11,7 +11,7 @@ export default function Image() {
   return generateOGImage({
     title: 'Ask me anything.',
     description:
-      'Especially the thing you almost didn’t. Ask anonymously. No name needed.',
+      'Ask a question anonymously. You don’t need to leave your name.',
     label: 'QUESTIONS & ANSWERS',
     footer: 'Mohammed Mostafa',
     detail: 'ask.modev.me',

@@ -2,7 +2,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
   title: 'C# Boxing and Unboxing',
-  description: 'A practical guide to boxing and unboxing in C# and their performance impact.',
+  description: 'What boxing and unboxing do in C#, where allocations happen, and how typed collections avoid boxing.',
   slug: 'boxing-and-unboxing-in-csharp',
   publishedTime: '2023-08-22T10:00:00.000Z',
   modifiedTime: '2026-09-17T00:00:00.000Z',
@@ -12,7 +12,7 @@ export const metadata = generateBlogPostSEO({
 
 
 
-# Deep Dive into C# Boxing and Unboxing
+# Boxing and unboxing in C#: allocations and runtime behavior
 
 
 ## Understanding the Fundamentals
@@ -438,7 +438,7 @@ They should be avoided in:
 * High-throughput services
 * Allocation-sensitive systems
 
-Understanding boxing is not optional for performance-critical .NET development. It is a core part of writing efficient, scalable C# code.
+Check for boxing in performance-sensitive C# code. It adds allocations and copying that can affect memory use and execution time.
 
 ## Check Your Understanding
 

@@ -2,7 +2,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
   title: 'Pagination Strategies: OFFSET vs Cursor Pagination',
-  description: 'OFFSET and cursor based pagination strategies: covering database internals, B-tree traversal, performance characteristics, data consistency problems.',
+  description: 'How OFFSET and cursor pagination use B-tree indexes, how their performance differs, and what happens when data changes between pages.',
   slug: 'pagination-strategies-offset-vs-cursor',
   publishedTime: '2026-03-13T10:00:00.000Z',
   modifiedTime: '2026-09-17T00:00:00.000Z',
@@ -11,9 +11,9 @@ export const metadata = generateBlogPostSEO({
 
 # Pagination Strategies: OFFSET vs Cursor Pagination
 
-Pagination is one of the most deceptively simple problems in backend engineering. Every application that lists data needs it. Yet the choice between **offset-based** and **cursor-based** pagination carries enormous implications for query performance, data consistency, scalability, and API design: implications that only become visible under production load.
+Applications that list data need a way to paginate it. OFFSET and cursor pagination differ in query performance, consistency, scalability, and API design. Those differences become clearer under production load.
 
-This post tears into both strategies at the database internals level. We'll look at how each approach interacts with B-tree indexes, what query plans they produce, where their O-complexity comes from, and how to implement each one correctly.
+This post compares their B-tree access patterns, query plans, time complexity, and implementations.
 
 <Callout type="success" title="Key takeaway">
 
@@ -21,13 +21,15 @@ Use OFFSET when readers need to jump to a page in a small or stable dataset. For
 
 </Callout>
 
-## What Is Pagination, Really?
+<span id="what-is-pagination-really" className="block" aria-hidden="true" />
 
-Before diving into strategies, let's be precise. Pagination is the technique of breaking a large result set into smaller, sequential chunks called **pages**. The database still holds the full dataset; the client receives one slice at a time.
+## What is pagination?
+
+Pagination splits a large result set into smaller, sequential pages. The database holds the full dataset; the client receives one page at a time.
 
 The core challenge: how do you tell the database *where* to start returning rows for any given page?
 
-That single question leads to two fundamentally different answers.
+OFFSET identifies the starting position by count; a cursor identifies it by value.
 
 
 ## Strategy 1: OFFSET Pagination
@@ -56,7 +58,7 @@ ORDER BY created_at DESC
 LIMIT 10 OFFSET 500;
 ```
 
-Page number translates directly to `OFFSET = (page - 1) * pageSize`. Clean. Predictable.
+Page number translates directly to `OFFSET = (page - 1) * pageSize`.
 
 <Cover
   src="/blog/pagination-strategies/offset-pagination-mechanics.webp"
@@ -66,7 +68,7 @@ Page number translates directly to `OFFSET = (page - 1) * pageSize`. Clean. Pred
 
 ### What the Database Actually Does
 
-This is where things get uncomfortable. The SQL standard and every major RDBMS implement OFFSET by **materialising and discarding** the skipped rows. There is no magical shortcut.
+OFFSET still has to process the rows it skips. The PostgreSQL plan below shows that work.
 
 When PostgreSQL processes `LIMIT 10 OFFSET 500`, it:
 
@@ -76,7 +78,7 @@ When PostgreSQL processes `LIMIT 10 OFFSET 500`, it:
 4. **Discards rows 1 through 500**
 5. Returns rows 501 through 510
 
-Step 4 is pure waste. You are paying the full I/O and CPU cost for rows you immediately throw away.
+The query spends I/O and CPU time on rows it does not return.
 
 Let's look at an actual query plan on a table with 10M rows:
 
@@ -114,7 +116,7 @@ The cost of OFFSET pagination is **O(offset)**: linear in the number of rows to 
 
 At page 1 you're reading 10 rows. At page 1,000 (with page size 10), you're reading 10,000 rows to return 10. At page 10,000, you're reading 100,000 rows to return 10. The database does proportionally more work for every deeper page, even though the client receives the same 10 rows each time.
 
-This "performance cliff" is often invisible in development (small datasets) and during early production (few users reaching deep pages). It becomes catastrophic as data grows and users or crawlers navigate deep into result sets.
+This cost is easy to miss with small development datasets or few users reaching deep pages. It grows as the dataset expands and users or crawlers request later pages.
 
 ### The Data Consistency Problem
 
@@ -293,7 +295,7 @@ Using `base64url` (URL-safe base64) avoids the need to URL-encode the token when
 
 ### Full Implementation Example
 
-Here is a production-grade cursor pagination implementation in TypeScript with PostgreSQL:
+Here is a cursor pagination example in TypeScript with PostgreSQL:
 
 ```typescript
 import { Pool } from 'pg'

@@ -109,7 +109,7 @@ export function generateProfessionalServiceSchema(data: PersonData) {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: `${data.name} - Software Engineering Services`,
-    description: 'Professional software development services specializing in ASP.NET Core, Node.js, and full-stack development',
+    description: 'Software development with ASP.NET Core and Node.js, including full-stack web applications.',
     url: data.url,
     telephone: '+20-XXX-XXX-XXXX', // Replace with actual if available
     email: data.email,
@@ -147,7 +147,7 @@ export function generateProfessionalServiceSchema(data: PersonData) {
           itemOffered: {
             '@type': 'Service',
             name: 'Full-Stack Development',
-            description: 'Complete web application development with modern frameworks',
+            description: 'Web application development across the frontend and backend.',
           },
         },
         {
@@ -155,7 +155,7 @@ export function generateProfessionalServiceSchema(data: PersonData) {
           itemOffered: {
             '@type': 'Service',
             name: 'Cloud Architecture',
-            description: 'Azure cloud solutions and microservices architecture',
+            description: 'Cloud architecture on Azure, including microservices.',
           },
         },
       ],
@@ -172,7 +172,7 @@ export function generateOrganizationSchema() {
     name: 'Mohammed Mostafa Portfolio',
     url: 'https://www.modev.me',
     logo: 'https://www.modev.me/avatar.jpg',
-    description: 'Professional portfolio website of Mohammed Mostafa, Software Engineer',
+    description: 'Mohammed Mostafa’s software engineering portfolio.',
     founder: {
       '@type': 'Person',
       name: 'Mohammed Mostafa',

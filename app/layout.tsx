@@ -49,7 +49,7 @@ export default function RootLayout({
     name: 'Mohammed Mostafa',
     jobTitle: 'Software Engineer',
     description:
-      'Experienced Software Engineer specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. Available for new opportunities.',
+      'Software engineer with experience in ASP.NET Core, Node.js, Express.js, and TypeScript. Open to new opportunities.',
     url: 'https://www.modev.me',
     email: 'mohammedmostafanazih@gmail.com',
     image: 'https://www.modev.me/avatar.jpg',
@@ -83,7 +83,7 @@ export default function RootLayout({
     url: 'https://www.modev.me',
     name: 'Mohammed Mostafa - Software Engineer Portfolio',
     description:
-      'Professional Software Engineer Mohammed specializing in ASP.NET Core, Node.js, Express.js, and TypeScript. View portfolio, projects, and contact information.',
+      'Mohammed Mostafa’s portfolio: projects, contact details, and work with ASP.NET Core, Node.js, Express.js, and TypeScript.',
   }
 
   return (
@@ -116,9 +116,13 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <div className="relative z-10 flex min-h-screen w-full flex-col">
-          <div className="site-shell relative mx-auto w-full max-w-[46rem] flex-1 px-6 pt-6 pb-8 sm:px-8 sm:pt-12 sm:pb-12">
+          <div className="site-shell relative mx-auto flex w-full max-w-[44rem] flex-1 flex-col px-6 pt-6 pb-8 sm:px-8 sm:pt-8 sm:pb-10">
             <Header />
-            <div id="main-content" tabIndex={-1} className="outline-none">
+            <div
+              id="main-content"
+              tabIndex={-1}
+              className="flex-1 outline-none"
+            >
               {children}
             </div>
             <Footer />

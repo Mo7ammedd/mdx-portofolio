@@ -236,7 +236,7 @@ export function AskPage({
           Ask me anything<span className="text-zinc-500">.</span>
         </h1>
         <p className="page-description mt-5">
-          Especially the thing you almost didn’t.
+          Ask anonymously. No name needed.
         </p>
       </section>
 

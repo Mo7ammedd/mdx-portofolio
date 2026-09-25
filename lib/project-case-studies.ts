@@ -26,7 +26,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 8', 'LSM-tree', 'Storage'],
     source: 'https://github.com/Mo7ammedd/LSMSharp',
     problem:
-      'A storage engine has to accept new writes while keeping old data readable and recoverable. LSMSharp makes those competing jobs explicit: collect writes in memory, preserve a recovery log, then reorganize sorted files in the background.',
+      'A storage engine has to accept new writes while keeping old data readable and recoverable. LSMSharp collects writes in memory, keeps a recovery log, and reorganizes sorted files in the background.',
     architecture: [
       {
         title: 'Write-ahead log',
@@ -66,7 +66,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     ],
     validation: [
       'The repository includes functional checks for CRUD operations, repeated updates, deletes, binary values, and concurrent access, alongside performance and reopen workloads. A checked-in test run records a post-compaction integrity failure, so fresh correctness checks should precede performance comparisons.',
-      'The published sequential-write example reports 5,000 operations in 207 ms, or about 24,155 operations per second. It is a repository-reported sample: the timer covers write submission and excludes the final flush. Hardware details were not recorded, so this is not a durable-commit benchmark or a cross-machine comparison.',
+      'The README reports 5,000 sequential writes in 207 ms, about 24,155 operations per second. The timer covers write submission and excludes the final flush. Hardware details were not recorded, so the sample cannot establish durable-commit speed or support comparisons across machines.',
       'For a meaningful rerun, record the runtime, hardware, value sizes, cache state, and flush policy; verify retrieved values as well as throughput. Multi-operation transactions and snapshot isolation remain separate design work.',
     ],
     references: [
@@ -104,7 +104,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['Rust', 'Tokio', 'UDP', 'Networking'],
     source: 'https://github.com/Mo7ammedd/AeroUDP',
     problem:
-      'UDP delivers independent datagrams without promising that they arrive, arrive once, or arrive in order. AeroUDP explores the machinery needed to expose reliable, ordered delivery while adapting to a slow receiver and a congested network.',
+      'UDP delivers independent datagrams without promising that they arrive, arrive once, or arrive in order. AeroUDP adds reliable, ordered delivery and adjusts sending to the receiver’s capacity and network conditions.',
     architecture: [
       {
         title: 'Application data',

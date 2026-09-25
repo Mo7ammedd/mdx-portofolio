@@ -32,6 +32,7 @@ export type PortfolioProject = {
   title: string
   category: string
   description: string
+  summary?: string
   technologies: readonly string[]
   href: string
   caseStudyHref: string
@@ -52,7 +53,7 @@ export const PROJECTS: PortfolioProject[] = [
     articleHref: '/blog/simukernel-operating-system-concepts',
     demoHref: '/projects/simukernel#scheduler',
     visual: 'scheduler',
-    featured: true,
+    featured: false,
     description:
       'Explore CPU scheduling and memory management in C#, then compare scheduling policies in the companion browser playground.',
     technologies: ['C#', '.NET 8', 'TypeScript'],
@@ -67,6 +68,7 @@ export const PROJECTS: PortfolioProject[] = [
     caseStudyHref: '/projects/lsmsharp',
     visual: 'storage',
     featured: true,
+    summary: 'An LSM-tree storage engine in C#.',
     description:
       'An LSM-tree storage engine in C# with write-ahead logging, Bloom filters, and background compaction.',
     technologies: ['C#', '.NET 8', 'LSM-tree'],
@@ -81,7 +83,8 @@ export const PROJECTS: PortfolioProject[] = [
     caseStudyHref: '/projects/disk-mesh',
     demoHref: '/projects/disk-mesh#replication',
     visual: 'replication',
-    featured: false,
+    featured: true,
+    summary: 'A distributed file system in Java.',
     description:
       'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
     technologies: ['Java 22+', 'TCP', 'Replication'],
@@ -111,6 +114,7 @@ export const PROJECTS: PortfolioProject[] = [
     articleHref: '/blog/aeroudp-networking-concepts',
     visual: 'transport',
     featured: true,
+    summary: 'Experimental reliable transport over UDP in Rust.',
     description:
       'Experimental reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
     technologies: ['Rust', 'Tokio', 'UDP'],
@@ -239,7 +243,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Manara',
     title: 'Backend Engineering Intern',
     description:
-      'Backend engineering internship focused on practical development, problem-solving, and software engineering fundamentals.',
+      'At Manara, I worked on backend development, problem-solving, and software engineering fundamentals.',
     start: 'Mar 2024',
     end: 'Jul 2024',
     link: 'https://app.manara.tech/auth/',
@@ -252,28 +256,28 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     title: 'Difference Between Cluster and Non-Cluster Index',
     description:
-      'An index is a disk-based structure linked to a table or view that speeds up the retrieval of rows.',
+      'How clustered and non-clustered indexes help the database find rows.',
     link: '/blog/difference-between-cluster-and-non-cluster-index',
     uid: 'blog-1',
   },
   {
     title: '3 Ways to Build Custom Middleware in ASP.NET Core',
     description:
-      'Middleware is software that is assembled into an app pipeline to handle requests and responses.',
+      'Three ways to write ASP.NET Core middleware and how each fits into the request pipeline.',
     link: '/blog/3-ways-to-build-custom-middleware-in-aspnet-core',
     uid: 'blog-2',
   },
   {
     title: 'Boxing and Unboxing in C#',
     description:
-      'Boxing is the process of converting a value type to the type object or to any interface type implemented by this value type.',
+      'How C# boxes value types as object or interface references, and what happens during unboxing.',
     link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
   },
   {
     title: 'SimuKernel: OS Concepts Explained',
     description:
-      'SimuKernel is a kernel simulator that allows you to explore the internals of an operating system.',
+      'CPU scheduling, paging, and process management in the SimuKernel simulator.',
     link: '/blog/simukernel-operating-system-concepts',
     uid: 'blog-4',
   },
@@ -281,19 +285,15 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    label: 'Github',
+    label: 'GitHub',
     link: 'https://github.com/mo7ammedd',
-  },
-  {
-    label: 'Twitter',
-    link: 'https://twitter.com/mohameddtv',
   },
   {
     label: 'LinkedIn',
     link: 'https://www.linkedin.com/in/mohammed-mostafa-316b21254/',
   },
   {
-    label: 'CV',
+    label: 'Résumé',
     link: '/resume.pdf',
   },
 ]

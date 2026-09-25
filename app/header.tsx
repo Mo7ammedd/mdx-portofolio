@@ -5,7 +5,7 @@ import { HeaderControls } from './header-controls'
 
 export function Header() {
   return (
-    <header className="mb-12 flex items-center justify-between gap-3 border-b border-white/10 pb-5 sm:mb-14">
+    <header className="mb-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 sm:mb-12">
       <SiteLink
         href="/"
         aria-label="Mohammed Mostafa, home"
@@ -19,11 +19,10 @@ export function Header() {
           height={32}
           priority
         />
-        <span className="hidden font-mono text-xs tracking-tight text-zinc-400 transition-colors group-hover:text-white min-[420px]:inline">
+        <span className="hidden text-sm text-zinc-400 transition-colors group-hover:text-white min-[420px]:inline">
           modev.me
         </span>
       </SiteLink>
-
       <HeaderControls />
     </header>
   )

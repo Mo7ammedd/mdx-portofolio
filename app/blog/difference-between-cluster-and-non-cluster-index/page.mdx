@@ -2,7 +2,7 @@ import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
   title: 'Clustered vs Non Clustered Database Indexes',
-  description: 'Database indexing with comprehensive guide on clustered and non-clustered indexes. Learn B-Tree architecture. ',
+  description: 'How clustered and non-clustered indexes store data, how B-trees work, and what that means for reads and writes.',
   slug: 'difference-between-cluster-and-non-cluster-index',
   publishedTime: '2023-11-10T10:00:00.000Z',
   modifiedTime: '2026-09-17T00:00:00.000Z',
@@ -10,7 +10,7 @@ export const metadata = generateBlogPostSEO({
 })
 
 
-# Clustered and Non-Clustered Implementations
+# Clustered and non-clustered indexes
 
 ## Introduction to Database Indexing
 
@@ -30,7 +30,7 @@ Indexes improve:
 
 Internally, an index is a data structure that maps **key values to row locations**. The database optimizer decides whether to use an index based on cost estimation, not based on whether the index exists.
 
-Creating the right index is not about indexing everything. It is about indexing access patterns.
+Choose indexes around the queries your application runs.
 
 ---
 
@@ -43,7 +43,7 @@ A table can be organized in two fundamental ways:
 * Physically ordered by a clustered index
 * Unordered as a heap with optional non-clustered indexes
 
-Understanding how each option affects storage, reads, and writes is critical for designing scalable schemas.
+The choice affects how the database stores, reads, and writes rows as the schema grows.
 
 ---
 
@@ -327,7 +327,9 @@ Fragmentation increases:
 * Reorganize when fragmentation is between 5 and 30 percent
 * Rebuild when fragmentation exceeds 30 percent
 
-### Smart Maintenance Script
+<span id="smart-maintenance-script" className="block" aria-hidden="true" />
+
+### Index maintenance script
 
 ```sql
 DECLARE @IndexName NVARCHAR(255), @Fragmentation FLOAT
@@ -474,4 +476,4 @@ Practical rules:
 4. Remove unused indexes regularly
 5. Maintain indexes based on fragmentation metrics
 
-Indexes are not optional optimizations. They are a core part of database design.
+Plan indexes alongside the schema and the queries it needs to support.
