@@ -2,16 +2,51 @@ import Link from 'next/link'
 
 import type { PortfolioProject } from './data'
 import type { BlogPost } from '@/lib/blog-utils'
+import { getProjectsForArticle } from '@/lib/project-links'
 
 interface PersonalClientProps {
   blogPosts: BlogPost[]
   projects: PortfolioProject[]
 }
 
+interface WritingEntry {
+  title: string
+  href: string
+  publishedTime?: string
+  project?: PortfolioProject
+}
+
+function caseStudyEntry(project: PortfolioProject): WritingEntry {
+  return {
+    title: project.title,
+    href: project.caseStudyHref,
+    project,
+  }
+}
+
 export function PersonalClient({ blogPosts, projects }: PersonalClientProps) {
-  const selectedProjects = projects
-    .filter((project) => project.featured)
-    .slice(0, 3)
+  const entries: WritingEntry[] = []
+  const remainingProjects = new Map(
+    projects.map((project) => [project.slug, project]),
+  )
+
+  for (const post of blogPosts) {
+    entries.push({
+      title: post.title,
+      href: `/blog/${post.slug}`,
+      publishedTime: post.publishedTime,
+    })
+
+    for (const { slug } of getProjectsForArticle(post.slug)) {
+      const project = remainingProjects.get(slug)
+      if (project) {
+        entries.push(caseStudyEntry(project))
+        remainingProjects.delete(slug)
+      }
+    }
+  }
+
+  entries.push(...Array.from(remainingProjects.values(), caseStudyEntry))
 
   return (
     <main className="space-y-10 sm:space-y-12">
@@ -48,66 +83,56 @@ export function PersonalClient({ blogPosts, projects }: PersonalClientProps) {
         </p>
       </section>
 
-      <section
-        id="projects"
-        aria-labelledby="projects-heading"
-        className="scroll-mt-8"
-      >
-        <h2
-          id="projects-heading"
-          className="text-base font-medium text-zinc-100"
+      {entries.length > 0 && (
+        <section
+          id="writing"
+          aria-labelledby="writing-heading"
+          className="scroll-mt-8"
         >
-          Projects
-        </h2>
-        <ul className="mt-3">
-          {selectedProjects.map((project) => (
-            <li key={project.slug}>
-              <Link
-                href={project.caseStudyHref}
-                className="group block min-h-11 rounded-sm py-2 text-base leading-7"
-                data-project-name={project.title}
-                data-link-type="case_study"
-              >
-                <span className="font-medium text-zinc-200 decoration-zinc-500 underline-offset-4 group-hover:underline">
-                  {project.title}
-                </span>
-                <span className="text-zinc-400">
-                  {' — '}
-                  {project.summary ?? project.description}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {blogPosts.length > 0 && (
-        <section id="writing" aria-labelledby="writing-heading">
           <h2
             id="writing-heading"
             className="text-base font-medium text-zinc-100"
           >
             Writing
           </h2>
-          <ul className="mt-3">
-            {blogPosts.slice(0, 3).map((post) => (
-              <li key={post.slug}>
+          <ul id="projects" className="mt-3 scroll-mt-8">
+            {entries.map((entry) => (
+              <li key={entry.href}>
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={entry.href}
                   className="group grid min-h-11 grid-cols-[4.75rem_minmax(0,1fr)] items-baseline gap-x-3 rounded-sm py-2 leading-7 sm:grid-cols-[5.5rem_minmax(0,1fr)]"
+                  data-project-name={entry.project?.title}
+                  data-link-type={entry.project ? 'case_study' : undefined}
                 >
-                  <time
-                    dateTime={post.publishedTime}
-                    className="text-sm text-zinc-400 tabular-nums"
-                  >
-                    {new Date(post.publishedTime).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      timeZone: 'UTC',
-                    })}
-                  </time>
-                  <span className="text-base text-zinc-200 decoration-zinc-500 underline-offset-4 group-hover:underline">
-                    {post.title}
+                  {entry.publishedTime ? (
+                    <time
+                      dateTime={entry.publishedTime}
+                      className="text-sm text-zinc-400 tabular-nums"
+                    >
+                      {new Date(entry.publishedTime).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'short',
+                          timeZone: 'UTC',
+                        },
+                      )}
+                    </time>
+                  ) : (
+                    <span className="text-sm whitespace-nowrap text-zinc-400">
+                      Case study
+                    </span>
+                  )}
+                  <span className="text-base text-zinc-200">
+                    <span className="decoration-zinc-500 underline-offset-4 group-hover:underline">
+                      {entry.title}
+                    </span>
+                    {entry.project && (
+                      <span className="text-zinc-400">
+                        {' — '}
+                        {entry.project.summary ?? entry.project.description}
+                      </span>
+                    )}
                   </span>
                 </Link>
               </li>

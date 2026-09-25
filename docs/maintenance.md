@@ -40,16 +40,19 @@ repositories at the product level.
 
 ## Projects and writing
 
-The homepage lists LSMSharp, Disk-Mesh, and AeroUDP as text links with short
-summaries, followed by the three latest articles and their publication dates.
+The homepage combines all articles and project case studies in one text list.
+Articles appear newest first, with related case studies placed after their
+newest matching article. Each case study appears once; those without a matching
+article follow the article list. Article rows show publication dates, and
+project rows use a "Case study" label with a short summary.
 The shared footer contains contact links, Ask, and RSS. `/projects` shows all
 six projects with case studies, source links, technical previews, and evidence
 highlights. SimuKernel and Disk-Mesh cards link directly to their browser demos
 on the case-study pages.
 
 Edit `app/data.tsx` for project descriptions, optional short homepage summaries
-(`summary`), evidence highlights, visual kinds, and homepage selection
-(`featured`). `components/project-visual.tsx` contains
+(`summary`), evidence highlights, and visual kinds. Every registered project
+appears on the homepage. `components/project-visual.tsx` contains
 the accessible SVG architecture sketches; these are static illustrations.
 Edit `lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel
 narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh,

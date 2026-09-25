@@ -39,7 +39,6 @@ export type PortfolioProject = {
   articleHref?: string
   demoHref?: string
   visual: ProjectVisualKind
-  featured: boolean
   highlight: string
 }
 
@@ -53,7 +52,7 @@ export const PROJECTS: PortfolioProject[] = [
     articleHref: '/blog/simukernel-operating-system-concepts',
     demoHref: '/projects/simukernel#scheduler',
     visual: 'scheduler',
-    featured: false,
+    summary: 'CPU scheduling and memory management in C#.',
     description:
       'Explore CPU scheduling and memory management in C#, then compare scheduling policies in the companion browser playground.',
     technologies: ['C#', '.NET 8', 'TypeScript'],
@@ -67,7 +66,6 @@ export const PROJECTS: PortfolioProject[] = [
     href: 'https://github.com/Mo7ammedd/LSMSharp',
     caseStudyHref: '/projects/lsmsharp',
     visual: 'storage',
-    featured: true,
     summary: 'An LSM-tree storage engine in C#.',
     description:
       'An LSM-tree storage engine in C# with write-ahead logging, Bloom filters, and background compaction.',
@@ -83,7 +81,6 @@ export const PROJECTS: PortfolioProject[] = [
     caseStudyHref: '/projects/disk-mesh',
     demoHref: '/projects/disk-mesh#replication',
     visual: 'replication',
-    featured: true,
     summary: 'A distributed file system in Java.',
     description:
       'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
@@ -98,7 +95,7 @@ export const PROJECTS: PortfolioProject[] = [
     href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     caseStudyHref: '/projects/hungerstation-microservices',
     visual: 'services',
-    featured: false,
+    summary: 'Food ordering with .NET services.',
     description:
       'Seven .NET 8 services for food ordering, connecting authentication, Stripe checkout, and Azure Service Bus messaging.',
     technologies: ['.NET 8', 'Azure Service Bus', 'Stripe'],
@@ -113,7 +110,6 @@ export const PROJECTS: PortfolioProject[] = [
     caseStudyHref: '/projects/aeroudp',
     articleHref: '/blog/aeroudp-networking-concepts',
     visual: 'transport',
-    featured: true,
     summary: 'Experimental reliable transport over UDP in Rust.',
     description:
       'Experimental reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
@@ -128,7 +124,7 @@ export const PROJECTS: PortfolioProject[] = [
     href: 'https://github.com/Mo7ammedd/LLMProxy',
     caseStudyHref: '/projects/llmproxy',
     visual: 'gateway',
-    featured: false,
+    summary: 'A self-hosted gateway for LLM providers.',
     description:
       'A self-hosted .NET 10 gateway for ten LLM providers, with OpenAI-compatible APIs, key rotation, quotas, usage accounting, and a web admin console.',
     technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
