@@ -46,14 +46,15 @@ newest matching article. Each case study appears once; those without a matching
 article follow the article list. Article rows show publication dates, and
 project rows use a "Case study" label with a short summary.
 The shared footer contains contact links, Ask, and RSS. `/projects` shows all
-six projects with case studies, source links, technical previews, and evidence
-highlights. SimuKernel and Disk-Mesh cards link directly to their browser demos
-on the case-study pages.
+six projects as compact rows with short summaries, small technical previews,
+evidence highlights, and links to case studies and source code. SimuKernel and
+Disk-Mesh cards link directly to their browser demos on the case-study pages.
 
-Edit `app/data.tsx` for project descriptions, optional short homepage summaries
-(`summary`), evidence highlights, and visual kinds. Every registered project
-appears on the homepage. `components/project-visual.tsx` contains
-the accessible SVG architecture sketches; these are static illustrations.
+Edit `app/data.tsx` for project descriptions, optional short summaries for the
+homepage and project list (`summary`), evidence highlights, and visual kinds.
+Every registered project appears on the homepage.
+`components/project-visual.tsx` contains the accessible SVG architecture sketches;
+these are static illustrations.
 Edit `lib/project-case-studies.ts` for the LSMSharp, AeroUDP, and SimuKernel
 narratives, and `lib/additional-project-case-studies.ts` for Disk-Mesh,
 HungerStation, and LLMProxy. All entries share the main registry, which also

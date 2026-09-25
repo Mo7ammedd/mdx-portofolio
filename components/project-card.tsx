@@ -27,7 +27,7 @@ export function ProjectCard({
       className={cn(
         'group min-w-0',
         compact
-          ? 'py-5'
+          ? 'border-b border-white/[0.08] py-5'
           : featured
             ? 'overflow-hidden rounded-lg border border-white/15 bg-card'
             : 'border-b border-white/[0.08] py-6',
@@ -76,7 +76,9 @@ export function ProjectCard({
               compact && 'col-span-2 row-start-3',
             )}
           >
-            {project.description}
+            {compact
+              ? (project.summary ?? project.description)
+              : project.description}
           </p>
           <ul
             aria-label={`${project.title} technologies`}
@@ -162,7 +164,7 @@ export function ProjectCard({
           >
             GitHub <ArrowUpRight aria-hidden="true" className="size-3.5" />
           </a>
-          {project.articleHref && !compact && (
+          {project.articleHref && (
             <Link
               href={project.articleHref}
               className="text-link min-h-11"

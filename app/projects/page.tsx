@@ -24,13 +24,9 @@ export default function ProjectsPage() {
         and replica recovery demos.
       </p>
       <ul className="mt-8">
-        {PROJECTS.map((project, index) => (
+        {PROJECTS.map((project) => (
           <li key={project.slug}>
-            <ProjectCard
-              project={project}
-              featured={index === 0}
-              headingLevel={2}
-            />
+            <ProjectCard project={project} compact headingLevel={2} />
           </li>
         ))}
       </ul>
