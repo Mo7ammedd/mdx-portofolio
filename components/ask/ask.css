@@ -1,16 +1,16 @@
 @reference '../../app/globals.css';
 
 @layer components {
-  .ask-composer {
-    @apply bg-card relative rounded-md border border-white/15 transition-colors;
-  }
-
   .ask-compose-input {
-    @apply mt-1 block min-h-28 w-full resize-y border-0 bg-transparent px-4 py-3 text-base leading-7 text-zinc-200 placeholder:text-zinc-400 disabled:cursor-not-allowed disabled:opacity-50 sm:px-5;
+    @apply mt-2 block min-h-28 w-full resize-y border-0 border-b border-white/20 bg-transparent px-0 py-3 text-base leading-7 text-zinc-200 placeholder:text-zinc-400 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .ask-compose-footer {
-    @apply mx-4 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 py-3 sm:mx-5;
+    @apply mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-3;
+  }
+
+  .ask-submit {
+    @apply inline-flex min-h-11 shrink-0 items-center justify-center rounded-sm border border-white/20 bg-transparent px-4 text-sm text-zinc-200 transition-colors enabled:hover:border-white/40 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .ask-reply {
@@ -18,17 +18,9 @@
   }
 }
 
-.ask-composer:focus-within {
-  border-color: rgb(161 161 170 / 55%);
-}
-
-.ask-composer:has(.ask-compose-input:focus-visible) {
+.ask-compose-input:focus-visible {
   outline: 2px solid rgb(212 212 216 / 80%);
   outline-offset: 4px;
-}
-
-.ask-page .ask-compose-input:focus-visible {
-  outline: none;
 }
 
 .ask-answer[open] > summary {

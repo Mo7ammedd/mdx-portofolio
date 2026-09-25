@@ -1,14 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import {
-  ArrowUpRight,
-  ChevronDown,
-  LoaderCircle,
-  RefreshCw,
-  Search,
-  X,
-} from 'lucide-react'
+import { ChevronDown, RefreshCw, Search, X } from 'lucide-react'
 import {
   ASK_TOPICS,
   filterAnswers,
@@ -231,11 +224,13 @@ export function AskPage({
       data-clarity-mask="true"
     >
       <section>
-        <p className="section-heading">Questions & answers</p>
-        <h1 id="ask-title" className="page-title mt-4">
-          Ask me anything<span className="text-zinc-500">.</span>
+        <h1
+          id="ask-title"
+          className="text-[28px] leading-9 font-medium tracking-tight text-zinc-100"
+        >
+          Ask me anything
         </h1>
-        <p className="page-description mt-5">
+        <p className="mt-4 text-base leading-7 text-zinc-300">
           Ask anonymously. No name needed.
         </p>
       </section>
@@ -243,10 +238,10 @@ export function AskPage({
       <section
         id="ask-question"
         aria-labelledby="question-title"
-        className="mt-8 scroll-mt-8 sm:mt-9"
+        className="mt-8 scroll-mt-8"
       >
         {submitted ? (
-          <div className="ask-composer px-5 py-7 sm:px-6">
+          <div>
             <h2
               ref={successTitle}
               tabIndex={-1}
@@ -266,8 +261,7 @@ export function AskPage({
                 requestAnimationFrame(() => textarea.current?.focus())
               }}
             >
-              Ask another question{' '}
-              <ArrowUpRight aria-hidden="true" className="size-3" />
+              Ask another question
             </button>
           </div>
         ) : (
@@ -275,15 +269,12 @@ export function AskPage({
             action="/api/ask/questions"
             method="post"
             onSubmit={submit}
-            className="ask-composer"
+            className="relative"
             aria-busy={sending}
           >
-            <div className="flex items-baseline justify-between gap-4 px-4 pt-4 sm:px-5 sm:pt-5">
+            <div className="flex items-baseline justify-between gap-4">
               <h2 id="question-title">
-                <label
-                  htmlFor="question"
-                  className="text-xs font-medium text-zinc-300"
-                >
+                <label htmlFor="question" className="text-sm text-zinc-300">
                   Your question
                 </label>
               </h2>
@@ -291,7 +282,7 @@ export function AskPage({
                 id="question-count"
                 className={
                   question.length
-                    ? 'font-mono text-[11px] text-zinc-400 tabular-nums'
+                    ? 'text-xs text-zinc-400 tabular-nums'
                     : 'sr-only'
                 }
               >
@@ -313,7 +304,7 @@ export function AskPage({
                 setQuestion(event.target.value)
                 setError('')
               }}
-              placeholder="What’s on your mind?"
+              placeholder="Write a question…"
               aria-describedby={`question-privacy question-count${error ? ' question-error' : ''}`}
               aria-invalid={Boolean(error)}
               className="ask-compose-input"
@@ -332,37 +323,31 @@ export function AskPage({
               <p
                 id="question-error"
                 role="alert"
-                className="px-4 pb-2 text-xs leading-6 text-red-300 sm:px-5"
+                className="mt-2 text-sm leading-6 text-red-300"
               >
                 {error}
               </p>
             )}
             {!available && (
-              <p
-                role="status"
-                className="px-4 pb-2 text-xs leading-6 text-zinc-400 sm:px-5"
-              >
+              <p role="status" className="mt-2 text-sm leading-6 text-zinc-400">
                 Questions are closed for the moment. Please check back soon.
               </p>
             )}
             <div className="ask-compose-footer">
-              <span className="text-[11px] text-zinc-400">No name needed</span>
+              <p
+                id="question-privacy"
+                className="text-xs leading-6 text-zinc-400"
+              >
+                Questions stay private until I publish an answer.
+              </p>
               <button
                 type="submit"
                 disabled={
                   sending || !available || !hydrated || !question.trim()
                 }
-                className="button-primary gap-2 px-3.5"
+                className="ask-submit"
               >
-                {sending ? 'Sending' : 'Send question'}
-                {sending ? (
-                  <LoaderCircle
-                    aria-hidden="true"
-                    className="size-3.5 animate-spin"
-                  />
-                ) : (
-                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
-                )}
+                {sending ? 'Sending…' : 'Send question'}
               </button>
             </div>
           </form>
@@ -373,27 +358,22 @@ export function AskPage({
             published answers below.
           </p>
         </noscript>
-        {!submitted && (
-          <p
-            id="question-privacy"
-            className="mt-3 text-[11px] leading-6 text-zinc-400"
-          >
-            Questions stay private until I publish an answer.
-          </p>
-        )}
       </section>
 
       <section
         id="answers"
         aria-labelledby="answers-title"
-        className="mt-12 scroll-mt-8 sm:mt-16"
+        className="mt-12 scroll-mt-8 sm:mt-14"
       >
         <div className="section-header">
           <div className="flex items-baseline gap-3">
-            <h2 id="answers-title" className="section-heading">
+            <h2
+              id="answers-title"
+              className="text-base font-medium text-zinc-100"
+            >
               Answers
             </h2>
-            <span className="font-mono text-[11px] text-zinc-400 tabular-nums">
+            <span className="text-sm text-zinc-400 tabular-nums">
               {questions.length}
             </span>
           </div>

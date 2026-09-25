@@ -66,6 +66,10 @@ Project-to-article relationships live in `lib/project-links.ts`; related article
 are ranked by shared tags, then publication date, without recommending the
 current article or unrelated topics.
 
+The Writing page (`/blog`) lists article titles and publication dates. Reading
+paths, saved articles, and the glossary are linked below the list. Full-text
+search is available from the reading controls inside an article.
+
 Articles live in `app/blog/<slug>/page.mdx`. During compilation,
 `lib/rehype-blog-post.mjs` assigns stable, unique IDs to Markdown headings and
 builds the table of contents from the same headings. It wraps each article with
