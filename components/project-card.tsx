@@ -132,7 +132,7 @@ export function ProjectCard({
           {project.demoHref && (
             <a
               href={project.demoHref}
-              className={cn('button-primary', compact && 'px-3')}
+              className="text-link text-zinc-200"
               aria-label={`Try demo: ${project.title}`}
               data-project-name={project.title}
               data-link-type="demo"

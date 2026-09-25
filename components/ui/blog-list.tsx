@@ -25,22 +25,39 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
       </p>
 
       {posts.length > 0 ? (
-        <ol aria-label="Articles" className="mt-8">
+        <ol
+          aria-label="Articles"
+          className="mt-8 divide-y divide-white/10 border-y border-white/10"
+        >
           {posts.map((post) => (
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="group grid min-h-11 grid-cols-[4.75rem_minmax(0,1fr)] items-baseline gap-x-3 rounded-sm py-2 leading-7 sm:grid-cols-[5.5rem_minmax(0,1fr)]"
+                aria-labelledby={`${post.slug}-title`}
+                className="group grid gap-y-2 rounded-sm py-6 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-x-6 sm:py-7"
               >
-                <time
-                  dateTime={post.publishedTime}
-                  className="text-sm text-zinc-400 tabular-nums"
-                >
-                  {formatDate(post.publishedTime)}
-                </time>
-                <h2 className="text-base font-normal text-zinc-200 decoration-zinc-500 underline-offset-4 group-hover:underline">
-                  {post.title}
-                </h2>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] leading-6 text-zinc-400 sm:flex-col sm:items-start sm:gap-1 sm:pt-0.5">
+                  <time dateTime={post.publishedTime} className="tabular-nums">
+                    {formatDate(post.publishedTime)}
+                  </time>
+                  <span aria-hidden="true" className="sm:hidden">
+                    ·
+                  </span>
+                  <span>{post.readingTime} min read</span>
+                </div>
+                <div className="min-w-0">
+                  <h2
+                    id={`${post.slug}-title`}
+                    className="text-lg leading-7 font-medium tracking-[-0.015em] text-zinc-100 decoration-zinc-500 underline-offset-4 group-hover:underline"
+                  >
+                    {post.title}
+                  </h2>
+                  {post.description && (
+                    <p className="mt-2 text-[15px] leading-7 text-zinc-400">
+                      {post.description}
+                    </p>
+                  )}
+                </div>
               </Link>
             </li>
           ))}

@@ -75,7 +75,7 @@ export default async function ProjectPage({ params }: Props) {
           {presentation?.demoHref && (
             <a
               href={presentation.demoHref}
-              className="button-primary"
+              className="text-link text-zinc-200"
               data-project-name={project.title}
               data-link-type="demo"
             >
