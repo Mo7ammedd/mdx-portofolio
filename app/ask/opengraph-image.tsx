@@ -14,6 +14,6 @@ export default function Image() {
       'Ask a question anonymously. You don’t need to leave your name.',
     label: 'QUESTIONS & ANSWERS',
     footer: 'Mohammed Mostafa',
-    detail: 'ask.modev.me',
+    detail: 'ask.momostafa.tech',
   })
 }

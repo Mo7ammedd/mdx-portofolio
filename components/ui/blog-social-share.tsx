@@ -15,7 +15,7 @@ export function BlogSocialShare({ title }: BlogSocialShareProps) {
     url: string
     status: 'copying' | 'copied' | 'error'
   } | null>(null)
-  const url = `https://www.modev.me${pathname ?? '/blog'}`
+  const url = `https://www.momostafa.tech${pathname ?? '/blog'}`
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
   const copyStatus = copyFeedback?.url === url ? copyFeedback.status : 'idle'

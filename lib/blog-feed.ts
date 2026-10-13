@@ -382,7 +382,7 @@ export function buildRssFeed(articles: { post: BlogPost; html: string }[]) {
         WEBSITE_URL,
         true,
       )
-      const content = `${image ? `<img src="${xmlText(image)}" alt="${xmlText(post.title)}" style="max-width:100%;height:auto" />` : ''}${html}<hr /><p><a href="${xmlText(url)}">Read on modev.me</a> · ${post.readingTime} min read</p>`
+      const content = `${image ? `<img src="${xmlText(image)}" alt="${xmlText(post.title)}" style="max-width:100%;height:auto" />` : ''}${html}<hr /><p><a href="${xmlText(url)}">Read on momostafa.tech</a> · ${post.readingTime} min read</p>`
       return `<item>
       <title>${cdata(post.title)}</title>
       <description>${cdata(post.description)}</description>

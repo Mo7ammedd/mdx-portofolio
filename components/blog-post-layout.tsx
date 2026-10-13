@@ -39,9 +39,9 @@ const author = {
   jobTitle: 'Software Engineer',
   description:
     'Software engineer working with ASP.NET Core, Node.js, Express.js, and TypeScript.',
-  url: 'https://www.modev.me',
+  url: 'https://www.momostafa.tech',
   email: 'mohammedmostafanazih@gmail.com',
-  image: 'https://www.modev.me/avatar.jpg',
+  image: 'https://www.momostafa.tech/avatar.jpg',
   sameAs: [
     'https://github.com/Mo7ammedd',
     'https://linkedin.com/in/mohammed-mostafa',

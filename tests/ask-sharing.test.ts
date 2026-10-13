@@ -62,7 +62,7 @@ function mockDatabase(t: TestContext, question: Question | null = answered) {
 }
 
 function imageRequest(id = answered.id) {
-  return questionImage(new Request(`https://ask.modev.me/og/ask/${id}`), {
+  return questionImage(new Request(`https://ask.momostafa.tech/og/ask/${id}`), {
     params: Promise.resolve({ id }),
   })
 }
@@ -71,9 +71,9 @@ test('shared question links reach the server and preserve host routing and the a
   const href = getQuestionHref(answered.id)
   assert.equal(isAskPath(href), true)
   for (const [hostname, expected] of [
-    ['www.modev.me', `https://ask.modev.me/?question=${answered.id}`],
-    ['modev.me', `https://ask.modev.me/?question=${answered.id}`],
-    ['ask.modev.me', `/?question=${answered.id}`],
+    ['www.momostafa.tech', `https://ask.momostafa.tech/?question=${answered.id}`],
+    ['momostafa.tech', `https://ask.momostafa.tech/?question=${answered.id}`],
+    ['ask.momostafa.tech', `/?question=${answered.id}`],
     ['ask.localhost', `/?question=${answered.id}`],
     ['localhost', `/ask?question=${answered.id}`],
     ['preview.vercel.app', `/ask?question=${answered.id}`],
@@ -90,11 +90,11 @@ test('shared question links reach the server and preserve host routing and the a
 
 test('the main Ask page advertises its own card on both Open Graph and Twitter', () => {
   const metadata = generateAskMetadata()
-  assert.equal(metadata.alternates?.canonical, 'https://ask.modev.me')
-  assert.equal(metadata.openGraph?.url, 'https://ask.modev.me')
+  assert.equal(metadata.alternates?.canonical, 'https://ask.momostafa.tech')
+  assert.equal(metadata.openGraph?.url, 'https://ask.momostafa.tech')
   assert.deepEqual(metadata.openGraph?.images, [
     {
-      url: 'https://ask.modev.me/ask/opengraph-image',
+      url: 'https://ask.momostafa.tech/ask/opengraph-image',
       width: 1200,
       height: 630,
       alt: 'Ask me anything',
@@ -102,15 +102,15 @@ test('the main Ask page advertises its own card on both Open Graph and Twitter',
     },
   ])
   assert.deepEqual(metadata.twitter?.images, [
-    'https://ask.modev.me/ask/opengraph-image',
+    'https://ask.momostafa.tech/ask/opengraph-image',
   ])
 })
 
 test('question metadata identifies the question, uses its answer, and updates the image URL after edits', () => {
   const question = publicQuestion(answered)!
   const metadata = generateAskMetadata(question)
-  const canonical = `https://ask.modev.me/?question=${question.id}`
-  const image = `https://ask.modev.me/og/ask/${question.id}?v=${encodeURIComponent(question.answeredAt)}`
+  const canonical = `https://ask.momostafa.tech/?question=${question.id}`
+  const image = `https://ask.momostafa.tech/og/ask/${question.id}?v=${encodeURIComponent(question.answeredAt)}`
   assert.equal(metadata.title, question.question)
   assert.equal(metadata.description, question.answer)
   assert.equal(metadata.alternates?.canonical, canonical)

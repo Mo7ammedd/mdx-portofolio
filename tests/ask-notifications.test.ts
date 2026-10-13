@@ -82,7 +82,7 @@ test('mail only goes to the admin, escapes anonymous content, and links to the p
   assert.ok(message)
   assert.deepEqual(message.to, ['owner@example.com'])
   assert.equal(message.from, 'Modev Q&A <questions@example.com>')
-  assert.equal(message.subject, 'New question on ask.modev.me')
+  assert.equal(message.subject, 'New question on ask.momostafa.tech')
   assert.equal(headers?.get('Idempotency-Key'), `ask-question-${question.id}`)
   assert.equal(headers?.get('Authorization'), 'Bearer re_test_notification_key')
   assert.equal(String(message.text).includes(question.question), true)
@@ -94,7 +94,7 @@ test('mail only goes to the admin, escapes anonymous content, and links to the p
     assert.equal(content.includes(question.answer!), false)
     assert.equal(content.includes('re_test_notification_key'), false)
     assert.equal(
-      content.includes(`https://ask.modev.me/inbox?question=${question.id}`),
+      content.includes(`https://ask.momostafa.tech/inbox?question=${question.id}`),
       true,
     )
   }

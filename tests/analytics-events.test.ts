@@ -3,7 +3,7 @@ import test from 'node:test'
 
 import { getEngagementEvent } from '../lib/analytics-events'
 
-const origin = 'https://www.modev.me'
+const origin = 'https://www.momostafa.tech'
 
 test('resume opens recognize local PDF links, including query strings, without counting external files', () => {
   assert.equal(

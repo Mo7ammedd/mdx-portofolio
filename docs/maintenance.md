@@ -1,6 +1,6 @@
 # Site maintenance
 
-Implementation and deployment notes for [modev.me](https://www.modev.me).
+Implementation and deployment notes for [momostafa.tech](https://www.momostafa.tech).
 See the [README](../README.md) for an overview and local setup.
 
 ## Development
@@ -22,7 +22,7 @@ engagement-event classification.
 
 `/ask` accepts anonymous questions and shows searchable, topic-filtered answers.
 Review questions and publish replies at the private `/ask/inbox`.
-Host-based routing also supports `ask.modev.me` in the same Vercel project.
+Host-based routing also supports `ask.momostafa.tech` in the same Vercel project.
 Next.js server routes use Supabase in production and an ignored local file in
 development. Run `node scripts/setup-ask.mjs --email you@example.com` to configure
 the local inbox email and generate a password.

@@ -143,17 +143,17 @@ test('inbox sessions expire, reject tampering, and are invalidated by password r
 
 test('mutating requests reject absent, malformed, and cross-site origins', () => {
   const request = (origin?: string) =>
-    new Request('https://ask.modev.me/api/ask/questions', {
+    new Request('https://ask.momostafa.tech/api/ask/questions', {
       headers: origin ? { origin } : {},
     })
-  assert.doesNotThrow(() => requireSameOrigin(request('https://ask.modev.me')))
+  assert.doesNotThrow(() => requireSameOrigin(request('https://ask.momostafa.tech')))
   for (const origin of [
     undefined,
     'null',
     'invalid',
     'https://evil.example',
-    'https://ask.modev.me.evil.example',
-    'https://ask.modev.me:444',
+    'https://ask.momostafa.tech.evil.example',
+    'https://ask.momostafa.tech:444',
   ]) {
     assert.throws(() => requireSameOrigin(request(origin)), AskError)
   }
@@ -161,7 +161,7 @@ test('mutating requests reject absent, malformed, and cross-site origins', () =>
 
 test('JSON request parsing rejects excessive, malformed, and unsupported input', async () => {
   const request = (body: string, contentType = 'application/json') =>
-    new Request('https://ask.modev.me', {
+    new Request('https://ask.momostafa.tech', {
       method: 'POST',
       headers: { 'content-type': contentType },
       body,
@@ -187,10 +187,10 @@ test('fingerprints hash trusted Vercel addresses and ignore spoofed forwarding h
   const previous = process.env.VERCEL
   try {
     delete process.env.VERCEL
-    const first = new Request('https://ask.modev.me', {
+    const first = new Request('https://ask.momostafa.tech', {
       headers: { 'x-forwarded-for': '192.0.2.1' },
     })
-    const second = new Request('https://ask.modev.me', {
+    const second = new Request('https://ask.momostafa.tech', {
       headers: { 'x-forwarded-for': '192.0.2.2' },
     })
     assert.equal(
@@ -361,25 +361,25 @@ test('Supabase accepts the public URL with a server secret and preserves legacy 
 test('navigation preserves local previews and sends portfolio and inbox links to the right host', () => {
   assert.equal(siteHref('/ask', 'localhost'), '/ask')
   assert.equal(siteHref('/ask/inbox', 'preview.vercel.app'), '/ask/inbox')
-  assert.equal(siteHref('/ask', 'www.modev.me'), 'https://ask.modev.me/')
+  assert.equal(siteHref('/ask', 'www.momostafa.tech'), 'https://ask.momostafa.tech/')
   assert.equal(
-    siteHref('/ask#question-id', 'modev.me'),
-    'https://ask.modev.me/#question-id',
+    siteHref('/ask#question-id', 'momostafa.tech'),
+    'https://ask.momostafa.tech/#question-id',
   )
-  assert.equal(siteHref('/ask', 'ask.modev.me'), '/')
-  assert.equal(siteHref('/ask/inbox', 'ask.modev.me'), '/inbox')
-  assert.equal(siteHref('/ask#question-id', 'ask.modev.me'), '/#question-id')
+  assert.equal(siteHref('/ask', 'ask.momostafa.tech'), '/')
+  assert.equal(siteHref('/ask/inbox', 'ask.momostafa.tech'), '/inbox')
+  assert.equal(siteHref('/ask#question-id', 'ask.momostafa.tech'), '/#question-id')
   assert.equal(
-    siteHref('/projects', 'ask.modev.me'),
-    'https://www.modev.me/projects',
+    siteHref('/projects', 'ask.momostafa.tech'),
+    'https://www.momostafa.tech/projects',
   )
   assert.equal(
-    siteHref('/blog/rss.xml', 'ask.modev.me'),
-    'https://www.modev.me/blog/rss.xml',
+    siteHref('/blog/rss.xml', 'ask.momostafa.tech'),
+    'https://www.momostafa.tech/blog/rss.xml',
   )
   assert.equal(
     siteHref('/', 'ask.localhost', 'http://ask.localhost:3000'),
     'http://localhost:3000/',
   )
-  assert.equal(isAskHost('ask.modev.me.evil.example'), false)
+  assert.equal(isAskHost('ask.momostafa.tech.evil.example'), false)
 })

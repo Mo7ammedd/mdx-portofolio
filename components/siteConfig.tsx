@@ -14,7 +14,7 @@ export const siteConfig: Metadata = {
     'Mohammed Mostafa Software Engineer',
     'Mohammed Developer Egypt',
     'Mohammed Mostafa Portfolio',
-    'modev.me',
+    'momostafa.tech',
     
     // Technical expertise - Long tail
     'ASP.NET Core Developer',
@@ -62,7 +62,7 @@ export const siteConfig: Metadata = {
     '5 years software development experience',
     'Backend development',
   ],
-  authors: [{ name: 'Mohammed Mostafa', url: 'https://www.modev.me' }],
+  authors: [{ name: 'Mohammed Mostafa', url: 'https://www.momostafa.tech' }],
   creator: 'Mohammed - Software Engineer',
   publisher: 'Mohammed Portfolio Website',
   
@@ -87,7 +87,7 @@ export const siteConfig: Metadata = {
   openGraph: {
     type: 'profile',
     locale: 'en_US',
-    url: 'https://www.modev.me',
+    url: 'https://www.momostafa.tech',
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
     title: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js)',
     description:
@@ -120,12 +120,12 @@ export const siteConfig: Metadata = {
   },
   
   alternates: {
-    canonical: 'https://www.modev.me',
+    canonical: 'https://www.momostafa.tech',
     languages: {
-      'en-US': 'https://www.modev.me',
+      'en-US': 'https://www.momostafa.tech',
     },
     types: {
-      'application/rss+xml': 'https://www.modev.me/blog/rss.xml',
+      'application/rss+xml': 'https://www.momostafa.tech/blog/rss.xml',
     },
   },
   
@@ -138,7 +138,7 @@ export const siteConfig: Metadata = {
     } : {},
   },
   
-  metadataBase: new URL('https://www.modev.me/'),
+  metadataBase: new URL('https://www.momostafa.tech/'),
   
   // Add category for better classification
   category: 'Professional Portfolio',

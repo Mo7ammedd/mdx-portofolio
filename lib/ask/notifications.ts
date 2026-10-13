@@ -48,7 +48,7 @@ export async function notifyNewQuestion(
   const body = JSON.stringify({
     from: `Modev Q&A <${config.from}>`,
     to: [config.to],
-    subject: 'New question on ask.modev.me',
+    subject: 'New question on ask.momostafa.tech',
     text: [
       'Someone left you a question.',
       '',

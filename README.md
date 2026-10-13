@@ -1,9 +1,9 @@
 # Mohammed Mostafa
 
 Backend engineer working on APIs, infrastructure, and distributed systems.
-This repo is the source for my personal site, [modev.me](https://www.modev.me).
+This repo is the source for my personal site, [momostafa.tech](https://www.momostafa.tech).
 
-[About](https://www.modev.me/about) · [Projects](https://www.modev.me/projects) · [Writing](https://www.modev.me/blog) · [Q&A](https://ask.modev.me)
+[About](https://www.momostafa.tech/about) · [Projects](https://www.momostafa.tech/projects) · [Writing](https://www.momostafa.tech/blog) · [Q&A](https://ask.momostafa.tech)
 
 Built with Next.js, TypeScript, Tailwind CSS, and MDX. Deployed on Vercel.
 

@@ -29,7 +29,7 @@ export const QUESTION_MIN_LENGTH = 15
 export const QUESTION_MAX_LENGTH = 1000
 export const ANSWER_MAX_LENGTH = 8000
 
-export const ASK_URL = 'https://ask.modev.me'
+export const ASK_URL = 'https://ask.momostafa.tech'
 
 export function topicLabel(topic: AskTopic) {
   return ASK_TOPICS.find((item) => item.value === topic)!.label

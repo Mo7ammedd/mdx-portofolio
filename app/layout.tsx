@@ -50,15 +50,15 @@ export default function RootLayout({
     jobTitle: 'Software Engineer',
     description:
       'Software engineer with experience in ASP.NET Core, Node.js, Express.js, and TypeScript. Open to new opportunities.',
-    url: 'https://www.modev.me',
+    url: 'https://www.momostafa.tech',
     email: 'mohammedmostafanazih@gmail.com',
-    image: 'https://www.modev.me/avatar.jpg',
+    image: 'https://www.momostafa.tech/avatar.jpg',
     sameAs: [
       'https://github.com/Mo7ammedd',
       'https://linkedin.com/in/mohammed-mostafa',
       'https://twitter.com/mohameddtv',
-      'https://www.modev.me',
-      'https://www.modev.me/blog',
+      'https://www.momostafa.tech',
+      'https://www.momostafa.tech/blog',
     ],
     knowsAbout: [
       'ASP.NET Core',
@@ -80,7 +80,7 @@ export default function RootLayout({
   }
 
   const websiteData = {
-    url: 'https://www.modev.me',
+    url: 'https://www.momostafa.tech',
     name: 'Mohammed Mostafa - Software Engineer Portfolio',
     description:
       'Mohammed Mostafa’s portfolio: projects, contact details, and work with ASP.NET Core, Node.js, Express.js, and TypeScript.',

@@ -1,8 +1,8 @@
 # Anonymous Q&A
 
 The public page is `/ask`. The private inbox is `/ask/inbox`. The same Next.js
-project also serves `ask.modev.me/` and `ask.modev.me/inbox` through host-based
-rewrites. Main portfolio links return to `www.modev.me` on the subdomain.
+project also serves `ask.momostafa.tech/` and `ask.momostafa.tech/inbox` through host-based
+rewrites. Main portfolio links return to `www.momostafa.tech` on the subdomain.
 
 Visitors send a question without an account, name, or email. New questions use
 the General topic; the inbox owner can choose a topic while publishing an answer.
@@ -70,9 +70,9 @@ For a local subdomain preview, open `http://ask.localhost:3000` and
 
 3. Deploy this Next.js project. Vercel's Node.js runtime handles all database
    requests; there is no separate backend to deploy.
-4. Add `ask.modev.me` to **Vercel → Project → Settings → Domains** and create the
+4. Add `ask.momostafa.tech` to **Vercel → Project → Settings → Domains** and create the
    DNS record shown by Vercel. The host rewrites are already in `next.config.mjs`.
-5. Open `https://ask.modev.me/inbox`, sign in, and publish an answer to a question
+5. Open `https://ask.momostafa.tech/inbox`, sign in, and publish an answer to a question
    you submit through the public form.
 
 The existing `NEXT_PUBLIC_SUPABASE_URL` variable is also accepted for the URL.

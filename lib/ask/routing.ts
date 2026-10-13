@@ -2,7 +2,7 @@ import { WEBSITE_URL } from '../constants'
 import { ASK_URL } from './types'
 
 export function isAskHost(hostname: string) {
-  return hostname === 'ask.modev.me' || hostname === 'ask.localhost'
+  return hostname === 'ask.momostafa.tech' || hostname === 'ask.localhost'
 }
 
 export function isAskPath(href: string) {
@@ -25,7 +25,7 @@ export function siteHref(href: string, hostname: string, localOrigin?: string) {
     const suffix = href.slice(4)
     const path = suffix.startsWith('/') ? suffix : `/${suffix}`
     if (isAskHost(hostname)) return path
-    if (hostname === 'modev.me' || hostname === 'www.modev.me') {
+    if (hostname === 'momostafa.tech' || hostname === 'www.momostafa.tech') {
       return `${ASK_URL}${path}`
     }
   }

@@ -117,7 +117,7 @@ test('RSS parses titled fences, plain fences, native tables and Markdown without
       '[Section](#details) and ![Diagram](/diagram.png)',
       '<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Value</td></tr></tbody></table>',
     ].join('\n\n'),
-    'https://www.modev.me/blog/example',
+    'https://www.momostafa.tech/blog/example',
   )
   assert.match(html, /<figcaption>demo.html<\/figcaption>/)
   assert.match(html, /<code class="language-html">/)
@@ -125,8 +125,8 @@ test('RSS parses titled fences, plain fences, native tables and Markdown without
   assert.doesNotMatch(html, /<script>|```|showLineNumbers/)
   assert.match(html, /<ol>\s*<li>First/)
   assert.match(html, /<strong>Second<\/strong>/)
-  assert.match(html, /href="https:\/\/www.modev.me\/blog\/example#details"/)
-  assert.match(html, /src="https:\/\/www.modev.me\/diagram.png"/)
+  assert.match(html, /href="https:\/\/www.momostafa.tech\/blog\/example#details"/)
+  assert.match(html, /src="https:\/\/www.momostafa.tech\/diagram.png"/)
   assert.match(html, /<table><thead><tr><th>Name/)
 })
 
@@ -148,7 +148,7 @@ test('RSS expands MDX learning components and every tab without executing author
       '<script>alert("drop this")</script>',
       '<a href="javascript:alert(1)" onClick={missing}>Unsafe link</a>',
     ].join('\n\n'),
-    'https://www.modev.me/blog/example',
+    'https://www.momostafa.tech/blog/example',
   )
   for (const content of [
     'Keep this explanation.',

@@ -26,7 +26,11 @@ const BLOG_IMAGE_DIMENSIONS: Record<string, BlogImageDimensions> = {
   '/blog/pagination-strategies/cursor-pagination-mechanics.webp': { width: 1376, height: 768 },
   '/blog/pagination-strategies/offset-pagination-mechanics.webp': { width: 1376, height: 768 },
   '/blog/pagination-strategies/offset-phantom-records.webp': { width: 1376, height: 768 },
-  '/blog/pagination-strategies/offset-vs-cursor-performance.webp': { width: 1376, height: 768 },
+  '/blog/pagination-strategies/offset-vs-cursor-~/mohammed/projects/mdx-portofolio | git:main deleted | node:22.23.3
+$ 
+
+
+performance.webp': { width: 1376, height: 768 },
 }
 
 export function getBlogImageDimensions(src: string): BlogImageDimensions | undefined {

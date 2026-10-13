@@ -33,7 +33,7 @@ export async function GET(
     description: previewText(question.answer, 240),
     label: 'QUESTIONS & ANSWERS',
     footer: 'Answered by Mohammed Mostafa',
-    detail: 'ask.modev.me',
+    detail: 'ask.momostafa.tech',
   })
   // Recheck publication on every request, including after edits or archiving.
   image.headers.set('Cache-Control', headers['Cache-Control'])

@@ -170,8 +170,8 @@ export function generateOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Mohammed Mostafa Portfolio',
-    url: 'https://www.modev.me',
-    logo: 'https://www.modev.me/avatar.jpg',
+    url: 'https://www.momostafa.tech',
+    logo: 'https://www.momostafa.tech/avatar.jpg',
     description: 'Mohammed Mostafa’s software engineering portfolio.',
     founder: {
       '@type': 'Person',

@@ -20,7 +20,7 @@ export function Header() {
           priority
         />
         <span className="hidden text-sm text-zinc-400 transition-colors group-hover:text-white min-[420px]:inline">
-          modev.me
+          momostafa.tech
         </span>
       </SiteLink>
       <HeaderControls />

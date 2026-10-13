@@ -21,7 +21,7 @@ export function calculateReadingTime(content: string): string {
 }
 
 export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
-  const url = `https://www.modev.me/blog/${slug}`
+  const url = `https://www.momostafa.tech/blog/${slug}`
   
   return {
     title: `${meta.title} | Mohammed Mostafa`,
@@ -35,7 +35,7 @@ export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
     ],
     authors: [{ 
       name: meta.author?.name || 'Mohammed Mostafa', 
-      url: meta.author?.url || 'https://www.modev.me' 
+      url: meta.author?.url || 'https://www.momostafa.tech' 
     }],
     publishedTime: meta.publishDate,
     modifiedTime: meta.lastModified || meta.publishDate,
@@ -49,7 +49,7 @@ export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
       authors: [meta.author?.name || 'Mohammed Mostafa'],
       images: meta.image ? [
         {
-          url: `https://www.modev.me${meta.image}`,
+          url: `https://www.momostafa.tech${meta.image}`,
           width: 1200,
           height: 630,
           alt: meta.title,
@@ -62,7 +62,7 @@ export function generateBlogMetadata(meta: BlogPostMeta, slug: string) {
       title: meta.title,
       description: meta.description,
       creator: '@mohameddtv',
-      images: meta.image ? [`https://www.modev.me${meta.image}`] : [],
+      images: meta.image ? [`https://www.momostafa.tech${meta.image}`] : [],
     },
     alternates: {
       canonical: url,
