@@ -383,3 +383,19 @@ test('navigation preserves local previews and sends portfolio and inbox links to
   )
   assert.equal(isAskHost('ask.momostafa.tech.evil.example'), false)
 })
+
+test('modev aliases keep Ask, inbox, and portfolio navigation on their corresponding hosts', () => {
+  for (const host of ['modev.me', 'www.modev.me']) {
+    assert.equal(siteHref('/ask', host), 'https://ask.modev.me/')
+    assert.equal(
+      siteHref('/ask?question=example#question-example', host),
+      'https://ask.modev.me/?question=example#question-example',
+    )
+  }
+  assert.equal(isAskHost('ask.modev.me'), true)
+  assert.equal(siteHref('/ask/inbox', 'ask.modev.me'), '/inbox')
+  assert.equal(siteHref('/ask', 'ask.modev.me'), '/')
+  assert.equal(siteHref('/projects', 'ask.modev.me'), 'https://modev.me/projects')
+  assert.equal(isAskHost('ask.modev.me.evil.example'), false)
+  assert.equal(siteHref('/ask', 'modev.me.evil.example'), '/ask')
+})

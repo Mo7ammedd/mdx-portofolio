@@ -2,7 +2,11 @@ import { WEBSITE_URL } from '../constants'
 import { ASK_URL } from './types'
 
 export function isAskHost(hostname: string) {
-  return hostname === 'ask.momostafa.tech' || hostname === 'ask.localhost'
+  return (
+    hostname === 'ask.momostafa.tech' ||
+    hostname === 'ask.modev.me' ||
+    hostname === 'ask.localhost'
+  )
 }
 
 export function isAskPath(href: string) {
@@ -28,12 +32,17 @@ export function siteHref(href: string, hostname: string, localOrigin?: string) {
     if (hostname === 'momostafa.tech' || hostname === 'www.momostafa.tech') {
       return `${ASK_URL}${path}`
     }
+    if (hostname === 'modev.me' || hostname === 'www.modev.me') {
+      return `https://ask.modev.me${path}`
+    }
   }
   if (isAskHost(hostname) && href.startsWith('/') && !askPath) {
     const origin =
       hostname === 'ask.localhost' && localOrigin
         ? localOrigin.replace('ask.localhost', 'localhost')
-        : WEBSITE_URL
+        : hostname === 'ask.modev.me'
+          ? 'https://modev.me'
+          : WEBSITE_URL
     return `${origin}${href}`
   }
   return href

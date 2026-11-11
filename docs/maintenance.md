@@ -23,6 +23,10 @@ engagement-event classification.
 `/ask` accepts anonymous questions and shows searchable, topic-filtered answers.
 Review questions and publish replies at the private `/ask/inbox`.
 Host-based routing also supports `ask.momostafa.tech` in the same Vercel project.
+The configured `modev.me` / `ask.modev.me` aliases use the same application, with
+Ask root/inbox rewrites and navigation between the matching domains. Domain
+ownership verification alone does not establish working DNS: the external
+registrar must point these names at the Vercel targets shown in project settings.
 Next.js server routes use Supabase in production and an ignored local file in
 development. Run `node scripts/setup-ask.mjs --email you@example.com` to configure
 the local inbox email and generate a password.
