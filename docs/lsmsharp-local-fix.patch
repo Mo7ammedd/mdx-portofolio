@@ -1,0 +1,567 @@
+diff --git a/LSMTree.csproj b/LSMTree.csproj
+index 8c8c88d..32036dc
+--- a/LSMTree.csproj
++++ b/LSMTree.csproj
+@@ -11,7 +11,7 @@
+   </ItemGroup>
+ 
+   <ItemGroup>
+-    <Compile Remove="Tests/**/*.cs" />
++    <Compile Remove="Tests/**/*.cs;benchmark_test.cs" />
+   </ItemGroup>
+ 
+ </Project>
+diff --git a/LSMTreeDB.cs b/LSMTreeDB.cs
+index cef4a5a..e87072e
+--- a/LSMTreeDB.cs
++++ b/LSMTreeDB.cs
+@@ -62,6 +62,7 @@ namespace LSMTree
+             if (_disposed)
+                 throw new ObjectDisposedException(nameof(LSMTreeDB));
+ 
++            ArgumentNullException.ThrowIfNull(key);
+             if (string.IsNullOrEmpty(key))
+                 throw new ArgumentException("Key cannot be null or empty", nameof(key));
+ 
+@@ -142,6 +143,7 @@ namespace LSMTree
+             if (_disposed)
+                 throw new ObjectDisposedException(nameof(LSMTreeDB));
+ 
++            ArgumentNullException.ThrowIfNull(key);
+             if (string.IsNullOrEmpty(key))
+                 throw new ArgumentException("Key cannot be null or empty", nameof(key));
+ 
+diff --git a/Program.cs b/Program.cs
+index eb7bf31..a7273ba
+--- a/Program.cs
++++ b/Program.cs
+@@ -7,30 +7,12 @@ namespace LSMTree
+     class Program
+     {
+         static async Task Main(string[] args)
+-        {            if (args.Length > 0)
++        {
++            if (args.Length > 0)
+             {
+-                switch (args[0].ToLower())
+-                {
+-                    case "functional":
+-                        await LSMTree.Tests.FunctionalTests.RunAllAsync();
+-                        return;
+-                    case "performance":
+-                        await LSMTree.Tests.PerformanceTests.RunAllAsync();
+-                        return;
+-                    case "stress":
+-                        await LSMTree.Tests.StressTests.RunAllAsync();
+-                        return;
+-                    case "bloom":
+-                        LSMTree.Tests.BloomFilterBenchmark.RunBenchmark();
+-                        return;
+-                    case "all-tests":
+-                        await LSMTree.Tests.FunctionalTests.RunAllAsync();
+-                        Console.WriteLine();
+-                        await LSMTree.Tests.PerformanceTests.RunAllAsync();
+-                        Console.WriteLine();
+-                        await LSMTree.Tests.StressTests.RunAllAsync();
+-                        return;
+-                }
++                Console.Error.WriteLine("Run tests with: dotnet run --project Tests/Tests.csproj -- <storage|functional|performance|stress>");
++                Environment.ExitCode = 1;
++                return;
+             }
+ 
+             Console.WriteLine("LSM-Tree Storage Engine Demo");
+diff --git a/README.md b/README.md
+index ee08d06..ed62bae
+--- a/README.md
++++ b/README.md
+@@ -1,10 +1,15 @@
+ # LSM-Tree Storage Engine
+ 
+-A high-performance, production-ready implementation of an LSM-Tree (Log-Structured Merge-Tree) storage engine in C# with full ACID guarantees and concurrent access support.
++An experimental LSM-tree (Log-Structured Merge-Tree) key-value engine in C#. It implements storage, compaction, caching, and recovery mechanisms for learning and testing; it does not provide full ACID or production durability guarantees.
++
++Build the engine/demo with `dotnet build LSMTree.csproj`. Run correctness checks
++with `dotnet run --project Tests/Tests.csproj -- functional`, or the focused
++concurrency/storage regressions with the `storage` argument. See
++[the test documentation](Tests/README.md) for the bounded guarantees exercised.
+ 
+ ## Abstract
+ 
+-This implementation provides a complete LSM-Tree database engine optimized for write-heavy workloads while maintaining efficient read performance through intelligent data organization and indexing. The system employs a leveled compaction strategy with background merge processes, probabilistic data structures for query optimization, and write-ahead logging for durability guarantees.
++This implementation explores leveled compaction, sorted in-memory and on-disk storage, probabilistic read filters, caching, and batched write-ahead logging. Correctness and recovery limits are stated separately from the implemented mechanisms.
+ 
+ ## System Architecture
+ 
+@@ -12,8 +17,8 @@ The storage engine is built on a multi-tier architecture consisting of:
+ 
+ ### Core Components
+ 
+-- **Concurrent Skip List**: Fine-grained lock-based thread-safe probabilistic data structure implementing O(log n) search, insert, and delete operations with per-node reader-writer locks and thread-local random generators for optimal concurrency
+-- **Write-Ahead Log (WAL)**: Batched write-ahead log with background flushing (100ms intervals, 100 entry batches) for improved throughput while maintaining durability guarantees
++- **Concurrent Skip List**: Sorted in-memory entries with serialized writes and shared reader locks. Predecessor search and insertion use the same write lock to avoid stale insertion positions.
++- **Write-Ahead Log (WAL)**: Batched write-ahead log with background flushing (100ms intervals, 100 entry batches) with periodic synchronization; successful writes may precede fsync
+ - **Memtable**: In-memory buffer utilizing skip list for maintaining sorted key-value pairs with configurable size thresholds and automatic flushing
+ - **Sorted String Tables (SSTables)**: Immutable disk-based storage format with block-based organization, GZip compression, and embedded metadata
+ - **Bloom Filters**: Space-efficient probabilistic membership testing using multiple FNV-1a hash functions with configurable false positive rates
+@@ -22,12 +27,12 @@ The storage engine is built on a multi-tier architecture consisting of:
+ 
+ ### Technical Features
+ 
+-- **Concurrency Control**: Fine-grained reader-writer locks at node level for maximum concurrent throughput, atomic memtable switching during flush operations
++- **Concurrency Control**: Reader-writer locking in the skip list and explicit-offset SSTable reads, so concurrent lookups do not share a mutable file cursor. Regression tests cover uncached concurrent reads and concurrent skip-list insertions/updates.
+ - **Crash Recovery**: Automatic WAL replay on startup with corruption detection and partial recovery capabilities
+-- **Write Optimization**: Batched WAL writes (100 entries/100ms) with background flushing, reducing disk sync overhead by 10-50x
++- **Write Optimization**: Batched WAL writes (100 entries/100ms) with background flushing; no throughput improvement is established by the correctness checks
+ - **Read Optimization**: SSTable file descriptor cache (200 handles, 60s idle timeout) eliminating repeated file open/close overhead, multi-level cache hierarchy with Bloom filter optimization
+ - **Space Efficiency**: Block-level compression with prefix encoding and automatic dead space reclamation through compaction
+-- **Durability Guarantees**: Batched WAL writes with periodic fsync for optimal throughput/durability balance
++- **Durability Limits**: WAL writes are batched; a successful small write may return before fsync. Crash-safe manifest publication, concurrent flush/compaction lifetimes, and arbitrary concurrent-write recovery are not established by the regression suite.
+ 
+ ## System Architecture
+ 
+@@ -113,8 +118,8 @@ var db = await LSMTreeDB.OpenAsync(
+ 
+ ### Write Path Optimization
+ 
+-1. **WAL Persistence**: Synchronous append-only writes with configurable fsync behavior for durability guarantees
+-2. **Memtable Management**: Lock-free reads with exclusive writes using reader-writer synchronization primitives
++1. **WAL Persistence**: Queued append records with batched synchronization; this is not per-write fsync durability
++2. **Memtable Management**: Shared reader locks and serialized skip-list writes
+ 3. **Flush Coordination**: Atomic memtable switching with background SSTable generation to minimize write stalls
+ 4. **Compaction Scheduling**: Priority-based background compaction with level-specific size thresholds and overlap detection
+ 
+@@ -190,6 +195,8 @@ Footer (Fixed 48 bytes):
+ 
+ ## Performance Analysis
+ 
++The historical measurements below were not rerun or validated during the concurrency fix. They predate the current locking strategy; zero-millisecond timing output and correctness failures make them unsuitable as current performance or reliability claims. They are retained as historical notes, not evidence for the CV.
++
+ ### Theoretical Complexity
+ 
+ **Time Complexity:**
+@@ -248,6 +255,8 @@ Comprehensive benchmarking of the probabilistic membership testing subsystem rev
+ 
+ ## Experimental Evaluation
+ 
++This section retains historical evaluation notes, including incomplete verification. It does not establish current production readiness or code coverage. For the checks actually run against the local patch, see the storage-regression commands above and the test documentation.
++
+ This implementation has undergone comprehensive testing across functional correctness, performance benchmarks, and stress testing scenarios to validate production readiness.
+ 
+ ### Functional Correctness Validation
+@@ -305,7 +314,7 @@ Quantitative analysis of system performance under controlled conditions after op
+ - Recovery Time: <1 second for 1K operations with WAL replay
+ - Data Consistency: No corruption detected across multiple crash-recovery cycles
+ 
+-### Production Readiness Assessment
++### Historical Production Readiness Notes (Unverified)
+ 
+ **Functional Correctness:** Complete validation of core database operations with comprehensive edge case coverage  
+ **Performance Metrics:** Achieves target throughput requirements with predictable latency characteristics  
+@@ -440,4 +449,4 @@ LSMTree/                          # Root namespace and primary database class
+ - **Skip List Analysis**: Pugh, W. (1990). Skip lists: A probabilistic alternative to balanced trees
+ - **Bloom Filter Theory**: Bloom, B. H. (1970). Space/time trade-offs in hash coding with allowable errors
+ 
+-This implementation serves as both a production-ready storage engine and an educational reference for understanding LSM-Tree concepts, concurrent data structures, and high-performance systems design principles.
++This is an experimental reference for exploring LSM-tree storage, concurrency, and recovery. It should not be treated as a production-ready database.
+diff --git a/SSTable/SSTable.cs b/SSTable/SSTable.cs
+index 3e46741..dc9b05a
+--- a/SSTable/SSTable.cs
++++ b/SSTable/SSTable.cs
+@@ -82,10 +82,7 @@ namespace LSMTree.SSTable
+                 return cachedBlock;
+             }
+ 
+-            var buffer = new byte[handle.Length];
+-            _fileStream.Seek((long)handle.Offset, SeekOrigin.Begin);
+-            
+-            await _fileStream.ReadAsync(buffer, 0, (int)handle.Length);
++            var buffer = await ReadBlockAsync(_fileStream, handle);
+             
+             var dataBlock = new DataBlock();
+             dataBlock.Decode(buffer);
+@@ -95,35 +92,53 @@ namespace LSMTree.SSTable
+             return dataBlock;
+         }
+ 
++        private static async Task<byte[]> ReadBlockAsync(FileStream stream, BlockHandle handle)
++        {
++            var fileLength = (ulong)stream.Length;
++            if (handle.Length == 0 || handle.Length > int.MaxValue ||
++                handle.Offset > fileLength || handle.Length > fileLength - handle.Offset)
++                throw new InvalidDataException("SSTable block is outside the file or has an invalid length");
++
++            var buffer = new byte[(int)handle.Length];
++            var bytesRead = 0;
++            while (bytesRead < buffer.Length)
++            {
++                // Explicit offsets avoid racing on a shared FileStream cursor. A read may
++                // return fewer bytes than requested, so only decode after filling the block.
++                var count = await RandomAccess.ReadAsync(stream.SafeFileHandle,
++                    buffer.AsMemory(bytesRead), (long)handle.Offset + bytesRead);
++                if (count == 0)
++                    throw new EndOfStreamException("SSTable block ended before its recorded length");
++                bytesRead += count;
++            }
++            return buffer;
++        }
++
+         public static async Task<SSTable> OpenAsync(string filePath, IBlockCache? blockCache = null)
+         {
+             if (!File.Exists(filePath))
+                 throw new FileNotFoundException($"SSTable file not found: {filePath}");
+ 
+-            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
++            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read,
++                bufferSize: 4096, options: FileOptions.Asynchronous | FileOptions.RandomAccess);
+             
+             try
+             {
+                 if (stream.Length < Footer.FooterSize)
+                     throw new InvalidDataException("File too small to contain valid SSTable");
+ 
+-                stream.Seek(-Footer.FooterSize, SeekOrigin.End);
+-                var footerBytes = new byte[Footer.FooterSize];
+-                await stream.ReadAsync(footerBytes, 0, Footer.FooterSize);
++                var footerBytes = await ReadBlockAsync(stream,
++                    new BlockHandle((ulong)(stream.Length - Footer.FooterSize), (ulong)Footer.FooterSize));
+ 
+                 var footer = new Footer();
+                 footer.Decode(footerBytes);
+ 
+-                var metaBytes = new byte[footer.MetaBlockHandle.Length];
+-                stream.Seek((long)footer.MetaBlockHandle.Offset, SeekOrigin.Begin);
+-                await stream.ReadAsync(metaBytes, 0, (int)footer.MetaBlockHandle.Length);
++                var metaBytes = await ReadBlockAsync(stream, footer.MetaBlockHandle);
+ 
+                 var metaBlock = new MetaBlock();
+                 metaBlock.Decode(metaBytes);
+ 
+-                var indexBytes = new byte[footer.IndexBlockHandle.Length];
+-                stream.Seek((long)footer.IndexBlockHandle.Offset, SeekOrigin.Begin);
+-                await stream.ReadAsync(indexBytes, 0, (int)footer.IndexBlockHandle.Length);
++                var indexBytes = await ReadBlockAsync(stream, footer.IndexBlockHandle);
+ 
+                 var indexBlock = new IndexBlock();
+                 indexBlock.Decode(indexBytes);
+diff --git a/SkipList/ConcurrentSkipList.cs b/SkipList/ConcurrentSkipList.cs
+index e0ebc6e..d41ddd0
+--- a/SkipList/ConcurrentSkipList.cs
++++ b/SkipList/ConcurrentSkipList.cs
+@@ -55,11 +55,13 @@ namespace LSMTree.SkipList
+         {
+             var update = new SkipListNode[MaxLevel];
+             var current = _head;
+-            int currentLevel = Volatile.Read(ref _level);
+-
+-            _head.Lock.EnterReadLock();
++            // Search and mutation must share one write lock. Releasing a read lock
++            // before insertion leaves stale predecessors when another writer inserts
++            // a node or increases the height in between.
++            _head.Lock.EnterWriteLock();
+             try
+             {
++                int currentLevel = _level;
+                 for (int i = currentLevel - 1; i >= 0; i--)
+                 {
+                     while (current.Next[i] != null && 
+@@ -88,18 +90,7 @@ namespace LSMTree.SkipList
+                     }
+                     return;
+                 }
+-            }
+-            finally
+-            {
+-                _head.Lock.ExitReadLock();
+-            }
+-
+-            int newLevel = GetRandomLevel();
+-            
+-            _head.Lock.EnterWriteLock();
+-            try
+-            {
+-                currentLevel = Volatile.Read(ref _level);
++                int newLevel = GetRandomLevel();
+                 
+                 if (newLevel > currentLevel)
+                 {
+diff --git a/Tests/FunctionalTests.cs b/Tests/FunctionalTests.cs
+index a90e399..5025d49
+--- a/Tests/FunctionalTests.cs
++++ b/Tests/FunctionalTests.cs
+@@ -512,6 +512,8 @@ namespace LSMTree.Tests
+ 
+             testStopwatch.Stop();
+             var successRate = validCount * 100.0 / testData.Count;
++            if (validCount != testData.Count)
++                throw new Exception($"Post-compaction integrity mismatch: {validCount}/{testData.Count} records verified");
+             Console.WriteLine($"✅ Data integrity: {validCount}/{testData.Count} records verified ({successRate:F1}%)");
+             Console.WriteLine($"   Total time: {testStopwatch.ElapsedMilliseconds}ms, Verification time: {verifyStopwatch.ElapsedMilliseconds}ms, Verification rate: {testData.Count * 1000.0 / verifyStopwatch.ElapsedMilliseconds:F0} ops/sec");
+             Console.WriteLine();
+@@ -720,6 +722,8 @@ namespace LSMTree.Tests
+ 
+             testStopwatch.Stop();
+             Console.WriteLine($"✅ Edge cases: {passedTests}/{edgeCases.Count} passed");
++            if (passedTests != edgeCases.Count)
++                throw new Exception($"Edge case failures: {edgeCases.Count - passedTests}/{edgeCases.Count}");
+             Console.WriteLine($"   Total time: {testStopwatch.ElapsedMilliseconds}ms, Average test time: {totalTime / (double)edgeCases.Count:F1}ms");
+             Console.WriteLine();
+         }
+diff --git a/Tests/README.md b/Tests/README.md
+index 40e7345..b7a4920
+--- a/Tests/README.md
++++ b/Tests/README.md
+@@ -36,6 +36,23 @@ Test metrics include:
+ 
+ ## Running Tests
+ 
++### Storage and concurrency regressions
++
++```bash
++dotnet run --project Tests/Tests.csproj -- storage
++```
++
++Run this command from the repository root. These assertions cover uncached
++concurrent SSTable reads/enumeration, invalid persisted block handles,
++compacted values/updates/deletion across a clean reopen, and concurrent
++skip-list insertions and phased updates. A failed assertion exits nonzero.
++The `functional` and default suites also run these regressions. For just the
++skip-list scenario, use the `skiplist` argument.
++
++This is bounded correctness testing. It does not establish crash-safe manifest
++publication, per-write fsync durability, or safe compaction with arbitrary
++concurrent writers. The older timing output is not a validated throughput claim.
++
+ ### Run All Tests
+ ```bash
+ cd Tests
+diff --git a/Tests/TestRunner.cs b/Tests/TestRunner.cs
+index 5dff6e7..bf71cb7
+--- a/Tests/TestRunner.cs
++++ b/Tests/TestRunner.cs
+@@ -18,7 +18,14 @@ namespace LSMTree.Tests
+                 {
+                     switch (args[0].ToLower())
+                     {
++                        case "storage":
++                            await StorageRegressionTests.RunAllAsync();
++                            break;
++                        case "skiplist":
++                            await StorageRegressionTests.ConcurrentSkipListWritesAsync();
++                            break;
+                         case "functional":
++                            await StorageRegressionTests.RunAllAsync();
+                             await FunctionalTests.RunAllAsync();
+                             break;
+                         case "performance":
+@@ -60,6 +67,7 @@ namespace LSMTree.Tests
+             Console.WriteLine("Running complete test suite...");
+             Console.WriteLine();
+ 
++            await StorageRegressionTests.RunAllAsync();
+             await FunctionalTests.RunAllAsync();
+             Console.WriteLine();
+             
+diff --git a/Tests/StorageRegressionTests.cs b/Tests/StorageRegressionTests.cs
+new file mode 100644
+index 0000000..9ab6e2b
+--- /dev/null
++++ b/Tests/StorageRegressionTests.cs
+@@ -0,0 +1,197 @@
++using System;
++using System.Collections.Generic;
++using System.IO;
++using System.Linq;
++using System.Threading.Tasks;
++using LSMTree.Core;
++using LSMTree.SSTable;
++using LSMTree.SkipList;
++
++namespace LSMTree.Tests
++{
++    public static class StorageRegressionTests
++    {
++        public static async Task RunAllAsync()
++        {
++            var directory = Path.Combine(Path.GetTempPath(), "lsm-storage-regression-" + Guid.NewGuid().ToString("N"));
++            Directory.CreateDirectory(directory);
++            try
++            {
++                await ConcurrentBlockReadsAsync(directory);
++                await InvalidBlockHandleAsync(directory);
++                await CompactedDatabaseReadsAsync(directory);
++                await ConcurrentSkipListWritesAsync();
++                Console.WriteLine("Storage regressions: 4 scenarios passed.");
++            }
++            finally
++            {
++                Directory.Delete(directory, recursive: true);
++            }
++        }
++
++        public static async Task ConcurrentSkipListWritesAsync()
++        {
++            var list = new ConcurrentSkipList();
++            var start = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
++            var tasks = Enumerable.Range(0, 32).Select(worker => Task.Run(async () =>
++            {
++                await start.Task;
++                for (int i = 0; i < 128; i++)
++                {
++                    var id = worker * 128 + i;
++                    list.Set(new Entry($"writer_{id:D5}", BitConverter.GetBytes(id)));
++                }
++            })).ToArray();
++            start.SetResult(true);
++            await Task.WhenAll(tasks);
++
++            // Each phase completes before the next; no ordering assumption between
++            // concurrent callers is needed to assert the final value and uniqueness.
++            for (int phase = 1; phase <= 3; phase++)
++            {
++                var value = phase;
++                await Task.WhenAll(Enumerable.Range(0, 32).Select(worker => Task.Run(() =>
++                {
++                    for (int i = 0; i < 128; i++)
++                    {
++                        var id = worker * 128 + i;
++                        list.Set(new Entry($"writer_{id:D5}", BitConverter.GetBytes(id + value)));
++                    }
++                })));
++            }
++            var all = list.GetAll().ToList();
++            if (all.Count != 4096 || all.Select(e => e.Key).Distinct().Count() != 4096)
++                throw new Exception("Concurrent skip-list writes lost or duplicated keys.");
++            for (int i = 0; i < 4096; i++)
++            {
++                var key = $"writer_{i:D5}";
++                var (found, entry) = list.Get(key);
++                if (!found || !entry.Value.SequenceEqual(BitConverter.GetBytes(i + 3)) || all[i].Key != key)
++                    throw new Exception($"Concurrent skip-list value/order mismatch: {key}");
++            }
++            Console.WriteLine("PASS: 32 skip-list writers preserve 4,096 unique sorted keys and phased updates.");
++        }
++
++        private static List<Entry> CreateEntries(int count)
++        {
++            var random = new Random(42);
++            return Enumerable.Range(0, count).Select(i =>
++            {
++                var value = new byte[128];
++                random.NextBytes(value);
++                return new Entry($"key_{i:D5}", value);
++            }).ToList();
++        }
++
++        private static async Task ConcurrentBlockReadsAsync(string directory)
++        {
++            var entries = CreateEntries(256);
++            var path = Path.Combine(directory, "concurrent.sst");
++            using (await SSTable.SSTable.BuildAsync(path, entries, dataBlockSize: 512)) { }
++            // No block cache: every lookup must exercise the shared table's file I/O.
++            using var table = await SSTable.SSTable.OpenAsync(path);
++            if (table._indexBlock!.Entries.Count < 32)
++                throw new Exception("Concurrency fixture must span many distinct blocks.");
++
++            var start = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
++            var readers = Enumerable.Range(0, 32).Select(worker => Task.Run(async () =>
++            {
++                await start.Task;
++                for (int i = 0; i < 128; i++)
++                {
++                    var expected = entries[(worker * 17 + i * 31) % entries.Count];
++                    var (found, actual) = await table.SearchAsync(expected.Key);
++                    if (!found || !actual.Value.SequenceEqual(expected.Value))
++                        throw new Exception($"Concurrent block read mismatch: {expected.Key}");
++                }
++            })).ToList();
++            readers.Add(Task.Run(async () =>
++            {
++                await start.Task;
++                var actual = (await table.GetAllEntriesAsync()).ToList();
++                if (actual.Count != entries.Count || actual.Where((e, i) =>
++                    e.Key != entries[i].Key || !e.Value.SequenceEqual(entries[i].Value)).Any())
++                    throw new Exception("Concurrent enumeration returned incorrect entries.");
++            }));
++            start.SetResult(true);
++            await Task.WhenAll(readers);
++            Console.WriteLine("PASS: 4,096 uncached lookups and enumeration share one SSTable safely.");
++        }
++
++        private static async Task InvalidBlockHandleAsync(string directory)
++        {
++            // Corrupt the persisted footer, rather than just mocking a read method.
++            foreach (var handle in new[]
++            {
++                new BlockHandle(ulong.MaxValue, 1),
++                new BlockHandle(0, ulong.MaxValue),
++                new BlockHandle(0, 0)
++            })
++            {
++                var path = Path.Combine(directory, "invalid.sst");
++                using (await SSTable.SSTable.BuildAsync(path, CreateEntries(4))) { }
++                var bytes = await File.ReadAllBytesAsync(path);
++                var footer = new Footer();
++                footer.Decode(bytes.AsSpan(bytes.Length - Footer.FooterSize).ToArray());
++                footer.MetaBlockHandle = handle;
++                footer.Encode().CopyTo(bytes, bytes.Length - Footer.FooterSize);
++                await File.WriteAllBytesAsync(path, bytes);
++                try
++                {
++                    using var table = await SSTable.SSTable.OpenAsync(path);
++                    throw new Exception("Opening an out-of-bounds/empty block must fail.");
++                }
++                catch (InvalidDataException)
++                {
++                    // Invalid on-disk offsets/lengths must fail before allocation or decoding.
++                }
++            }
++            Console.WriteLine("PASS: invalid persisted block offsets/lengths are rejected.");
++        }
++
++        private static async Task CompactedDatabaseReadsAsync(string directory)
++        {
++            var path = Path.Combine(directory, "compacted");
++            var config = new LSMConfiguration
++            {
++                EnableBlockCache = false,
++                DataBlockSize = 512,
++                Level0CompactionTrigger = 100
++            };
++            var expected = CreateEntries(400).ToDictionary(e => e.Key, e => e.Value);
++            await using (var db = await LSMTreeDB.OpenAsync(path, config))
++            {
++                foreach (var batch in expected.Chunk(100))
++                {
++                    foreach (var pair in batch)
++                        await db.SetAsync(pair.Key, pair.Value);
++                    await db.FlushAsync();
++                }
++                // Include updates and tombstones in the compacted output.
++                expected["key_00000"] = new byte[] { 9, 8, 7 };
++                await db.SetAsync("key_00000", expected["key_00000"]);
++                expected.Remove("key_00001");
++                await db.DeleteAsync("key_00001");
++                await db.FlushAsync();
++                await db.CompactAsync();
++                await VerifyDatabaseAsync(db, expected);
++            }
++            await using (var reopened = await LSMTreeDB.OpenAsync(path, config))
++                await VerifyDatabaseAsync(reopened, expected);
++            Console.WriteLine("PASS: concurrent compacted reads, updates/deletion, and clean reopen.");
++        }
++
++        private static async Task VerifyDatabaseAsync(LSMTreeDB db, Dictionary<string, byte[]> expected)
++        {
++            await Task.WhenAll(expected.Select(async pair =>
++            {
++                var (found, actual) = await db.GetAsync(pair.Key);
++                if (!found || !actual.SequenceEqual(pair.Value))
++                    throw new Exception($"Compacted/reopened value mismatch: {pair.Key}");
++            }));
++            var (deletedFound, _) = await db.GetAsync("key_00001");
++            if (deletedFound)
++                throw new Exception("Deleted key reappeared after compaction/reopen.");
++        }
++    }
++}

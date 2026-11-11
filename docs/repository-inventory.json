@@ -347,7 +347,7 @@
       "private": false,
       "fork": true,
       "default_branch": "main",
-      "description": "List of awesome Egyptian things for developers. 📜",
+      "description": "List of awesome Egyptian things for developers. \ud83d\udcdc",
       "archived": false,
       "access": [
         "authenticated GitHub CLI inventory",
@@ -999,9 +999,18 @@
       "depth": "priority repository architecture/lifecycle investigation",
       "working_tree_caveat": "29 local file-mode changes; zero text changes. Committed integrity failure remains unresolved by available local code.",
       "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
-      "observed_default_head": "a8686cf696add5988008d9a88d65a41a514df77b",
+      "observed_default_head": "e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f",
       "local_snapshot": "a8686cf696add5988008d9a88d65a41a514df77b",
-      "second_pass_verification": "Two fresh isolated functional executions failed final post-compaction integrity read. No source fix attempted."
+      "second_pass_verification": "Two fresh isolated functional executions failed final post-compaction integrity read. No source fix attempted. Subsequent user-authorized local fix: explicit-offset exact block reads, serialized skip-list writes, null-key contract and root build corrections; functional plus four strict storage regressions pass, including five repeated storage runs. Fix subsequently published as e70fe08; original audit snapshot remains separate.",
+      "local_followup": {
+        "patch": "docs/lsmsharp-local-fix.patch",
+        "patch_sha256": "bc579d8c7b9615122f7228b0b88ddc6bd4d54b7664c762eb6816863968319a6c",
+        "base_commit": "a8686cf696add5988008d9a88d65a41a514df77b",
+        "published": true,
+        "validation": "docs/repository-test-results.json#lsmsharp_local_followup",
+        "published_commit": "e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f",
+        "published_commit_url": "https://github.com/Mo7ammedd/LSMSharp/commit/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f"
+      }
     },
     {
       "repository": "Mo7ammedd/matlapalgo",

@@ -164,5 +164,166 @@
       }
     ],
     "scope": "Only task-owned names with matching task label removed; no global prune or production container mutation."
+  },
+  "lsmsharp_local_followup": {
+    "base_commit": "a8686cf696add5988008d9a88d65a41a514df77b",
+    "local_worktree": "/home/mohammed/mohammed/projects/LSMSharp",
+    "patch": "docs/lsmsharp-local-fix.patch",
+    "patch_sha256": "bc579d8c7b9615122f7228b0b88ddc6bd4d54b7664c762eb6816863968319a6c",
+    "patch_applies_to_original_snapshot": true,
+    "source_files": [
+      {
+        "path": "LSMTree.csproj",
+        "sha256": "16d85b34c650274d799ecf4bad8848d8777d56ec471edc6b02e67494c8b18c7c"
+      },
+      {
+        "path": "LSMTreeDB.cs",
+        "sha256": "d9bd3c79c71270cd423989d30161cf21636e2fd0b03af6a564f967ea3ca2b951"
+      },
+      {
+        "path": "Program.cs",
+        "sha256": "612b85a9f223fada8e49921b563659e3928d0084c53e66325961f83a2d56917e"
+      },
+      {
+        "path": "README.md",
+        "sha256": "103460ac9e844a083c948d1b378a59ed326ab8fcf873dce1c5f633a72f783fae"
+      },
+      {
+        "path": "SSTable/SSTable.cs",
+        "sha256": "51662f0650d28caeeacb23a05640d073c82419a4a540601e970b730601369daa"
+      },
+      {
+        "path": "SkipList/ConcurrentSkipList.cs",
+        "sha256": "94f8ec0560f71e8d7ca66c047dbe3f2c2c9661325d675f72f4f92bca91f4b289"
+      },
+      {
+        "path": "Tests/FunctionalTests.cs",
+        "sha256": "4424c7bebaa85d8fd8fe89de00d7bf91eb178e22f04495cca4f611a7dc7a0e9c"
+      },
+      {
+        "path": "Tests/TestRunner.cs",
+        "sha256": "e36470d7cb7f5b8efa54f44ad350c644eb595fef466ad42c0556697f3114eebb"
+      },
+      {
+        "path": "Tests/README.md",
+        "sha256": "924494d038ed6f88d9fcf94687a0a9e4c4a921a3858704d850bebfdfb0a50fa7"
+      },
+      {
+        "path": "Tests/StorageRegressionTests.cs",
+        "sha256": "39e50c9bff4ae5bc8bd49704044b68f0bee7e0a719e7eb5f9ac3661edf3d32b4"
+      }
+    ],
+    "published": true,
+    "audit_date": "2026-11-11",
+    "baseline_regressions": [
+      {
+        "name": "concurrent SSTable reads",
+        "exit": 1,
+        "failure": "Concurrent block read mismatch",
+        "log_sha256": "bb835252355cd06b52bacae7f21032aad11b82e07bcd2b1e36b43a9d13f093c7"
+      },
+      {
+        "name": "concurrent skip-list writers",
+        "exit": 1,
+        "failure": "NullReferenceException in stale insertion predecessor",
+        "log_sha256": "6d4b8314d6c204d66d7e0efc06c88b92570e00688e49050d2d2eb229713d173e"
+      }
+    ],
+    "engine_build": {
+      "command": "dotnet build LSMTree.csproj",
+      "exit": 0,
+      "warnings": "Four pre-existing CS8604 nullable warnings in LevelManager; not remediated."
+    },
+    "checks": [
+      {
+        "name": "functional",
+        "command": [
+          "dotnet",
+          "run",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "functional"
+        ],
+        "exit": 0,
+        "failure_output": false
+      },
+      {
+        "name": "storage-repeat-1",
+        "command": [
+          "dotnet",
+          "run",
+          "--no-build",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "storage"
+        ],
+        "exit": 0,
+        "failure_output": false
+      },
+      {
+        "name": "storage-repeat-2",
+        "command": [
+          "dotnet",
+          "run",
+          "--no-build",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "storage"
+        ],
+        "exit": 0,
+        "failure_output": false
+      },
+      {
+        "name": "storage-repeat-3",
+        "command": [
+          "dotnet",
+          "run",
+          "--no-build",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "storage"
+        ],
+        "exit": 0,
+        "failure_output": false
+      },
+      {
+        "name": "storage-repeat-4",
+        "command": [
+          "dotnet",
+          "run",
+          "--no-build",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "storage"
+        ],
+        "exit": 0,
+        "failure_output": false
+      },
+      {
+        "name": "storage-repeat-5",
+        "command": [
+          "dotnet",
+          "run",
+          "--no-build",
+          "--project",
+          "Tests/Tests.csproj",
+          "--",
+          "storage"
+        ],
+        "exit": 0,
+        "failure_output": false
+      }
+    ],
+    "functional_integrity": "200/200 records after compaction",
+    "functional_edge_cases": "8/8",
+    "storage_scenarios": 4,
+    "execution_scope": "Isolated source copy matched to working-tree patch. Existing performance/stress/benchmark suites not run; no production, crash-safety, or full-database-correctness claim. Prior failed published-snapshot results remain historical, not overwritten.",
+    "published_commit": "e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f",
+    "published_commit_url": "https://github.com/Mo7ammedd/LSMSharp/commit/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f"
   }
 }

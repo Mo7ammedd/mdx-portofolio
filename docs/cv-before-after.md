@@ -130,21 +130,21 @@ Comparison with the delivered CV at the start of this optimization pass, reviewe
 
 **Reason:** States why failover stops after stream delivery and how accounting recovery works. CI/integration implementation and observed CI remain distinct from the blocked fresh local test attempt.
 
-## 17. GhostyKey crypto boundary
+## 17. GhostyKey to LSMSharp storage internals
 
 **Original:** Built encrypted secret sharing with browser-side AES-GCM and decryption keys in URL fragments. Stored ciphertext and hashed access/deletion tokens on the server.
 
-**Improved:** Built browser-encrypted secret sharing with AES-GCM and fragment-only decryption keys; the server stores ciphertext and hashed read/deletion capabilities.
+**Improved:** Built an experimental C# key-value engine with write-ahead logging, skip-list memtables, immutable SSTables, Bloom filters, and leveled compaction.
 
-**Reason:** Names the server/client capability boundary in direct language. The implementation does not amount to a comprehensive security certification.
+**Reason:** At your request, the selected project now demonstrates WAL, memtable, SSTable, Bloom filter, and compaction implementation. The change followed a local fix and passing targeted checks, not a decision to ignore the old integrity failure.
 
-## 18. GhostyKey SQL lifecycle
+## 18. LSMSharp implementation and verification
 
 **Original:** Enforced expiration and view limits in a PostgreSQL transaction; added tests for concurrent consumers, expiry after lock waits, and separate deletion permissions.
 
-**Improved:** Serialized consumption, expiry checks, and deletion in PostgreSQL transactions. Verified single-use consumption with 20 concurrent readers and expiry after lock waits in database tests.
+**Improved:** Implemented prefix-compressed keys, GZip blocks, and an LRU block cache; added WAL replay and tests for concurrent reads, compaction, and clean reopen.
 
-**Reason:** Adds the fresh, bounded concurrency result: 20 readers of a single-use secret and expiry after lock waits. It does not turn a database test into production throughput.
+**Reason:** Adds prefix encoding, compression/cache, replay, and bounded concurrency/compaction/clean-reopen validation. This is an experimental engine with a documented fix published as e70fe08, not a production durability or benchmark claim. GhostyKey remains an alternative in the report.
 
 ## 19. AeroUDP protocol
 
@@ -168,7 +168,7 @@ Comparison with the delivered CV at the start of this optimization pass, reviewe
 - Removed low-value NUnit/Postman/FCM skill-list entries from this version. Push notification work remains in Experience. Rust and Python remain explicitly project work; no paid production expertise is inferred from a skills label.
 - Device pairing, streamed progress, SSH query access, and restart/reconciliation details remain in the evidence report but are consolidated rather than individually enumerated in the CV. No important whole product was removed.
 - Replaced “Led the launch” for Airwave with verified backend scope. Replaced broad security outcomes with concrete controls. Narrowed Rewaaq snapshot wording to what is actually persisted.
-- No additional project was dropped in this pass. LLMProxy, GhostyKey, and AeroUDP were reselected after fresh comparison; [the ranking](project-ranking.md) explains the alternatives, including LSMSharp’s reproduced integrity failure.
+- The final user-requested substitution replaces GhostyKey with LSMSharp after fixing its reproduced concurrency defects locally. [The ranking](project-ranking.md) and [fix record](lsmsharp-fix.md) distinguish the historical failure from passing bounded checks and remaining limitations.
 - Historical unsupported percentages/user counts, AWS telemetry deployment claims, universal compliance claims, and uncommitted Reflx Shopify attribution remain withheld. They are not declared false; they need evidence before external use.
 
 Architecture/ownership support and limitations are in the [ownership report](repository-ownership-report.md). Exact execution states are in the [test record](repository-test-results.json).

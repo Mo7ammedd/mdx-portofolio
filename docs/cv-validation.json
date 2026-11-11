@@ -5,20 +5,20 @@
   "reading_order": "verified",
   "unmapped_symbols_or_ligatures": false,
   "pdf_link_annotations": 18,
-  "word_count": 682,
+  "word_count": 681,
   "selected_projects": [
     "LLMProxy",
-    "GhostyKey",
+    "LSMSharp",
     "AeroUDP"
   ],
   "audit_date": "2026-11-11",
   "compiler": "Tectonic 0.17.0 / XeTeX",
   "source": "public/resume.tex",
   "pdf": "public/resume.pdf",
-  "source_sha256": "f21bbb37a1cd5b6ed39b5abff538d147a5a023623af669ac7ec970d566c7e480",
-  "pdf_sha256": "5194bb5f023f88ae6c3b4cc53c0c9d45faea1e989a8d32cd606eeff5b74531a4",
-  "visual_review": "Both final rendered pages viewed and inspected after the final source revision; no clipping, awkward breaks, or orphaned skill-list line.",
-  "official_titles_dates_contacts_education": "Exact pre-pass header, role macro arguments, education and URI-set comparisons passed.",
+  "source_sha256": "e8efb71f8a880dd1997824c80b72b8e5dc1ba0d2e2ad27bf79089ddabad3432b",
+  "pdf_sha256": "7ae0ff25245be122908b8926920ee1d9c04fcbd27121d7884943be4e54bbf9a2",
+  "visual_review": "Both final rendered pages viewed after the LSMSharp substitution; two pages, no clipping or awkward line breaks.",
+  "official_titles_dates_contacts_education": "The source prefix through the first selected project and the suffix from AeroUDP onward exactly match the pre-substitution source. Only GhostyKey project content/link was replaced.",
   "fonts": "Three Latin Modern faces embedded/subset, Identity-H, Unicode mappings present; pdffonts checked.",
   "host_fontconfig_warnings": "Host configuration warnings emitted by compiler process; no LaTeX font/overflow warnings and embedded PDF fonts verified.",
   "https_checks": [
@@ -42,11 +42,6 @@
       "first_attempt_error": "<urlopen error [Errno 104] Connection reset by peer>",
       "status": 200,
       "final_url": "https://github.com/Mo7ammedd/AeroUDP"
-    },
-    {
-      "url": "https://github.com/Mo7ammedd/GhostyKey",
-      "status": 200,
-      "final_url": "https://github.com/Mo7ammedd/GhostyKey"
     },
     {
       "url": "https://github.com/Mo7ammedd/LLMProxy",
@@ -102,6 +97,11 @@
       "url": "https://www.momostafa.tech",
       "status": 200,
       "final_url": "https://www.momostafa.tech"
+    },
+    {
+      "url": "https://github.com/Mo7ammedd/LSMSharp",
+      "status": 200,
+      "final_url": "https://github.com/Mo7ammedd/LSMSharp"
     }
   ],
   "email_phone_uris": [
@@ -125,12 +125,15 @@
       "text_y_min_pt": 41.766415,
       "text_x_max_pt": 568.811132,
       "text_y_max_pt": 576.308473,
-      "words": 261
+      "words": 260
     }
   ],
-  "source_snapshot_backup": "/tmp/cv-ownership-optimization-6i3a75jm/before-resume.tex",
-  "pdf_snapshot_backup": "/tmp/cv-ownership-optimization-6i3a75jm/before-resume.pdf",
+  "source_snapshot_backup": "/tmp/lsm-cv-fix-wkio_1a2/before-resume.tex",
+  "pdf_snapshot_backup": "/tmp/lsm-cv-fix-wkio_1a2/before-resume.pdf",
   "test_results": "docs/repository-test-results.json",
-  "application_sources_modified": false,
-  "fixture_cleanup": "Task-owned PostgreSQL/Redis fixtures and dedicated network removed."
+  "application_sources_modified": "User-authorized local LSMSharp concurrency, validation, build, and test changes; unrelated portfolio/application files untouched.",
+  "fixture_cleanup": "Task-owned PostgreSQL/Redis fixtures and dedicated network removed.",
+  "lsmsharp_fix_record": "docs/lsmsharp-fix.md",
+  "lsmsharp_published_commit": "e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f",
+  "lsmsharp_published_commit_url": "https://github.com/Mo7ammedd/LSMSharp/commit/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f"
 }

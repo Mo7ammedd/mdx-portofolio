@@ -117,11 +117,11 @@
   \item Made usage finalization idempotent and recovered abandoned reservations conservatively; limited failover to before the first stream event to avoid replaying partial responses. Added PostgreSQL/Redis integration tests and CI recovery drills.
 \end{itemize}
 
-\project{GhostyKey}{TypeScript, Next.js, PostgreSQL\enspace\textbar\enspace Personal project}
-  {https://github.com/Mo7ammedd/GhostyKey}{github.com/Mo7ammedd/GhostyKey}
+\project{LSMSharp}{C\#, .NET 8\enspace\textbar\enspace Experimental storage engine}
+  {https://github.com/Mo7ammedd/LSMSharp}{github.com/Mo7ammedd/LSMSharp}
 \begin{itemize}
-  \item Built browser-encrypted secret sharing with AES-GCM and fragment-only decryption keys; the server stores ciphertext and hashed read/deletion capabilities.
-  \item Serialized consumption, expiry checks, and deletion in PostgreSQL transactions. Verified single-use consumption with 20 concurrent readers and expiry after lock waits in database tests.
+  \item Built an experimental C\# key-value engine with write-ahead logging, skip-list memtables, immutable SSTables, Bloom filters, and leveled compaction.
+  \item Implemented prefix-compressed keys, GZip blocks, and an LRU block cache; added WAL replay and tests for concurrent reads, compaction, and clean reopen.
 \end{itemize}
 
 \project{AeroUDP}{Rust, Tokio\enspace\textbar\enspace Experimental transport protocol}
