@@ -1,0 +1,3277 @@
+{
+  "audit_date": "2026-11-11",
+  "repository_total": 126,
+  "owners": {
+    "oblien": 45,
+    "Mo7ammedd": 75,
+    "Hydralerne": 6
+  },
+  "methodology": "Inventory and depth are distinct. Priority systems received repository-level lifecycle investigation; other entries explicitly state narrower coverage. No blanket claim of reading every file or proving production operation. Second pass refreshed account inventories and deepened project verification. Related-owner discovery is separate from the requested-owner total.",
+  "repositories": [
+    {
+      "repository": "Hydralerne/axios-code",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "tree_blob_count": 7,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "touch/main.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Hydralerne/cenells",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "tree_blob_count": 2936,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "2/websockets/socket-server.js",
+        "ajax-php/posts/postvalues.php"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "4fd4efb0441159f977bbdafab770fd57514227a8"
+    },
+    {
+      "repository": "Hydralerne/neon",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": true,
+      "default_branch": "main",
+      "description": "Neon: Serverless Postgres. We separated storage and compute to offer autoscaling, code-like database branching, and scale to zero.",
+      "upstream_parent": "neondatabase/neon",
+      "tree_blob_count": 1903,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "fork lineage/structure; no upstream ownership credit",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Hydralerne/next-server-info",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "tree_blob_count": 24,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "lib/serverInfo.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Hydralerne/oss-scanner",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": true,
+      "default_branch": "main",
+      "description": null,
+      "upstream_parent": "anthropics/oss-scanner",
+      "tree_blob_count": 342,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "fork lineage/structure; no upstream ownership credit",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Hydralerne/sector",
+      "access": [
+        "GitHub MCP metadata/tree"
+      ],
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Sector 07: a dependency-free first-person WebGL extraction game",
+      "tree_blob_count": 22,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "simulation.mjs",
+        "simulation.test.mjs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "b3483c45a974f5f2db121c336b0ae751793e0b39"
+    },
+    {
+      "repository": "Mo7ammedd/.NET-Development-Learning-Path-GDG",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": " materials and notes from the Google Developers Group (GDG) at Suez Canal University.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 19,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/abdo",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 15,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/AeroUDP",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Reliable transport protocol built on top of UDP in asynchronous Rust. Implements TCP-inspired features including reliable delivery, ordered packets, congestion control, retransmissions, sliding windows, RTT/RTO estimation",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 42,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "crates/aeroudp/src/congestion/mod.rs",
+        "crates/aeroudp/src/congestion/rtt.rs",
+        "crates/aeroudp/src/connection/engine.rs",
+        "crates/aeroudp/src/connection/handshake.rs",
+        "crates/aeroudp/src/retransmission/mod.rs",
+        "crates/aeroudp/src/simulator/mod.rs",
+        "crates/aeroudp/src/socket/driver.rs",
+        "crates/aeroudp/src/transport/receive.rs",
+        "crates/aeroudp/src/transport/send.rs",
+        "crates/aeroudp/tests/reliability.rs",
+        "crates/aeroudp/tests/stress.rs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "fd747a4c3ed5d26065b87af517b38875aaff6fd9",
+      "second_pass_verification": "Fresh isolated workspace test: 26 passed."
+    },
+    {
+      "repository": "Mo7ammedd/amen",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 1,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/analysis-user-feeling",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Analyze user feelings based on provided emotions ",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 3,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/apigo",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "An OpenAPI-native API client for your terminal. Discover Swagger endpoints, generate requests, and automate backend workflows.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 80,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/ci.yml",
+        "src/http/client.ts",
+        "src/openapi/resolver.ts",
+        "src/storage/database.ts",
+        "src/storage/vault.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/askMe",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Cross platform AI Linktree mobile app built with React Native Expo, enabling users to create smart AI-powered profile pages with chat, links, content sharing, and personal assistant experiences.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 140,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "apps/backend/src/modules/chat/chat.service.ts",
+        "apps/backend/src/services/ai/ingest.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/assiut-sheet-sol",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "solving problems from assiut newcomers sheets",
+      "archived": true,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 169,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/audio-transcribe",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": " .NET Console Application that uses the OpenAI Whisper API to transcribe audio ",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 29,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Aura-Decor",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "my graduation project AR application integrating custom 3D models to deliver immersive.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 248,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "AuraDecor.Services/OrderService.cs",
+        "AuraDecor.Services/PaymentService.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "6867d5062367d4e9f734db1886ef3ca3c53b65b9",
+      "second_pass_verification": "Full isolated archive; order/payment/layer/test-tree review, no suite execution."
+    },
+    {
+      "repository": "Mo7ammedd/awesome-egypt",
+      "private": false,
+      "fork": true,
+      "default_branch": "main",
+      "description": "List of awesome Egyptian things for developers. 📜",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "upstream_parent": "Seth0x41/awesome-egypt",
+      "tree_blob_count": 2,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "fork lineage/structure; no upstream ownership credit",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Backend-NodeJS-Summer-Training-",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "solution of backend fundamentals tasks with nodejs",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 85,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/backend-task",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 25,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Blocking-Country-Detection",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 25,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "BD.Services/IpGeolocationService.cs",
+        "BD.Services/TemporalBlocksCleanupService.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/BookStore",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Full MVC Book Store with payment method",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 255,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "BookStore.Web/Areas/Admin/Controllers/OrderController.cs",
+        "BookStore.Web/Areas/Customer/Controllers/CartController.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Cars-maintenance",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "A simple car maintenance management app to track services, repairs, and maintenance history.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 100,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "services/carMeterService.js",
+        "services/maintenanceRequestService.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/cbox",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": "A tiny rootless Linux container runtime in C#.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 31,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/ci.yml",
+        "src/Cgroup.cs",
+        "src/Init.cs",
+        "tests/integration.py"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "cb8e9cd0c87aaccfec93e36450c169003e7db97e",
+      "history_scope": "Full accessible default-branch commit collection read; concentrated/imported history is distinguished in report."
+    },
+    {
+      "repository": "Mo7ammedd/Cnn-image-classification",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "img classification model using  (CNN)",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 44,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/color-quiz-application",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "displays questions related to hexadecimal color codes",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 7,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/CrudMvc",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "crud operations with mvc ",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 92,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/data-structure",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "stls implementation in c++",
+      "archived": true,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 7,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/deployment",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 24,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "controllers/projects.js",
+        "controllers/webhooks.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Disk-Mesh",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "buted file system built from scratch in Java with chunk replication, failure detection, and automatic recovery.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 40,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/dfs/master/MasterNode.java",
+        "src/dfs/metadata/MetadataSnapshotStore.java",
+        "src/dfs/metadata/MetadataStore.java",
+        "src/dfs/storage/ChunkStore.java",
+        "src/dfs/tests/IntegrationTests.java"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "8f960a3cfd5bb6685f6caf9c338a1ea49d242331",
+      "history_scope": "Full accessible default-branch commit collection read; concentrated/imported history is distinguished in report.",
+      "second_pass_verification": "Fresh nine-scenario local integration harness passed."
+    },
+    {
+      "repository": "Mo7ammedd/dotfiles",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Personal Arch Linux dotfiles for Hyprland, Quickshell, Zsh, terminals and editors",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 1624,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/download-pdf",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "download protected pdfs",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 2,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/ea",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "glassmorphism e-commerce app with an admin dashboard, built using Next.js, TypeScript, Tailwind CSS, Prisma, NextAuth, Framer Motion, and shadcn/ui",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 64,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/epub-to-pdf",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "converting EPUB files (fixed-layout or reflowable) into high-quality, print-ready PDFs. Supports single and batch conversions, preserves exact EPUB dimensions",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 11,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Exam-System",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "The Examination System Database is a comprehensive solution designed to streamline examination processes ",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 34,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "StudentQuery/Insert or update student answers for a specific question in an exam.sql",
+        "instructorQuery/InsertExamRandom.sql"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/fawry-task",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 17,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Filmak",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "movies website",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 41,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/GetSongLyrics",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "API to fetch lyrics from songs",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 6,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/GhostyKey",
+      "private": false,
+      "fork": false,
+      "default_branch": "master",
+      "description": "Temporary secret sharing with browser-side AES-256-GCM encryption, disposable links, and atomic one-time access. Built by modev.me with Next.js and Supabase.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 69,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/components/create-secret.tsx",
+        "src/components/secret-result.tsx",
+        "src/lib/crypto/client.ts",
+        "src/lib/secrets/client.ts",
+        "src/lib/secrets/server.ts",
+        "supabase/migrations/20260917000200_secret_functions.sql",
+        "tests/database/lifecycle.test.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "d4c6626cd41a466a5e64447d687dfdc2614b665c",
+      "history_scope": "Full accessible default-branch commit collection read; concentrated/imported history is distinguished in report.",
+      "second_pass_verification": "Fresh isolated 36 unit/API and 14 PostgreSQL tests passed; no browser E2E rerun."
+    },
+    {
+      "repository": "Mo7ammedd/GiGG",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 29,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Health-Tracker",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": " ASP.NET Core web app empowers users to monitor their health metrics, track fitness goals, and maintain wellness records.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 70,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "HealthTracker.Services/AuthService.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Hospital-system",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Hospital Management System is a console-based C++ application that helps manage patient and doctor",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 6,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Hospital_system",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 3,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/HungerStation_Microservices",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Microservices architecture with .NET Core (.NET 8) and Identity Server Integration with Azure Service Bus",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 238,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "HungerStation.Services.EmailAPI/Messaging/AzureServiceBusConsumer.cs",
+        "HungerStation.Services.RewardAPI/Messaging/AzureServiceBusConsumer.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "390fff389727d1eb9c41eb132eecb33e0b2837f0",
+      "second_pass_verification": "Deeper reward service review found swallowed database-save exceptions before caller acknowledgement."
+    },
+    {
+      "repository": "Mo7ammedd/ikea-scrapper",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "scrap ikea products metadata with 3d models",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 5,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/LeetCode_Problems",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "repository contains solutions to LeetCode problems",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 98,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/LLMProxy",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Self-hosted OpenAI-compatible gateway: 10 providers, encrypted key pools, shared Redis routing, quotas, alerts, admin UI and signed Docker images.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 203,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/ci.yml",
+        "docs/architecture.md",
+        "src/LLMProxy.Application/GatewayService.cs",
+        "src/LLMProxy.Application/RuntimeCatalog.cs",
+        "src/LLMProxy.Infrastructure/Persistence/EfGatewayStore.cs",
+        "src/LLMProxy.Infrastructure/RateLimiting/RedisState.cs",
+        "tests/LLMProxy.IntegrationTests/PersistenceTests.cs",
+        "tests/LLMProxy.IntegrationTests/RedisTests.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "1fa11c5196a89da06b5bbcae7de21f954233cb69",
+      "second_pass_verification": "Host restore environment blocked; SDK image pull timed out; pinned-head successful Actions observed. No fresh local pass."
+    },
+    {
+      "repository": "Mo7ammedd/LSMSharp",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "LSM-Tree based storage engine implemented in C#",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 29,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "Compaction/LevelManager.cs",
+        "LSMTreeDB.cs",
+        "SSTable/SSTable.cs",
+        "Tests/FunctionalTests.cs",
+        "Tests/full_test_results.txt",
+        "WAL/WriteAheadLog.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "working_tree_caveat": "29 local file-mode changes; zero text changes. Committed integrity failure remains unresolved by available local code.",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "a8686cf696add5988008d9a88d65a41a514df77b",
+      "local_snapshot": "a8686cf696add5988008d9a88d65a41a514df77b",
+      "second_pass_verification": "Two fresh isolated functional executions failed final post-compaction integrity read. No source fix attempted."
+    },
+    {
+      "repository": "Mo7ammedd/matlapalgo",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Message encryption algorithms with MATLAB GUI",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 16,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/mdx-portofolio",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Showcasing my projects and blogs on software development",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 234,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/mindwire",
+      "private": false,
+      "fork": true,
+      "default_branch": "main",
+      "description": "Ship AI products powered by the best harnesses without building another agent loop",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "upstream_parent": "oblien/mindwire",
+      "tree_blob_count": 2403,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "fork lineage/structure; no upstream ownership credit",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Mo7ammedd",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Config files for my GitHub profile.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 9,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/mpv-configurations",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "my configurations for MPV Media Player ",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 1,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/my-resume",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 1,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/My-Terminal",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Personal website simulating a terminal",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 21,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/myportfolio",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "It's my portfolio",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 28,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/neetcode",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "This repository is managed by LeetPush extension: https://github.com/husamahmud/LeetPush",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 17,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/new",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 75,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "services/orderAssignmentService.js",
+        "services/webhookService.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/nodejs-e-commerce",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "E-commerce website with Node.js, Express js, and Mongoose",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 18,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "modelRoute/orderRoute.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Oblien.SearchAgent",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "AI-powered web search, intelligent content extraction, and deep website research with real-time streaming capabilities.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 13,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/OblienSandbox",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": ".NET client library for Oblien Sandbox",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 10,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/otpauth-bridge",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Offline Rust toolkit for migrating TOTP accounts between authenticators, with QR support and encrypted transfers.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 30,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/main.rs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/outako",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 88,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "backend-api/src/controllers/authController.js",
+        "backend-api/src/controllers/orderController.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/PalestineApi",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "API to get killed people names in palestine",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 8,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/passCli",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Secure CLI password manager written in Rust with Argon2 key derivation and ChaCha20-Poly1305 encryption, designed for local-first encrypted credential storage with strong memory safety and modern cryptographic practices.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 9,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/main.rs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/PrayerCli",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "C# console app for calculating Islamic prayer times, Qibla direction, and Hijri date with IP geolocation, multiple methods, and styled CLI output.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 25,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Real-Kamehameha",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Throw a Kamehameha in real life using AI pose tracking with MediaPipe and real-time visual effects.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 8,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/shelyst-APIs",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 116,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "controllers/orderController.js",
+        "controllers/twoFactorController.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/SignalR",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": " real-time communication. includes chat functionality, harry potter house groups, notifications, a race, and a user count tracker.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 325,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "SignalR/Program.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/simple-rag",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "simple rag with c#",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 21,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/SimuKernel",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "OS simulator exploring scheduling, memory management, and kernel concepts.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 22,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "Core/Memory/LRUMemoryManager.cs",
+        "Core/Schedulers/MLFQScheduler.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "1e0df8b5e0a2e92a72f0935e304f64cdf6ae558b",
+      "second_pass_verification": "Full isolated archive; simulated MLFQ/LRU review, no suite execution."
+    },
+    {
+      "repository": "Mo7ammedd/snake-game",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Snake Game implemented in C++ using the OpenGL",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 2,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/SpeedTest",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "A .NET Aspire + Blazor WebAssembly app for real-time internet speed testing",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 38,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "SpeedTest.Api/Program.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/subme",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Subtitle Link Extractor built with React and Vite that searches subtitle providers, parses HTML pages, and extracts filtered subtitle download links with optional proxy support for handling CORS restrictions",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 20,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Talabat-APIs",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Talabat Integration Platform API System Clone",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 106,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "Talabat.Services/OrderService.cs",
+        "Talabat.Services/PaymentService.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/taylor-quote-generator",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Taylor Swift Random Quote Generator In JavaScript .",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 20,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/taylor-swift",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "API to get random lyrics/quotes of Taylor Swift",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 19,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/TaylorSwiftClient",
+      "private": false,
+      "fork": true,
+      "default_branch": "main",
+      "description": "taylor swift quiz questions",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "upstream_parent": "Ebrahim-Ramadan/TaylerSwiftClient",
+      "tree_blob_count": 43,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "fork lineage/structure; no upstream ownership credit",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/Tiktok-Reposts-Remover",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "A Chrome extension to remove all Reposts videos on TikTok",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 8,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/vscode-blur",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "vscode-blur brings blur and transparency effects to Visual Studio Code on Linux, with support for KDE Plasma and GNOME.",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 10,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/WPF-ExamSystem",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "WPF Exam System is a Windows Presentation Foundation (WPF) application",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 109,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "Exam system/MainWindow.xaml.cs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "Mo7ammedd/youtube-summary",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Summarize YouTube videos based on the URL",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 3,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/agents",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 190,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "core/BaseAgent.js",
+        "core/helpers/AgentCycle.js",
+        "core/helpers/ParallelCoordinator.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "b576240f91dcd077a45c823ea0a862f27ec64b15",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/assets-ai",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 14,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/auth",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 47,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/backend",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Official repo for oblien backend",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 1264,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "billing/capacity/recoverWorkspace.js",
+        "billing/capacity/recovery.js",
+        "billing/recoveryWorker.js",
+        "database/schema/workspaces.sql",
+        "workspaces/migrations/service.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "local_snapshot": "6a7b569624701503e74ff1986b6d224452ff6093"
+    },
+    {
+      "repository": "oblien/blurs",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 425,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/blurs-waitlist",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 79,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/browser",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 10,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/bytesmap",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 3331,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/quality.yml",
+        "apps/events/internal/ingest/admission.go",
+        "apps/events/internal/queue/queue.go",
+        "apps/events/internal/worker/worker.go",
+        "packages/db/src/organization-transaction.ts",
+        "packages/db/src/repos/report-workflow-recovery.test.ts",
+        "packages/db/src/repos/reports.ts",
+        "packages/platform/src/engine/lib/run-query.ts",
+        "packages/platform/src/engine/lib/secret-codec.ts",
+        "packages/platform/src/engine/lib/tunnel/ssh-session.ts",
+        "packages/platform/src/engine/modules/reports/collect.ts",
+        "packages/platform/src/engine/modules/reports/runner.ts",
+        "packages/platform/src/engine/modules/reports/scheduler.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "local_snapshot": "39499a5d7a983de87add76795f24c3dc3b99d195"
+    },
+    {
+      "repository": "oblien/cdn",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 44,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "services/jobStore.js",
+        "services/safeFetch.js",
+        "services/tokenService.js",
+        "services/uploadJobs.js",
+        "storage/delivery.js",
+        "tests/jobs.test.mjs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "0a2c86948d3958e7d2c31ac8108164376c3a4729",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/clincai",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 1913,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "apps/api/package.json",
+        "apps/api/src/modules/appointments/appointments.repo.ts",
+        "apps/api/src/modules/appointments/appointments.service.ts",
+        "apps/api/src/modules/whatsapp/whatsapp.worker.ts",
+        "apps/api/tests/appointment-arrival.test.ts",
+        "packages/db/src/schema/clinic-provisioning.ts",
+        "packages/db/src/schema/clinical.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "c779590b1b3c983fff4aa3aed76dba3cb588c444",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/container-manager",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 17,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/handlers/files/content_chunker.rs",
+        "src/main.rs"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "abf3dd4927664c4e500a68cdb60da5095706dd99",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/container-manager-go",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": null,
+      "tree_read_error": "gh: Git Repository is empty. (HTTP 409)\n",
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "empty repository; no source to investigate",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/dashboard",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 1219,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/data",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 33917,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/demon",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 22,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "test-basic-edge.sh",
+        "vms.sh"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "19b534b15f7b942e4c8d344ff1663bf004f9be6a",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/deploy",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": true,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 108,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "index.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/dev-portal",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 139,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/diavira",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 139,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "apps/api/src/lib/auth.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "ce784b25c8f0df28d2b67fc4fbca1f29894149ea",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/edge",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 208,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "collector/lua/transport_usage.lua",
+        "deploy/MIGRATION-20261029.md",
+        "handlers/lua/cluster_manager.lua",
+        "nginx/lua/routing/route_limits.lua",
+        "nginx/lua/routing/site_router.lua",
+        "tunnel/auth/jwt.go"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "e92355179e414cb2feed0167d788ccef58c4da4d",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/flow",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 101,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/landing",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 94,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/mcp-portal",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 20,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/mindwire",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Ship AI products powered by the best harnesses without building another agent loop",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 2797,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/release-gate.yml",
+        "packages/daemon/internal/computer/pairing.go",
+        "packages/daemon/internal/orchestrator/orchestrator.go",
+        "packages/daemon/internal/orchestrator/turn_requests.go",
+        "packages/daemon/internal/session/history_revision.go",
+        "packages/daemon/internal/session/store.go",
+        "packages/daemon/internal/session/turn_requests.go",
+        "packages/sdk/src/native-sessions.ts",
+        "packages/sdk/src/target/ssh.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "499929bbf09bfe362a74547d4b4af953cebdf7a7",
+      "local_snapshot": "c3c90757d4bcabf92f08a4c3c5b7d6e5d69addd6"
+    },
+    {
+      "repository": "oblien/mobile",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 515,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/node-container",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 43,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "server.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/openship",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": "Self-hosted deployment platform",
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 7959,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/release-gate.yml",
+        "apps/api/src/modules/deployments/deployment-recovery.test.ts",
+        "packages/db/src/advisory-lock-factory.ts",
+        "packages/db/src/repos/deployment.repo.ts",
+        "packages/platform/src/authorization.ts",
+        "packages/platform/src/engine/lib/cloud-workspace-lock.ts",
+        "packages/platform/src/engine/lib/provision-lock.ts",
+        "packages/platform/src/engine/modules/deployments/deployment-recovery.ts",
+        "packages/platform/src/engine/modules/deployments/rollback/rollback-orchestrator.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "3fd39c5dc58b92af5184febba339139c52b96b07",
+      "local_snapshot": "99904af0f8497a6df64e1769a32a0c604a81f79f",
+      "second_pass_verification": "Refreshed head and MCP recovery/coordination review; older pinned evidence remains in report."
+    },
+    {
+      "repository": "oblien/openship-ghsa-2mr8-9mcm-m44q",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 7693,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "advisory copy inventoried; grouped with Openship, not independently audited as a new product",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/openship-ghsa-4rpm-6h7x-jvwf",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 7693,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "advisory copy inventoried; grouped with Openship, not independently audited as a new product",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/openship-ghsa-6f6x-x4vv-6w9q",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 7664,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "advisory copy inventoried; grouped with Openship, not independently audited as a new product",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/openship-ghsa-m4h6-gw2j-5g3r",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 7665,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "advisory copy inventoried; grouped with Openship, not independently audited as a new product",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/paas",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 903,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/pocket-agent",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 1148,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "apps/ios/Mindwire/App/AppModel.swift"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "c1cf1cba61ed56faa85ad1042c34ef9537429c1b",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/production",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 20,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "server.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/raptormind",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 1964,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        ".github/workflows/runtime-release.yml",
+        "apps/api/src/lib/checkpoint-store.ts",
+        "apps/api/src/lib/turn-persistence.ts",
+        "apps/api/src/middleware/auth-guard.ts",
+        "apps/api/src/modules/sessions/session.stream.ts",
+        "packages/db/src/drizzle/checkpoint-store.ts",
+        "packages/db/src/drizzle/lease-guard.ts",
+        "packages/runtime/ARCHITECTURE.md"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "b9edd7c9007d2af9f1710a8bb484600a9605b48a",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/react-ai-agent",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 118,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/reflx-backend",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 82,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "prisma/schema.prisma",
+        "server.js",
+        "services/agentService.js",
+        "services/auth/authService.js",
+        "services/chatService.js",
+        "services/creditWebhookHandler.js",
+        "services/guestSession.js",
+        "services/knowledgeService.js",
+        "services/linkedinService.js",
+        "services/shopifySecurity.js",
+        "services/shopifyService.js",
+        "services/twitterService.js"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "priority repository architecture/lifecycle investigation",
+      "working_tree_caveat": "Substantive local uncommitted changes. Shopify additions are not in the pinned base and receive no released-work/CV ownership credit.",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/reflx-frontend",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 139,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "working_tree_caveat": "Substantive local uncommitted changes. Shopify additions are not in the pinned base and receive no released-work/CV ownership credit.",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/reflx-mobile",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 54,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/sdk",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 162,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "src/client.ts",
+        "src/runtime/exec.ts",
+        "src/runtime/transfer.ts"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "ff3b8ba570583a7d175412dcd47895e3e19fc6cd",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/search",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 7,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/sites",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 57,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/swift-sdk",
+      "private": false,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory",
+        "GitHub MCP metadata/tree"
+      ],
+      "tree_blob_count": 72,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "Sources/OblienKit/HTTPRedirectPolicy.swift"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "bounded source review; no full lifecycle or production-ownership conclusion",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/vms",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 4519,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [
+        "docs/VSOCK_ISOLATION.md",
+        "init/proxy_test.go",
+        "manager/jailer.go",
+        "manager/lifecycle.go",
+        "manager/network_alloc_db.go",
+        "manager/network_policy.go",
+        "manager/network_security.go",
+        "manager/reconciler.go"
+      ],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "additional system: architecture/history and selected implementation boundaries",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof.",
+      "observed_default_head": "c8c30c4cd25959e9f939b69f5e5518c91bd5b1af",
+      "history_scope": "Full accessible default-branch commit collection read; imported history is distinguished in report."
+    },
+    {
+      "repository": "oblien/web",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 61,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    },
+    {
+      "repository": "oblien/webhub",
+      "private": true,
+      "fork": false,
+      "default_branch": "main",
+      "description": null,
+      "archived": false,
+      "access": [
+        "authenticated GitHub CLI inventory"
+      ],
+      "tree_blob_count": 136,
+      "tree_read_error": null,
+      "tree_truncated": false,
+      "source_paths_reviewed": [],
+      "source_review_note": "Selected files and relevant code paths; not an assertion that every line or every module was inspected.",
+      "depth": "tree/metadata and product-context triage only; no code-level ownership finding",
+      "ownership_scope": "See ownership report; repository access/authorship alone is not accountability proof."
+    }
+  ],
+  "additional_local_repositories": [
+    {
+      "repository": "carlink-sa/carlink-backend",
+      "snapshot": "799c915bd47a09505856d5a3d483fe63bb245347",
+      "depth": "priority architecture/lifecycle investigation from local source/history"
+    },
+    {
+      "repository": "humind-group/carelinker_backend",
+      "snapshot": "a172f570615cf0371fe7894335a5fe4b8a80bdca",
+      "depth": "priority architecture/lifecycle investigation from local source/history"
+    },
+    {
+      "repository": "humind-group/rewaaq_backend (medicascope/MedicaScopeLMS)",
+      "snapshot": "1b0d47fc865861cd119e3204d2eff6e7771288f9",
+      "depth": "priority architecture/lifecycle investigation from local source/history"
+    },
+    {
+      "repository": "ONVO-me/onvo",
+      "snapshot": "562bb50bee180dddfa352314368f5d219f0ffa27",
+      "depth": "local history/context only; newer source not attributed to the CV employment window"
+    }
+  ],
+  "related_owner_discovery": {
+    "repository_total": 48,
+    "owners": {
+      "medicascope": 5,
+      "ONVO-me": 43
+    },
+    "note": "Separate from 126 requested-owner records. Three recovered historical backends received stated deep review; other depths are explicit.",
+    "repositories": [
+      {
+        "repository": "medicascope/MedicaScopeLMS",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "medicascope/shelyst-APIs",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "medicascope/MedicaScopeLms.Front",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "medicascope/LMSAgent",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 125
+      },
+      {
+        "repository": "medicascope/medica-backend",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "GitHub MCP private source request rejected",
+          "authenticated GitHub CLI complete source archive and default-branch history"
+        ],
+        "depth": "professional product architecture/lifecycle investigation; source mechanisms and available history reviewed, not every-line coverage",
+        "tree_blob_count": 255,
+        "snapshot": "ffa347279dd43102bf2a39d96a3937e24afdb1a8",
+        "history_commits": 76,
+        "history_first": "2025-07-29T10:02:07Z",
+        "history_last": "2025-12-21T14:34:27Z",
+        "account_authors": [
+          "Hydralerne",
+          "Mo7ammedd",
+          "root"
+        ],
+        "source_paths_reviewed": [
+          "index.js",
+          "services/orderService.js",
+          "services/enrollmentService.js",
+          "services/vdocipherService.js",
+          "middleware/accessControl.js",
+          "middleware/paymobHmac.js",
+          "routes/orderRoutes.js",
+          "routes/lessonRoutes.js",
+          "prisma/schema.prisma",
+          "package.json"
+        ],
+        "ownership_scope": "See ownership report; unmapped root authors, formal product accountability and production outcomes unverified"
+      },
+      {
+        "repository": "ONVO-me/onvo",
+        "private": true,
+        "default_branch": {
+          "name": "mainsa"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-kmp",
+        "private": true,
+        "default_branch": {
+          "name": "testing"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/web-new-",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-new-web",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-react-native",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/api-node",
+        "private": true,
+        "default_branch": {
+          "name": ""
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": null
+      },
+      {
+        "repository": "ONVO-me/tests",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/auth-web",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/api",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 42322
+      },
+      {
+        "repository": "ONVO-me/twitter",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/tv",
+        "private": false,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/st",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/render-frame",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/sites",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/airwave-scrap",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 38
+      },
+      {
+        "repository": "ONVO-me/scrap",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-node",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 1152
+      },
+      {
+        "repository": "ONVO-me/onvo-ejs",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/test-blurswsa",
+        "private": false,
+        "default_branch": {
+          "name": ""
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/test-blurs",
+        "private": false,
+        "default_branch": {
+          "name": ""
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/test",
+        "private": false,
+        "default_branch": {
+          "name": ""
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-backend-nodejs",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "GitHub MCP private source request rejected",
+          "authenticated GitHub CLI complete source archive and default-branch history"
+        ],
+        "depth": "professional product architecture/lifecycle investigation; source mechanisms and available history reviewed, not every-line coverage",
+        "tree_blob_count": 64,
+        "snapshot": "a0b5250ceb1f9a6c7dc874416900979d419b5274",
+        "history_commits": 4,
+        "history_first": "2024-12-27T17:02:22Z",
+        "history_last": "2025-05-12T01:09:18Z",
+        "account_authors": [
+          "Hydralerne",
+          "root"
+        ],
+        "source_paths_reviewed": [
+          "index.js",
+          "core.js",
+          "posts/main.js",
+          "posts/handler.js",
+          "package.json"
+        ],
+        "ownership_scope": "See ownership report; unmapped root authors, formal product accountability and production outcomes unverified"
+      },
+      {
+        "repository": "ONVO-me/drawing-panel",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-drawing-board",
+        "private": false,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/airwave-ios",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-tv-dev",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/Airwave-Android",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/axios-code-ios",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/demo-repository",
+        "private": true,
+        "default_branch": {
+          "name": "testing"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/algorithm",
+        "private": false,
+        "default_branch": {
+          "name": ""
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-android-fuck-webview",
+        "private": true,
+        "default_branch": {
+          "name": "testing"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo-android",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/Airwave-Lite",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 1064
+      },
+      {
+        "repository": "ONVO-me/airwave",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "GitHub MCP private source request rejected",
+          "authenticated GitHub CLI complete source archive and default-branch history"
+        ],
+        "depth": "professional product architecture/lifecycle investigation; source mechanisms and available history reviewed, not every-line coverage",
+        "tree_blob_count": 27,
+        "snapshot": "73d26f28960f484264cc762f4442a955603e8fd7",
+        "history_commits": 26,
+        "history_first": "2024-08-15T18:16:04Z",
+        "history_last": "2024-11-07T23:53:43Z",
+        "account_authors": [
+          "Hydralerne",
+          "Mo7ammedd",
+          "root"
+        ],
+        "source_paths_reviewed": [
+          "index.js",
+          "socket.js",
+          "users/playlists.js",
+          "functions.js",
+          "Payments/billing.js",
+          "package.json"
+        ],
+        "ownership_scope": "See ownership report; unmapped root authors, formal product accountability and production outcomes unverified"
+      },
+      {
+        "repository": "ONVO-me/android-airwave",
+        "private": true,
+        "default_branch": {
+          "name": "testing"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/ONVO-TV-Android",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/ONVO_TV_Android_Huawei",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/ONVO_Android_Huawei",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/onvo.me",
+        "private": true,
+        "default_branch": {
+          "name": "testing"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "targeted metadata/tree triage; source coverage stated separately",
+        "tree_blob_count": 1134
+      },
+      {
+        "repository": "ONVO-me/onvo-ios",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/tv-electron",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/ONVO-TV-Desktop",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      },
+      {
+        "repository": "ONVO-me/android-app",
+        "private": true,
+        "default_branch": {
+          "name": "main"
+        },
+        "access": [
+          "authenticated GitHub CLI metadata"
+        ],
+        "depth": "related-owner metadata discovery only; no source or ownership conclusion"
+      }
+    ]
+  }
+}

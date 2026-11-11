@@ -7,6 +7,7 @@ type WorkExperience = {
   highlights?: readonly {
     title: string
     description: string
+    href?: string
   }[]
   start: string
   end: string
@@ -54,7 +55,7 @@ export const PROJECTS: PortfolioProject[] = [
     visual: 'scheduler',
     summary: 'CPU scheduling and memory management in C#.',
     description:
-      'Explore CPU scheduling and memory management in C#, then compare scheduling policies in the companion browser playground.',
+      'A C# simulator for CPU scheduling and memory management, with a browser demo for comparing scheduling policies.',
     technologies: ['C#', '.NET 8', 'TypeScript'],
     highlight:
       'Three browser scheduling policies, checked against known and generated workloads.',
@@ -137,22 +138,36 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Oblien',
     title: 'Founding Engineer',
     description:
-      'Agent runtimes, cloud workspaces, and deployment infrastructure.',
+      'Building the infrastructure behind agent sessions, isolated workspaces, and application deployments.',
     highlights: [
       {
-        title: 'MindWire',
+        title: 'Mindwire',
         description:
-          'Go runtime and TypeScript SDK for agent sessions, streamed events, and execution across local hosts, SSH, Docker, and cloud workspaces.',
+          'Built a Go runtime and TypeScript SDK for connecting agent sessions to product interfaces and streaming their progress. Execution can run locally, over SSH, in Docker, or in cloud workspaces.',
+        href: 'https://github.com/oblien/mindwire',
       },
       {
         title: 'Openship',
         description:
-          'Deployment workflows from source to running apps, with build pipelines, custom domains, HTTPS, live logs, and release rollbacks.',
+          'Built deployment tooling that takes apps from Git to production, including builds, custom domains, HTTPS, live logs, and rollbacks. Available through a CLI, web dashboard, and desktop app.',
+        href: 'https://github.com/oblien/openship',
       },
       {
-        title: 'Workspace SDKs',
+        title: 'BytesMap',
         description:
-          'Typed Swift APIs for workspace lifecycle, file access, terminal sessions, snapshots, and HTTP retries.',
+          'Built a TypeScript and Bun platform for exploring databases and turning visual queries or native SQL into charts and dashboards. Added SSH connections, workspace permissions, and scheduled PDF/CSV reports.',
+        href: 'https://bytesmap.com',
+      },
+      {
+        title: 'Agent sandboxes',
+        description:
+          'Built isolated execution environments using Firecracker microVMs, plus workspace SDKs for file access, terminal sessions, snapshots, and environment lifecycle management.',
+        href: 'https://oblien.com',
+      },
+      {
+        title: 'Reflx',
+        description:
+          'Built ingestion pipelines that turn public profile content into structured profiles, and backend services for conversations with AI versions of those profiles.',
       },
     ],
     start: 'Aug 2025',
@@ -165,22 +180,41 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Medica Scope',
     title: 'Backend Engineer',
     description:
-      'Backend systems for CarLink vehicle maintenance and learning platforms.',
+      'Backend development for CarLink, CareLinker, Rewaaq, and Medica Academy.',
     highlights: [
       {
-        title: 'CarLink',
+        title: 'CarLink bookings',
         description:
-          'NestJS APIs for service bookings, workshop operations, vehicle records, and notifications, organized around module contracts and domain events.',
+          'Built the flow from nearby service-center discovery to booking, operator acceptance, and workshop completion in NestJS and PostgreSQL. Invoices use the price quoted at booking, even if the center changes its prices.',
+        href: 'https://carlink.dev/',
       },
       {
-        title: 'Learning platforms',
+        title: 'Vehicle telemetry and notifications',
         description:
-          '.NET and Node.js services for tenant management, course enrollment, assessments, payments, and certificates.',
+          'Designed an AWS pipeline that processes OBD2 readings through IoT Core, Kinesis, and Lambda to trigger maintenance alerts. Added Arabic and English API messages and per-user notification language preferences.',
+      },
+      {
+        title: 'CareLinker',
+        description:
+          'Built patient profiles and case intake in NestJS and PostgreSQL, with patient and staff access controls. Added encrypted document uploads and patient–navigator messaging through REST and Socket.IO, with Arabic and English API responses.',
+        href: 'https://carelinker.ai/en',
+      },
+      {
+        title: 'Rewaaq',
+        description:
+          'Built a multi-tenant learning platform in .NET 10, covering course enrollment, content, timed quizzes, grading, and payments. Course access and quiz attempts are scoped to each student’s subscription.',
+        href: 'https://rewaaq.com/landing/',
+      },
+      {
+        title: 'Medica Academy',
+        description:
+          'Integrated Paymob payments and VdoCipher video access for Medica Academy.',
+        href: 'https://medicaacademy.com/',
       },
       {
         title: 'Learning assistants',
         description:
-          'Python services for course questions and quiz generation, with source citations and retrieval scoped to each tenant.',
+          'Built a Python service that answers course questions with source citations and generates quizzes from uploaded material. Retrieval is scoped to each learner’s tenant and course access.',
       },
     ],
     start: 'Jul 2025',
@@ -193,17 +227,24 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'ONVO',
     title: 'Software Engineer',
     description:
-      'Scaled a Q&A platform to 150k+ users and cut load times by 20%.',
+      'Reworked ONVO’s PHP backend in Express.js. The Q&A platform served 150,000+ users, and the changes reduced load times by 20%.',
     highlights: [
       {
-        title: 'Q&A and social features',
+        title: 'Anonymous Q&A and feeds',
         description:
-          'Anonymous questions, threaded replies, personalized feeds, messaging, and moderation across web and mobile clients.',
+          'Built anonymous questions, threaded replies, and personalized feeds, with Redis caching and cursor pagination.',
+        href: 'https://onvo.me/',
       },
       {
-        title: 'Performance and notifications',
+        title: 'Messaging and notifications',
         description:
-          'Redis feed storage, cursor pagination, and BullMQ workers for feed updates and push notifications.',
+          'Built direct messaging with replies and media attachments, plus mobile push notifications.',
+        href: 'https://onvo.me/',
+      },
+      {
+        title: 'Airwave',
+        description:
+          'Led the launch of a podcast and music streaming app that reached 10,000+ users in its first week.',
       },
     ],
     start: 'May 2024',
@@ -221,12 +262,13 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
       {
         title: 'Database foundations',
         description:
-          'Teaching notes and SQL demos covering relational modeling, normalization, joins, aggregation, and transactions.',
+          'Created teaching notes and SQL examples for relational modeling, normalization, joins, aggregation, and transactions.',
       },
       {
-        title: '.NET curriculum',
+        title: '.NET learning path',
         description:
-          'A progression through C#, object-oriented design, LINQ, Entity Framework Core, and ASP.NET APIs.',
+          'Organized a progression from C# and object-oriented design to LINQ, Entity Framework Core, and ASP.NET APIs, with the learning materials published on GitHub.',
+        href: 'https://github.com/Mo7ammedd/.NET-Development-Learning-Path-GDG',
       },
     ],
     start: 'Oct 2024',
@@ -239,7 +281,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Manara',
     title: 'Backend Engineering Intern',
     description:
-      'At Manara, I worked on backend development, problem-solving, and software engineering fundamentals.',
+      'Backend engineering internship focused on development fundamentals and problem-solving.',
     start: 'Mar 2024',
     end: 'Jul 2024',
     link: 'https://app.manara.tech/auth/',
@@ -250,7 +292,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    title: 'Difference Between Cluster and Non-Cluster Index',
+    title: 'Clustered vs. non-clustered indexes',
     description:
       'How clustered and non-clustered indexes help the database find rows.',
     link: '/blog/difference-between-cluster-and-non-cluster-index',
@@ -286,7 +328,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/mohammed-mostafa-316b21254/',
+    link: 'https://www.linkedin.com/in/mohammedtv/',
   },
   {
     label: 'Résumé',

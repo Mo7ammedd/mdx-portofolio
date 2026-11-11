@@ -13,21 +13,9 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction
 
-Nginx is widely used for high-traffic websites, APIs, microservices platforms, and edge gateways. Netflix, Dropbox, and WordPress.com use it to handle millions of concurrent connections.
+An Nginx configuration can be short and still route a request somewhere unexpected. Location matching, rewrites, and proxy headers each affect what reaches the backend.
 
-Unlike traditional process-based servers (Apache with prefork MPM), Nginx is built around an **event-driven, non-blocking architecture**. This fundamental design difference allows it to handle tens of thousands of concurrent connections with predictable resource usage and minimal memory footprint.
-
-Nginx is commonly deployed for:
-
-* **Serving static content** - HTML, CSS, JavaScript, images with sendfile() optimization
-* **Reverse proxy** - Abstracting backend services behind a unified interface
-* **Load balancing** - Distributing traffic across multiple backend servers
-* **TLS termination** - Offloading SSL/TLS encryption from application servers
-* **API gateways** - Request routing, authentication, rate limiting
-* **Zero-downtime deployments** - Graceful configuration reloads without dropping connections
-* **Security filtering** - DDoS protection, request validation, WAF integration
-
-The rest of this article follows request processing, configuration rules, and their effects on performance.
+This article follows a request through Nginx, starting with its event-driven workers and then working through routing, proxying, load balancing, caching, and TLS. The configuration examples show where those pieces interact and what to check when a request behaves differently than expected.
 
 ---
 
@@ -35,7 +23,7 @@ The rest of this article follows request processing, configuration rules, and th
 
 ![Nginx Architecture Overview](/blog/nginx/nginx-architecture-overview.webp)
 
-Nginx uses a **master-worker process model** that differs fundamentally from traditional web servers like Apache's prefork MPM.
+Nginx uses a **master-worker process model**: the master manages configuration and worker lifecycles, while workers handle client traffic.
 
 ### Master Process Responsibilities
 
@@ -80,7 +68,7 @@ Nginx's event-driven model scales differently:
 * No context switching between connections
 * Predictable memory usage regardless of connection count
 
-**Result**: A single Nginx instance can handle 100,000+ concurrent connections on modest hardware.
+Each worker handles many connections through an event loop. Capacity depends on the workload, configuration, and available resources.
 
 ---
 
@@ -717,7 +705,7 @@ ssl_session_cache shared:SSL:10m;
 
 Caches SSL session parameters across workers:
 * Eliminates full handshake for returning clients
-* Reduces CPU usage by ~90% for repeat connections
+* Reduces handshake work for repeat connections
 * 1MB cache stores ~4000 sessions
 
 ### OCSP Stapling
@@ -828,7 +816,7 @@ Don't cache requests with Pragma or Authorization headers.
 ![Cache Architecture](/blog/nginx/nginx-cache-2.png)
 
 With caching:
-* Cache hit: ~0.1ms response time, 0% backend load
+* Cache hit: serves the cached response without requesting it from the backend
 * Cache miss: Normal backend latency
 * Cache hit ratio determines overall performance gain
 
@@ -1195,17 +1183,6 @@ Nginx is infrastructure, not application logic. Don't use Nginx for:
 
 ## Conclusion
 
-Nginx handles routing, proxying, caching, and TLS. Its configuration determines how it handles traffic.
+When debugging a request, first identify the server and location blocks that handle it. Then follow any rewrites or internal redirects, check the headers sent upstream, and compare request time with upstream response time.
 
-**Key takeaways**:
-
-1. **Architecture** — Event-driven workers handle many concurrent connections.
-2. **Request flow understanding** - Know the 11 processing phases
-3. **Location matching** — Check which block handles each request.
-4. **Headers in proxy** - Always set Host, X-Real-IP, X-Forwarded-*
-5. **Load balancing** - Choose algorithm based on your workload
-6. **Caching** — Reduce backend requests for read-heavy workloads.
-7. **Security** - Rate limiting, request size limits, security headers
-8. **Zero-downtime** - Graceful reloads and binary upgrades
-9. **Observability** - Log timing breakdowns, monitor cache hit rates
-10. **Know your limits** - Nginx is infrastructure, not application logic
+Test configuration changes before reloading. For caching and load balancing, use the logs to check the actual hit rate and backend distribution under your workload.

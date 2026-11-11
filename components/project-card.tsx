@@ -29,7 +29,7 @@ export function ProjectCard({
         compact
           ? 'border-b border-white/[0.08] py-5'
           : featured
-            ? 'overflow-hidden rounded-lg border border-white/15 bg-card'
+            ? 'bg-card overflow-hidden rounded-lg border border-white/15'
             : 'border-b border-white/[0.08] py-6',
       )}
     >
@@ -96,7 +96,7 @@ export function ProjectCard({
         <ProjectVisual
           kind={project.visual}
           className={cn(
-            'w-full rounded-md border border-white/[0.07] bg-card',
+            'bg-card w-full rounded-md border border-white/[0.07]',
             !featured && 'max-sm:mx-auto max-sm:max-w-xs',
             compact && 'col-start-2 row-span-2 row-start-1 self-center',
           )}
@@ -118,7 +118,9 @@ export function ProjectCard({
           data-project-name={project.title}
           data-link-type="case_study"
         >
-          <span className="shrink-0 font-medium text-zinc-300">Evidence</span>
+          <span className="shrink-0 font-medium text-zinc-300">
+            Project notes
+          </span>
           <span aria-hidden="true" className="text-zinc-600">
             /
           </span>

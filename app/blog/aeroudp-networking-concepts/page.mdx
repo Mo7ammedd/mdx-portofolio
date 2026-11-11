@@ -12,7 +12,7 @@ export const metadata = generateBlogPostSEO({
 
 # Building a Transport Protocol on Top of UDP
 
-AeroUDP combines simplified TCP and QUIC ideas in an async Rust transport protocol. It adds reliable, ordered delivery and congestion control over UDP. This article explains those mechanisms using the implementation.
+In AeroUDP, I implemented ordering, retransmission, and congestion control over UDP in async Rust. This article follows the packet format, acknowledgements, and send window to explain how the pieces work together. The protocol is educational and experimental.
 
 ---
 
@@ -36,7 +36,7 @@ The transport layer sits between the raw network (IP) and your application. It i
 
 Modern protocols like QUIC (which powers HTTP/3) are built *on top of* UDP in user space, re-implementing reliability and congestion control where they can evolve quickly without kernel changes.
 
-AeroUDP takes the same approach for educational and experimental purposes. It uses UDP as a dumb packet pipe and rebuilds the guarantees people expect from TCP:
+AeroUDP also implements its transport logic in user space, using UDP to carry packets. It includes:
 
 - Reliable, in-order, bidirectional delivery
 - Detection and recovery from loss, duplication, reordering, and corruption
@@ -94,7 +94,9 @@ On receipt, the process is reversed. A mismatch means the packet is silently dro
 
 ---
 
-## Reliability: Turning "Best Effort" into "Guaranteed"
+<span id="reliability-turning-best-effort-into-guaranteed" className="block" aria-hidden="true" />
+
+## Reliability: acknowledgements and retransmission
 
 UDP can lose, duplicate, or reorder packets. Reliability is the machinery that hides all of that from the application.
 
@@ -405,7 +407,7 @@ Run the server on port 9000 and point the client at port 9500. These flags confi
 
 ## Putting It All Together
 
-A single `send()` call in AeroUDP quietly exercises every concept in this article:
+Here is how the mechanisms fit into a `send()` call:
 
 1. The payload is wrapped in a **28-byte header** with a sequence number and CRC32 **checksum**.
 2. The sender checks **flow control** (peer window) and **congestion control** (cwnd), it only transmits if `in_flight < min(cwnd, peer_window)`.
@@ -414,7 +416,7 @@ A single `send()` call in AeroUDP quietly exercises every concept in this articl
 5. The ACK confirms the packet, updates the **RTT/RTO estimate**, and grows **cwnd** (slow start or congestion avoidance).
 6. If it is lost, either **three duplicate ACKs** (fast retransmit) or an **RTO timeout** triggers retransmission and shrinks cwnd.
 
-None of this is visible to the application, which simply sees a reliable, ordered byte stream, exactly the illusion a transport protocol exists to provide.
+The application uses a byte-stream interface while the transport tracks packets, acknowledgements, and retries underneath it. Checking the delivered bytes alongside the ACK and window traces helps show whether those mechanisms are working as expected.
 
 ---
 

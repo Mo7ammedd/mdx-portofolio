@@ -27,7 +27,9 @@ const nextConfig = {
     '/*': ['./.data/**/*'],
   },
   async rewrites() {
-    const askHost = [{ type: 'host', value: 'ask\\.(modev\\.me|localhost)' }]
+    const askHost = [
+      { type: 'host', value: 'ask\\.(momostafa\\.tech|localhost)' },
+    ]
     return {
       beforeFiles: [
         { source: '/', has: askHost, destination: '/ask' },
@@ -36,7 +38,9 @@ const nextConfig = {
     }
   },
   async redirects() {
-    const askHost = [{ type: 'host', value: 'ask\\.(modev\\.me|localhost)' }]
+    const askHost = [
+      { type: 'host', value: 'ask\\.(momostafa\\.tech|localhost)' },
+    ]
     return [
       { source: '/ask', has: askHost, destination: '/', permanent: true },
       {

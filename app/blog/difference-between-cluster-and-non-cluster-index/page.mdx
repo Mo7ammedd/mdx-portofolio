@@ -1,7 +1,7 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'Clustered vs Non Clustered Database Indexes',
+  title: 'Clustered vs. non-clustered indexes',
   description: 'How clustered and non-clustered indexes store data, how B-trees work, and what that means for reads and writes.',
   slug: 'difference-between-cluster-and-non-cluster-index',
   publishedTime: '2023-11-10T10:00:00.000Z',
@@ -14,23 +14,11 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction to Database Indexing
 
-Database indexes help the database locate data faster by reducing the amount of data that must be read from disk.
+A query for one customer's orders should not have to read every order in the table. An index gives the database a way to find matching keys and locate the rows it needs.
 
-Without an index, the database engine performs a **table scan**, which means reading every data page and evaluating each row until the query condition is satisfied. This approach is acceptable for very small tables but quickly becomes a bottleneck as data volume grows.
+In SQL Server, a clustered index holds the table's rows at its leaf level. A non-clustered index is a separate structure with keys and row locators. That difference affects which queries an index can answer on its own and when it needs another lookup.
 
-Indexes exist to avoid this cost by allowing the engine to jump directly to relevant pages.
-
-Indexes improve:
-
-* Query performance by reducing I/O
-* Sorting efficiency by maintaining ordered structures
-* Join performance by enabling fast lookups
-* CPU usage by minimizing row evaluations
-* Overall system throughput under concurrent load
-
-Internally, an index is a data structure that maps **key values to row locations**. The database optimizer decides whether to use an index based on cost estimation, not based on whether the index exists.
-
-Choose indexes around the queries your application runs.
+The examples below use SQL Server syntax. Having an index does not guarantee the optimizer will use it; the estimated cost still determines the plan.
 
 ---
 
@@ -51,7 +39,7 @@ The choice affects how the database stores, reads, and writes rows as the schema
 
 Most relational databases use <Term id="b-tree">B-tree</Term> structures for indexes. This includes SQL Server, PostgreSQL, MySQL (InnoDB), and Oracle.
 
-A B-Tree keeps data balanced and shallow, which guarantees predictable performance even as tables grow to millions or billions of rows.
+A B-tree stays balanced and shallow as the table grows.
 
 Key properties:
 
@@ -461,19 +449,6 @@ Never create indexes blindly based only on missing index suggestions.
 
 ## Conclusion
 
-A strong indexing strategy balances:
+Start with a query and its execution plan. Check the filter and sort columns, how many rows are read, and whether key lookups account for much of the work. Then test whether a matching index or included columns reduce that work.
 
-* Read performance
-* Write cost
-* Storage usage
-* Maintenance overhead
-
-Practical rules:
-
-1. Choose clustered keys deliberately
-2. Use non-clustered indexes to support query patterns
-3. Cover critical queries with INCLUDE
-4. Remove unused indexes regularly
-5. Maintain indexes based on fragmentation metrics
-
-Plan indexes alongside the schema and the queries it needs to support.
+Every extra index also takes storage and adds write work. Check usage and maintenance costs alongside the reads it saves.

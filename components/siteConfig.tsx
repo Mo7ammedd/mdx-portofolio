@@ -3,11 +3,12 @@ import { Metadata } from 'next'
 export const siteConfig: Metadata = {
   // More specific and searchable title variations
   title: {
-    default: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js, SQL Server)',
+    default:
+      'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js, SQL Server)',
     template: '%s | Mohammed Mostafa',
   },
   description:
-    'Mohammed Mostafa, backend software engineer in Egypt. 5+ years building microservices, REST APIs, and distributed systems with ASP.NET Core, Node.js, and TypeScript. Projects and technical articles.',
+    'Mohammed Mostafa is a backend software engineer in Egypt with 5+ years of experience using ASP.NET Core, Node.js, and TypeScript. Browse his projects and technical articles.',
   keywords: [
     // Personal brand keywords
     'Mohammed Mostafa',
@@ -15,7 +16,7 @@ export const siteConfig: Metadata = {
     'Mohammed Developer Egypt',
     'Mohammed Mostafa Portfolio',
     'momostafa.tech',
-    
+
     // Technical expertise - Long tail
     'ASP.NET Core Developer',
     'ASP.NET Core Web API Developer',
@@ -25,17 +26,17 @@ export const siteConfig: Metadata = {
     'C# development',
     'Backend Software Engineer',
     'Microservices architecture',
-    
+
     // Location-based SEO
     'Software Engineer Egypt',
     'Backend Developer Cairo',
     'Remote Software Engineer Middle East',
     'Egyptian Software Engineer',
-    
+
     // Professional status
     'Available for opportunities',
     'Remote developer',
-    
+
     // Technologies & Skills
     'Azure Cloud Developer',
     'SQL Server',
@@ -50,13 +51,13 @@ export const siteConfig: Metadata = {
     'Clean Architecture',
     'CQRS Pattern',
     'Domain Driven Design',
-    
+
     // Content keywords
     'Software Engineering Blog',
     'ASP.NET Core Tutorials',
     'Node.js Best Practices',
     'Backend Development Guide',
-    
+
     // Education & Experience
     'Suez Canal University Computer Science',
     '5 years software development experience',
@@ -65,17 +66,17 @@ export const siteConfig: Metadata = {
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.momostafa.tech' }],
   creator: 'Mohammed - Software Engineer',
   publisher: 'Mohammed Portfolio Website',
-  
+
   // Add structured data hints and meta properties
   other: {
     // Profile metadata
     'og:profile:first_name': 'Mohammed',
     'og:profile:last_name': 'Mostafa',
     'og:profile:username': 'Mo7ammedd',
-    
+
     // Professional info
     'article:author': 'Mohammed Mostafa',
-    
+
     // App-specific
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
@@ -83,7 +84,7 @@ export const siteConfig: Metadata = {
     'mobile-web-app-capable': 'yes',
     'theme-color': '#1c1c1c',
   },
-  
+
   openGraph: {
     type: 'profile',
     locale: 'en_US',
@@ -95,7 +96,7 @@ export const siteConfig: Metadata = {
     emails: ['mohammedmostafanazih@gmail.com'],
     countryName: 'Egypt',
   },
-  
+
   twitter: {
     card: 'summary_large_image',
     site: '@mohameddtv',
@@ -104,7 +105,7 @@ export const siteConfig: Metadata = {
     description:
       'Backend software engineer with 5+ years building microservices and distributed systems using ASP.NET Core, Node.js, and TypeScript.',
   },
-  
+
   robots: {
     index: true,
     follow: true,
@@ -118,7 +119,7 @@ export const siteConfig: Metadata = {
       'max-snippet': 160,
     },
   },
-  
+
   alternates: {
     canonical: 'https://www.momostafa.tech',
     languages: {
@@ -128,18 +129,20 @@ export const siteConfig: Metadata = {
       'application/rss+xml': 'https://www.momostafa.tech/blog/rss.xml',
     },
   },
-  
+
   // Add verification tags if you have them
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
     yandex: process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION || undefined,
-    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? {
-      'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
-    } : {},
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? {
+          'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+        }
+      : {},
   },
-  
+
   metadataBase: new URL('https://www.momostafa.tech/'),
-  
+
   // Add category for better classification
   category: 'Professional Portfolio',
 }

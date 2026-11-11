@@ -16,26 +16,11 @@ export const metadata = generateBlogPostSEO({
 
 ## Introduction
 
-In ASP.NET Core, <Term id="middleware">middleware</Term> processes HTTP requests and responses through a pipeline.
+Request logging, authentication, and rate limiting all need access to a request before it reaches a controller. In ASP.NET Core, <Term id="middleware">middleware</Term> handles that work in a pipeline.
 
-A middleware component can:
+Each component can inspect or modify the request, call the next component, or return a response immediately. If it calls the next component, it can also run code after that call finishes.
 
-* Inspect the incoming request
-* Modify request headers or body
-* Decide whether to short-circuit the pipeline
-* Invoke the next middleware
-* Modify the outgoing response
-
-Because middleware sits at the lowest level of the request lifecycle, it is commonly used for:
-
-* Logging and tracing
-* Authentication and authorization
-* Rate limiting
-* Request validation
-* Performance monitoring
-* Response transformation
-
-Middleware runs on every request, so its design affects maintainability and performance.
+There are three ways to write custom middleware: an inline delegate, a class following the middleware convention, or an `IMiddleware` implementation. The examples below show how they differ, especially when resolving dependencies.
 
 ---
 
@@ -92,7 +77,7 @@ Execution order is the same as registration order.
 
 ## Implementation Methods
 
-ASP.NET Core provides three main ways to build custom middleware. Each serves a different purpose and has different trade-offs.
+The same request logic can live in a delegate or a class. The main differences are where you register it and how its dependencies are created.
 
 ---
 
@@ -438,15 +423,9 @@ Pipeline order should be intentional and documented.
 
 ## Summary
 
-Key takeaways:
+Use an inline delegate for a small piece of request logic. Move it into a conventional middleware class when it needs its own configuration or is reused. Use `IMiddleware` when you want dependency injection to control the instance lifetime, including scoped constructor dependencies.
 
-* Middleware order defines behavior
-* Keep middleware focused and small
-* Prefer convention-based middleware by default
-* Use `IMiddleware` for complex, test-heavy scenarios
-* Treat middleware as infrastructure, not business logic
-
-Shared request logic belongs in one place. Middleware can keep that logic out of controllers and apply it consistently across requests.
+Check the registration order as well as the implementation: it determines which components see the request and which can stop it before it reaches the rest of the pipeline.
 
 ## Check Your Understanding
 

@@ -1,0 +1,168 @@
+{
+  "audit_date": "2026-11-11",
+  "scope": "Isolated source snapshots and task-owned disposable fixtures. No application source edits or production deployments. Counts are not coverage, production scale or certification.",
+  "results": [
+    {
+      "repository": "Mo7ammedd/AeroUDP",
+      "snapshot": "fd747a4c3ed5d26065b87af517b38875aaff6fd9",
+      "command": "cargo test --workspace",
+      "status": "passed",
+      "exit_code": 0,
+      "passed": 26,
+      "failed": 0,
+      "breakdown": {
+        "unit": 17,
+        "handshake": 3,
+        "reliability": 4,
+        "stress": 2
+      },
+      "context": "Rust 1.98.1; dependencies resolved in isolated copy without a checked-in Cargo.lock. Bounded loopback/property/handshake verification, not WAN performance.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/aeroudp-tests.log",
+        "sha256": "d3561f9f3dfa32308bc133e2a2979e6461da395dea68c5996689f56c25bc5f12"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/GhostyKey",
+      "snapshot": "d4c6626cd41a466a5e64447d687dfdc2614b665c",
+      "command": "npm test -- --reporter=json --outputFile=<audit-stage>/ghost-unit-results.json",
+      "status": "passed",
+      "exit_code": 0,
+      "passed": 36,
+      "failed": 0,
+      "context": "npm ci --ignore-scripts in isolated copy. No package updates applied to original source.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/ghost-unit-results.json",
+        "sha256": "dcd98cf8d323ab1c4385613c169f0407f6d17d9201ad3e10de5855cd9dffee59"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/GhostyKey",
+      "snapshot": "d4c6626cd41a466a5e64447d687dfdc2614b665c",
+      "command": "npm exec -- vitest run --config vitest.database.config.ts --reporter=json --outputFile=<audit-stage>/ghost-database-results.json",
+      "status": "passed",
+      "exit_code": 0,
+      "passed": 14,
+      "failed": 0,
+      "context": "Disposable PostgreSQL 16. Twenty simultaneous single-use readers: one successful consume. Lock-wait expiry/view limits/deletion permissions checked. No browser E2E rerun or security audit.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/ghost-database-results.json",
+        "sha256": "8adfe23d755b5beacb56c1a717c39959985aa2cdbdd5a7574553627fdcaab694"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/Disk-Mesh",
+      "snapshot": "8f960a3cfd5bb6685f6caf9c338a1ea49d242331",
+      "command": "bash scripts/test.sh",
+      "status": "passed",
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0,
+      "context": "Local in-process cluster harness, not production operation or power-loss durability.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/disk-mesh-tests.log",
+        "sha256": "482cf018ff5f908cb5083c682e409019e6885dd97b9eafa7207ed5399312e4a4"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/LSMSharp",
+      "snapshot": "a8686cf696add5988008d9a88d65a41a514df77b",
+      "command": "dotnet run --project Tests/Tests.csproj -- functional; then dotnet run --no-build --project Tests/Tests.csproj -- functional",
+      "status": "failed",
+      "exit_codes": [
+        1,
+        1
+      ],
+      "failure": "Both runs failed the final post-compaction integrity read: unsupported compression method. Stack includes GZipCompressor, DataBlock.Decode, SSTable.ReadDataBlockAsync and DataIntegrityTest. Root cause not confirmed.",
+      "context": "Isolated git archive; host SDK 10.0.114 and .NET 8 runtime. User checkout mode-only changes do not contain a textual fix.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/lsm-functional-reproduction.log",
+        "sha256": "be16373640daa63de0f8c437fbf1985015efb7a18bab1e43ff8f7b882f27508a"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/LLMProxy",
+      "snapshot": "1fa11c5196a89da06b5bbcae7de21f954233cb69",
+      "command": "dotnet restore --locked-mode; compatibility diagnostic: dotnet restore --locked-mode -p:AllowMissingPrunePackageData=true",
+      "status": "environment_blocked_before_tests",
+      "exit_codes": [
+        1,
+        1
+      ],
+      "failure": "NETSDK1226 missing .NET 10 pruning metadata; compatibility retry also cannot resolve required package/reference data. Not classified as a test failure or repository defect.",
+      "evidence": [
+        {
+          "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/llm-restore.log",
+          "sha256": "08b6aef303a37bf49751fe2529d0297c191df43d8db71f7e5f5d8b0f51d6269d"
+        },
+        {
+          "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/llm-restore-compatible.log",
+          "sha256": "8e42afd74ae4fe594034959ce2bee911522233d44aa545a8180a80404596552e"
+        }
+      ]
+    },
+    {
+      "repository": "Mo7ammedd/LLMProxy",
+      "snapshot": "1fa11c5196a89da06b5bbcae7de21f954233cb69",
+      "command": "docker run --rm mcr.microsoft.com/dotnet/sdk:10.0 sh -c \"dotnet --info && dotnet restore --locked-mode && dotnet test --configuration Release --no-restore --logger trx --results-directory /src/audit-test-results\"",
+      "status": "environment_timeout_before_tests",
+      "exit_code": 124,
+      "failure": "240-second bound reached during SDK image cold pull. No SDK restore/test output or TRX result; no fresh local pass.",
+      "evidence": {
+        "local_evidence": "/tmp/cv-ownership-optimization-6i3a75jm/llm-container-tests.log",
+        "sha256": "08b96a4b6dad22ae980767acb9b562094274c01044b1b3b3f39bddc0aa86964d"
+      }
+    },
+    {
+      "repository": "Mo7ammedd/LLMProxy",
+      "snapshot": "1fa11c5196a89da06b5bbcae7de21f954233cb69",
+      "command": "GitHub MCP workflow result inspection",
+      "status": "observed_ci_success_not_local_execution",
+      "url": "https://github.com/Mo7ammedd/LLMProxy/actions/runs/36064490447",
+      "context": "Pinned-head successful workflow re-read. Later dependency-branch failures are distinct, not all branches uniformly green."
+    }
+  ],
+  "recorded_verification_not_rerun": [
+    {
+      "repository": "oblien/backend",
+      "path": "docs/verification/namespace-quota-stress-20260919.json",
+      "harness": "tests/unit/billing.customerContract.mocktest.js",
+      "source_and_harness_inspected": true,
+      "recorded_passed": true,
+      "synthetic_metering_streams": 40,
+      "deliveries": 6960,
+      "unique_windows": 5200,
+      "duplicate_deliveries": 1760,
+      "injected_deadlocks": 74,
+      "context": "Disposable real MariaDB with mocked Redis/external recovery. Repository-recorded result, not fresh execution or production capacity."
+    },
+    {
+      "repository": "oblien/backend",
+      "path": "docs/verification/docker-build-storage-20261106.json",
+      "recorded_passed_checks": 1599,
+      "context": "Scoped recorded critical checks, not coverage or fresh suite execution. Timings exclude provisioning/source fetch/ingress."
+    }
+  ],
+  "fixture_cleanup": {
+    "status": "complete",
+    "resources": [
+      {
+        "container": "cv-opt-6i3a75jm-pg",
+        "result": "removed task-owned fixture"
+      },
+      {
+        "container": "cv-opt-6i3a75jm-redis",
+        "result": "removed task-owned fixture"
+      },
+      {
+        "container": "cv-opt-6i3a75jm-dotnet",
+        "result": "already absent"
+      },
+      {
+        "network": "cv-opt-6i3a75jm",
+        "result": "removed"
+      }
+    ],
+    "scope": "Only task-owned names with matching task label removed; no global prune or production container mutation."
+  }
+}

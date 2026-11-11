@@ -25,8 +25,7 @@ export default async function SavedArticlesPage() {
         Saved articles
       </h1>
       <p className="mt-4 text-sm leading-7 text-zinc-400">
-        Your reading list stays in this browser. Save an article for later, then
-        return whenever you have time.
+        Articles you save are stored in this browser.
       </p>
       <Link href="/blog/paths" className="text-link mt-2">
         View reading paths

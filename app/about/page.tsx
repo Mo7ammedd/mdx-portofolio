@@ -1,10 +1,12 @@
+import Link from 'next/link'
+
 import { WORK_EXPERIENCE } from '@/app/data'
 import { generateSEO } from '@/lib/seo'
 
 export const metadata = generateSEO({
   title: 'About',
   description:
-    'Mohammed Mostafa, software engineer in Egypt. Work experience and computer science education at Suez Canal University.',
+    'Mohammed Mostafa, software engineer in Egypt. Building backend systems, agent runtimes, and deployment tools at Oblien.',
   path: '/about',
 })
 
@@ -19,8 +21,18 @@ export default function AboutPage() {
           About
         </h1>
         <p className="mt-4 text-base leading-7 text-zinc-300">
-          I’m Mohammed, a software engineer in Egypt. I work on backend systems,
-          databases, and cloud infrastructure.
+          I’m Mohammed, a software engineer based in Egypt. I build backend
+          systems and infrastructure at{' '}
+          <a href="#work0" className="inline-link">
+            Oblien
+          </a>
+          .
+        </p>
+        <p className="mt-3 text-base leading-7 text-zinc-400">
+          I work on agent runtimes, isolated workspaces, and deployment tools.
+          That includes connecting agent sessions to product interfaces and
+          building the tools that take a Git repository through builds,
+          deployments, custom domains, and rollbacks.
         </p>
       </section>
 
@@ -59,7 +71,18 @@ export default function AboutPage() {
                   {job.highlights.map((highlight) => (
                     <div key={highlight.title}>
                       <dt className="text-sm font-medium text-zinc-300">
-                        {highlight.title}
+                        {highlight.href ? (
+                          <a
+                            href={highlight.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-link"
+                          >
+                            {highlight.title}
+                          </a>
+                        ) : (
+                          highlight.title
+                        )}
                       </dt>
                       <dd className="mt-1 text-base leading-7 text-zinc-400">
                         {highlight.description}
@@ -73,6 +96,33 @@ export default function AboutPage() {
         </ol>
       </section>
 
+      <section aria-labelledby="systems-heading">
+        <h2
+          id="systems-heading"
+          className="text-base font-medium text-zinc-100"
+        >
+          Systems projects
+        </h2>
+        <p className="mt-3 text-base leading-7 text-zinc-400">
+          I also build smaller systems from scratch.{' '}
+          <Link href="/projects/lsmsharp" className="inline-link">
+            LSMSharp
+          </Link>{' '}
+          is a C# storage engine with a write-ahead log and background
+          compaction.{' '}
+          <Link href="/projects/aeroudp" className="inline-link">
+            AeroUDP
+          </Link>{' '}
+          is an experimental Rust transport that adds packet ordering and
+          retransmission to UDP.{' '}
+          <Link href="/projects/disk-mesh" className="inline-link">
+            Disk-Mesh
+          </Link>{' '}
+          is a Java file system that replicates chunks across storage nodes and
+          repairs missing copies after a node failure.
+        </p>
+      </section>
+
       <section aria-labelledby="education-heading">
         <h2
           id="education-heading"
@@ -81,7 +131,21 @@ export default function AboutPage() {
           Education
         </h2>
         <p className="mt-3 text-base leading-7 text-zinc-300">
-          CS graduate from Suez Canal University.
+          B.Sc. in Computer Science, Suez Canal University, 2021–2025.
+        </p>
+        <p className="mt-2 text-base leading-7 text-zinc-400">
+          My graduation project,{' '}
+          <a
+            href="https://github.com/Mo7ammedd/Aura-Decor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-link"
+          >
+            Aura Decor
+          </a>
+          , combined an ASP.NET Core furniture platform with text and image
+          search, Stripe payments, and an AR mobile app. It received an
+          Excellent grade.
         </p>
       </section>
     </main>

@@ -1,0 +1,136 @@
+{
+  "pages": 2,
+  "body_font_pt": 11,
+  "font_or_overflow_warnings": false,
+  "reading_order": "verified",
+  "unmapped_symbols_or_ligatures": false,
+  "pdf_link_annotations": 18,
+  "word_count": 682,
+  "selected_projects": [
+    "LLMProxy",
+    "GhostyKey",
+    "AeroUDP"
+  ],
+  "audit_date": "2026-11-11",
+  "compiler": "Tectonic 0.17.0 / XeTeX",
+  "source": "public/resume.tex",
+  "pdf": "public/resume.pdf",
+  "source_sha256": "f21bbb37a1cd5b6ed39b5abff538d147a5a023623af669ac7ec970d566c7e480",
+  "pdf_sha256": "5194bb5f023f88ae6c3b4cc53c0c9d45faea1e989a8d32cd606eeff5b74531a4",
+  "visual_review": "Both final rendered pages viewed and inspected after the final source revision; no clipping, awkward breaks, or orphaned skill-list line.",
+  "official_titles_dates_contacts_education": "Exact pre-pass header, role macro arguments, education and URI-set comparisons passed.",
+  "fonts": "Three Latin Modern faces embedded/subset, Identity-H, Unicode mappings present; pdffonts checked.",
+  "host_fontconfig_warnings": "Host configuration warnings emitted by compiler process; no LaTeX font/overflow warnings and embedded PDF fonts verified.",
+  "https_checks": [
+    {
+      "url": "https://bytesmap.com",
+      "status": 200,
+      "final_url": "https://bytesmap.com"
+    },
+    {
+      "url": "https://carelinker.ai/en",
+      "status": 200,
+      "final_url": "https://carelinker.ai/en"
+    },
+    {
+      "url": "https://carlink.dev/",
+      "status": 200,
+      "final_url": "https://carlink.dev/"
+    },
+    {
+      "url": "https://github.com/Mo7ammedd/AeroUDP",
+      "first_attempt_error": "<urlopen error [Errno 104] Connection reset by peer>",
+      "status": 200,
+      "final_url": "https://github.com/Mo7ammedd/AeroUDP"
+    },
+    {
+      "url": "https://github.com/Mo7ammedd/GhostyKey",
+      "status": 200,
+      "final_url": "https://github.com/Mo7ammedd/GhostyKey"
+    },
+    {
+      "url": "https://github.com/Mo7ammedd/LLMProxy",
+      "status": 200,
+      "final_url": "https://github.com/Mo7ammedd/LLMProxy"
+    },
+    {
+      "url": "https://github.com/mo7ammedd",
+      "status": 200,
+      "final_url": "https://github.com/mo7ammedd"
+    },
+    {
+      "url": "https://linkedin.com/in/mohammedtv",
+      "status": 200,
+      "final_url": "https://linkedin.com/in/mohammedtv"
+    },
+    {
+      "url": "https://medicaacademy.com/",
+      "status": 200,
+      "final_url": "https://medicaacademy.com/"
+    },
+    {
+      "url": "https://medicascopehms.com/",
+      "status": 200,
+      "final_url": "https://medicascopehms.com/"
+    },
+    {
+      "url": "https://mindwire.sh",
+      "status": 200,
+      "final_url": "https://mindwire.sh"
+    },
+    {
+      "url": "https://oblien.com/",
+      "status": 200,
+      "final_url": "https://oblien.com/"
+    },
+    {
+      "url": "https://onvo.me/",
+      "status": 200,
+      "final_url": "https://onvo.me/"
+    },
+    {
+      "url": "https://openship.io/",
+      "status": 200,
+      "final_url": "https://openship.io/"
+    },
+    {
+      "url": "https://rewaaq.com/landing/",
+      "status": 200,
+      "final_url": "https://rewaaq.com/landing/"
+    },
+    {
+      "url": "https://www.momostafa.tech",
+      "status": 200,
+      "final_url": "https://www.momostafa.tech"
+    }
+  ],
+  "email_phone_uris": [
+    "mailto:MohammedMostafaNazih@gmail.com",
+    "tel:+201112961724"
+  ],
+  "page_text_bounds": [
+    {
+      "width_pt": 612.0,
+      "height_pt": 792.0,
+      "text_x_min_pt": 41.804,
+      "text_y_min_pt": 37.775395,
+      "text_x_max_pt": 568.810488,
+      "text_y_max_pt": 744.500543,
+      "words": 421
+    },
+    {
+      "width_pt": 612.0,
+      "height_pt": 792.0,
+      "text_x_min_pt": 41.804,
+      "text_y_min_pt": 41.766415,
+      "text_x_max_pt": 568.811132,
+      "text_y_max_pt": 576.308473,
+      "words": 261
+    }
+  ],
+  "source_snapshot_backup": "/tmp/cv-ownership-optimization-6i3a75jm/before-resume.tex",
+  "pdf_snapshot_backup": "/tmp/cv-ownership-optimization-6i3a75jm/before-resume.pdf",
+  "test_results": "docs/repository-test-results.json",
+  "application_sources_modified": false,
+  "fixture_cleanup": "Task-owned PostgreSQL/Redis fixtures and dedicated network removed."
+}

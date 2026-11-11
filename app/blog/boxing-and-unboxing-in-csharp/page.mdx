@@ -17,9 +17,9 @@ export const metadata = generateBlogPostSEO({
 
 ## Understanding the Fundamentals
 
-<Term id="boxing">Boxing</Term> and unboxing describe how the .NET runtime moves data between **value types** and **reference types**.
+Assigning an `int` to an `object` looks like a simple assignment, but it boxes the value. <Term id="boxing">Boxing</Term> creates an object containing a copy; unboxing retrieves the value with a runtime type check.
 
-This behavior is rooted in how the CLR represents data in memory and how the JIT compiler generates machine code.
+The examples below follow that copy, show where allocations appear, and compare object-based collections with typed ones.
 
 ![C# Boxing and Unboxing Overview](/blog/BoxingUnboxing/csharp-boxing-unboxing-overview.png)
 
@@ -60,7 +60,7 @@ object boxed = 42;
 int unboxed = (int)boxed;
 ```
 
-Unboxing is not just a cast. It includes a runtime type check and a memory copy.
+Unboxing checks the stored value type at runtime and copies the value out of the box.
 
 ---
 
@@ -89,7 +89,7 @@ A boxed value includes:
 * Padding for alignment
 * The actual value
 
-This explains why boxing can dramatically increase memory usage in tight loops or large collections.
+Repeated boxing adds object allocations in tight loops or large collections.
 
 ---
 
@@ -351,7 +351,7 @@ This pattern is a common hidden performance bug.
 
 ### Recommended
 
-* Prefer generics everywhere
+* Prefer generic APIs and collections when working with value types
 * Use `List<T>`, `Dictionary<TKey,TValue>`
 * Implement `IEquatable<T>` on structs
 * Keep structs small and immutable
@@ -417,28 +417,15 @@ The `struct` constraint allows the JIT to generate boxing-free code paths.
 * ValueTask
 * Pattern matching with generics
 
-When used correctly, modern C# allows writing allocation-free code in most scenarios.
+These features can help avoid boxing, but check the API overloads and the code generated for the path you are measuring.
 
 ---
 
 ## Summary
 
-Boxing and unboxing are fundamental CLR behaviors that directly impact performance and memory usage.
+Start by checking where value types cross an `object` or interface boundary. A typed collection such as `List<int>` avoids the per-element boxing in `ArrayList`, and generic APIs can often keep values typed through the call.
 
-They are acceptable in:
-
-* Low-frequency code
-* Application boundaries
-* Debug or tooling scenarios
-
-They should be avoided in:
-
-* Hot paths
-* Tight loops
-* High-throughput services
-* Allocation-sensitive systems
-
-Check for boxing in performance-sensitive C# code. It adds allocations and copying that can affect memory use and execution time.
+A box in rarely used code may not matter. In a hot loop, measure the allocations and their effect on the workload before choosing an alternative.
 
 ## Check Your Understanding
 

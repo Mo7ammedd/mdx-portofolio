@@ -26,7 +26,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 8', 'LSM-tree', 'Storage'],
     source: 'https://github.com/Mo7ammedd/LSMSharp',
     problem:
-      'A storage engine has to accept new writes while keeping old data readable and recoverable. LSMSharp collects writes in memory, keeps a recovery log, and reorganizes sorted files in the background.',
+      'I built LSMSharp around a write path that collects changes in memory and appends them to a recovery log. Sorted files hold older data on disk, and background compaction merges them as more writes come in.',
     architecture: [
       {
         title: 'Write-ahead log',
@@ -51,23 +51,23 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Batch persistence work',
         description:
-          'The WAL groups writes around a 100-entry threshold and a 100 ms timer. This reduces per-write I/O, but a completed SetAsync call can precede persistence. Flush coordinates WAL synchronization and table creation; batching is a throughput–durability tradeoff.',
+          'I batch WAL writes using a 100-entry threshold and a 100 ms timer to reduce per-write I/O. That means SetAsync can finish before the data is persisted. Flush coordinates WAL synchronization and table creation, so callers need to account for that gap when they need durable writes.',
       },
       {
         title: 'Separate ingestion from reorganization',
         description:
-          'A memtable becomes read-only during a flush while a new one accepts writes. Readers can still inspect the flushing table. Background compaction keeps the disk layout manageable, at the cost of additional reads and writes.',
+          'During a flush, I make the old memtable read-only and send new writes to a fresh one. Reads still check both. Compaction runs in the background to merge disk tables, though it adds its own read and write load.',
       },
       {
         title: 'Spend memory to avoid disk work',
         description:
-          'Bloom filters, block caching, and cached SSTable handles reduce unnecessary I/O. A Bloom-filter match still needs a real lookup: the filter can return false positives, so it is an optimization rather than the source of truth.',
+          'I use Bloom filters to skip tables that cannot contain a key, and cache blocks and SSTable handles to avoid repeated disk work. A positive Bloom-filter result still needs a lookup because false positives are possible.',
       },
     ],
     validation: [
-      'The repository includes functional checks for CRUD operations, repeated updates, deletes, binary values, and concurrent access, alongside performance and reopen workloads. A checked-in test run records a post-compaction integrity failure, so fresh correctness checks should precede performance comparisons.',
-      'The README reports 5,000 sequential writes in 207 ms, about 24,155 operations per second. The timer covers write submission and excludes the final flush. Hardware details were not recorded, so the sample cannot establish durable-commit speed or support comparisons across machines.',
-      'For a meaningful rerun, record the runtime, hardware, value sizes, cache state, and flush policy; verify retrieved values as well as throughput. Multi-operation transactions and snapshot isolation remain separate design work.',
+      'The functional suite covers CRUD, repeated updates, deletes, binary values, and concurrent access. There are also performance and reopen workloads. A saved test run contains an integrity failure after compaction; that needs fixing and a fresh correctness run before the performance numbers are useful.',
+      'The README sample submits 5,000 sequential writes in 207 ms, about 24,155 operations per second. It excludes the final flush and has no recorded hardware details, so it measures submission throughput rather than durable commits.',
+      'A benchmark rerun needs the runtime, hardware, value sizes, cache state, and flush policy recorded, plus checks that the values read back correctly. Multi-operation transactions and snapshot isolation are not implemented.',
     ],
     references: [
       {
@@ -104,7 +104,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['Rust', 'Tokio', 'UDP', 'Networking'],
     source: 'https://github.com/Mo7ammedd/AeroUDP',
     problem:
-      'UDP delivers independent datagrams without promising that they arrive, arrive once, or arrive in order. AeroUDP adds reliable, ordered delivery and adjusts sending to the receiver’s capacity and network conditions.',
+      'In AeroUDP, I built ordering, retransmission, and flow control on top of UDP. The sender tracks unacknowledged packets and adjusts its sending rate to both the receiver’s buffer space and network congestion. It is an experimental implementation.',
     architecture: [
       {
         title: 'Application data',
@@ -129,24 +129,24 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Use two independent limits',
         description:
-          'The send buffer combines the congestion window with the peer’s advertised receive window: separate budgets for network and receiver capacity. The current engine clamps a zero receive window to one packet, so complete zero-window backpressure remains a limitation.',
+          'I limit sending by both the congestion window and the peer’s advertised receive window. One tracks network capacity; the other tracks receiver capacity. The engine currently clamps a zero receive window to one packet, so it cannot fully pause sending when the receiver is full.',
       },
       {
         title: 'Keep the feedback loop observable',
         description:
-          'NewReno-style congestion control combines slow start, additive growth, and loss recovery. RTT-based retransmission timers adapt to latency, while packet counters and tracing expose the state changes that explain a stalled or recovering connection.',
+          'I use NewReno-style slow start, additive growth, and loss recovery, with retransmission timers based on measured RTT. Packet counters and tracing make it possible to follow window changes and timeouts when a connection stalls.',
       },
       {
         title: 'Keep the protocol small enough to inspect',
         description:
-          'Cumulative ACKs simplify bookkeeping but cannot identify every packet received beyond a gap. Selective acknowledgements are omitted. CRC32 detects accidental corruption; it does not provide authentication or encryption.',
+          'I use cumulative ACKs and leave out selective acknowledgements. This keeps the ACK state small, but the sender cannot identify every packet received beyond a gap. CRC32 catches accidental corruption; the protocol has no authentication or encryption.',
       },
     ],
     validation: [
-      'Receive-buffer unit tests cover packets arriving out of order and duplicate detection. Codec property tests exercise arbitrary payload round-trips and corruption rejection.',
-      'The CLI includes a network-simulation proxy with seeded random choices for packet loss, duplication, latency, and jitter. It lets you configure network faults and observe the protocol’s response; end-to-end timing still depends on execution.',
-      'The documented example configures 5% loss and 3% reordering, with 20–60 ms latency and 10 ms jitter. These are inputs, not measured results. The proxy forwards packets serially, so enabling its reordering flag is not proof of reordered delivery.',
-      'Useful observations include delivered-data correctness, duplicate delivery, retransmissions, smoothed RTT, timeout backoff, and congestion-window recovery. The detailed walkthrough connects each metric to the mechanism it explains.',
+      'Receive-buffer tests cover out-of-order packets and duplicate detection. Codec property tests check payload round-trips and rejection of corrupted data.',
+      'The CLI proxy can inject loss, duplication, latency, and jitter using seeded random choices. The seed controls those choices, but execution still affects end-to-end timing.',
+      'The example configures 5% loss, 3% reordering, 20–60 ms latency, and 10 ms jitter. Those are fault settings, not measured outcomes. The proxy forwards serially, so the reordering flag alone does not demonstrate out-of-order delivery.',
+      'When trying the proxy, check that the received bytes match the sent bytes, then follow retransmissions, smoothed RTT, timeout backoff, and congestion-window recovery. The walkthrough explains how these measurements relate to the protocol.',
     ],
     references: [
       {
@@ -183,7 +183,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 8', 'Operating systems', 'Scheduling'],
     source: 'https://github.com/Mo7ammedd/SimuKernel',
     problem:
-      'A scheduling policy can be simple to describe and still produce surprising waiting times. SimuKernel’s console project implements Round Robin, priority scheduling, and multilevel feedback queues with aging. Its memory simulator compares FIFO, LRU, and optimal page replacement. The companion browser playground below compares FCFS, non-preemptive SJF, and Round Robin on editable workloads.',
+      'I built SimuKernel to simulate scheduling and page replacement in C#. The console app includes Round Robin, priority scheduling, multilevel feedback queues with aging, and FIFO, LRU, and optimal page replacement. I also added the browser playground below, where you can edit a workload and compare FCFS, non-preemptive SJF, and Round Robin.',
     architecture: [
       {
         title: 'Arrivals',
@@ -222,8 +222,8 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The playground computes waiting time as completion minus arrival minus burst, turnaround as completion minus arrival, and response as first start minus arrival. It shows both the timeline and per-process results.',
-      'The browser scheduling engine is checked against known examples, idle periods, simultaneous arrivals, arrivals on a quantum boundary, and invalid workloads. A generated-workload test exercises 80 workloads under each of the three policies. No process can run before it arrives, and every process must receive its requested CPU time. These checks cover the companion playground; the C# repository has no automated test suite at the linked revision.',
+      'The playground shows a timeline and per-process results. Waiting time is completion minus arrival minus burst; turnaround is completion minus arrival; response is first start minus arrival.',
+      'The browser tests cover known examples, idle periods, simultaneous arrivals, arrivals on a quantum boundary, and invalid input. They also generate 80 workloads for each policy and check that every process gets its requested CPU time without running before arrival. These tests cover the browser engine. The linked C# version has no automated test suite.',
     ],
     references: [
       {

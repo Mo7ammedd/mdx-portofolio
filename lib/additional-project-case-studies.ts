@@ -10,7 +10,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['Java', 'TCP', 'SHA-256', 'Distributed storage'],
     source: 'https://github.com/Mo7ammedd/Disk-Mesh',
     problem:
-      'A distributed file system needs to locate chunks, detect corruption, and keep reads working when a storage node disappears. Disk-Mesh uses a metadata master, storage nodes, and a client that checks the data it receives.',
+      'I built Disk-Mesh with a metadata master that tracks file locations and storage nodes that hold replicated chunks. The client checks the bytes it downloads, tries another replica when a read fails, and verifies the assembled file.',
     architecture: [
       {
         title: 'Allocate',
@@ -38,23 +38,23 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Keep metadata separate from file bytes',
         description:
-          'One master owns the namespace and placement decisions while storage nodes handle the data. This keeps bulk transfers off the master, but makes its availability a shared dependency. Periodic snapshots support restart; there is no metadata write-ahead log, so an abrupt failure can lose changes made since the last snapshot.',
+          'I keep file transfers between clients and storage nodes so the master only handles names and placement. The master is still a single point of failure. It saves periodic snapshots, but has no metadata write-ahead log; a crash can lose changes since the last snapshot.',
       },
       {
         title: 'Chain replicas before acknowledging a chunk',
         description:
-          'The client sends one copy to the first node, which stores it and forwards it down the chain. Acknowledgements return after downstream writes finish, making the slowest link part of upload latency. Allocation caps the replication factor at the number of live nodes, so a successful upload can have fewer copies than the configured target.',
+          'I send each chunk to the first storage node and let the nodes forward it down a chain. The acknowledgement waits for downstream writes, so a slow node slows the upload. If there are fewer live nodes than the target replication factor, an upload can succeed with fewer copies.',
       },
       {
         title: 'Repair from observed replica reports',
         description:
-          'Heartbeats include each node’s chunk list. After a timeout removes a node from replica sets, the master asks surviving holders to copy chunks to other nodes, favoring free capacity. Repair needs a healthy source and an available destination; a timeout can also mistake a slow node for a failed one.',
+          'Each heartbeat reports the chunks a node holds. When a node times out, the master removes its replicas and asks surviving nodes to make new copies, favoring destinations with free space. This needs a healthy source and somewhere to copy to. A slow node can also time out even when it is still running.',
       },
     ],
     validation: [
-      'The nine integration scenarios include byte-for-byte round trips, concurrent transfers, corrupt-replica handling, node loss, and garbage collection. The links show the test definitions; this page does not include results from a new run.',
-      'The recovery scenario starts four storage nodes with a replication factor of three, stops one node, waits for every chunk to have three live replicas again, and compares a downloaded file with its original bytes. This checks storage-node recovery within an in-process cluster; it does not exercise abrupt master failure.',
-      'Chunk data and checksum sidecars are written separately without an explicit disk synchronization call. Replication and checksum validation therefore do not establish power-loss durability. Master-crash and interrupted-write scenarios are useful next checks before making stronger persistence claims.',
+      'The repository has nine integration scenarios covering byte-for-byte round trips, concurrent transfers, corrupt replicas, node loss, and garbage collection. The links below point to those scenarios; I have not included a fresh run here.',
+      'The recovery test starts four storage nodes with three replicas per chunk, stops one node, and waits for three live replicas again. It then downloads the file and compares its bytes with the original. The cluster runs in one process, and this test does not cover a master crash.',
+      'Chunk data and checksum files are written separately without an explicit disk sync. Copies and checksums alone cannot guarantee survival after power loss. Master crashes and interrupted writes still need testing.',
     ],
     references: [
       {
@@ -98,7 +98,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 8', 'EF Core', 'Azure Service Bus', 'Stripe'],
     source: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
     problem:
-      'Checkout combines product prices, discounts, payment state, and follow-up work. This project splits those steps across services, from the cart request to the order and rewards message. One step can succeed while the next fails.',
+      'In this project, I split a food-ordering flow across .NET services: the cart fetches products and discounts, the order service handles Stripe checkout, and a separate consumer records rewards. The difficult part is handling the gaps where one service saves its work and the next step fails.',
     architecture: [
       {
         title: 'Cart',
@@ -124,23 +124,23 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Give each service its own data model',
         description:
-          'Services define separate EF Core contexts; most use PostgreSQL, while orders and rewards use SQL Server. The cart composes product and coupon data through HTTP instead of joining their tables. This makes ownership explicit, but the cart request also depends on those services being available.',
+          'I gave the services separate EF Core contexts. Most use PostgreSQL; orders and rewards use SQL Server. The cart fetches products and coupons over HTTP rather than joining their tables, so those services have to be available for the cart request to succeed.',
       },
       {
         title: 'Move follow-up work onto a message bus',
         description:
-          'Cart details need immediate HTTP responses, while email requests and rewards use queues or topics. The payment-validation endpoint saves an approved order before publishing its reward message. Those are separate operations with no transactional outbox, leaving a failure window between database persistence and publication.',
+          'I use HTTP for cart details and Service Bus queues or topics for email requests and rewards. Payment validation saves the approved order, then publishes its reward message. There is no transactional outbox, so a failure between those operations can leave an approved order without a reward message.',
       },
       {
         title: 'Keep the reward contract small',
         description:
-          'The reward message carries an order ID, user ID, and reward activity. Its consumer writes a separate reward record, keeping it independent of the order schema. Repeated payment validation or message delivery can still create duplicate records because the handler has no check that an order has already earned rewards.',
+          'I pass the order ID, user ID, and reward activity in the message, and the consumer saves its own reward record. The handler does not check whether an order has already earned rewards, so repeated validation or message delivery can create duplicates.',
       },
     ],
     validation: [
-      'The source shows cart composition, Stripe status validation, message publication, and reward handling. The linked revision has no automated test project or reproducible benchmark. This page does not report measured latency or end-to-end reliability.',
-      'The reward consumer requests IRewardService, but startup registers only the concrete RewardService. That registration needs correction before exercising the consumer. A local run also needs database, Stripe, and Service Bus configuration; the producer and consumers read different configuration keys.',
-      'The reward handler catches database failures without rethrowing, after which the consumer can complete the message. Useful next checks are a failed database write, duplicate delivery, and interruption between order persistence and publication. EmailAPI currently logs generated content without calling a mail transport.',
+      'The linked version implements the cart, Stripe status checks, reward publication, and reward handling. It has no automated test project or reproducible benchmark, so I do not have latency or end-to-end reliability measurements to share.',
+      'The reward consumer has a registration bug: it requests IRewardService, but startup only registers RewardService. That needs fixing before running the consumer. Local setup also needs database, Stripe, and Service Bus credentials, with different configuration keys used by the producer and consumers.',
+      'There are other unfinished parts: the reward handler swallows database errors, allowing the consumer to complete a failed message, and EmailAPI logs the generated email without sending it. Failed writes, duplicate delivery, and a crash between saving an order and publishing its message still need tests.',
     ],
     references: [
       {
@@ -182,7 +182,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
     source: 'https://github.com/Mo7ammedd/LLMProxy',
     problem:
-      'Applications that call several model providers have to manage different credentials, protocols, rate limits, and billing rules. LLMProxy puts those responsibilities behind one API: clients use gateway keys and public model aliases while the server chooses a compatible upstream, enforces allowances, and records the work performed.',
+      'I built LLMProxy to put provider credentials, routing, quotas, and usage accounting behind one API. Clients send a gateway key and a public model alias. The gateway chooses a compatible provider, checks the limits, and records each attempt.',
     architecture: [
       {
         title: 'Authenticate',
@@ -211,23 +211,23 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       {
         title: 'Keep provider differences behind adapters',
         description:
-          'Clients select public model aliases instead of provider-specific model IDs. The router checks capabilities and feature combinations before dispatch, then applies a strategy such as priority, round-robin, cost, or latency. A common API simplifies client integration, while supported tools, media inputs, and response formats still depend on the chosen adapter and model.',
+          'I put provider protocols behind adapters and expose public model aliases to clients. The router checks the requested features before choosing by priority, round-robin, cost, or latency. Tools, media inputs, and response formats still depend on what the chosen adapter and model support.',
       },
       {
         title: 'Stop fallback once streaming output begins',
         description:
-          'Named provider accounts can rotate through multiple keys, cool down rejected credentials, and fall back to another provider after eligible failures. Streaming fallback is allowed before the first event. After output reaches the client, a later failure ends the stream without replaying the request. Retrying upstream requests can still incur additional provider charges.',
+          'Provider accounts can rotate keys, cool down rejected credentials, and fall back after eligible failures. I stop fallback after the first streaming event reaches the client: a later failure ends the stream rather than replaying it. Attempts before that boundary can still incur separate provider charges.',
       },
       {
         title: 'Reserve allowances before dispatch',
         description:
-          'A conditional database update reserves tokens and spending before a request starts. Completion settles the reservation and usage record in one transaction, with duplicate finalization handled idempotently. Missing usage or interrupted requests require conservative estimates; invoice reconciliation can later adjust spending from provider records.',
+          'I reserve tokens and spending with a conditional database update before dispatch. Completion settles usage and the reservation in one transaction, and repeating finalization does not charge the request twice. Interrupted requests or missing usage need conservative estimates; provider invoice records can later correct spending.',
       },
     ],
     validation: [
-      'The repository includes tests for provider fallback, pooled-key failover, and streaming failures before and after the first event. API tests check that failover records both credential fingerprints while settling one gateway request, and that a stream error after output never retries another key.',
+      'The tests cover provider fallback, key-pool failover, and stream failures on either side of the first event. API checks verify that failover records both credential fingerprints but settles one gateway request, and that an error after streaming starts never retries another key.',
       'Persistence scenarios submit 40 concurrent reservations against an allowance that admits 17, then check both the counters and stored reservations. Separate SQLite and PostgreSQL scenarios check that duplicate finalizers commit usage once.',
-      'The linked tests use deterministic fakes or mock endpoints for provider calls. PostgreSQL and Redis checks need configured test services and are skipped when their environment variables are missing. The links document the test definitions.',
+      'Provider calls in these tests use deterministic fakes or mock endpoints. PostgreSQL and Redis tests need configured services; they skip when the environment variables are missing. The links below show the test cases, not a fresh run against live providers.',
     ],
     references: [
       {

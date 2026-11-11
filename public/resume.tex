@@ -1,185 +1,150 @@
-% !TEX root = ./Mohamed_Mostafa_Software_Engineer.tex
-\documentclass[letterpaper, 11pt]{article}
+% !TEX root = ./resume.tex
+\documentclass[letterpaper,11pt]{article}
 
-% Packages
-\usepackage[utf8]{inputenc}
-\usepackage[top=0.3in, bottom=0.4in, left=0.3in, right=0.3in]{geometry}
-
-\usepackage{import}
-\usepackage{multicol}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\else
+  \usepackage{fontspec}
+  \setmainfont{lmroman10-regular.otf}[
+    BoldFont=lmroman10-bold.otf,
+    ItalicFont=lmroman10-italic.otf,
+    BoldItalicFont=lmroman10-bolditalic.otf,
+    Ligatures=NoCommon
+  ]
+\fi
+\usepackage[margin=0.6in,top=0.55in,bottom=0.55in]{geometry}
 \usepackage{enumitem}
-\usepackage{amssymb}
-\usepackage{fontawesome5}
-\usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
-\usepackage{parskip}
-\usepackage{lmodern}
-% Tighter spacing for compact layout
-\titlespacing{\section}{0pt}{4pt}{2pt}
-\setlist[itemize]{leftmargin=1.2em, topsep=0pt, partopsep=0pt, parsep=0pt, itemsep=0pt}
-\setlength{\parskip}{0pt}
-\setlength{\belowdisplayskip}{0pt}
-\setlength{\abovedisplayskip}{0pt}
+\usepackage{needspace}
+\usepackage[unicode,hidelinks]{hyperref}
 
-
-% Font
-% \renewcommand{\familydefault}{\sfdefault}
-
-% Section formatting
-\titleformat{\section}{\normalsize\bfseries\scshape\raggedright}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{10pt}{5pt}
-
-% Remove page numbering
 \pagestyle{empty}
+\raggedright
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Mohamed Mostafa Nazih - Backend and Platform Software Engineer},
+  pdfauthor={Mohamed Mostafa Nazih},
+  pdfsubject={Backend software engineering experience and selected projects}
+}
+
+\titleformat{\section}{\normalsize\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{12pt}{7pt}
+\setlist[itemize]{
+  leftmargin=1.15em,
+  label=\textbullet,
+  topsep=3pt,
+  itemsep=4pt,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\newcommand{\role}[4]{%
+  \par\addvspace{9pt}%
+  \Needspace{5\baselineskip}%
+  \textbf{#1}\hfill\textbf{#2}\par
+  \textit{#3\enspace\textbar\enspace#4}\par
+}
+\newcommand{\project}[4]{%
+  \par\addvspace{8pt}%
+  \Needspace{5\baselineskip}%
+  \textbf{#1}\hfill{\small\href{#3}{#4}}\par
+  {\small#2}\par
+}
 
 \begin{document}
 
 \begin{center}
-    {\LARGE \textbf{Mohamed Mostafa Nazih}}\\[0.15em]
-    \textbf{Software Engineer} \\[0.15em]
-    \faPhone~(+20) 111 296 1724 \quad
-    \faMapMarker~Cairo, Egypt \quad
-    \faEnvelope~\href{mailto:MohammedMostafaNazih@gmail.com}{MohammedMostafaNazih@gmail.com} \\[0.15em]
-    {\small
-    \faLinkedin~\href{http://linkedin.com/in/mohammedtv}{linkedin.com/in/mohammedtv} \quad
-    \faGithub~\href{https://github.com/mo7ammedd}{github.com/mo7ammedd} \quad
-    \faGlobe~\href{https://momostafa.tech/}{momostafa.tech}
-    }
+  {\LARGE\textbf{Mohamed Mostafa Nazih}}\\[3pt]
+  {\textbf{Backend and Platform Software Engineer}}\\[5pt]
+  Cairo, Egypt\enspace\textbar\enspace
+  \href{tel:+201112961724}{+20 111 296 1724}\enspace\textbar\enspace
+  \href{mailto:MohammedMostafaNazih@gmail.com}{MohammedMostafaNazih@gmail.com}\\[3pt]
+  {\small
+    \href{https://linkedin.com/in/mohammedtv}{linkedin.com/in/mohammedtv}\enspace\textbar\enspace
+    \href{https://github.com/mo7ammedd}{github.com/mo7ammedd}\enspace\textbar\enspace
+    \href{https://www.momostafa.tech}{momostafa.tech}
+  }
 \end{center}
 
+\section{Professional Experience}
 
-
-\section{EDUCATION}
-\vspace{0.5em}
-\textbf{B.Sc in Computer Science}, Suez Canal University \hfill \textbf{Oct 2021 -- Jul 2025} \\
-\vspace{-1em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.1em]
-  \item Graduation Project Grade: Excellent
-  \item Mentored students in backend development fundamentals through Google Developer Groups.
+\role{\href{https://oblien.com/}{Oblien}}{Aug 2025 -- Present}
+  {Founding Engineer}{Part-time, remote}
+\begin{itemize}
+  \item Designed and maintained \href{https://openship.io/}{\textbf{Openship}}'s TypeScript/Hono control plane, giving API, SDK, CLI, and desktop clients shared authorization and deployment behavior across local, SSH, and cloud targets.
+  \item Engineered deployment coordination and recovery using PostgreSQL advisory locks, durable execution receipts, and release snapshots to serialize host operations and recover interrupted builds without reclaiming live workers' resources. Added release gates with Docker integration tests.
+  \item Built \href{https://mindwire.sh}{\textbf{Mindwire}}'s Go runtime and TypeScript SDK for local, SSH, and Docker agents; persisted turn receipts before execution to deduplicate retries and reconciled unfinished runs after daemon restarts.
+  \item Developed \href{https://bytesmap.com}{\textbf{BytesMap}}'s query/reporting backend with connection leases, row/byte/time limits, encrypted credentials, and transactional report claims. Built Go ingestion that acknowledges events after durable JetStream publication and indexes them in ClickHouse.
+  \item Built Firecracker VM lifecycle and network policies; implemented billing-aware capacity recovery with quota rechecks and stop tokens to avoid restarting manually stopped workspaces.
+  \item Developed \textbf{Reflx}'s Express/Prisma backend from profile ingestion through agent conversations and WhatsApp integration, retaining guest/member session state and conversation history across requests.
 \end{itemize}
 
-
-\section{EXPERIENCE}
-\vspace{0.5em}
-
-\textbf{Oblien} \hfill \textbf{Aug 2025 -- Present} \\
-\textit{Founding Engineer \textbar{} Part-time Remote}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
- \item Founding engineer at \href{https://oblien.com/}{\textbf{Oblien}}, building a programmable infrastructure layer for autonomous agents using Firecracker microVMs for secure, isolated code execution and rapid environment provisioning.
-  \item Architected and built \href{https://openship.io/}{\textbf{Openship}}, an open-source, self-hostable deployment platform with built-in CI/CD that automates application builds, deployments, routing, and TLS across desktop, web, and CLI interfaces.
-  \item Built privacy-focused infrastructure with encrypted secrets, sandbox isolation, and strict data-ownership boundaries.
-  \item Built a sandboxed execution platform using Firecracker microVMs to deploy and isolate agent-generated applications, ensuring secure multi-tenant execution and rapid provisioning.
-  
-    \item Designed and implemented backend systems powering \href{https://reflx.me/}{\textbf{Reflx}}, a platform that creates AI-based digital clones from users' public presence.
-
-  \item Developed ingestion pipelines that processed user public data and transformed it into structured profiles used by AI agents.
-
-  \item Implemented real-time interaction systems enabling users to communicate with their clones, including low-latency messaging, session handling, and stateful conversations.
-
+\role{\href{https://medicascopehms.com/}{Medica Scope}}{Jul 2025 -- Present}
+  {Backend Engineer}{Full-time, hybrid}
+\begin{itemize}
+  \item Owned \href{https://carlink.dev/}{\textbf{CarLink}}'s NestJS/Prisma/PostgreSQL backend implementation across authentication, vehicle integrations, bookings, and workshop operations. Used conditional status updates to enforce booking transitions and retained quoted prices for invoicing.
+  \item Implemented CarLink consent/deletion workflows, append-only audit ledgers, and retention controls to keep administrative and privacy actions traceable; maintained migrations and PostgreSQL-backed CI tests.
+  \item Developed \href{https://rewaaq.com/landing/}{\textbf{Rewaaq}}'s .NET 10 course/quiz APIs with subscription-scoped access, persisted question selection, grading, and server-enforced attempt deadlines. Built GitLab deployment pipelines with health checks and rollback for authentication and application services.
+  \item Built \href{https://carelinker.ai/en}{\textbf{CareLinker}} patient/case and messaging subsystems with record-level authorization, transactions, and encrypted uploads; persisted conversation history and rechecked case access for REST/Socket.IO messaging.
+  \item Connected \href{https://medicaacademy.com/}{\textbf{Medica Academy}}'s Paymob checkout/webhooks to course enrollment and VdoCipher playback, with transactional enrollment creation and lesson-access checks before issuing video credentials.
 \end{itemize}
 
-
-
-\textbf{Medica Scope} \hfill \textbf{Jul 2025 -- Present} \\
-\textit{Backend Engineer \textbar{} Full-time Hybrid}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.1em]
-  \item Architected and developed backend services for \href{https://carlink.dev/}{\textbf{CarLink}}, a smart vehicle maintenance platform connecting vehicle owners with oil-change and brake service centers across Saudi Arabia, using NestJS, TypeScript, Prisma, and PostgreSQL.
-  \item Built a modular monolith with contract- and event-driven module boundaries, supporting secure JWT/OTP authentication, geospatial service-center discovery, and end-to-end booking workflows for mobile and operator applications.
-  \item Designed a secure OBD2 telemetry pipeline using AWS IoT Core, Kinesis, Lambda, Timestream, DynamoDB, and SNS/FCM, including X.509 device authentication, odometer tamper detection, and maintenance-threshold notifications.
-  \item Applied Saudi PDPL requirements through regional data residency, consent tracking, personal-data deletion workflows, telemetry retention controls, and structured log redaction.
-  \item Developed and maintained backend services for \href{https://medicaacademy.com/}{\textbf{Medica Academy}}, an online medical education platform.
-  \item Built a multi-tenant SaaS Learning Management System with microservices architecture (.NET 10.0, RabbitMQ, Redis, Firebase) handling 70+ domain services with full tenant isolation.
-  \item Implemented event-driven communication using RabbitMQ, Redis caching/rate limiting, and Firebase Cloud Messaging for push notifications.
+\role{\href{https://onvo.me/}{Onvo}}{May 2024 -- Jul 2025}
+  {Software Engineer}{Full-time, remote}
+\begin{itemize}
+  \item Reworked ONVO's PHP backend in Express.js, including anonymous Q\&A, threaded replies, and followed-user feeds with capped queries and timestamp-based pagination.
+  \item Implemented messaging permissions, replies/media, and push notifications; used Redis session/context lookups and rate limits, request-size limits, and XSS middleware around backend endpoints.
+  \item Built Airwave's Node.js backend for music/podcast playback, with playlists and WebSocket listening rooms that synchronize playback state across connected clients.
 \end{itemize}
 
+\newpage
+\section{Selected Projects}
 
-
-\textbf{Onvo} \hfill \textbf{May 2024 -- Jul 2025} \\
-\textit{Software Engineer \textbar{} Full-time, Remote}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.1em]
-  \item Reworked the backend of \href{https://onvo.me/}{\textbf{Onvo}} from PHP to Express.js, reducing load times by 20\% and improving system stability.
-   \item Built and scaled a large Q/A platform serving 150{,}000+ users with real-time interactions and high concurrency support.
-  \item Led the launch of Airwave, a platform for streaming podcasts and music, which attracted more than 10,000 users in the first week.
-  \item Secured the backend to prevent DoS and XSS attacks, ensuring a more resilient and secure application.
+\project{LLMProxy}{C\#, .NET 10, PostgreSQL, Redis\enspace\textbar\enspace Personal project}
+  {https://github.com/Mo7ammedd/LLMProxy}{github.com/Mo7ammedd/LLMProxy}
+\begin{itemize}
+  \item Designed a gateway with 10 provider adapters, atomic Redis rate limits, and SQL token/spend reservations to enforce shared allowances under concurrent requests.
+  \item Made usage finalization idempotent and recovered abandoned reservations conservatively; limited failover to before the first stream event to avoid replaying partial responses. Added PostgreSQL/Redis integration tests and CI recovery drills.
 \end{itemize}
 
-
-
-
-
-
-\section{PROJECTS}
-\vspace{0.5em}
-
-\textbf{Aura Decor (Graduation Project) \textbar{}} ASP.NET, Redis, RabbitMQ, SQL Server
-\hfill \faGithub~\textbf{\href{https://github.com/Mo7ammedd/Aura-Decor}{GitHub}} \\
-\vspace{-0.6em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
-    \item AuraDecor is a modern furniture management system built with ASP.NET Core 8.0 using a clean architecture.
-    \item It offers AI-powered text and image search, secure JWT authentication, and integrated Stripe processing.
-    \item The system includes an advanced admin panel, RabbitMQ-based notifications, and Docker-ready deployment.
+\project{GhostyKey}{TypeScript, Next.js, PostgreSQL\enspace\textbar\enspace Personal project}
+  {https://github.com/Mo7ammedd/GhostyKey}{github.com/Mo7ammedd/GhostyKey}
+\begin{itemize}
+  \item Built browser-encrypted secret sharing with AES-GCM and fragment-only decryption keys; the server stores ciphertext and hashed read/deletion capabilities.
+  \item Serialized consumption, expiry checks, and deletion in PostgreSQL transactions. Verified single-use consumption with 20 concurrent readers and expiry after lock waits in database tests.
 \end{itemize}
 
-\vspace{0.6em}
-\textbf{LSMSharp \textbar{}} C\#
-\hfill \faGithub~\textbf{\href{https://github.com/Mo7ammedd/LSMSharp}{GitHub}} \\
-\vspace{-0.6em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
-    \item Developed a high-performance LSM-Tree storage engine in C\# with ACID guarantees, leveled compaction, and crash-safe WAL.
-    \item Optimized for write-heavy workloads with Bloom filters, skip lists, and low-latency read paths.
+\project{AeroUDP}{Rust, Tokio\enspace\textbar\enspace Experimental transport protocol}
+  {https://github.com/Mo7ammedd/AeroUDP}{github.com/Mo7ammedd/AeroUDP}
+\begin{itemize}
+  \item Implemented experimental ordered UDP transport with sequence-numbered packets, acknowledgements, sliding windows, retransmission, and out-of-order buffering.
+  \item Added TCP-inspired congestion recovery, RTT-based timeouts, and separate receiver/congestion windows; verified codec properties, connection handshakes, and loopback transfers with Rust tests.
 \end{itemize}
 
-\vspace{0.6em}
-\textbf{HungerStation Microservices \textbar{}} .NET 8, SQL Server, Docker, Azure Service Bus, Stripe
-\hfill \faGithub~\textbf{\href{https://github.com/Mo7ammedd/HungerStation_Microservices}{GitHub}} \\
-\vspace{-0.6em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
-    \item Designed a modular food delivery platform using Clean Architecture, DDD, CQRS, and database-per-service principles.
-    \item Implemented event-driven communication with Azure Service Bus, JWT authentication, Stripe payments, and Dockerized deployment.
-\end{itemize}
+\section{Technical Skills}
 
-\vspace{0.6em}
-\textbf{AeroUDP \textbar{}} Rust, Tokio, UDP, Networking
-\hfill \faGithub~\textbf{\href{https://github.com/Mo7ammedd/AeroUDP}{GitHub}} \\
-\vspace{-0.6em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
-    \item Built a reliable asynchronous transport protocol over UDP with ordered packet delivery, retransmissions, and sliding windows.
-    \item Implemented TCP-inspired congestion control and RTT/RTO estimation in Rust using Tokio.
-\end{itemize}
+\textbf{Languages:} C\#, TypeScript, Go, JavaScript; Rust and Python (project work).\par\vspace{3pt}
+\textbf{Backend:} ASP.NET Core/.NET, NestJS, Hono, Express.js, Node.js, Bun.\par\vspace{3pt}
+\textbf{Databases and caching:} PostgreSQL, MySQL/MariaDB, SQL Server, SQLite, Redis, ClickHouse.\par\vspace{3pt}
+\textbf{Data access:} Entity Framework Core, Prisma, Drizzle.\par\vspace{3pt}
+\textbf{Infrastructure / CI/CD:} Linux, Docker, Firecracker, Nginx/OpenResty, SSH; GitHub Actions, GitLab CI.\par\vspace{3pt}
+\textbf{APIs and messaging:} REST, SSE, Socket.IO, JWT/OTP, NATS JetStream, RabbitMQ.\par\vspace{3pt}
+\textbf{Testing and tools:} xUnit, Bun test, Go testing, Docker E2E, OpenAPI, Git.
 
+\section{Education}
 
-\vspace{0.6em}
-\textbf{SimuKernel \textbar{}} C\#, .NET 8
-\hfill \faGithub~\textbf{\href{https://github.com/Mo7ammedd/SimuKernel}{GitHub}} \\
-\vspace{-0.6em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.15em]
-    \item Developed an operating system simulator implementing CPU scheduling, virtual memory paging, and a mini kernel with process management.
-    \item Supports Round Robin, Priority, and MLFQ schedulers with real-time visualization and detailed performance metrics.
-    \item Built paging simulator with FIFO, LRU, and Optimal algorithms, providing step-by-step visualization and fault/hit statistics.
-    \item Includes a mini in-memory kernel featuring boot sequence, CLI commands, process creation/termination, and memory allocation.
-\end{itemize}
+\textbf{Suez Canal University}\hfill\textbf{Oct 2021 -- Jul 2025}\par
+B.Sc. in Computer Science. Graduation project grade: Excellent.\par
+Mentored students in backend development through Google Developer Groups.
 
-
-\section{SKILLS}
-\vspace{0.5em}
-\begin{itemize}[leftmargin=1.5em, nosep, itemsep=0.2em]
-
-\item \textbf{Languages \& Frameworks:} \small{C\#, ASP.NET Core, JavaScript (Node.js, Express.js, NestJS, Hono, Bun), Python, C++, React Native, Next.js}
-
-\item \textbf{Databases:} \small{SQL Server, PostgreSQL, MongoDB, MySQL, MariaDB, SQLite, Redis, Memcached}
-
-\item \textbf{Cloud \& DevOps:} \small{Docker, Nginx, OpenResty, Azure, AWS (EC2, S3, Lambda, ECS, API Gateway), CI/CD (GitHub Actions, Azure DevOps), Linux}
-
-\item \textbf{API \& Messaging:} \small{REST, gRPC, RabbitMQ, Azure Service Bus, Stripe, Paymob}
-
-\item \textbf{Testing \& Tools:} \small{xUnit, NUnit, Postman, Swagger/OpenAPI, Git}
-
-\item \textbf{Core Concepts:} \small{Clean Architecture, Microservices, Distributed Systems, CQRS, DDD, SOLID, Design Patterns, OOP, Algorithms, Data Structures, Networking}
-
-\end{itemize}
-
-
-
-
-
-\end{document}add in medica 
+\end{document}

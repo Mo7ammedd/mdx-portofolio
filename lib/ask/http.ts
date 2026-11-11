@@ -70,7 +70,7 @@ export async function limitAskRequest(
   const retryAfter = await getAskStore().consumeLimit(key, 5, 15 * 60)
   if (retryAfter) {
     throw new AskError(
-      `A few too many attempts. Please try again in ${Math.ceil(retryAfter / 60)} minutes.`,
+      `Too many attempts. Try again in ${Math.ceil(retryAfter / 60)} minutes.`,
       429,
       retryAfter,
     )

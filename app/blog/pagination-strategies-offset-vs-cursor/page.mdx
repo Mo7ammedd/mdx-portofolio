@@ -11,9 +11,9 @@ export const metadata = generateBlogPostSEO({
 
 # Pagination Strategies: OFFSET vs Cursor Pagination
 
-Applications that list data need a way to paginate it. OFFSET and cursor pagination differ in query performance, consistency, scalability, and API design. Those differences become clearer under production load.
+A query for page 1 can be fast while the same query for page 10,000 slows down. With OFFSET, the database still has to walk past the earlier entries. A cursor lets it start after a known sort key instead.
 
-This post compares their B-tree access patterns, query plans, time complexity, and implementations.
+This post compares the queries and index access patterns, then looks at tied sort values and rows changing between requests.
 
 <Callout type="success" title="Key takeaway">
 
@@ -136,7 +136,7 @@ If a row is inserted or deleted between two page fetches, the offset arithmetic 
 
 In a high-write environment (social feed, live auction, notification list), this is not an edge case: it happens constantly.
 
-OFFSET pagination is **not safe for concurrent write workloads**. Any application where data is inserted, updated, or deleted while users paginate will produce inconsistent results. This includes most real-world applications.
+When rows change between page requests, OFFSET pagination can return duplicate rows or skip rows.
 
 ### When OFFSET Is Acceptable
 
@@ -228,7 +228,7 @@ For a table with 10M rows, `log₂(10,000,000) ≈ 23`. Regardless of which "pag
 
 A <Term id="composite-cursor">composite cursor</Term> records every ordering value needed to identify a unique position.
 
-Simple cursors based on a single monotonically increasing integer ID work perfectly. Real world queries are messier. What if you're ordering by `created_at`, which is not unique?
+A single ID can identify the cursor position when it defines the sort order. If you sort by a non-unique field such as `created_at`, you also need a tiebreaker.
 
 ```sql
 -- WRONG: created_at is not unique: ties cause missed rows
@@ -551,7 +551,7 @@ This dramatically reduces index size and improves seek performance when the filt
 
 ## GraphQL Relay Cursor Connections
 
-The most standardised cursor pagination API is the **Relay Connection Specification**, used as the de-facto standard for GraphQL APIs.
+The **Relay Connection Specification** defines a cursor-based pagination format for GraphQL APIs.
 
 ```graphql
 query GetPosts($first: Int, $after: String) {
@@ -689,7 +689,7 @@ Design rules:
     <tr>
       <td>**Large dataset (&gt; 1M rows)**</td>
       <td>Problematic</td>
-      <td>Scales indefinitely</td>
+      <td>Efficient at depth with a matching index</td>
     </tr>
   </tbody>
 </table>
@@ -714,7 +714,7 @@ A common hybrid: use OFFSET for page 1-5 (fast enough, simpler API) and switch t
 
 ## Keyset Pagination: The Generalisation
 
-Cursor pagination is a specific application of a broader technique called **keyset pagination**. The key insight is: instead of specifying a position by count from the beginning, specify it by value in the sort key.
+Cursor pagination uses **keyset pagination**: the next query starts after a sort-key value rather than skipping a count of rows.
 
 Any query of the form:
 

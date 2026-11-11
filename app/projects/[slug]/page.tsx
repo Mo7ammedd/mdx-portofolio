@@ -113,7 +113,7 @@ export default async function ProjectPage({ params }: Props) {
           >
             <span>
               <span className="mr-2 font-mono text-[10px] tracking-wide text-zinc-400 uppercase">
-                Evidence
+                Project notes
               </span>
               {presentation.highlight}
             </span>
@@ -189,7 +189,7 @@ export default async function ProjectPage({ params }: Props) {
         className="scroll-mt-8"
       >
         <h2 id="validation-title" className="section-heading mb-4">
-          Evidence & validation
+          Tests and limitations
         </h2>
         <div className="body-copy space-y-3">
           {project.validation.map((paragraph) => (

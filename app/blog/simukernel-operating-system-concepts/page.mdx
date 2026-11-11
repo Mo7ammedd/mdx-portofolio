@@ -12,13 +12,13 @@ export const metadata = generateBlogPostSEO({
 
 # OS Concepts Explained
 
-SimuKernel models CPU scheduling, paging, and process management. Here’s how those parts work.
+I built SimuKernel in C# to simulate CPU scheduling, paging, and process management. This article explains the algorithms behind those parts, including how the time quantum changes Round Robin behavior and how page-replacement policies choose what to evict.
 
 ## CPU Scheduling
 
 ### What is CPU Scheduling?
 
-CPU scheduling is the process of determining which process in the ready queue will be allocated the CPU for execution. The goal is to maximize CPU utilization, throughput, and minimize waiting time and response time.
+CPU scheduling chooses which ready process runs next. Different policies change how long processes wait, how quickly they first get CPU time, and how many finish in a given interval.
 
 ### Process States
 
@@ -185,7 +185,7 @@ Physical: Frame 1, Offset 100
 
 ### Page Replacement Algorithms
 
-When memory is full and new page needed, must replace existing page.
+When memory is full and another page is needed, the OS must choose a page to replace.
 
 #### 1. FIFO (First-In-First-Out)
 

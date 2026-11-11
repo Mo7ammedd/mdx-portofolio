@@ -35,8 +35,10 @@ Edit `WORK_EXPERIENCE` in `app/data.tsx` for company summaries, roles, dates,
 and optional `highlights`. The full history is on `/about`, with highlights
 shown beneath each role. Edit the biography and education in
 `app/about/page.tsx`. CarLink and the learning platforms
-share the Medica Scope entry. Descriptions summarize the organization
-repositories at the product level.
+share the Medica Scope entry. Descriptions use concrete examples from the CV
+and project implementations. Highlights can include an optional `href` linking
+to a public product or repository. The biography, systems-project links, and
+graduation-project description live in `app/about/page.tsx`.
 
 ## Projects and writing
 
