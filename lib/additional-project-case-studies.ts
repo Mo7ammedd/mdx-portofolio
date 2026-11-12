@@ -52,7 +52,7 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The repository has nine integration scenarios covering byte-for-byte round trips, concurrent transfers, corrupt replicas, node loss, and garbage collection. The links below point to those scenarios; I have not included a fresh run here.',
+      'All nine local integration scenarios passed on 11 November 2026, covering byte-for-byte round trips, concurrent transfers, corrupt replicas, node loss, and garbage collection. The harness runs the cluster within one JVM; it does not establish production reliability.',
       'The recovery test starts four storage nodes with three replicas per chunk, stops one node, and waits for three live replicas again. It then downloads the file and compares its bytes with the original. The cluster runs in one process, and this test does not cover a master crash.',
       'Chunk data and checksum files are written separately without an explicit disk sync. Copies and checksums alone cannot guarantee survival after power loss. Master crashes and interrupted writes still need testing.',
     ],
@@ -226,25 +226,29 @@ export const ADDITIONAL_PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     ],
     validation: [
       'The tests cover provider fallback, key-pool failover, and stream failures on either side of the first event. API checks verify that failover records both credential fingerprints but settles one gateway request, and that an error after streaming starts never retries another key.',
-      'Persistence scenarios submit 40 concurrent reservations against an allowance that admits 17, then check both the counters and stored reservations. Separate SQLite and PostgreSQL scenarios check that duplicate finalizers commit usage once.',
-      'Provider calls in these tests use deterministic fakes or mock endpoints. PostgreSQL and Redis tests need configured services; they skip when the environment variables are missing. The links below show the test cases, not a fresh run against live providers.',
+      'Persistence scenarios contend for shared allowances and verify both counters and stored reservations. SQLite and PostgreSQL scenarios check that duplicate finalizers commit usage once; Redis tests exercise shared admission across gateway instances.',
+      'Repository CI passed for the pinned revision. Provider calls in the tests use deterministic fakes or mock endpoints; the PostgreSQL and Redis scenarios require configured services. This is not a live-provider benchmark or a verified production workload.',
     ],
     references: [
       {
         title: 'Architecture and request lifecycle',
-        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/docs/architecture.md',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/1fa11c5196a89da06b5bbcae7de21f954233cb69/docs/architecture.md',
       },
       {
         title: 'Fallback and streaming tests',
-        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.UnitTests/FallbackTests.cs',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/1fa11c5196a89da06b5bbcae7de21f954233cb69/tests/LLMProxy.UnitTests/FallbackTests.cs',
       },
       {
         title: 'Provider key-pool API tests',
-        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.IntegrationTests/ProviderKeyPoolApiTests.cs',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/1fa11c5196a89da06b5bbcae7de21f954233cb69/tests/LLMProxy.IntegrationTests/ProviderKeyPoolApiTests.cs',
       },
       {
         title: 'Concurrent quota and persistence tests',
-        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/8ae9311b096b9983b187cd6c2d42aefca072d825/tests/LLMProxy.IntegrationTests/PersistenceTests.cs',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/blob/1fa11c5196a89da06b5bbcae7de21f954233cb69/tests/LLMProxy.IntegrationTests/PersistenceTests.cs',
+      },
+      {
+        title: 'Successful CI for the reviewed revision',
+        href: 'https://github.com/Mo7ammedd/LLMProxy/actions/runs/36064490447',
       },
     ],
     experiment: {

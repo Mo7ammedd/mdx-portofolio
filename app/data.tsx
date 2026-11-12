@@ -45,20 +45,18 @@ export type PortfolioProject = {
 
 export const PROJECTS: PortfolioProject[] = [
   {
-    slug: 'simukernel',
-    title: 'SimuKernel',
-    category: 'Operating systems',
-    href: 'https://github.com/Mo7ammedd/SimuKernel',
-    caseStudyHref: '/projects/simukernel',
-    articleHref: '/blog/simukernel-operating-system-concepts',
-    demoHref: '/projects/simukernel#scheduler',
-    visual: 'scheduler',
-    summary: 'CPU scheduling and memory management in C#.',
+    slug: 'llmproxy',
+    title: 'LLMProxy',
+    category: 'AI infrastructure',
+    href: 'https://github.com/Mo7ammedd/LLMProxy',
+    caseStudyHref: '/projects/llmproxy',
+    visual: 'gateway',
+    summary: 'A self-hosted gateway for LLM providers.',
     description:
-      'A C# simulator for CPU scheduling and memory management, with a browser demo for comparing scheduling policies.',
-    technologies: ['C#', '.NET 8', 'TypeScript'],
+      'A self-hosted .NET 10 gateway with ten provider adapters, shared rate limits, transactional quota reservations, and idempotent usage accounting.',
+    technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
     highlight:
-      'Three browser scheduling policies, checked against known and generated workloads.',
+      'Tests exercise key failover, stream replay boundaries, and concurrent quota reservations.',
   },
   {
     slug: 'lsmsharp',
@@ -67,41 +65,12 @@ export const PROJECTS: PortfolioProject[] = [
     href: 'https://github.com/Mo7ammedd/LSMSharp',
     caseStudyHref: '/projects/lsmsharp',
     visual: 'storage',
-    summary: 'An LSM-tree storage engine in C#.',
+    summary: 'An experimental LSM-tree storage engine in C#.',
     description:
-      'An LSM-tree storage engine in C# with write-ahead logging, Bloom filters, and background compaction.',
+      'An experimental C# key-value engine with write-ahead logging, skip-list memtables, immutable SSTables, Bloom filters, and leveled compaction.',
     technologies: ['C#', '.NET 8', 'LSM-tree'],
     highlight:
-      'Functional checks cover updates, deletes, binary values, and concurrent access.',
-  },
-  {
-    slug: 'disk-mesh',
-    title: 'Disk-Mesh',
-    category: 'Distributed systems',
-    href: 'https://github.com/Mo7ammedd/Disk-Mesh',
-    caseStudyHref: '/projects/disk-mesh',
-    demoHref: '/projects/disk-mesh#replication',
-    visual: 'replication',
-    summary: 'A distributed file system in Java.',
-    description:
-      'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
-    technologies: ['Java 22+', 'TCP', 'Replication'],
-    highlight:
-      'Includes a four-node recovery scenario that checks restoration to three replicas.',
-  },
-  {
-    slug: 'hungerstation-microservices',
-    title: 'HungerStation Microservices',
-    category: 'Backend services',
-    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
-    caseStudyHref: '/projects/hungerstation-microservices',
-    visual: 'services',
-    summary: 'Food ordering with .NET services.',
-    description:
-      'Seven .NET 8 services for food ordering, connecting authentication, Stripe checkout, and Azure Service Bus messaging.',
-    technologies: ['.NET 8', 'Azure Service Bus', 'Stripe'],
-    highlight:
-      'Stripe payment approval publishes a rewards message through Azure Service Bus.',
+      'Verified 200 records after compaction, with regression checks for concurrent reads and clean reopen.',
   },
   {
     slug: 'aeroudp',
@@ -116,21 +85,52 @@ export const PROJECTS: PortfolioProject[] = [
       'Experimental reliable transport over UDP in async Rust, with ordered delivery and congestion control.',
     technologies: ['Rust', 'Tokio', 'UDP'],
     highlight:
-      'Buffer and codec tests cover reordering, duplicates, and corruption.',
+      '26 Rust tests passed across codec, handshake, reliability, and loopback transfer paths.',
   },
   {
-    slug: 'llmproxy',
-    title: 'LLMProxy',
-    category: 'AI infrastructure',
-    href: 'https://github.com/Mo7ammedd/LLMProxy',
-    caseStudyHref: '/projects/llmproxy',
-    visual: 'gateway',
-    summary: 'A self-hosted gateway for LLM providers.',
+    slug: 'disk-mesh',
+    title: 'Disk-Mesh',
+    category: 'Distributed systems',
+    href: 'https://github.com/Mo7ammedd/Disk-Mesh',
+    caseStudyHref: '/projects/disk-mesh',
+    demoHref: '/projects/disk-mesh#replication',
+    visual: 'replication',
+    summary: 'A distributed file system in Java.',
     description:
-      'A self-hosted .NET 10 gateway for ten LLM providers, with OpenAI-compatible APIs, key rotation, quotas, usage accounting, and a web admin console.',
-    technologies: ['C#', '.NET 10', 'PostgreSQL', 'Redis'],
+      'A Java distributed file system with checksummed chunks, chained replication, and heartbeat-driven replica repair.',
+    technologies: ['Java 22+', 'TCP', 'Replication'],
     highlight:
-      'Tests exercise key failover, stream replay boundaries, and concurrent quota reservations.',
+      'Nine local integration scenarios passed, including replica repair after a node failure.',
+  },
+  {
+    slug: 'simukernel',
+    title: 'SimuKernel',
+    category: 'Operating systems',
+    href: 'https://github.com/Mo7ammedd/SimuKernel',
+    caseStudyHref: '/projects/simukernel',
+    articleHref: '/blog/simukernel-operating-system-concepts',
+    demoHref: '/projects/simukernel#scheduler',
+    visual: 'scheduler',
+    summary: 'CPU scheduling and memory management in C#.',
+    description:
+      'An educational C# simulator for CPU scheduling and memory management, with a separate browser demo for comparing scheduling policies.',
+    technologies: ['C#', '.NET 8', 'TypeScript'],
+    highlight:
+      'Three browser scheduling policies, checked against known and generated workloads.',
+  },
+  {
+    slug: 'hungerstation-microservices',
+    title: 'HungerStation Microservices',
+    category: 'Backend services',
+    href: 'https://github.com/Mo7ammedd/HungerStation_Microservices',
+    caseStudyHref: '/projects/hungerstation-microservices',
+    visual: 'services',
+    summary: 'Food ordering with .NET services.',
+    description:
+      'A learning project with seven .NET 8 services for food ordering, Stripe checkout, and Azure Service Bus messaging.',
+    technologies: ['.NET 8', 'Azure Service Bus', 'Stripe'],
+    highlight:
+      'Stripe payment approval publishes a rewards message through Azure Service Bus.',
   },
 ]
 export const WORK_EXPERIENCE: WorkExperience[] = [
@@ -138,36 +138,36 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Oblien',
     title: 'Founding Engineer',
     description:
-      'Building the infrastructure behind agent sessions, isolated workspaces, and application deployments.',
+      'Part-time, remote. Designing and maintaining deployment control planes, agent runtimes, analytics backends, and execution infrastructure.',
     highlights: [
-      {
-        title: 'Mindwire',
-        description:
-          'Built a Go runtime and TypeScript SDK for connecting agent sessions to product interfaces and streaming their progress. Execution can run locally, over SSH, in Docker, or in cloud workspaces.',
-        href: 'https://github.com/oblien/mindwire',
-      },
       {
         title: 'Openship',
         description:
-          'Built deployment tooling that takes apps from Git to production, including builds, custom domains, HTTPS, live logs, and rollbacks. Available through a CLI, web dashboard, and desktop app.',
+          'Designed and maintained the TypeScript/Hono control plane shared by the API, SDK, CLI, and desktop clients. Used PostgreSQL advisory locks, durable execution receipts, and release snapshots to coordinate deployments and recover interrupted work without reclaiming live workers’ resources. Added release gates with Docker integration tests.',
         href: 'https://github.com/oblien/openship',
+      },
+      {
+        title: 'Mindwire',
+        description:
+          'Built the Go runtime and TypeScript SDK for local, SSH, and Docker agents. Persisted turn receipts before execution to deduplicate retries and reconciled unfinished runs after daemon restarts. Added device pairing and streamed events for product integrations.',
+        href: 'https://github.com/oblien/mindwire',
       },
       {
         title: 'BytesMap',
         description:
-          'Built a TypeScript and Bun platform for exploring databases and turning visual queries or native SQL into charts and dashboards. Added SSH connections, workspace permissions, and scheduled PDF/CSV reports.',
+          'Developed the query and reporting backend with connection leases, row/byte/time limits, encrypted credentials, and transactional worker claims. Built Go ingestion that acknowledges events after durable JetStream publication and indexes them in ClickHouse.',
         href: 'https://bytesmap.com',
       },
       {
         title: 'Agent sandboxes',
         description:
-          'Built isolated execution environments using Firecracker microVMs, plus workspace SDKs for file access, terminal sessions, snapshots, and environment lifecycle management.',
+          'Built Firecracker VM lifecycle management, network policies, and workspace SDKs. Implemented billing-aware capacity recovery with quota rechecks and stop tokens so funding restoration does not restart manually stopped workspaces.',
         href: 'https://oblien.com',
       },
       {
         title: 'Reflx',
         description:
-          'Built ingestion pipelines that turn public profile content into structured profiles, and backend services for conversations with AI versions of those profiles.',
+          'Built the Express/Prisma backend from profile ingestion through agent conversations and WhatsApp integration. Retained guest/member session state and conversation history across requests.',
       },
     ],
     start: 'Aug 2025',
@@ -180,41 +180,41 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'Medica Scope',
     title: 'Backend Engineer',
     description:
-      'Backend development for CarLink, CareLinker, Rewaaq, and Medica Academy.',
+      'Full-time, hybrid. Own CarLink’s backend implementation and develop patient/case, learning, and payment subsystems across CareLinker, Rewaaq, and Medica Academy.',
     highlights: [
       {
-        title: 'CarLink bookings',
+        title: 'CarLink backend',
         description:
-          'Built the flow from nearby service-center discovery to booking, operator acceptance, and workshop completion in NestJS and PostgreSQL. Invoices use the price quoted at booking, even if the center changes its prices.',
+          'Owned the NestJS/Prisma/PostgreSQL backend implementation across authentication, vehicle integrations, bookings, and workshop operations. Used conditional status updates to enforce booking transitions and retained quoted prices for invoicing.',
         href: 'https://carlink.dev/',
       },
       {
-        title: 'Vehicle telemetry and notifications',
+        title: 'CarLink privacy and maintenance',
         description:
-          'Designed an AWS pipeline that processes OBD2 readings through IoT Core, Kinesis, and Lambda to trigger maintenance alerts. Added Arabic and English API messages and per-user notification language preferences.',
+          'Implemented consent/deletion workflows, append-only audit ledgers, and retention controls to keep administrative and privacy actions traceable. Maintained schema migrations and PostgreSQL-backed CI tests.',
       },
       {
         title: 'CareLinker',
         description:
-          'Built patient profiles and case intake in NestJS and PostgreSQL, with patient and staff access controls. Added encrypted document uploads and patient–navigator messaging through REST and Socket.IO, with Arabic and English API responses.',
+          'Built patient/case and messaging subsystems in NestJS/PostgreSQL with record-level authorization, transactions, and encrypted uploads. Persisted conversation history and rechecked case access for REST and Socket.IO messaging.',
         href: 'https://carelinker.ai/en',
       },
       {
         title: 'Rewaaq',
         description:
-          'Built a multi-tenant learning platform in .NET 10, covering course enrollment, content, timed quizzes, grading, and payments. Course access and quiz attempts are scoped to each student’s subscription.',
+          'Developed .NET 10 course and quiz APIs within the shared learning platform, with subscription-scoped access, persisted question selection, grading, and server-enforced deadlines. Built GitLab deployment pipelines with health checks and rollback for authentication and application services.',
         href: 'https://rewaaq.com/landing/',
       },
       {
         title: 'Medica Academy',
         description:
-          'Integrated Paymob payments and VdoCipher video access for Medica Academy.',
+          'Connected Paymob checkout/webhooks to course enrollment and VdoCipher playback. Used transactional enrollment creation and lesson-access checks before issuing video credentials.',
         href: 'https://medicaacademy.com/',
       },
       {
         title: 'Learning assistants',
         description:
-          'Built a Python service that answers course questions with source citations and generates quizzes from uploaded material. Retrieval is scoped to each learner’s tenant and course access.',
+          'Developed a Python service for course-content answers with source citations and quiz generation from uploaded material. Retrieval filters the corpus by tenant and course.',
       },
     ],
     start: 'Jul 2025',
@@ -227,24 +227,24 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     company: 'ONVO',
     title: 'Software Engineer',
     description:
-      'Reworked ONVO’s PHP backend in Express.js. The Q&A platform served 150,000+ users, and the changes reduced load times by 20%.',
+      'Full-time, remote. Reworked ONVO’s PHP backend in Express.js, building its Q&A, feed, and messaging workflows.',
     highlights: [
       {
         title: 'Anonymous Q&A and feeds',
         description:
-          'Built anonymous questions, threaded replies, and personalized feeds, with Redis caching and cursor pagination.',
+          'Built anonymous questions, threaded replies, and followed-user feeds with capped queries and timestamp-based pagination. Used Redis for session/context lookups and action rate limits.',
         href: 'https://onvo.me/',
       },
       {
         title: 'Messaging and notifications',
         description:
-          'Built direct messaging with replies and media attachments, plus mobile push notifications.',
+          'Implemented messaging permissions, replies, media attachments, and push notifications, with request-size limits and XSS middleware around backend endpoints.',
         href: 'https://onvo.me/',
       },
       {
         title: 'Airwave',
         description:
-          'Led the launch of a podcast and music streaming app that reached 10,000+ users in its first week.',
+          'Built the Node.js backend for music/podcast playback, playlists, and WebSocket listening rooms that synchronize playback state across connected clients.',
       },
     ],
     start: 'May 2024',

@@ -22,11 +22,11 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
     title: 'LSMSharp',
     subtitle: 'Inside an embedded storage engine',
     description:
-      'A C# key-value storage engine built around a write-ahead log, sorted memory buffers, and immutable disk tables.',
+      'An experimental C# key-value engine with write-ahead logging, skip-list memtables, immutable SSTables, and leveled compaction.',
     technologies: ['C#', '.NET 8', 'LSM-tree', 'Storage'],
     source: 'https://github.com/Mo7ammedd/LSMSharp',
     problem:
-      'I built LSMSharp around a write path that collects changes in memory and appends them to a recovery log. Sorted files hold older data on disk, and background compaction merges them as more writes come in.',
+      'I built LSMSharp to work through storage-engine internals: recording writes, keeping recent keys sorted, writing immutable tables, and merging versions across levels. The implementation also explores concurrent reads, block caching, and replaying a recovery log.',
     architecture: [
       {
         title: 'Write-ahead log',
@@ -46,7 +46,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     architectureNote:
-      'Reads check the active and flushing memtables first, then search disk tables. Bloom filters reject definite misses before a block is read and decompressed.',
+      'Reads check the active and flushing memtables first, then search disk tables. Bloom filters reject definite misses; prefix-encoded keys, GZip blocks, and an LRU block cache reduce storage and repeated reads.',
     decisions: [
       {
         title: 'Batch persistence work',
@@ -54,9 +54,9 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
           'I batch WAL writes using a 100-entry threshold and a 100 ms timer to reduce per-write I/O. That means SetAsync can finish before the data is persisted. Flush coordinates WAL synchronization and table creation, so callers need to account for that gap when they need durable writes.',
       },
       {
-        title: 'Separate ingestion from reorganization',
+        title: 'Coordinate concurrent reads and writes',
         description:
-          'During a flush, I make the old memtable read-only and send new writes to a fresh one. Reads still check both. Compaction runs in the background to merge disk tables, though it adds its own read and write load.',
+          'Concurrent SSTable reads use explicit file offsets and fill each block before decoding it. This fixes a shared-cursor race that produced incorrect compressed data. Skip-list search and mutation share a write lock so another writer cannot invalidate insertion positions; readers still share read locks.',
       },
       {
         title: 'Spend memory to avoid disk work',
@@ -65,34 +65,38 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'The functional suite covers CRUD, repeated updates, deletes, binary values, and concurrent access. There are also performance and reopen workloads. A saved test run contains an integrity failure after compaction; that needs fixing and a fresh correctness run before the performance numbers are useful.',
-      'The README sample submits 5,000 sequential writes in 207 ms, about 24,155 operations per second. It excludes the final flush and has no recorded hardware details, so it measures submission throughput rather than durable commits.',
-      'A benchmark rerun needs the runtime, hardware, value sizes, cache state, and flush policy recorded, plus checks that the values read back correctly. Multi-operation transactions and snapshot isolation are not implemented.',
+      'The 11 November 2026 checks verified all 200 records after compaction and passed all eight functional edge cases. Four strict regression scenarios cover uncached concurrent block reads, invalid block handles, compaction and clean reopen, and concurrent skip-list writes.',
+      'The read regression exercises 4,096 lookups across 32 readers while enumerating the same table. The skip-list check preserves 4,096 unique sorted keys across concurrent inserts and phased updates. Five additional storage runs passed. The published fix is linked below.',
+      'These are bounded correctness checks, not throughput benchmarks. Small writes can return before WAL fsync; crash-safe manifest publication, cache eviction during active reads, and arbitrary concurrent flush/compaction still need work. Multi-operation transactions and snapshot isolation are not implemented.',
     ],
     references: [
       {
-        title: 'Functional checks',
-        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/Tests/FunctionalTests.cs',
+        title: 'Concurrency and storage regressions',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f/Tests/StorageRegressionTests.cs',
       },
       {
-        title: 'Published benchmark',
-        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/README.md#L263-L275',
+        title: 'Functional integrity checks',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f/Tests/FunctionalTests.cs',
       },
       {
-        title: 'WAL implementation',
-        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/WAL/WriteAheadLog.cs#L22-L100',
+        title: 'Explicit-offset SSTable reads',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f/SSTable/SSTable.cs',
       },
       {
-        title: 'Recorded test run',
-        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/a8686cf696add5988008d9a88d65a41a514df77b/Tests/full_test_results.txt#L95-L125',
+        title: 'Skip-list synchronization',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f/SkipList/ConcurrentSkipList.cs',
+      },
+      {
+        title: 'WAL batching and replay',
+        href: 'https://github.com/Mo7ammedd/LSMSharp/blob/e70fe08fcd3cbbd16f7a83d7640a987f7c8d309f/WAL/WriteAheadLog.cs',
       },
     ],
     experiment: {
-      title: 'Reproduce the workload',
+      title: 'Run the correctness checks',
       description:
-        'From a checkout of the repository, run the functional suite before comparing performance. The read/write samples use 5,000 operations and fixed random-key seeds; the sequential-write sample uses 256-byte values.',
+        'From a repository checkout with .NET 8 installed, build the engine and run the functional suite. The suite includes the storage regressions. Use the storage argument for just the focused concurrency, compaction, and reopen checks.',
       command:
-        'cd Tests\ndotnet run -c Release -- functional\ndotnet run -c Release -- performance',
+        'dotnet build LSMTree.csproj\ndotnet run --project Tests/Tests.csproj -- functional\ndotnet run --project Tests/Tests.csproj -- storage',
     },
   },
   {
@@ -143,7 +147,7 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
       },
     ],
     validation: [
-      'Receive-buffer tests cover out-of-order packets and duplicate detection. Codec property tests check payload round-trips and rejection of corrupted data.',
+      'The 11 November 2026 workspace run passed 26 Rust tests: 17 unit, three handshake, four reliability, and two stress cases. They cover codec properties, duplicate/reordered receive buffers, handshakes, and loopback transfers; this is not a WAN performance result.',
       'The CLI proxy can inject loss, duplication, latency, and jitter using seeded random choices. The seed controls those choices, but execution still affects end-to-end timing.',
       'The example configures 5% loss, 3% reordering, 20–60 ms latency, and 10 ms jitter. Those are fault settings, not measured outcomes. The proxy forwards serially, so the reordering flag alone does not demonstrate out-of-order delivery.',
       'When trying the proxy, check that the received bytes match the sent bytes, then follow retransmissions, smoothed RTT, timeout backoff, and congestion-window recovery. The walkthrough explains how these measurements relate to the protocol.',

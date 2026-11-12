@@ -131,9 +131,17 @@ running the Java cluster or measuring network and disk performance. Tests cover
 node failures during transfers, missing sources, too few live nodes, playback,
 reset, and deterministic state transitions.
 
-Case-study measurements are attributed to their sources. The LSMSharp figure is
-a published write-submission sample, not a new benchmark or a synchronous durable
-commit result. AeroUDP's proxy percentages describe an example test workload.
+Experience, biography, metadata, and project summaries use the verified ownership
+report and CV as their reference. Keep official titles/dates and distinguish
+individual backend responsibility from shared product work. Unsupported ONVO
+traffic/performance figures, Airwave launch claims, and CarLink AWS deployment
+claims are excluded pending evidence.
+
+Case-study checks are attributed to their reviewed revisions. LSMSharp links to
+the published concurrency fix and records the 11 November 2026 correctness runs;
+it makes no throughput or per-write durability claim. AeroUDP's 26 tests and
+Disk-Mesh's nine local scenarios are bounded test results. AeroUDP's proxy
+percentages describe an example test workload.
 Case-study references link to the reviewed GitHub revisions. SimuKernel's C#
 console simulator and the companion browser playground are described separately
 because they offer different scheduling policies.

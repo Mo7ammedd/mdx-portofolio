@@ -4,64 +4,26 @@ export const siteConfig: Metadata = {
   // More specific and searchable title variations
   title: {
     default:
-      'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js, SQL Server)',
+      'Mohammed Mostafa | Backend and Platform Software Engineer',
     template: '%s | Mohammed Mostafa',
   },
   description:
-    'Mohammed Mostafa is a backend software engineer in Egypt with 5+ years of experience using ASP.NET Core, Node.js, and TypeScript. Browse his projects and technical articles.',
+    'Backend and platform software engineer in Cairo building deployment platforms, agent runtimes, and application backends with C#, TypeScript, and Go.',
   keywords: [
-    // Personal brand keywords
     'Mohammed Mostafa',
-    'Mohammed Mostafa Software Engineer',
-    'Mohammed Developer Egypt',
-    'Mohammed Mostafa Portfolio',
-    'momostafa.tech',
-
-    // Technical expertise - Long tail
-    'ASP.NET Core Developer',
-    'ASP.NET Core Web API Developer',
-    'Node.js Backend Engineer',
-    'TypeScript Full Stack Developer',
-    'Express.js REST API Developer',
-    'C# development',
-    'Backend Software Engineer',
-    'Microservices architecture',
-
-    // Location-based SEO
-    'Software Engineer Egypt',
-    'Backend Developer Cairo',
-    'Remote Software Engineer Middle East',
-    'Egyptian Software Engineer',
-
-    // Professional status
-    'Available for opportunities',
-    'Remote developer',
-
-    // Technologies & Skills
-    'Azure Cloud Developer',
-    'SQL Server',
-    'Redis caching',
-    'JWT Authentication Implementation',
-    'RESTful API Design',
-    'Database design',
-    'System Architecture Design',
-    'Docker Containerization',
-    'RabbitMQ Message Queue',
-    'Entity Framework Core',
-    'Clean Architecture',
-    'CQRS Pattern',
-    'Domain Driven Design',
-
-    // Content keywords
-    'Software Engineering Blog',
-    'ASP.NET Core Tutorials',
-    'Node.js Best Practices',
-    'Backend Development Guide',
-
-    // Education & Experience
-    'Suez Canal University Computer Science',
-    '5 years software development experience',
-    'Backend development',
+    'Backend and Platform Software Engineer',
+    'Cairo Egypt',
+    'C#',
+    'ASP.NET Core',
+    'TypeScript',
+    'Go',
+    'Node.js',
+    'PostgreSQL',
+    'Redis',
+    'Docker',
+    'Deployment platforms',
+    'Agent runtimes',
+    'Software engineering projects',
   ],
   authors: [{ name: 'Mohammed Mostafa', url: 'https://www.momostafa.tech' }],
   creator: 'Mohammed - Software Engineer',
@@ -90,9 +52,9 @@ export const siteConfig: Metadata = {
     locale: 'en_US',
     url: 'https://www.momostafa.tech',
     siteName: 'Mohammed Mostafa - Software Engineer Portfolio',
-    title: 'Mohammed Mostafa | Backend Software Engineer (.NET, Node.js)',
+    title: 'Mohammed Mostafa | Backend and Platform Software Engineer',
     description:
-      'Backend software engineer in Egypt with 5+ years building microservices and distributed systems using ASP.NET Core, Node.js, and TypeScript.',
+      'Backend and platform software engineer in Cairo. Deployment control planes, agent runtimes, database internals, and backend application development.',
     emails: ['mohammedmostafanazih@gmail.com'],
     countryName: 'Egypt',
   },
@@ -101,9 +63,9 @@ export const siteConfig: Metadata = {
     card: 'summary_large_image',
     site: '@mohameddtv',
     creator: '@mohameddtv',
-    title: 'Mohammed Mostafa | Backend Software Engineer',
+    title: 'Mohammed Mostafa | Backend and Platform Software Engineer',
     description:
-      'Backend software engineer with 5+ years building microservices and distributed systems using ASP.NET Core, Node.js, and TypeScript.',
+      'Backend and platform engineering: deployment control planes, agent runtimes, database internals, and application backends.',
   },
 
   robots: {

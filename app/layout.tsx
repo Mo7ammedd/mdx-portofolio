@@ -47,15 +47,15 @@ export default function RootLayout({
   // Structured data for the person (you)
   const personData = {
     name: 'Mohammed Mostafa',
-    jobTitle: 'Software Engineer',
+    jobTitle: 'Backend and Platform Software Engineer',
     description:
-      'Software engineer with experience in ASP.NET Core, Node.js, Express.js, and TypeScript. Open to new opportunities.',
+      'Backend and platform software engineer building deployment control planes, agent runtimes, and application backends with C#, TypeScript, and Go.',
     url: 'https://www.momostafa.tech',
     email: 'mohammedmostafanazih@gmail.com',
     image: 'https://www.momostafa.tech/avatar.jpg',
     sameAs: [
       'https://github.com/Mo7ammedd',
-      'https://linkedin.com/in/mohammed-mostafa',
+      'https://linkedin.com/in/mohammedtv',
       'https://twitter.com/mohameddtv',
       'https://www.momostafa.tech',
       'https://www.momostafa.tech/blog',
@@ -70,8 +70,10 @@ export default function RootLayout({
       'Software Engineering',
       'Web Development',
       'Backend Development',
-      'Full Stack Development',
-      'Azure',
+      'Platform Engineering',
+      'Go',
+      'PostgreSQL',
+      'Docker',
       'SQL Server',
       'Redis',
     ],
@@ -83,7 +85,7 @@ export default function RootLayout({
     url: 'https://www.momostafa.tech',
     name: 'Mohammed Mostafa - Software Engineer Portfolio',
     description:
-      'Mohammed Mostafa’s portfolio: projects, contact details, and work with ASP.NET Core, Node.js, Express.js, and TypeScript.',
+      'Mohammed Mostafa’s backend and platform engineering work, projects, technical writing, and contact details.',
   }
 
   return (

@@ -61,7 +61,8 @@ export function PersonalClient({ blogPosts, projects }: PersonalClientProps) {
           id="work"
           className="mt-4 scroll-mt-8 text-base leading-7 text-zinc-300"
         >
-          I’m a software engineer in Egypt. I build backend systems at{' '}
+          I’m a backend and platform software engineer in Cairo, Egypt. I build
+          deployment platforms, agent runtimes, and application backends at{' '}
           <a
             href="https://oblien.com/"
             target="_blank"

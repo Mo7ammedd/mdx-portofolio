@@ -36,15 +36,15 @@ import { blogVerifications } from '@/lib/blog-freshness'
 
 const author = {
   name: 'Mohammed Mostafa',
-  jobTitle: 'Software Engineer',
+  jobTitle: 'Backend and Platform Software Engineer',
   description:
-    'Software engineer working with ASP.NET Core, Node.js, Express.js, and TypeScript.',
+    'Backend and platform software engineer working with C#, TypeScript, and Go.',
   url: 'https://www.momostafa.tech',
   email: 'mohammedmostafanazih@gmail.com',
   image: 'https://www.momostafa.tech/avatar.jpg',
   sameAs: [
     'https://github.com/Mo7ammedd',
-    'https://linkedin.com/in/mohammed-mostafa',
+    'https://linkedin.com/in/mohammedtv',
     'https://twitter.com/mohameddtv',
   ],
   knowsAbout: [

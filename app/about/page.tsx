@@ -6,7 +6,7 @@ import { generateSEO } from '@/lib/seo'
 export const metadata = generateSEO({
   title: 'About',
   description:
-    'Mohammed Mostafa, software engineer in Egypt. Building backend systems, agent runtimes, and deployment tools at Oblien.',
+    'Mohammed Mostafa, backend and platform software engineer in Cairo. Deployment platforms, agent runtimes, and application backends at Oblien and Medica Scope.',
   path: '/about',
 })
 
@@ -21,18 +21,23 @@ export default function AboutPage() {
           About
         </h1>
         <p className="mt-4 text-base leading-7 text-zinc-300">
-          I’m Mohammed, a software engineer based in Egypt. I build backend
-          systems and infrastructure at{' '}
+          I’m Mohammed, a backend and platform software engineer based in Cairo,
+          Egypt. I build backend systems and infrastructure at{' '}
           <a href="#work0" className="inline-link">
             Oblien
+          </a>{' '}
+          and{' '}
+          <a href="#work1" className="inline-link">
+            Medica Scope
           </a>
           .
         </p>
         <p className="mt-3 text-base leading-7 text-zinc-400">
-          I work on agent runtimes, isolated workspaces, and deployment tools.
-          That includes connecting agent sessions to product interfaces and
-          building the tools that take a Git repository through builds,
-          deployments, custom domains, and rollbacks.
+          My work spans architecture, implementation, integration, and deployment.
+          Recent projects include a shared deployment control plane, restart
+          recovery for agent sessions, and CarLink’s backend. I focus on the
+          details that make these systems behave correctly: coordinating work,
+          preserving state, checking access, and recovering interrupted operations.
         </p>
       </section>
 
@@ -104,12 +109,13 @@ export default function AboutPage() {
           Systems projects
         </h2>
         <p className="mt-3 text-base leading-7 text-zinc-400">
-          I also build smaller systems from scratch.{' '}
+          My personal projects explore storage, networking, and distributed
+          systems.{' '}
           <Link href="/projects/lsmsharp" className="inline-link">
             LSMSharp
           </Link>{' '}
-          is a C# storage engine with a write-ahead log and background
-          compaction.{' '}
+          is an experimental C# storage engine with a write-ahead log, SSTables,
+          and leveled compaction.{' '}
           <Link href="/projects/aeroudp" className="inline-link">
             AeroUDP
           </Link>{' '}
@@ -118,8 +124,13 @@ export default function AboutPage() {
           <Link href="/projects/disk-mesh" className="inline-link">
             Disk-Mesh
           </Link>{' '}
-          is a Java file system that replicates chunks across storage nodes and
-          repairs missing copies after a node failure.
+          is an experimental Java file system with chunk replication and
+          heartbeat-driven repair.{' '}
+          <Link href="/projects/llmproxy" className="inline-link">
+            LLMProxy
+          </Link>{' '}
+          is a .NET gateway with shared quotas, transactional usage reservations,
+          and recovery for interrupted requests.
         </p>
       </section>
 
