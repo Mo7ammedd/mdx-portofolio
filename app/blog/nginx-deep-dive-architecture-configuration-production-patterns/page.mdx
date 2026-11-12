@@ -1,21 +1,21 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'Nginx Architecture, Configuration, and Production Patterns',
-  description: 'Nginx architecture and production configuration.',
+  title: 'How Nginx routes a request',
+  description: 'Location matching, rewrites, proxy headers, and the configuration that decides which backend handles a request.',
   slug: 'nginx-deep-dive-architecture-configuration-production-patterns',
   publishedTime: '2026-01-15T10:00:00.000Z',
-  modifiedTime: '2026-09-17T00:00:00.000Z',
+  modifiedTime: '2026-11-12T00:00:00.000Z',
   tags: ['nginx', 'web-server', 'reverse-proxy', 'load-balancing', 'devops', 'performance', 'configuration'],
 })
 
-# Nginx: From Request Flow to Production Deployment
+# How Nginx routes a request
 
-## Introduction
+<span id="introduction" className="block" aria-hidden="true" />
 
-An Nginx configuration can be short and still route a request somewhere unexpected. Location matching, rewrites, and proxy headers each affect what reaches the backend.
+When `/api/users` reaches the wrong backend, checking the upstream alone is not enough. The matching `location`, any rewrite, and the forwarded headers determine what the application receives.
 
-This article follows a request through Nginx, starting with its event-driven workers and then working through routing, proxying, load balancing, caching, and TLS. The configuration examples show where those pieces interact and what to check when a request behaves differently than expected.
+The examples below trace those decisions through Nginx, then show how workers, timeouts, caching, and TLS affect the same request path.
 
 ---
 

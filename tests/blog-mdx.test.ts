@@ -165,6 +165,26 @@ test('articles without sections omit the table of contents', async () => {
   assert.doesNotMatch(html, /<details|On this page/)
 })
 
+test('long contents lists start compact and retain every section link without JavaScript', async () => {
+  const markdown = Array.from(
+    { length: 10 },
+    (_, index) => `## Section ${index + 1}\n\n### Detail ${index + 1}\n\nContent.`,
+  ).join('\n\n')
+  const { html } = await renderPost(markdown)
+  const desktop = html.slice(html.indexOf('class="blog-toc-desktop"'))
+  const more = desktop.indexOf('data-toc-more')
+  assert.ok(more > 0)
+  assert.match(desktop.slice(0, more), /href="#section-6"/)
+  assert.doesNotMatch(desktop.slice(0, more), /href="#section-7"/)
+  const disclosure = desktop.match(/<details\b[^>]*\bdata-toc-more\b[^>]*>/)?.[0]
+  assert.ok(disclosure)
+  assert.doesNotMatch(disclosure, /\sopen(?:=|\s|>)/)
+  for (let section = 1; section <= 10; section++) {
+    assert.ok(desktop.includes(`href="#section-${section}"`))
+    assert.ok(desktop.includes(`href="#detail-${section}"`))
+  }
+})
+
 test('heading fragments retain existing punctuation and inline-code behavior', async () => {
   const { layout } = await renderPost(
     '### 3. Factory-Based Middleware (`IMiddleware`)\n\n## C# & .NET\n\n## !!!',

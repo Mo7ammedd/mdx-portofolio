@@ -34,9 +34,9 @@ export function BlogHeader({
       </Link>
 
       <h1 className="page-title">{title}</h1>
-      <p className="page-description mt-5">{description.trim()}</p>
+      <p className="page-description mt-4">{description.trim()}</p>
 
-      <div className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-5 text-zinc-400">
+      <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-5 text-zinc-400">
         <time dateTime={datePublished}>{formattedDate}</time>
         {updated && (
           <>

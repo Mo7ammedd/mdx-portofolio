@@ -1,20 +1,20 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: '3 Ways to Build Custom Middleware in ASP.NET Core',
+  title: 'Three ways to write ASP.NET Core middleware',
   description: 'Inline delegates, convention-based middleware, and IMiddleware, with examples and dependency lifetime notes.',
   slug: '3-ways-to-build-custom-middleware-in-aspnet-core',
   publishedTime: '2024-03-15T10:00:00.000Z',
-  modifiedTime: '2026-09-17T00:00:00.000Z',
+  modifiedTime: '2026-11-12T00:00:00.000Z',
   tags: ['aspnet-core', 'middleware', 'dotnet', 'web-development', 'request-pipeline', 'csharp'],
 })
 
 
 
 
-# Building Custom Middleware in ASP.NET Core
+# Three ways to write ASP.NET Core middleware
 
-## Introduction
+<span id="introduction" className="block" aria-hidden="true" />
 
 Request logging, authentication, and rate limiting all need access to a request before it reaches a controller. In ASP.NET Core, <Term id="middleware">middleware</Term> handles that work in a pipeline.
 

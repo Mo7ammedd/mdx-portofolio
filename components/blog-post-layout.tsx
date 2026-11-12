@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 
 import { StructuredData } from '@/components/structured-data'
 import { BlogHeader } from '@/components/ui/blog-header'
@@ -110,13 +110,22 @@ export async function BlogPostLayout({
             description={post.description}
             readingTime={post.readingTime}
           />
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] py-4">
-            <TextSizeControl />
-            <div className="flex flex-wrap items-center gap-2">
-              <BlogSearchDialog />
-              <SaveArticleButton slug={slug} />
+          <details data-reading-tools className="group/tools mt-4">
+            <summary className="inline-flex min-h-9 cursor-pointer list-none items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 [&::-webkit-details-marker]:hidden">
+              Reading tools
+              <ChevronDown
+                aria-hidden="true"
+                className="size-3 transition-transform group-open/tools:rotate-180 motion-reduce:transition-none"
+              />
+            </summary>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2 pb-3">
+              <TextSizeControl />
+              <div className="flex flex-wrap items-center gap-2">
+                <BlogSearchDialog />
+                <SaveArticleButton slug={slug} />
+              </div>
             </div>
-          </div>
+          </details>
           <ReadingStorageNotice />
         </div>
 
@@ -126,16 +135,23 @@ export async function BlogPostLayout({
 
         <div className="blog-reading-column min-w-0 pt-7 sm:pt-8">
           <ResumeReading key={slug} slug={slug} headings={headings} />
-          <ArticleReadingPath slug={slug} posts={posts} />
+          <article
+            id="article-content"
+            className="blog-prose prose prose-zinc prose-invert prose-strong:font-semibold max-w-none"
+          >
+            {children}
+          </article>
+
           {relatedProjects.length > 0 && (
-            <aside
+            <nav
               aria-label="Related projects"
-              className="mb-8 rounded-md border border-white/10 bg-white/[0.02] px-4 py-3"
+              className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.07] pt-5 text-sm"
             >
+              <span className="text-zinc-400">Related projects</span>
               {relatedProjects.map((project) => (
                 <div
                   key={project.slug}
-                  className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1"
+                  className="flex flex-wrap items-center gap-x-4 gap-y-1"
                 >
                   <Link
                     href={`/projects/${project.slug}`}
@@ -143,7 +159,7 @@ export async function BlogPostLayout({
                     data-project-name={project.title}
                     data-link-type="case_study"
                   >
-                    Explore {project.title}{' '}
+                    {project.title}{' '}
                     <ArrowUpRight aria-hidden="true" className="size-3" />
                   </Link>
                   {project.slug === 'simukernel' && (
@@ -159,16 +175,12 @@ export async function BlogPostLayout({
                   )}
                 </div>
               ))}
-            </aside>
+            </nav>
           )}
 
-          <article
-            id="article-content"
-            className="blog-prose prose prose-zinc prose-invert prose-strong:font-semibold max-w-none"
-          >
-            {children}
-          </article>
-
+          <div className="mt-8">
+            <ArticleReadingPath slug={slug} posts={posts} />
+          </div>
           <ContinueReadingPath slug={slug} posts={posts} />
 
           {relatedPosts.length > 0 && (

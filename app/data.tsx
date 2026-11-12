@@ -299,21 +299,21 @@ export const BLOG_POSTS: BlogPost[] = [
     uid: 'blog-1',
   },
   {
-    title: '3 Ways to Build Custom Middleware in ASP.NET Core',
+    title: 'Three ways to write ASP.NET Core middleware',
     description:
       'Three ways to write ASP.NET Core middleware and how each fits into the request pipeline.',
     link: '/blog/3-ways-to-build-custom-middleware-in-aspnet-core',
     uid: 'blog-2',
   },
   {
-    title: 'Boxing and Unboxing in C#',
+    title: 'Where boxing allocates in C#',
     description:
       'How C# boxes value types as object or interface references, and what happens during unboxing.',
     link: '/blog/boxing-and-unboxing-in-csharp',
     uid: 'blog-3',
   },
   {
-    title: 'SimuKernel: OS Concepts Explained',
+    title: 'Scheduling and paging in SimuKernel',
     description:
       'CPU scheduling, paging, and process management in the SimuKernel simulator.',
     link: '/blog/simukernel-operating-system-concepts',

@@ -7,8 +7,10 @@ export interface BlogHeading {
   level: 2 | 3
 }
 
-function SectionLinks({ headings }: { headings: BlogHeading[] }) {
-  const sections: { heading: BlogHeading; children: BlogHeading[] }[] = []
+type TocSection = { heading: BlogHeading; children: BlogHeading[] }
+
+function groupSections(headings: BlogHeading[]) {
+  const sections: TocSection[] = []
   for (const heading of headings) {
     const parent = sections.at(-1)
     if (heading.level === 3 && parent?.heading.level === 2) {
@@ -18,6 +20,10 @@ function SectionLinks({ headings }: { headings: BlogHeading[] }) {
     }
   }
 
+  return sections
+}
+
+function SectionLinks({ sections }: { sections: TocSection[] }) {
   return (
     <ol className="space-y-1">
       {sections.map(({ heading, children }) => (
@@ -67,6 +73,9 @@ export function TableOfContents({
   slug?: string
 }) {
   if (headings.length === 0) return null
+  const sections = groupSections(headings)
+  const preview = sections.slice(0, 6)
+  const remaining = sections.slice(6)
 
   return (
     <TableOfContentsObserver slug={slug}>
@@ -85,14 +94,28 @@ export function TableOfContents({
           />
         </summary>
         <nav aria-label="On this page" className="blog-toc-scroll pb-3">
-          <SectionLinks headings={headings} />
+          <SectionLinks sections={sections} />
         </nav>
       </details>
 
       <div className="blog-toc-desktop">
         <p className="section-heading mb-4 px-2">On this page</p>
         <nav aria-label="On this page" className="blog-toc-scroll">
-          <SectionLinks headings={headings} />
+          <SectionLinks sections={preview} />
+          {remaining.length > 0 && (
+            <details data-toc-more className="group/more mt-3">
+              <summary className="flex min-h-8 cursor-pointer list-none items-center gap-2 px-2 text-xs text-zinc-400 hover:text-zinc-200 [&::-webkit-details-marker]:hidden">
+                More sections ({remaining.length})
+                <ChevronDown
+                  aria-hidden="true"
+                  className="size-3 transition-transform group-open/more:rotate-180 motion-reduce:transition-none"
+                />
+              </summary>
+              <div className="mt-1">
+                <SectionLinks sections={remaining} />
+              </div>
+            </details>
+          )}
         </nav>
         <a href="#main-content" className="text-link mt-4 px-2">
           Back to top <span aria-hidden="true">↑</span>

@@ -91,8 +91,15 @@ so articles and native heading navigation remain visible when JavaScript is
 disabled.
 
 The first Markdown H1 becomes the article header, with the metadata description
-as its introduction. The contents list groups subsections and stays beside the
-article on wide screens; a small client component highlights the current section.
+as its introduction. Search, saving, and text-size controls sit inside the native
+"Reading tools" disclosure. Learning-path context and related-project links
+follow the article so they do not interrupt its opening.
+
+The contents list groups subsections and stays beside the article on wide screens.
+It initially shows six sections, with the rest under "More sections"; all links
+remain server-rendered and work without JavaScript. A small client component
+highlights the current section. When removing an introductory heading, keep its
+old ID on an inline anchor so existing links still resolve.
 See [the blog authoring guide](blog-authoring.md) for code filenames, line
 highlights, callouts, steps, tabs, and image captions.
 

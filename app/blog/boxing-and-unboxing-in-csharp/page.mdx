@@ -1,21 +1,21 @@
 import { generateBlogPostSEO } from '@/lib/seo'
 
 export const metadata = generateBlogPostSEO({
-  title: 'C# Boxing and Unboxing',
+  title: 'Where boxing allocates in C#',
   description: 'What boxing and unboxing do in C#, where allocations happen, and how typed collections avoid boxing.',
   slug: 'boxing-and-unboxing-in-csharp',
   publishedTime: '2023-08-22T10:00:00.000Z',
-  modifiedTime: '2026-09-17T00:00:00.000Z',
+  modifiedTime: '2026-11-12T00:00:00.000Z',
   tags: ['csharp', 'dotnet', 'performance', 'memory-management', 'programming-fundamentals'],
 })
 
 
 
 
-# Boxing and unboxing in C#: allocations and runtime behavior
+# Where boxing allocates in C#
 
 
-## Understanding the Fundamentals
+<span id="understanding-the-fundamentals" className="block" aria-hidden="true" />
 
 Assigning an `int` to an `object` looks like a simple assignment, but it boxes the value. <Term id="boxing">Boxing</Term> creates an object containing a copy; unboxing retrieves the value with a runtime type check.
 
@@ -23,7 +23,7 @@ The examples below follow that copy, show where allocations appear, and compare 
 
 ![C# Boxing and Unboxing Overview](/blog/BoxingUnboxing/csharp-boxing-unboxing-overview.png)
 
-### Value Types vs Reference Types
+## Value Types vs Reference Types
 
 **Value types**
 

@@ -68,8 +68,14 @@ export function TableOfContentsObserver({
         link.setAttribute('aria-current', 'location')
         const group = link.closest<HTMLDetailsElement>('[data-toc-subsections]')
         if (group) group.open = true
+        const more = link.closest<HTMLDetailsElement>('[data-toc-more]')
 
-        if (desktop.matches && link.closest('.blog-toc-desktop')) {
+        if (
+          desktop.matches &&
+          link.closest('.blog-toc-desktop') &&
+          (!more || more.open) &&
+          link.getClientRects().length > 0
+        ) {
           const nav = link.closest('nav')!
           const bounds = nav.getBoundingClientRect()
           const item = link.getBoundingClientRect()
